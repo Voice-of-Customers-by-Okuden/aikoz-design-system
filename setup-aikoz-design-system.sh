@@ -1,0 +1,62 @@
+#!/bin/bash
+# ─────────────────────────────────────────────────────────────
+# Script de création du dossier Aikoz Design System
+# À lancer depuis ton terminal (pas dans Claude Code)
+# Usage : bash setup-aikoz-design-system.sh
+# ─────────────────────────────────────────────────────────────
+
+set -e
+
+DEST="$HOME/aikoz-design-system"
+
+echo "📁 Création du dossier $DEST..."
+mkdir -p "$DEST/fonts/PPRadioGrotesk"
+mkdir -p "$DEST/fonts/Satoshi"
+mkdir -p "$DEST/logos"
+mkdir -p "$DEST/references"
+mkdir -p "$DEST/brand-brain"
+
+echo ""
+echo "✅ Structure créée :"
+echo "   aikoz-design-system/"
+echo "   ├── DESIGN.md                 ← Design system complet (à uploader dans Claude Design)"
+echo "   ├── fonts/"
+echo "   │   ├── PPRadioGrotesk/       ← 10 fichiers .ttf"
+echo "   │   └── Satoshi/              ← 4 fichiers .otf"
+echo "   ├── logos/                    ← SVG Aikoz"
+echo "   ├── references/               ← PDFs brand book de référence"
+echo "   └── brand-brain/              ← brand-voice-guidelines.md + guidelines Claude Code"
+echo ""
+echo "⚠️  ÉTAPES MANUELLES REQUISES :"
+echo ""
+echo "1. Copie les fichiers téléchargés depuis Claude.ai dans les bons dossiers :"
+echo ""
+echo "   DESIGN.md                    → $DEST/DESIGN.md"
+echo "   brand-voice-guidelines.md    → $DEST/brand-brain/brand-voice-guidelines.md"
+echo ""
+echo "   PPRadioGrotesk-*.ttf (x10)   → $DEST/fonts/PPRadioGrotesk/"
+echo "   Satoshi-*.otf (x4)           → $DEST/fonts/Satoshi/"
+echo ""
+echo "   Logo_Horizontal.svg          → $DEST/logos/"
+echo "   Logo_Horizontal-byOkuden.svg → $DEST/logos/"
+echo "   Logo_Vertical.svg            → $DEST/logos/"
+echo "   Logo_Vertical-byokuden.svg   → $DEST/logos/"
+echo "   Logo_Sybol.svg               → $DEST/logos/"
+echo ""
+echo "   20240830_PRESENTATION_AIKOZ.pdf → $DEST/references/"
+echo "   20250604_ALLIANZ_Aikoz_v2.pdf   → $DEST/references/"
+echo "   20250324_COVEA_Aikoz.pdf        → $DEST/references/"
+echo ""
+echo "2. Installe les polices sur ton Mac :"
+echo "   Double-clique sur chaque .ttf dans fonts/PPRadioGrotesk/"
+echo "   Double-clique sur chaque .otf dans fonts/Satoshi/"
+echo ""
+echo "3. Pour Claude Design (claude.ai/design) :"
+echo "   → Set up design system"
+echo "   → Upload : DESIGN.md + tous les SVG logos + les 3 PDFs de références"
+echo ""
+echo "4. Pour Claude Code (~/aikoz-brand) :"
+echo "   → Le dossier ~/aikoz-brand/.claude/brand-voice-guidelines.md est déjà en place"
+echo "   → Copie aussi DESIGN.md dans ~/aikoz-brand/.claude/DESIGN.md"
+echo ""
+echo "🎯 Dossier prêt : $DEST"

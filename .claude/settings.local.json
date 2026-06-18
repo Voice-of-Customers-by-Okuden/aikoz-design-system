@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/alicemarechaud/Desktop//**)",
+      "Read(//Users/alicemarechaud/aikoz-brand/**)"
+    ]
+  }
+}
