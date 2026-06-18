@@ -1,56 +1,14 @@
 ---
-version: 1.0
+version: 1.1
 name: "Aikoz Design System"
 description: >
   Design system de la plateforme Aikoz by Okuden.
   Solution SaaS d'intelligence des avis digitaux — secteurs assurance,
   assistance, banque, automobile, santé.
   Ce fichier est la source de vérité unique pour tout contenu visuel Aikoz :
-  slides, landing page, carrousels LinkedIn, documents commerciaux.
-
----
-
-## Couleurs
-
-### Palette primaire
-
-```
-midnight-blue:    #0A1128   — fond dominant, backgrounds dark, textes sur clair
-frozen-white:     #FFFFFF   — fond clair, textes sur dark
-aquamarine-green: #70FFD4   — accent primaire, CTA, highlights, numéros de section
-ultramarine-blue: #3B5DCE   — interactif, énergie, liens
-```
-
-### Palette secondaire (usage slides & contenus)
-
-```
-deep-navy:        #1A2744   — blocs dark secondaires (colonnes, panels)
-card-dark:        #111B35   — surfaces dark (jamais en fond plein page)
-muted-blue:       #5A7BA8   — texte secondaire sur dark
-muted-light:      #9AA3B2   — texte tertiaire, captions, dates
-blue-subtitle:    #3B9DCE   — sous-titres italiques sur fond clair
-section-inactive: #3A5070   — items non-actifs dans agenda/sommaire
-rule-dark:        #1A2A50   — séparateurs fins sur fond dark
-rule-light:       #D8DEE9   — séparateurs fins sur fond clair
-```
-
-### Tokens sémantiques
-
-```
-background-dark:    midnight-blue (#0A1128)
-background-light:   frozen-white  (#FFFFFF)
-background-panel:   deep-navy     (#1A2744)
-text-on-dark:       frozen-white  (#FFFFFF)
-text-on-light:      #1A1A2E       (quasi-noir, jamais pur #000000)
-text-accent:        aquamarine-green (#70FFD4)
-text-link:          ultramarine-blue (#3B5DCE)
-text-muted-dark:    muted-blue    (#5A7BA8)
-text-muted-light:   #555555
-text-subtitle:      blue-subtitle (#3B9DCE)
-rule-on-dark:       rule-dark     (#1A2A50)
-rule-on-light:      rule-light    (#D8DEE9)
-left-rule:          aquamarine-green (#70FFD4) — filet vertical gauche, 7px largeur
-```
+  slides, landing page, carrousels LinkedIn, dashboard SaaS, documents commerciaux.
+  Le système est en deux couches : Brand Layer (remplaçable en marque blanche)
+  et Product Layer (invariable, accessible WCAG AA sur tous supports).
 
 ---
 
@@ -59,42 +17,182 @@ left-rule:          aquamarine-green (#70FFD4) — filet vertical gauche, 7px la
 ### Familles de polices
 
 ```
-primary:   PP Radio Grotesk   — tous les titres, sous-titres, labels, numéros
-secondary: Satoshi             — corps de texte long, captions, notes de bas de page
-fallback:  Calibri, Arial      — si PP Radio Grotesk indisponible (Office/LibreOffice)
+brand-primary:   PP Radio Grotesk   — titres, headings, numéros, labels slides & print
+product-primary: Inter              — UI, dashboard, body, captions, composants web
+fallback:        system-ui, -apple-system, sans-serif
+microsoft:       Bahnschrift        — remplacement natif Microsoft Office
 ```
 
-### Hiérarchie typographique (slides 16:9 — 10" × 5.625")
+### CDN
+```
+Inter :         https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap
+PP Radio Grotesk : non disponible sur Google Fonts — fichiers TTF dans /fonts/PPRadioGrotesk/
+Satoshi :       https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap
+```
+
+### Hiérarchie typographique — UI / Dashboard (Inter)
 
 ```
-display-xl:    PP Radio Grotesk Black,  72–90pt  — grands chiffres impact (+25%, 93%)
-display-lg:    PP Radio Grotesk Black,  44–56pt  — titres cover
-display-md:    PP Radio Grotesk Bold,   36–42pt  — titres de section divider
-heading-1:     PP Radio Grotesk Bold,   26–32pt  — titres de slides contenu
-heading-2:     PP Radio Grotesk Bold,   18–22pt  — sous-titres de sections
-heading-3:     PP Radio Grotesk Bold,   15–17pt  — titres de colonnes, labels
-body-lg:       PP Radio Grotesk Regular, 14–15pt — corps principal
-body-md:       PP Radio Grotesk Regular, 12–13pt — corps secondaire
-body-sm:       PP Radio Grotesk Regular, 10–12pt — captions, sources, notes
-kicker:        PP Radio Grotesk Bold,   10–12pt, letter-spacing: 2–3pt, ALL CAPS — labels de section
-numeric-hero:  PP Radio Grotesk Black,  60–120pt — chiffres décoratifs de section
+display:    Inter 900, 36px, tracking -0.02em  — grands chiffres KPI, heroes
+h1:         Inter 700, 28px, tracking -0.01em
+h2:         Inter 700, 22px
+h3:         Inter 600, 18px
+h4:         Inter 600, 15px
+body-lg:    Inter 400, 16px, line-height 1.5
+body:       Inter 400, 14px, line-height 1.5
+body-sm:    Inter 400, 13px
+caption:    Inter 400, 12px
+label:      Inter 600, 11px, tracking 0.06em, UPPERCASE  — badges, kickers, headers tableau
+mono:       "JetBrains Mono" ou monospace, 500, 14px     — valeurs KPI, chiffres data
+```
+
+### Hiérarchie typographique — Slides / Print (PP Radio Grotesk)
+
+```
+cover-title:     PP Radio Grotesk Black, 48–72px
+section-number:  PP Radio Grotesk Black, 80–120px, aquamarine-green
+slide-title:     PP Radio Grotesk Bold, 36–42px
+slide-heading:   PP Radio Grotesk Bold, 26–32px
+slide-header:    PP Radio Grotesk Bold, 14–15px  — "X.X – Titre"
+slide-subtitle:  PP Radio Grotesk Regular Italic, 12–13px, blue-subtitle
+slide-body:      PP Radio Grotesk Regular, 12–14px
+slide-kicker:    PP Radio Grotesk Bold, 10–11px, letter-spacing 2–3pt, ALL CAPS
 ```
 
 ### Règles typographiques
 
 **À faire :**
-- Utiliser PP Radio Grotesk sur tous les éléments de slides
-- Les numéros de section (01, 02…) : Black ou Bold, couleur aquamarine-green, taille 80–120pt
-- Les sous-titres de slides contenu : Regular Italic, couleur blue-subtitle (#3B9DCE)
-- Les titres de slides : "X.X – Titre" en Bold, couleur text-on-dark ou text-on-light selon fond
-- Letter-spacing de 2–3pt uniquement sur les kickers/labels en CAPS (ex: "WE ARE", "AGENDA")
+- Inter pour tout ce qui est interface, web, dashboard
+- PP Radio Grotesk pour slides, print, supports de marque
+- Chiffres KPI dashboard toujours en monospace (JetBrains Mono ou fallback monospace)
+- Minimum 12px sur tous les supports
 
 **À éviter :**
-- Ne jamais utiliser de police serif — la marque est 100% sans-serif
-- Ne pas utiliser Satoshi pour les titres de slides
-- Ne pas dépasser 3 tailles de police par slide
-- Ne pas utiliser l'italic hors sous-titres — la hiérarchie se fait par le poids, pas par l'italique
-- Ne pas utiliser le poids Ultralight pour du texte informatif
+- Jamais de police serif — la marque est 100% sans-serif
+- Pas d'italic hors sous-titres de slides
+- Pas d'ALL CAPS sur les titres principaux (seulement labels/kickers)
+
+---
+
+## Couleurs
+
+### COUCHE 1 — Brand Layer (remplaçable en marque blanche)
+
+#### Palette primaire (source : Brand Book V1.0)
+
+```
+midnight-blue:      #0A1128   RGB 10  17  40   — fond dominant, dark backgrounds
+ultramarine-blue:   #3B5DCE   RGB 59  93  206  — interactif, énergie, liens
+aquamarine-green:   #70FFD4   RGB 112 255 212  — accent primaire, CTA sur dark
+frozen-white:       #FFFFFF                    — fond clair, texte sur dark
+```
+
+#### Nuances — 5 niveaux par couleur primaire
+
+```
+/* Midnight Blue */
+midnight-900: #0A1128
+midnight-800: #1C223C
+midnight-700: #2E3450
+midnight-600: #404566
+midnight-500: #52587C
+
+/* Ultramarine Blue */
+ultramarine-900: #3B5DCE
+ultramarine-800: #5674DC
+ultramarine-700: #738CE9
+ultramarine-600: #A3B6F4
+ultramarine-500: #DDE5FC
+
+/* Aquamarine Green */
+aquamarine-900: #70FFD4
+aquamarine-800: #8CFFE0
+aquamarine-700: #A9FFE6
+aquamarine-600: #D6FFF4
+aquamarine-500: #EDFFF9
+```
+
+#### Règles d'usage Brand Layer
+
+```
+aquamarine-green (#70FFD4) :
+  ✓ Sur fond dark (#0A1128, #1C223C, #2E3450) — contraste 9.8:1 ✓ WCAG AAA
+  ✗ JAMAIS sur fond blanc ou gris clair — contraste 1.4:1 ✗ WCAG FAIL
+
+ultramarine-blue (#3B5DCE) :
+  ✓ Sur fond blanc (#FFFFFF) — contraste 5.9:1 ✓ WCAG AA
+  ✓ Sur fond très clair (#F5F7FA) — contraste 5.6:1 ✓ WCAG AA
+  ✓ Sur fond dark en version claire (#DDE5FC, #A3B6F4)
+  ✗ Pas comme couleur de texte body sur fond intermédiaire (#E5E7EB)
+
+midnight-blue (#0A1128) :
+  ✓ Sur fond blanc — contraste 19.4:1 ✓ WCAG AAA
+  ✓ Comme fond avec texte blanc — contraste 19.4:1 ✓ WCAG AAA
+```
+
+### COUCHE 2 — Product Layer (invariable, WCAG AA garanti)
+
+#### Neutrals dashboard
+
+```
+neutral-900: #0F1117   — texte primaire sur fond clair (ratio 19:1 ✓)
+neutral-800: #1E2230
+neutral-700: #374151   — texte secondaire (ratio 10.7:1 ✓)
+neutral-500: #6B7280   — texte muted (ratio 4.6:1 ✓)
+neutral-300: #D1D5DB   — borders, dividers
+neutral-200: #E5E7EB   — borders légers
+neutral-100: #F3F4F6   — fond sunken
+neutral-50:  #F9FAFB   — fond page
+```
+
+#### Couleurs sémantiques (états, alertes, data)
+
+```
+/* SUCCESS */
+success-700: #15803D   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
+success-600: #16A34A   — texte sur blanc (ratio 5.1:1 ✓ WCAG AA)
+success-100: #DCFCE7   — fond badge/tag success
+
+/* WARNING */
+warning-700: #B45309   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
+warning-600: #D97706   — texte sur blanc (ratio 4.7:1 ✓ WCAG AA)
+warning-100: #FEF3C7   — fond badge/tag warning
+
+/* ERROR */
+error-700:   #B91C1C   — texte sur blanc (ratio 6.2:1 ✓ WCAG AA)
+error-600:   #DC2626   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
+error-100:   #FEE2E2   — fond badge/tag error
+
+/* INFO */
+info-700:    #1D4ED8   — texte sur blanc (ratio 7.0:1 ✓ WCAG AA)
+info-600:    #2563EB   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
+info-100:    #DBEAFE   — fond badge/tag info
+```
+
+#### Tokens sémantiques surfaces
+
+```
+surface-page:      #F9FAFB   — fond global dashboard
+surface-card:      #FFFFFF   — fond cards
+surface-sunken:    #F3F4F6   — fond inputs, table headers
+surface-border:    #E5E7EB   — borders standards
+surface-border-strong: #D1D5DB — borders visibles
+surface-dark:      #0A1128   — panels dark, sidebar
+surface-dark-2:    #1C223C   — cards sur fond dark
+surface-overlay:   rgba(10,17,40,0.6) — modales, overlays
+```
+
+#### Tokens sémantiques texte
+
+```
+text-primary:      #0F1117   — sur fond clair
+text-secondary:    #374151   — sur fond clair
+text-muted:        #6B7280   — sur fond clair
+text-on-dark:      #FFFFFF   — sur fond dark
+text-accent-dark:  #70FFD4   — sur fond dark UNIQUEMENT
+text-link:         #3B5DCE   — liens, éléments interactifs
+text-link-dark:    #A3B6F4   — liens sur fond dark
+```
 
 ---
 
@@ -103,374 +201,210 @@ numeric-hero:  PP Radio Grotesk Black,  60–120pt — chiffres décoratifs de s
 ### Variantes disponibles
 
 ```
-Logo_Horizontal.svg          — usage principal sur fond clair (symbole + "Aikoz")
-Logo_Horizontal-byOkuden.svg — co-branding, supports Okuden, fond clair
-Logo_Vertical.svg            — usage compact vertical, fond clair
-Logo_Vertical-byokuden.svg   — co-branding vertical, fond clair
-Logo_Sybol.svg               — picto seul, espaces très restreints
+Logo_Horizontal.svg          — usage principal (symbole + "Aikoz")
+Logo_Horizontal-byOkuden.svg — co-branding Okuden, supports officiels
+Logo_Vertical.svg            — usage compact vertical
+Logo_Vertical-byokuden.svg   — co-branding vertical
+Logo_Sybol.svg               — picto seul, espaces restreints
 ```
 
-### Règles d'usage logo
+### Règles d'usage
 
-**Fond dark (Midnight Blue) :**
-- Utiliser Logo_Horizontal.svg avec les paths SVG colorés en #FFFFFF
-- Position : bas-gauche, marges 8% du bord, hauteur ~0.38" sur slides 16:9
-
-**Fond clair (Frozen White) :**
-- Utiliser Logo_Horizontal.svg avec paths originaux (#0A1128)
-- Position : bas-gauche, mêmes marges
+```
+Sur fond dark (#0A1128, #1C223C) : logo en blanc — contraste 3:1 ✓
+Sur fond clair (#FFFFFF, #F9FAFB) : logo en midnight-blue (#0A1128) — contraste 19:1 ✓
+Sur fond ultramarine (#3B5DCE) : logo en blanc — contraste 5.9:1 ✓
+```
 
 **À faire :**
-- Toujours utiliser symbole + logotype ensemble (jamais le logotype seul)
-- Toujours placer le logo bas-gauche sur les slides
+- Toujours symbole + logotype ensemble
+- Logo bas-gauche sur les slides, bas-gauche sur les interfaces
 
 **À éviter :**
-- Ne jamais ajouter d'ombre ou d'effet sur le logo
-- Ne jamais placer le logo dans un conteneur coloré (pastille, rectangle)
-- Ne jamais modifier les proportions
-- Ne pas répéter le logo sur plusieurs endroits d'une même slide
+- Jamais d'ombre sur le logo
+- Jamais dans un conteneur coloré (pastille, rectangle)
+- Jamais les proportions modifiées
+- Jamais le logotype sans le symbole
+
+---
+
+## Composants UI — Dashboard SaaS
+
+### KPI Card
+
+```
+Fond :    surface-card (#FFFFFF)
+Border :  1px solid surface-border (#E5E7EB), radius 8px
+Padding : 20px
+Ombre :   none (border suffit)
+
+Label :   Inter 11px/600, UPPERCASE, letter-spacing 0.06em, text-muted (#6B7280)
+Valeur :  monospace 32–40px/700, text-primary (#0F1117)
+Delta :   Inter 12px/600, couleur selon direction :
+          ↑ positif : success-600 (#16A34A)
+          ↓ négatif : error-600 (#DC2626)
+          → neutre  : text-muted (#6B7280)
+Objectif: Inter 11px/400, text-muted — "Obj. 85%"
+```
+
+### Badge / Status pill
+
+```
+Radius :  9999px (pill)
+Padding : 2px 8px
+Taille :  Inter 11px/600, UPPERCASE
+
+success : fond success-100, texte success-700
+warning : fond warning-100, texte warning-700
+error   : fond error-100, texte error-700
+info    : fond info-100, texte info-700
+neutral : fond neutral-100, texte neutral-700
+```
+
+### Progress bar
+
+```
+Track :  neutral-200 (#E5E7EB), height 6px, radius 3px
+Fill :
+  <50% de l'objectif  → error-600   (#DC2626)
+  50–80% de l'objectif → warning-600 (#D97706)
+  >80% de l'objectif  → success-600 (#16A34A)
+```
+
+### Tableau de données
+
+```
+Header :    surface-sunken (#F3F4F6), Inter 11px/600 CAPS, text-muted, padding 12px 16px
+Row :       surface-card (#FFFFFF), border-bottom 1px surface-border
+Row hover : surface-sunken (#F3F4F6)
+Row highlight (marque user) : ultramarine-500 (#DDE5FC) à fond, ultramarine-900 en texte
+Colonnes numériques : alignées à droite, monospace
+Padding cellule : 12px 16px
+```
+
+### Sidebar navigation
+
+```
+Fond :        surface-dark (#0A1128)
+Item actif :  fond surface-dark-2 (#1C223C), texte blanc, accent aquamarine-green (#70FFD4)
+Item inactif: texte text-link-dark (#A3B6F4)
+Item hover :  fond midnight-800 (#1C223C)
+Icônes :      fill blanc ou aquamarine-green (actif)
+```
+
+### Bouton primaire
+
+```
+Fond :   ultramarine-blue (#3B5DCE)
+Texte :  blanc (#FFFFFF), Inter 14px/600
+Radius : 6px
+Hover :  ultramarine-800 (#5674DC)
+Padding: 8px 16px
+
+Variante dark :
+Fond :  aquamarine-green (#70FFD4)
+Texte : midnight-blue (#0A1128) — contraste 9.8:1 ✓
+```
+
+### Gauge / Arc
+
+```
+Stroke fond :   neutral-200 (#E5E7EB)
+Stroke valeur : success/warning/error-600 selon performance (logique progress bar)
+Valeur centre : monospace bold + caption Inter
+```
+
+### Tag / Keyword
+
+```
+Positif : fond success-100, texte success-700
+Négatif : fond error-100, texte error-700
+Neutre  : fond neutral-100, texte neutral-500
+```
 
 ---
 
 ## Layouts de slides — Patterns canoniques
 
-### 1. Slide Cover
+### Structure type d'un deck Aikoz
 
-**Fond :** midnight-blue (#0A1128) plein  
-**Structure :**
-- Surtitle centré, Regular 15–16pt, text-on-dark : contexte ("Présentation & échanges")
-- Titre principal centré, Bold 44–56pt, text-on-dark
-- Sous-titre centré, Regular 18–22pt, text-on-dark
-- Date centré, Regular italic 13pt, aquamarine-green
-- Logo bas-gauche (version white)
-- Optionnel : logo client bas-droit (dans bloc blanc ou transparent)
+```
+1. Cover           — dark (#0A1128), centré, logo bas-gauche
+2. Agenda          — dark, numéros aqua, item actif Bold blanc
+3. Section Divider — dark, grand numéro aqua (80–120px) + titre Bold blanc
+4. Slide contenu   — blanc, filet aqua gauche (7px), header "X.X – Titre"
+N. Section Divider — prochain chapitre
+```
 
-**À éviter :** Cards, shadows, éléments décoratifs superflus
+### Filet vertical gauche (fond blanc uniquement)
 
----
-
-### 2. Slide Agenda / Sommaire
-
-**Fond :** midnight-blue (#0A1128) plein  
-**Structure :**
-- "Agenda" haut-gauche, Bold 16–18pt, aquamarine-green
-- Liste numérotée, centrée verticalement, indentée à 25–30% du bord gauche
-  - Numéro : aquamarine-green, Bold 16pt
-  - Item actif : text-on-dark, Bold, CAPS ou capitalisation standard
-  - Items inactifs : section-inactive (#3A5070), Regular, CAPS
-- Logo bas-gauche (version white)
-
-**À éviter :** séparateurs entre items, backgrounds alternatifs
-
----
-
-### 3. Slide Section Divider
-
-**Fond :** midnight-blue (#0A1128) plein  
-**Structure :**
-- Grand numéro (01, 02…) : 80–120pt, Black, aquamarine-green, aligné gauche, y=1.2"
-- Titre de section : 36–42pt, Bold, text-on-dark, aligné gauche sous le numéro, y=2.9"
-- Logo bas-gauche (version white)
-- Aucun autre élément
-
-**À éviter :** sous-titres, descriptions, images
-
----
-
-### 4. Slide Contenu Standard (fond blanc, filet aqua gauche)
-
-**Fond :** frozen-white (#FFFFFF)  
-**Filet gauche :** rectangle aquamarine-green, 0.07" de large, toute la hauteur  
-**Header :**
-- Haut-gauche, x=0.35", y=0.22"
-- Titre : "X.X – Titre", Bold 14–15pt, text-on-light (#1A1A2E)
-- Sous-titre : Regular italic 12–13pt, blue-subtitle (#3B9DCE), y=0.62"
-
-**Zone de contenu :** démarre à y=1.05", x=0.35"  
-**Logo :** bas-gauche version dark, x=0.35", y=4.95"
-
----
-
-### 5. Slide Split (photo gauche + contenu droit)
-
-**Fond :** frozen-white (#FFFFFF)  
-**Filet gauche :** rectangle aquamarine-green, 0.07" × toute la hauteur  
-**Bloc gauche (0.07"–4.55") :**
-- Fond deep-navy (#1A2744), plein, toute la hauteur
-- Contenu : citation forte ou constat, Bold 22–28pt, text-on-dark (#FFFFFF)
-- Optionnel : grand chiffre, Black 72–90pt, aquamarine-green
-
-**Bloc droit (4.55"–10") :**
-- Fond frozen-white
-- Header standard en haut-gauche du bloc
-- Contenu : stats, chiffres, ou liste
-
-**Logo :** bas-gauche version dark
-
----
-
-### 6. Slide Split (contenu gauche + panel dark droit)
-
-**Fond :** frozen-white (#FFFFFF)  
-**Filet gauche :** rectangle aquamarine-green, 0.07" × toute la hauteur  
-**Zone gauche (0.07"–5.9") :**
-- Header standard
-- Grand chiffre impact, Black 72–90pt, aquamarine-green
-- Sous-titre chiffre, Regular 26–36pt, text-on-light
-- Corps, Regular 13–14pt, text-muted-light
-
-**Panel droit (5.9"–10") :**
-- Fond deep-navy (#1A2744), plein
-- Titre fort, Bold 18–22pt, text-on-dark
-- Corps, Regular 12pt, text-muted-dark
-
-**Logo :** bas-gauche version dark
-
----
-
-### 7. Slide Contenu Dark (fond midnight blue)
-
-**Fond :** midnight-blue (#0A1128) plein  
-**Header :**
-- Titre : "X.X – Titre", Bold 14–15pt, text-on-dark (#FFFFFF)
-- Sous-titre : Regular italic 12–13pt, blue-subtitle (#3B9DCE)
-
-**Séparateurs :** rectangles fins 0.01"–0.02" hauteur, rule-on-dark (#1A2A50)  
-**Logo :** bas-gauche version white
-
----
-
-### 8. Slide Two-Column (do / don't, we are / we are not)
-
-Variante de la slide contenu dark.
-
-**Labels colonnes :** Bold 11pt, letter-spacing 2–3pt, ALL CAPS
-- Colonne positive : aquamarine-green (#70FFD4)
-- Colonne négative : section-inactive (#3A5070)
-
-**Séparateur entre colonnes :** pas de ligne — l'espace est suffisant (colonne 1 : x=0.45"–4.55", colonne 2 : x=5.3"–9.65")
-
-**Items :** Regular 13–14pt
-- Colonne positive : #ADFFD8 (aqua très clair)
-- Colonne négative : #5A7BA8 (muted blue)
-
-**Séparateurs horizontaux entre items :** 0.01" hauteur, rule-on-dark (#1A2A50)
-
----
-
-## Éléments graphiques & décoration
-
-### Filet vertical gauche
-
-Présent sur toutes les slides à fond blanc (sauf cover et agenda).  
-`Rectangle : x=0, y=0, w=0.07", h=5.625", fill: aquamarine-green (#70FFD4)`  
-Ne jamais utiliser d'autre couleur pour ce filet.
-
-### Règles horizontales (séparateurs)
-
-Sur fond dark : 0.01"–0.02" hauteur, #1A2A50  
-Sur fond clair, sous labels : 0.02"–0.03" hauteur, aquamarine-green (colonne +) ou #FCA5A5 (colonne −)  
-Sur fond clair, entre items : 0.01" hauteur, #D8DEE9
-
-### Grands chiffres décoratifs
-
-Usage : chiffres-clés (stat, %) ou numéros de section  
-Police : PP Radio Grotesk Black  
-Taille : 60–120pt selon contexte  
-Couleur sur dark : aquamarine-green (#70FFD4)  
-Couleur sur clair : aquamarine-green (#70FFD4) ou ultramarine-blue (#3B5DCE)
-
-### Grid Vision (décoration géométrique)
-
-Motif de carrés emboîtés en tirets — signature graphique Aikoz.  
-Usage : fonds de slides dark, fond de carrousels LinkedIn.  
-Couleur : aquamarine-green ou ultramarine-blue, opacité 15–30%.  
-**Ne jamais surcharger** — 1 seul motif par slide maximum, en arrière-plan discret.
-
-### Halos / gradients
-
-Usage : slides cover, section dividers, backgrounds de présentation premium.  
-Technique : radial gradient, depuis ultramarine-blue (#3B5DCE) à opacité 30–50% vers transparent, sur fond midnight-blue.  
-**Ne jamais utiliser de gradient entre deux couleurs de marque.**
-
----
-
-## Composants slides récurrents
+```
+Rectangle : x=0, y=0, w=7px, h=100%, fill: aquamarine-green (#70FFD4)
+```
 
 ### Header de slide contenu
 
 ```
-Position : x=0.35", y=0.22" (toutes slides contenu)
-Titre    : "X.X – Titre long ici"
-           PP Radio Grotesk Bold, 14–15pt
-           Couleur : text-on-light (#1A1A2E) sur blanc / text-on-dark (#FFFFFF) sur dark
-Sous-titre : Regular italic, 12–13pt
-           Couleur : blue-subtitle (#3B9DCE) sur blanc / même couleur sur dark
-Séparation du contenu : y content start = 1.05" minimum
+Position : x=35px, y=22px
+Titre    : "X.X – Titre", PP Radio Grotesk Bold 14–15px, midnight-blue (#0A1128)
+Sous-titre : PP Radio Grotesk Regular Italic 12–13px, #3B9DCE
 ```
 
 ### Footer logo
 
 ```
-Position : x=0.35", y=4.95"
-Taille   : w=1.10", h=0.37"
-Version  : white sur fond dark / dark sur fond clair
-```
-
-### Analyse Brand Voice (colonne droite)
-
-Utilisé sur les slides d'exemples de contenu généré.
-
-```
-Panel droit : x=6.1", w=3.9", fond midnight-blue (#0A1128)
-Label       : "Analyse Brand Voice", Bold 13pt, aquamarine-green, x=6.3", y=0.55"
-Règle       : h=0.02", rule-on-dark (#1A2A50), y=1.0"
-Items (5)   : icône (✓ ou ⚠) + texte, 12–13pt
-              ✓ : couleur #ADFFD8
-              ⚠ : couleur #FBBF24 (jaune ambre)
-              Séparateurs entre items : 0.01", #1A2A50
+Position : x=35px, y=495px (slide 5.625" de hauteur)
+Taille   : w=110px, h=37px
 ```
 
 ---
 
-## Patterns d'espacement (slides 16:9)
+## Marque blanche
 
+Le système est white-labelable. Pour un client (ex: Generali), seule la Brand Layer change :
+
+```css
+/* Exemple client Generali */
+--brand-midnight: #C2001A;
+--brand-ultramarine: #C2001A;
+--brand-aquamarine: #FFFFFF;
 ```
-Marge gauche standard (après filet) : x = 0.35"
-Marge droite standard               : x = 9.65" (right edge)
-Marge haute standard                : y = 0.22" (header)
-Marge basse standard                : y = 4.95" (footer logo)
-Content area start Y                : 1.05"
-Content area end Y                  : 4.85"
-Colonne gauche (split)              : 0.07" – 4.50"
-Colonne droite (split)              : 4.55" – 10.00"
-Séparateur entre colonnes           : 4.50" – 4.55" (espace)
-Gutter entre colonnes parallèles    : 0.15"–0.20"
-Espacement entre sections (ligne)   : 0.70"–0.80"
-```
+
+La Product Layer (neutrals, semantic, composants) reste identique.
+Les composants data ne dépendent jamais directement des tokens brand.
 
 ---
 
-## Règles d'usage — Do & Don't
+## Règles Do / Don't globales
 
 ### Couleurs
 
 **À faire :**
-- Utiliser midnight-blue comme couleur structurelle dominante (fonds, headers de section)
-- Réserver aquamarine-green aux accents, CTA, chiffres-clés, filets — jamais en grand aplat
-- Utiliser frozen-white pour les slides de contenu détaillé (lisibilité maximale)
-- Alterner dark/clair selon la densité de contenu : cover=dark, contenu=clair, divider=dark
+- Aquamarine (#70FFD4) uniquement sur fond dark
+- Ultramarine (#3B5DCE) comme couleur interactive sur fond clair
+- Midnight Blue comme fond structurel (sidebars, covers, dividers)
+- Status communiqué par couleur ET icône (accessibilité)
 
 **À éviter :**
-- Ne jamais mettre de texte blanc sur aquamarine-green (contraste insuffisant)
-- Ne jamais utiliser aquamarine-green comme fond de slide entier
-- Ne jamais introduire de couleur hors palette (orange, rouge, violet)
-- Ne pas utiliser de dégradés entre couleurs de marque
-- Ne pas utiliser le pur noir (#000000) — toujours #1A1A2E ou #0A1128
+- Jamais aquamarine sur blanc ou gris clair (échec WCAG)
+- Jamais de texte en dessous de 12px
+- Jamais de contraste inférieur à 4.5:1
+- Jamais de couleur brand sur états sémantiques (success/error)
+- Pas de gradient entre deux couleurs de marque
 
-### Typographie
+### Composants
 
 **À faire :**
-- PP Radio Grotesk sur tous les éléments visuels sans exception
-- Hiérarchie stricte : 1 display + 1 heading + 1 body par slide maximum
-- Sous-titres de slides toujours en italic + blue-subtitle (#3B9DCE)
-- Numéros de section (01, 02…) toujours en aquamarine-green, taille ≥ 80pt
+- Cards avec border 1px neutral-200 — jamais de shadow épaisse
+- Radius 6–8px sur composants dashboard (pas > 12px, trop consumer)
+- Icônes fill, mélange angles droits et arrondis (style brand book)
+- Densité data : padding 16–20px cards, 12px tables
 
 **À éviter :**
-- Aucune police serif — même pour les citations
-- Pas d'italic hors sous-titres de slide
-- Pas de souligné
-- Pas d'ALL CAPS sur les titres principaux (seulement les labels/kickers en CAPS)
-- Pas plus de 3 tailles de police par slide
-
-### Composants & layout
-
-**À faire :**
-- Filet aqua gauche sur toutes les slides fond blanc
-- Logo bas-gauche systématiquement
-- Header "X.X – Titre / sous-titre italic" sur toutes les slides contenu
-- Séparateurs fins (#1A2A50 ou #D8DEE9) pour séparer les items en liste
-- Grand chiffre aqua comme élément visuel central sur les slides de stat
-
-**À éviter :**
-- Pas de cards avec shadow (shadow = AI-generated look, pas Aikoz)
-- Pas de rounded rectangles comme conteneurs d'information
-- Pas de badges ou pastilles de couleur superposées au texte
-- Pas de backgrounds alternatifs pour les rangées de liste (zébré)
-- Pas de borders multiples ou encadrements
-- Pas d'éléments centrés sauf sur les slides cover et agenda
-- Pas de plus de 2 blocs de couleur distincts par slide (ex: pas de 3 panels côte à côte)
-
-### Décoration
-
-**À faire :**
-- Grid Vision (carrés tiretés) comme seul motif décoratif, discret, en bg dark
-- Halos gradients uniquement sur covers et dividers
-- Filet aqua gauche comme seul accent coloré récurrent sur fond blanc
-
-**À éviter :**
-- Pas d'icônes colorées (uniquement blanc ou aqua, ligne fine)
-- Pas d'illustrations ou éléments hand-drawn
-- Pas d'images stock génériques
-- Pas de motifs répétitifs sur fond blanc
-
----
-
-## Patterns de slides pour présentations
-
-### Structure type d'un deck Aikoz
-
-```
-1. Cover           — dark, centré, logo bas-gauche
-2. Agenda          — dark, numérotation aqua, item actif en blanc Bold
-3. Section Divider — dark, grand numéro aqua + titre Bold
-4. Slide contenu   — blanc, filet aqua, header X.X, layout adapté au contenu
-   ...             — alterner dark/clair selon densité
-N. Section Divider — prochain chapitre
-N+1. Slide contenu — etc.
-```
-
-### Slides de contenu chiffré (stat headline)
-
-Layout : fond blanc, filet aqua gauche  
-Grand chiffre gauche (Black, 72–90pt, aqua) + explication dessous  
-Panel dark droit avec phrase-clé Bold + corps muted
-
-### Slides de liste comparative (do/don't)
-
-Layout : fond dark, two-column  
-Labels ALL CAPS + letter-spacing en haut de chaque colonne  
-Règle colorée sous chaque label (aqua + rouge clair)  
-Items avec séparateurs fins
-
-### Slides d'exemple de contenu généré
-
-Layout : fond blanc, filet aqua  
-Zone principale gauche (x=0.35"–5.9") : texte du contenu généré
-Panel analyse dark droit (x=6.1"–10") : checklist ✓/⚠
-
----
-
-## Voice & messaging — intégration DA
-
-Le design et la voix sont indissociables. Chaque choix visuel renforce le message.
-
-### Principes de composition visuelle
-
-- **Direct** : une idée par slide. Si le contenu ne tient pas en 3 lignes de body, c'est deux slides.
-- **Hiérarchie visuelle** : le regard suit chiffre → titre → corps. Ne jamais inverser.
-- **Blanc dominant** : les slides de contenu dense sont blanches. Le dark est réservé aux moments structurels (cover, divider) et aux panels d'analyse.
-- **Aquamarine = signal** : quand le lecteur voit du aqua, c'est l'information la plus importante de la slide.
-
-### Formulations visuelles récurrentes
-
-```
-Grand chiffre aqua   + label en dessous = stat headline (agents ou COMEX)
-"X.X – Titre"        + sous-titre italic = entrée de slide contenu
-Numéro (01, 02…)    + titre Bold        = transition de section
-"WE ARE / WE ARE NOT" + items aqua/muted = slide identité de marque
-✓ vert clair / ⚠ ambre                  = analyse de contenu généré
-```
+- Pas de shadow lourde (box-shadow épaisse = look daté)
+- Pas de rounded-xl (>12px) sur composants data
+- Pas de backgrounds alternés en zébré sur tables
+- Pas d'illustrations hand-drawn
 
 ---
 
@@ -478,37 +412,16 @@ Numéro (01, 02…)    + titre Bold        = transition de section
 
 ```
 /fonts/
-  PPRadioGrotesk-Black.ttf
-  PPRadioGrotesk-BlackItalic.ttf
-  PPRadioGrotesk-Bold.ttf
-  PPRadioGrotesk-BoldItalic.ttf
-  PPRadioGrotesk-Regular.ttf
-  PPRadioGrotesk-RegularItalic.ttf
-  PPRadioGrotesk-Light.ttf
-  PPRadioGrotesk-LightItalic.ttf
-  PPRadioGrotesk-Ultralight.ttf
-  PPRadioGrotesk-UltralightItalic.ttf
-  Satoshi-Bold.otf
-  Satoshi-Regular.otf (si disponible)
+  PPRadioGrotesk/ — Black, Bold, Regular, Light, Ultralight (+ italiques)
+  Satoshi/        — Bold, Regular, Medium (+ italiques)
 
 /logos/
-  Logo_Horizontal.svg          (usage principal)
-  Logo_Horizontal-byOkuden.svg (co-branding)
-  Logo_Vertical.svg
-  Logo_Vertical-byokuden.svg
-  Logo_Sybol.svg               (picto seul)
+  Sur fond clair/SVG/ — Logo_Horizontal.svg (usage principal)
+  Sur fond clair/SVG/ — Logo_Horizontal-byOkuden.svg
+  Sur fond sombre/SVG/ — variantes fond dark
+
+/references/
+  [DA]      V1_WIP_Brand book Aikoz.pdf   — source de vérité DA
+  [Contenu] 20250604_ALLIANZ_Aikoz.pdf    — patterns slides chiffrées
+  [Contenu] 20250324_COVEA_Aikoz.pdf      — patterns deck commercial
 ```
-
----
-
-## Références visuelles
-
-Les fichiers suivants sont les sources canoniques de la DA Aikoz. Tout nouveau contenu doit être iso à ces références.
-
-`[DA]` = référence visuelle à respecter à la lettre.  
-`[Contenu]` = exemple de messaging et structure, pas de référence pour la DA.
-
-- `[DA]`      `V1_WIP_Brand book Aikoz.pdf`                  — Brand book officiel, tous les patterns visuels de base
-- `[Contenu]` `20250604_ALLIANZ_Aikoz.pdf`                  — Deck commercial, patterns slides chiffrées + split
-- `[Contenu]` `20250324_COVEA_Aikoz.pdf`                    — Deck commercial, variante marque blanche
-- `[Généré]`  `Aikoz_-_Pr_sentation_commerciale_v2.pptx`   — Exemple de génération réussie, conforme à la DA
