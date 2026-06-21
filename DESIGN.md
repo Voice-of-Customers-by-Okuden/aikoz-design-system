@@ -406,6 +406,10 @@ Les composants data ne dépendent jamais directement des tokens brand.
 - Pas de backgrounds alternés en zébré sur tables
 - Pas d'illustrations hand-drawn
 
+### Décoration
+
+- Grid Vision (motif de carrés en pointillés) : retiré de la DA — ne pas utiliser sur aucun support.
+
 ---
 
 ## Assets disponibles
