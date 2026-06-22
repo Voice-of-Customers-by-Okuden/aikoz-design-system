@@ -539,17 +539,29 @@ Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
 ## Assets disponibles
 
 ```
-/fonts/
-  PPRadioGrotesk/ — Black, Bold, Regular, Light, Ultralight (+ italiques)
-  Satoshi/        — Bold, Regular, Medium (+ italiques)
+/Fonts/
+  PP Radio Grotesk/ — Black, Bold, Regular, Light, Ultralight (+ italiques) — 10 TTF
+  Satoshi/          — Black, Bold, Medium, Regular, Light (+ italiques) — 10 OTF
 
 /logos/
-  Sur fond clair/SVG/ — Logo_Horizontal.svg (usage principal)
-  Sur fond clair/SVG/ — Logo_Horizontal-byOkuden.svg
-  Sur fond sombre/SVG/ — variantes fond dark
+  Sur fond clair/SVG/   — Logo_Horizontal.svg (usage principal)
+  Sur fond clair/SVG/   — Logo_Horizontal-byOkuden.svg
+  Sur fond clair/PNG/   — variantes PNG fond clair
+  Sur fond sombre/SVG/  — variantes SVG fond dark
+  Sur fond sombre/PNG/  — variantes PNG fond dark
 
 /references/
-  [DA]      V1_WIP_Brand book Aikoz.pdf   — source de vérité DA
-  [Contenu] 20250604_ALLIANZ_Aikoz.pdf    — patterns slides chiffrées
-  [Contenu] 20250324_COVEA_Aikoz.pdf      — patterns deck commercial
+  Présentation/
+    [DA]      V1_WIP_Brand book Aikoz.pdf              — source de vérité DA
+    [Contenu] 20250604_ALLIANZ_Aikoz.pdf               — patterns slides chiffrées
+    [Contenu] 20250324_COVEA_Aikoz.pdf                 — patterns deck commercial
+    [Contenu] Aikoz_-_Pr_sentation_commerciale_v2.pptx — deck commercial PowerPoint
+  Post-linkedin/
+    Aikoz_AgenticAI.pdf                — carrousel LinkedIn Agentic AI
+    Aikoz_IA_caroussel_valeur.pdf      — carrousel LinkedIn valeur IA
+    Aikoz_IA_conversationnelle.pdf     — carrousel LinkedIn IA conversationnelle
+    Aikoz_moyenne_top_10.jpg           — visuel LinkedIn performance
+    2026_TDelacour.jpg                 — visuel LinkedIn
+  badge/
+    202512_AIKOZ_Badge_Meilleure-Agence_France[19293].png — badge Meilleure Agence France 2025
 ```
