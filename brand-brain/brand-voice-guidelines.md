@@ -1,6 +1,7 @@
 # Aikoz by Okuden — Brand Voice Guidelines
-*LLM-ready · Version 1.0 · Généré le 2026-06-18*
-*Source : inputs directs fondateur · Confiance globale : 82%*
+*LLM-ready · Version 1.1 · Mis à jour le 2026-06-22*
+*Sources : inputs directs fondateur (v1.0) · DESIGN.md v1.2 · corpus LinkedIn (Post-linkedin/)*
+*Confiance globale : 85%*
 
 ---
 
@@ -18,6 +19,7 @@ Aikoz transforme les données non structurées (verbatims, avis, signaux faibles
 - **Bruits bas** : détection de signaux faibles avant qu'ils ne deviennent des crises
 - **Activation de la donnée déstructurée** : des verbatims à la décision, pas du reporting
 - **Agents IA spécialisés** : pas un dashboard générique, une intelligence sectorielle
+- **IA conversationnelle** : interface naturelle pour interroger la voix du client
 - **Labels Aikoz** : programme de reconnaissance des meilleures agences partenaires
 
 ---
@@ -27,11 +29,14 @@ Aikoz transforme les données non structurées (verbatims, avis, signaux faibles
 | Couleur | Hex | Usage |
 |---------|-----|-------|
 | Midnight Blue | `#0A1128` | Dominant — fonds, textes principaux |
-| Aquamarine Green | `#70FFD4` | Accent — highlights, CTA, éléments clés |
-| Ultramarine Blue | `#3B5DCE` | Secondaire — liens, éléments d'appui |
+| Aquamarine Green | `#70FFD4` | Accent — highlights, CTA, éléments clés **sur fond dark uniquement** |
+| Ultramarine Blue | `#3B5DCE` | Secondaire — liens, éléments d'appui sur fond clair |
 | Frozen White | `#FFFFFF` | Espaces négatifs, textes sur fond sombre |
 
-*Identité visuelle des carrousels LinkedIn : Midnight Blue + Aquamarine.*
+**Règle critique :** Aquamarine (`#70FFD4`) sur fond blanc = contraste 1.4:1 → WCAG FAIL.
+Ne jamais utiliser l'aquamarine sur fond blanc ou gris clair, quelle que soit la surface.
+
+*Référence technique complète : DESIGN.md v1.2 — section Couleurs*
 
 ---
 
@@ -113,11 +118,13 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 | Bruits bas / signaux faibles | Données qualitatives |
 | Activation de la donnée | Exploitation des données |
 | Insights actionnables | Analyses / rapports |
-| Agents IA | Chatbot / IA générique |
+| Agents IA / IA agentique | Chatbot / IA générique / automatisation |
+| IA conversationnelle | Assistant virtuel / bot |
 | Verbatims | Commentaires clients |
 | Labels Aikoz | Récompenses / badges |
 | Décision business | ROI / KPI (sans contexte) |
 | Churns silencieux | Attrition (trop neutre) |
+| Valeur IA | Bénéfices de l'IA (trop vague) |
 
 ---
 
@@ -152,11 +159,32 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 4. **Preuve** : logos clients, chiffres terrain
 5. **CTA** : action simple et immédiate
 
-### Carrousel LinkedIn (identité visuelle)
-- Fond Midnight Blue `#0A1128`, accents Aquamarine `#70FFD4`
+### Carrousel LinkedIn — contenu et format technique
+
+**Contenu :**
 - Slide 1 : titre-choc + sous-titre problème
 - Slides 2–N : 1 insight / 1 visuel / max 25 mots
 - Dernière slide : CTA + logo Aikoz by Okuden
+
+**Format technique (source : DESIGN.md v1.2) :**
+```
+Dimensions  : 1080 × 1350 px (portrait 4:3 LinkedIn)
+Marges      : 80px haut/bas · 72px gauche/droite
+Safe zone   : zone centrale 936 × 1190 px
+
+Slide dark (fond #0A1128) :
+  Titre      : PP Radio Grotesk Bold 52–60px, blanc
+  Sous-titre : PP Radio Grotesk Regular 22–26px, aquamarine (#70FFD4)
+  Logo       : bas-gauche, w=100px, margin 48px
+
+Slide clair (fond #FFFFFF) :
+  Filet gauche : 7px aquamarine (#70FFD4)
+  Titre      : PP Radio Grotesk Bold 44–52px, midnight-blue (#0A1128)
+  Sous-titre : PP Radio Grotesk Regular Italic 20–22px, #3B9DCE
+
+Règle : 1re et dernière slide toujours en dark (#0A1128)
+Texte minimum : 18px — jamais en dessous sur carrousel
+```
 
 ---
 
@@ -176,18 +204,32 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 **Angle Aikoz** : transformation des avis clients en signal d'alerte opérationnel.
 **Clients de référence** : Renault, Volkswagen.
 
+### Angles de contenu IA (corpus LinkedIn Aikoz)
+Trois thèmes validés par le corpus Post-linkedin/ :
+
+**IA agentique :** Aikoz comme système d'agents spécialisés — pas un outil, une équipe IA dédiée à l'écoute client.
+*Format naturel : carrousel "Ce que fait un agent Aikoz que votre NPS ne fera jamais"*
+
+**IA conversationnelle :** Interroger la voix du client en langage naturel, sans requête SQL ni data analyst.
+*Format naturel : carrousel "3 questions que vous pouvez poser à vos verbatims dès demain"*
+
+**Valeur IA :** ROI concret de l'activation de la donnée — chiffres de performance, benchmarks sectoriels.
+*Format naturel : carrousel chiffres / avant-après*
+
 ---
 
 ## 10. Scores de confiance par section
 
 | Section | Confiance | Base |
 |---------|-----------|------|
-| Identité & positionnement | 95% | Explicitement fourni |
-| Voix & ton | 85% | Bien défini, à enrichir d'exemples réels |
+| Identité & positionnement | 95% | Explicitement fourni par le fondateur |
+| Voix & ton | 85% | Bien défini, à enrichir d'exemples réels validés |
 | Règles d'écriture | 80% | Inféré des principes déclarés |
-| Formats produits | 90% | Structure fournie + bonnes pratiques appliquées |
-| Terminologie | 70% | Partielle — à compléter sur corpus réel |
-| Exemples sectoriels | 65% | Construit sur cibles déclarées, pas de verbatims validés |
+| Formats produits — contenu | 90% | Structure fournie + bonnes pratiques |
+| Formats produits — technique | 95% | Extrait de DESIGN.md v1.2 (source de vérité) |
+| Terminologie | 75% | Enrichie depuis corpus LinkedIn — à valider sur verbatims réels |
+| Exemples sectoriels | 70% | Angles IA ajoutés depuis corpus — chiffres terrain à valider |
+| Cohérence visuelle | 90% | Alignée avec DESIGN.md v1.2 |
 
 ---
 
@@ -197,12 +239,13 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 
 2. **Contenu en anglais ?** Pour des clients multinationaux (AXA International, CMA CGM), Aikoz produit-il du contenu en anglais ? Les règles s'adaptent partiellement (structure identique, ton à recalibrer).
 
-3. **Segmentation par niveau de technicité** : Quand s'adresser à des CTO/DSI (jargon tech acceptable) vs. DG/Directeurs Métier (décision pure) ? Une matrice persona → niveau de technicité permettrait de préciser les règles.
+3. **Segmentation par niveau de technicité** : Quand s'adresser à des CTO/DSI (jargon tech acceptable) vs. DG/Directeurs Métier (décision pure) ? Une matrice persona → niveau de technicité permettrait de préciser les règles de terminologie IA.
 
-4. **Corpus d'exemples validés** : Des posts LinkedIn, slides ou emails existants représentant le meilleur de la voix Aikoz permettraient de calibrer les exemples et d'affiner la terminologie.
+4. **Corpus d'exemples validés** : Lire les PDFs de Post-linkedin/ permettrait d'extraire les formulations réelles utilisées par Aikoz et de calibrer la terminologie (nécessite `brew install poppler`).
 
 5. **Ton des Labels Aikoz** : Les communications autour des Labels (annonce, remise, promotion partenaires) suivent-elles le même registre direct, ou un ton plus solennel est-il approprié ?
 
 ---
 
-*Pour toute génération de contenu, injecter ce fichier en contexte système. Les sections 3 (We Are/We Are Not), 6 (Règles d'écriture) et 5 (Matrice Ton × Contexte) sont les plus opérationnelles pour le guidage LLM.*
+*Pour toute génération de contenu, injecter ce fichier en contexte système.*
+*Les sections les plus opérationnelles pour le guidage LLM : §3 (We Are/We Are Not), §6 (Règles d'écriture), §5 (Matrice Ton × Contexte).*
