@@ -1,7 +1,7 @@
 # Aikoz by Okuden — Brand Voice Guidelines
-*LLM-ready · Version 1.2 · Mis à jour le 2026-06-22*
-*Sources : inputs directs fondateur (v1.0) · DESIGN.md v1.2 · corpus LinkedIn réel — 3 carrousels (12 slides extraites via OCR) · stats terrain (Top 10 Assurance)*
-*Confiance globale : 92%*
+*LLM-ready · Version 1.3 · Mis à jour le 2026-06-22*
+*Sources : inputs directs fondateur (v1.0) · DESIGN.md v1.2 · corpus LinkedIn réel — 3 carrousels complets (15 slides extraites via OCR) · stats terrain (Top 10 Assurance)*
+*Confiance globale : 95%*
 
 ---
 
@@ -136,9 +136,21 @@ Ces phrases sont tirées des carrousels LinkedIn validés et publiés par Aikoz.
 - "Un agent général identifie les clients à risque de résiliation avant qu'il ne soit trop tard"
 - "Une direction CX détecte un irritant récurrent dès les premiers signaux"
 - "Un inspecteur repère les écarts de pratiques entre agences en temps réel"
+- "Aikoz aide les réseaux à mieux comprendre et agir en faveur des clients."
+
+**Positionnement IA + humain :**
+- "Chez Aikoz, nous libérons du temps grâce à l'IA mais sans retirer l'humain."
+- "L'IA ne remplace pas l'expertise. Elle la rend plus efficace."
+- "L'IA ne décide pas à votre place. Elle éclaire, aligne et accélère."
+
+**Triptyque de valeur (Simplifier, Analyser, Valoriser) :**
+- Répondre **plus rapidement** → Suggestions automatiques & personnalisées
+- Améliorer votre **expérience client** → Détection des irritants, analyse des concurrents
+- Prendre des **décisions éclairées** → Suivi des indicateurs clés, évolution de votre réseau
 
 **Positionnement final (CTA slides) :**
 - "Aikoz, l'intelligence qui redonne du sens aux décisions collectives."
+- "Prêts à faire de votre réputation et de votre expérience client un actif stratégique ?"
 - "Demandez une démo de la plateforme Aikoz !"
 - "Et vous, quel gain de temps concret attendez-vous de l'IA dans votre quotidien ?" *(CTA engagement)*
 
@@ -161,6 +173,10 @@ Ces phrases sont tirées des carrousels LinkedIn validés et publiés par Aikoz.
 | IA opérationnelle | POC / test IA / proof of concept |
 | Siège et terrain | Siège vs réseau (connotation conflictuelle) |
 | Excellence opérationnelle | Performance opérationnelle (trop neutre) |
+| Actif stratégique | Avantage concurrentiel (trop abstrait) |
+| Sans retirer l'humain | L'IA remplace / automatise (connotation négative) |
+| Simplifier, Analyser, Valoriser | — (triptyque de marque, à utiliser intact) |
+| Décisions éclairées | Décisions data-driven (jargon) |
 | Décisions collectives | Consensus (trop politique) |
 | Pilotage partagé | Reporting partagé (trop passif) |
 | Verbatims | Commentaires clients |
@@ -264,6 +280,12 @@ Texte minimum : 18px — jamais en dessous sur carrousel
 **Angle Aikoz :**
 > "Aikoz reconnecte le siège et le terrain. Une plateforme de données intégrant une IA conversationnelle capable de comprendre vos questions métier, croiser automatiquement les données réseau, compagnie et concurrence, et y répondre simplement, en langage naturel."
 
+**Promesse IA + humain :**
+> "Chez Aikoz, nous libérons du temps grâce à l'IA mais sans retirer l'humain. La plateforme Aikoz vous accompagne pour mieux accompagner vos clients sur ce qui compte."
+
+**Triptyque Simplifier, Analyser, Valoriser :**
+> Répondre plus rapidement (suggestions automatiques & personnalisées) · Améliorer votre expérience client (détection des irritants, analyse des concurrents) · Prendre des décisions éclairées (suivi des indicateurs clés, évolution de votre réseau)
+
 **Résultat concret :**
 > "Un agent général identifie les clients à risque de résiliation avant qu'il ne soit trop tard. Une direction CX détecte un irritant récurrent dès les premiers signaux. Un inspecteur repère les écarts de pratiques entre agences en temps réel."
 
@@ -301,8 +323,9 @@ Structure : question rhétorique (Et si…?) → tension siège/terrain → Aiko
 *Formule titre : "Et si l'IA transformait vraiment [problème secteur] ?"*
 
 **Valeur IA — pattern "L'IA au service de votre excellence opérationnelle" :**
-Structure : quotidien surchargé → pain points nommés (agents, clients, réputation) → solution Aikoz → benchmark Top 10.
+Structure : quotidien surchargé → pain points nommés (agents, clients, réputation) → IA sans retirer l'humain → triptyque Simplifier/Analyser/Valoriser → capacités concrètes → CTA "actif stratégique".
 *Formule titre : "Découvrez comment Aikoz met l'IA au service de votre [bénéfice cible]"*
+*Formule CTA : "Prêts à faire de votre réputation et de votre expérience client un actif stratégique ?"*
 
 ---
 
@@ -315,8 +338,8 @@ Structure : quotidien surchargé → pain points nommés (agents, clients, répu
 | Règles d'écriture | 90% | Principes déclarés + formulations canoniques validées |
 | Formats produits — contenu | 95% | Structure 5-slides observée sur 3 carrousels réels |
 | Formats produits — technique | 95% | Extrait de DESIGN.md v1.2 (source de vérité) |
-| Terminologie | 88% | Confirmée et enrichie depuis corpus réel |
-| Exemples sectoriels | 90% | Formulations réelles extraites (OCR carrousels publiés) |
+| Terminologie | 93% | Confirmée sur 15 slides + triptyque de marque identifié |
+| Exemples sectoriels | 95% | 3 carrousels complets (15 slides) — corpus exhaustif |
 | Cohérence visuelle | 90% | Alignée avec DESIGN.md v1.2 |
 
 ---
@@ -333,7 +356,7 @@ Structure : quotidien surchargé → pain points nommés (agents, clients, répu
 
 5. **Ton des Labels Aikoz** : Les communications autour des Labels (annonce, remise, promotion partenaires) suivent-elles le même registre direct, ou un ton plus solennel est-il approprié ? *(Nouveau en v1.2 — appuyé par la découverte du badge "Meilleure Agence de France 2026")*
 
-6. **Carousel pages 3–5 manquantes** : Aikoz_IA_caroussel_valeur.pdf n'a été extrait qu'à 2 slides sur 5 (limitation technique). Les slides 3–5 peuvent contenir des formulations supplémentaires sur la valeur IA — à compléter lors d'une prochaine session.
+6. ~~**Carousel pages 3–5 manquantes**~~ **Fermé en v1.3** — slides 3–5 extraites via PyMuPDF : triptyque Simplifier/Analyser/Valoriser, positionnement "sans retirer l'humain", CTA "actif stratégique" intégrés.
 
 ---
 
