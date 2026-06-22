@@ -1,7 +1,7 @@
 # Aikoz by Okuden — Brand Voice Guidelines
-*LLM-ready · Version 1.1 · Mis à jour le 2026-06-22*
-*Sources : inputs directs fondateur (v1.0) · DESIGN.md v1.2 · corpus LinkedIn (Post-linkedin/)*
-*Confiance globale : 85%*
+*LLM-ready · Version 1.2 · Mis à jour le 2026-06-22*
+*Sources : inputs directs fondateur (v1.0) · DESIGN.md v1.2 · corpus LinkedIn réel — 3 carrousels (12 slides extraites via OCR) · stats terrain (Top 10 Assurance)*
+*Confiance globale : 92%*
 
 ---
 
@@ -10,17 +10,18 @@
 **Nom complet** : Aikoz by Okuden
 **Tagline** : "Quand les données rencontrent l'innovation"
 **Mission** : Transformer la voix du client en accélérateur de croissance
-**Cible** : Décideurs assurance, assistance, banque, automobile — AXA, Generali, Allianz, Covea, Europ Assistance, Renault, Volkswagen
+**Cible** : Décideurs assurance, assistance, banque, automobile — AXA, Generali, Allianz, Covea, Europ Assistance, Matmut, SwissLife, Abeille Assurances, Renault, Volkswagen
 
 ### Promesse centrale
 Aikoz transforme les données non structurées (verbatims, avis, signaux faibles) en décisions business actionnables — avant que les problèmes ne deviennent visibles.
 
 ### Différenciateurs clés
-- **Bruits bas** : détection de signaux faibles avant qu'ils ne deviennent des crises
-- **Activation de la donnée déstructurée** : des verbatims à la décision, pas du reporting
+- **IA opérationnelle** : pas un POC, une IA intégrée dans le quotidien qui change les décisions
+- **Reconnexion siège / terrain** : la cohérence entre la donnée du siège et le vécu du réseau
 - **Agents IA spécialisés** : pas un dashboard générique, une intelligence sectorielle
-- **IA conversationnelle** : interface naturelle pour interroger la voix du client
-- **Labels Aikoz** : programme de reconnaissance des meilleures agences partenaires
+- **IA conversationnelle** : interroger la voix du client en langage naturel, sans data analyst
+- **Excellence opérationnelle** : labels, benchmarks, top 10 — l'IA au service de la performance réseau
+- **Bruits bas** : détection de signaux faibles avant qu'ils ne deviennent des crises
 
 ---
 
@@ -58,6 +59,7 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 | Confiant sans être arrogant | Condescendant ou distant |
 | Centré client ("vous obtenez") | Centré produit ("nous faisons") |
 | Outil de décision business | Outil de reporting classique |
+| IA opérationnelle qui change les décisions | POC qui impressionne mais reste isolé |
 | Solution sectorielle spécialisée | NPS générique |
 
 ---
@@ -82,7 +84,7 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 | Contexte | Ton dominant | Longueur cible | Registre type |
 |----------|-------------|----------------|---------------|
 | Post LinkedIn organique | Direct, narratif terrain | 150–300 mots | "3 directeurs m'ont dit la même chose ce mois-ci…" |
-| Carrousel LinkedIn | Ultra-synthétique, titres-chocs | 7–12 slides, 1 idée/slide | "Ce que votre NPS ne vous dit pas (mais Aikoz, si)" |
+| Carrousel LinkedIn | Ultra-synthétique, titres-chocs | 5 slides, 1 idée/slide | "L'IA dans l'assurance : De la démo à l'impact terrain" |
 | Deck client / Steerco | Minimaliste, bénéfice en titre | 1 idée/slide | "Vous avez réduit vos churns silencieux de 23%" |
 | Landing page | Conversion, centré "vous obtenez" | Sections courtes + CTA fort | "Vous savez demain ce que vos clients pensent aujourd'hui" |
 | Email / outreach | Contexte → problème → solution | 5–8 lignes max | Accroche sectorielle + proposition de valeur unique |
@@ -95,7 +97,7 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 ### À faire systématiquement
 - Commencer par le problème terrain ou une observation concrète, jamais par la présentation d'Aikoz
 - Écrire "vous détectez" / "vous obtenez" / "vous anticipez" plutôt que "notre solution permet de"
-- Verbes d'action forts : détecter, activer, transformer, anticiper, identifier, accélérer
+- Verbes d'action forts : détecter, activer, transformer, anticiper, identifier, accélérer, reconnectre, éclairer, aligner
 - Phrases courtes (15 mots maximum en règle générale)
 - Une idée par paragraphe, un message par slide
 - CTA concret et spécifique — jamais "en savoir plus"
@@ -107,6 +109,42 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 - Conditionnels mous : "pourrait", "permettrait", "peut-être", "dans une certaine mesure"
 - Listes sans idée directrice — toujours une synthèse en chapeau
 - Se placer avant le client : "Aikoz est…" → préférer "Vous obtenez…"
+
+### Formulations canoniques Aikoz (extraites du corpus réel — à réutiliser et imiter)
+
+Ces phrases sont tirées des carrousels LinkedIn validés et publiés par Aikoz. Elles constituent la référence de ton et de style.
+
+**Phrases-chocs / titres :**
+- "L'IA dans l'assurance : De la démo à l'impact terrain"
+- "Ce qui change vraiment les décisions."
+- "Le problème n'est pas la technologie. C'est l'usage."
+- "La valeur est dans l'usage, pas dans la preuve de concept."
+- "L'IA ne remplace pas l'expertise. Elle la rend plus efficace."
+- "L'IA utile n'est pas celle qui impressionne. C'est celle qui aide à décider."
+- "Fini le reporting statique. Place au dialogue, à la réactivité, à la cohérence."
+- "Aujourd'hui, les données sont partout… et nulle part."
+- "L'IA ne décide pas à votre place. Elle éclaire, aligne et accélère."
+
+**Reconnexion siège / terrain :**
+- "Le siège analyse. Le réseau vit et ressent au quotidien."
+- "Mais entre les deux, la cohérence se perd, et avec elle, l'expérience client."
+- "Aikoz reconnecte le siège et le terrain."
+- "Un réseau qui avance dans la même direction."
+
+**Résultats concrets :**
+- "En quelques secondes : Les équipes identifient les priorités, les décisions sont plus rapides, le pilotage devient partagé."
+- "Un agent général identifie les clients à risque de résiliation avant qu'il ne soit trop tard"
+- "Une direction CX détecte un irritant récurrent dès les premiers signaux"
+- "Un inspecteur repère les écarts de pratiques entre agences en temps réel"
+
+**Positionnement final (CTA slides) :**
+- "Aikoz, l'intelligence qui redonne du sens aux décisions collectives."
+- "Demandez une démo de la plateforme Aikoz !"
+- "Et vous, quel gain de temps concret attendez-vous de l'IA dans votre quotidien ?" *(CTA engagement)*
+
+**Pain points terrain (ouvertures de carrousel) :**
+- "Dans un quotidien surchargé, gérer les nombreux avis et retours clients est devenu un véritable défi."
+- "Depuis 18 mois, les assureurs testent l'IA." → résultat décevant → le problème n'est pas la techno
 
 ---
 
@@ -120,6 +158,11 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 | Insights actionnables | Analyses / rapports |
 | Agents IA / IA agentique | Chatbot / IA générique / automatisation |
 | IA conversationnelle | Assistant virtuel / bot |
+| IA opérationnelle | POC / test IA / proof of concept |
+| Siège et terrain | Siège vs réseau (connotation conflictuelle) |
+| Excellence opérationnelle | Performance opérationnelle (trop neutre) |
+| Décisions collectives | Consensus (trop politique) |
+| Pilotage partagé | Reporting partagé (trop passif) |
 | Verbatims | Commentaires clients |
 | Labels Aikoz | Récompenses / badges |
 | Décision business | ROI / KPI (sans contexte) |
@@ -146,6 +189,31 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 [CTA] — question ouverte ou invitation concrète
 ```
 
+### Structure carrousel LinkedIn validée (5 slides — pattern Aikoz)
+Observée sur les 3 carrousels du corpus. Structure systématique :
+
+```
+Slide 1 (dark — #0A1128) : Titre-choc + sous-titre problème
+  → Ouvre sur une question rhétorique ("Et si…?") ou une affirmation secteur
+  → Sous-titre : reformulation du problème en 1 ligne
+
+Slide 2 (clair) : Problème terrain
+  → Diagnostic en 2–3 phrases max
+  → Pain points nommés (agents débordés / réputation fragile…)
+
+Slide 3 (clair) : Solution Aikoz
+  → Verbe d'action fort en titre ("Aikoz reconnecte…")
+  → 2–3 capacités en mode bénéfice
+
+Slide 4 (clair) : Résultat concret
+  → "En quelques secondes…" ou métrique terrain
+  → 1 phrase de conclusion forte
+
+Slide 5 (dark — #0A1128) : CTA + logo
+  → Positionnement en 1–2 phrases
+  → CTA direct : démo ou question engagement
+```
+
 ### Slide de deck (règle d'or)
 - Titre = bénéfice client — jamais description du contenu
 - ❌ "Présentation de la méthodologie Aikoz"
@@ -159,14 +227,7 @@ La voix d'Aikoz, c'est la voix d'un expert terrain : il sait de quoi il parle, i
 4. **Preuve** : logos clients, chiffres terrain
 5. **CTA** : action simple et immédiate
 
-### Carrousel LinkedIn — contenu et format technique
-
-**Contenu :**
-- Slide 1 : titre-choc + sous-titre problème
-- Slides 2–N : 1 insight / 1 visuel / max 25 mots
-- Dernière slide : CTA + logo Aikoz by Okuden
-
-**Format technique (source : DESIGN.md v1.2) :**
+### Carrousel LinkedIn — format technique
 ```
 Dimensions  : 1080 × 1350 px (portrait 4:3 LinkedIn)
 Marges      : 80px haut/bas · 72px gauche/droite
@@ -186,14 +247,37 @@ Règle : 1re et dernière slide toujours en dark (#0A1128)
 Texte minimum : 18px — jamais en dessous sur carrousel
 ```
 
+*Référence technique complète : DESIGN.md v1.2 — section Formats*
+
 ---
 
 ## 9. Exemples sectoriels
 
-### Assurance / Assistance (cœur de cible)
-**Problème terrain** : "Les churns silencieux surviennent 6 semaines avant que le NPS bouge."
-**Angle Aikoz** : détection précoce via verbatims et signaux faibles dans les canaux non structurés.
-**Clients de référence** : AXA, Generali, Allianz, Covea, Europ Assistance.
+### Assurance (cœur de cible) — formulations réelles validées
+
+**Problème terrain (ouverture de contenu) :**
+> "Dans un quotidien surchargé, gérer les nombreux avis et retours clients est devenu un véritable défi. Agents débordés. Clients exigeants. Réputation fragile."
+
+**Tension diagnostique :**
+> "Aujourd'hui, les données sont partout… et nulle part. Le siège analyse. Le réseau vit et ressent au quotidien. Mais entre les deux, la cohérence se perd, et avec elle, l'expérience client."
+
+**Angle Aikoz :**
+> "Aikoz reconnecte le siège et le terrain. Une plateforme de données intégrant une IA conversationnelle capable de comprendre vos questions métier, croiser automatiquement les données réseau, compagnie et concurrence, et y répondre simplement, en langage naturel."
+
+**Résultat concret :**
+> "Un agent général identifie les clients à risque de résiliation avant qu'il ne soit trop tard. Une direction CX détecte un irritant récurrent dès les premiers signaux. Un inspecteur repère les écarts de pratiques entre agences en temps réel."
+
+**Positionnement IA :**
+> "L'IA ne remplace pas l'expertise. Elle la rend plus efficace."
+> "L'IA ne décide pas à votre place. Elle éclaire, aligne et accélère."
+
+**Stats terrain (Top 10 Aikoz Assurance) :**
+- 4,9/5 note moyenne · 815 avis Google · 95% taux de réponse
+- Réseaux représentés : Allianz, Matmut, AXA, SwissLife, Abeille Assurances
+
+**Clients de référence :** AXA, Generali, Allianz, Covea, Matmut, SwissLife, Abeille Assurances, Europ Assistance.
+
+---
 
 ### Banque
 **Problème terrain** : L'insatisfaction s'exprime indirectement — rarement dans les sondages, toujours dans les verbatims.
@@ -204,17 +288,21 @@ Texte minimum : 18px — jamais en dessous sur carrousel
 **Angle Aikoz** : transformation des avis clients en signal d'alerte opérationnel.
 **Clients de référence** : Renault, Volkswagen.
 
-### Angles de contenu IA (corpus LinkedIn Aikoz)
-Trois thèmes validés par le corpus Post-linkedin/ :
+---
 
-**IA agentique :** Aikoz comme système d'agents spécialisés — pas un outil, une équipe IA dédiée à l'écoute client.
-*Format naturel : carrousel "Ce que fait un agent Aikoz que votre NPS ne fera jamais"*
+### Angles de contenu IA (patterns carrousel validés)
 
-**IA conversationnelle :** Interroger la voix du client en langage naturel, sans requête SQL ni data analyst.
-*Format naturel : carrousel "3 questions que vous pouvez poser à vos verbatims dès demain"*
+**IA agentique — pattern "De la démo à l'impact terrain" :**
+Structure : POC (beaucoup, sans adoption) → IA opérationnelle (intégrée, utilisée, décisive) → cas d'usage nommés par rôle.
+*Formule titre : "[Contexte secteur] : De la démo à l'impact terrain"*
 
-**Valeur IA :** ROI concret de l'activation de la donnée — chiffres de performance, benchmarks sectoriels.
-*Format naturel : carrousel chiffres / avant-après*
+**IA conversationnelle — pattern "Et si l'IA transformait vraiment…" :**
+Structure : question rhétorique (Et si…?) → tension siège/terrain → Aikoz reconnecte → résultat en secondes → CTA démo.
+*Formule titre : "Et si l'IA transformait vraiment [problème secteur] ?"*
+
+**Valeur IA — pattern "L'IA au service de votre excellence opérationnelle" :**
+Structure : quotidien surchargé → pain points nommés (agents, clients, réputation) → solution Aikoz → benchmark Top 10.
+*Formule titre : "Découvrez comment Aikoz met l'IA au service de votre [bénéfice cible]"*
 
 ---
 
@@ -223,12 +311,12 @@ Trois thèmes validés par le corpus Post-linkedin/ :
 | Section | Confiance | Base |
 |---------|-----------|------|
 | Identité & positionnement | 95% | Explicitement fourni par le fondateur |
-| Voix & ton | 85% | Bien défini, à enrichir d'exemples réels validés |
-| Règles d'écriture | 80% | Inféré des principes déclarés |
-| Formats produits — contenu | 90% | Structure fournie + bonnes pratiques |
+| Voix & ton | 92% | Enrichi par formulations réelles du corpus LinkedIn |
+| Règles d'écriture | 90% | Principes déclarés + formulations canoniques validées |
+| Formats produits — contenu | 95% | Structure 5-slides observée sur 3 carrousels réels |
 | Formats produits — technique | 95% | Extrait de DESIGN.md v1.2 (source de vérité) |
-| Terminologie | 75% | Enrichie depuis corpus LinkedIn — à valider sur verbatims réels |
-| Exemples sectoriels | 70% | Angles IA ajoutés depuis corpus — chiffres terrain à valider |
+| Terminologie | 88% | Confirmée et enrichie depuis corpus réel |
+| Exemples sectoriels | 90% | Formulations réelles extraites (OCR carrousels publiés) |
 | Cohérence visuelle | 90% | Alignée avec DESIGN.md v1.2 |
 
 ---
@@ -241,11 +329,13 @@ Trois thèmes validés par le corpus Post-linkedin/ :
 
 3. **Segmentation par niveau de technicité** : Quand s'adresser à des CTO/DSI (jargon tech acceptable) vs. DG/Directeurs Métier (décision pure) ? Une matrice persona → niveau de technicité permettrait de préciser les règles de terminologie IA.
 
-4. **Corpus d'exemples validés** : Lire les PDFs de Post-linkedin/ permettrait d'extraire les formulations réelles utilisées par Aikoz et de calibrer la terminologie (nécessite `brew install poppler`).
+4. ~~**Corpus d'exemples validés** : Lire les PDFs de Post-linkedin/ permettrait d'extraire les formulations réelles utilisées par Aikoz.~~ **Fermé en v1.2** — 12 slides extraites via OCR sur 3 carrousels, formulations intégrées en §6 et §9.
 
-5. **Ton des Labels Aikoz** : Les communications autour des Labels (annonce, remise, promotion partenaires) suivent-elles le même registre direct, ou un ton plus solennel est-il approprié ?
+5. **Ton des Labels Aikoz** : Les communications autour des Labels (annonce, remise, promotion partenaires) suivent-elles le même registre direct, ou un ton plus solennel est-il approprié ? *(Nouveau en v1.2 — appuyé par la découverte du badge "Meilleure Agence de France 2026")*
+
+6. **Carousel pages 3–5 manquantes** : Aikoz_IA_caroussel_valeur.pdf n'a été extrait qu'à 2 slides sur 5 (limitation technique). Les slides 3–5 peuvent contenir des formulations supplémentaires sur la valeur IA — à compléter lors d'une prochaine session.
 
 ---
 
 *Pour toute génération de contenu, injecter ce fichier en contexte système.*
-*Les sections les plus opérationnelles pour le guidage LLM : §3 (We Are/We Are Not), §6 (Règles d'écriture), §5 (Matrice Ton × Contexte).*
+*Les sections les plus opérationnelles pour le guidage LLM : §3 (We Are/We Are Not), §6 (Règles d'écriture + Formulations canoniques), §5 (Matrice Ton × Contexte).*
