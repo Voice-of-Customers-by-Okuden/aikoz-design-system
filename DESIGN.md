@@ -19,6 +19,9 @@ description: >
 ```
 brand-primary:   PP Radio Grotesk   — titres, headings, numéros, labels slides & print
 product-primary: Inter              — UI, dashboard, body, captions, composants web
+brand-secondary: Satoshi            — communication externe uniquement (événements, landing pages
+                                       marketing, onboarding grand public). Jamais dans le dashboard
+                                       ni sur les slides internes.
 fallback:        system-ui, -apple-system, sans-serif
 microsoft:       Bahnschrift        — remplacement natif Microsoft Office
 ```
@@ -228,6 +231,41 @@ Sur fond ultramarine (#3B5DCE) : logo en blanc — contraste 5.9:1 ✓
 
 ---
 
+## Iconographie
+
+### Source officielle
+
+```
+Librairie : Google Material Symbols — style Rounded
+CDN :       https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
+Ne jamais mixer avec d'autres librairies (Heroicons, Feather, Lucide, etc.)
+```
+
+### Grille de taille
+
+```
+16px — icônes inline : labels, badges, boutons, cellules tableau
+20px — icônes standard : listes, navigation, champs de formulaire
+24px — icônes larges : headers, hero sections, actions primaires
+```
+
+### Règles d'usage
+
+```
+Sur fond clair :  fill neutral-700 (#374151) — icônes fonctionnelles
+                  fill ultramarine-blue (#3B5DCE) — icônes actives / interactives
+Sur fond dark :   fill blanc (#FFFFFF) — icônes standard
+                  fill aquamarine-green (#70FFD4) — icônes actives / accent
+Stroke weight :   wght 300–400 (Regular) — jamais Bold sur les icônes
+```
+
+**À éviter :**
+- Jamais de contour (outlined) — toujours filled
+- Jamais de redimensionnement hors grille 16/20/24px
+- Jamais d'icônes d'une autre librairie sur un même support
+
+---
+
 ## Composants UI — Dashboard SaaS
 
 ### KPI Card
@@ -306,6 +344,22 @@ Fond :  aquamarine-green (#70FFD4)
 Texte : midnight-blue (#0A1128) — contraste 9.8:1 ✓
 ```
 
+### Bouton secondaire (ghost)
+
+```
+Fond :   transparent
+Border : 1px solid ultramarine-blue (#3B5DCE)
+Texte :  ultramarine-blue (#3B5DCE), Inter 14px/600
+Radius : 6px
+Hover :  fond ultramarine-500 (#DDE5FC), border inchangé
+Padding: 8px 16px
+
+Variante dark :
+Border : 1px solid text-link-dark (#A3B6F4)
+Texte :  text-link-dark (#A3B6F4)
+Hover :  fond rgba(163,182,244,0.12)
+```
+
 ### Gauge / Arc
 
 ```
@@ -334,6 +388,33 @@ Neutre  : fond neutral-100, texte neutral-500
 3. Section Divider — dark, grand numéro aqua (80–120px) + titre Bold blanc
 4. Slide contenu   — blanc, filet aqua gauche (7px), header "X.X – Titre"
 N. Section Divider — prochain chapitre
+```
+
+### Slide split (50/50)
+
+```
+Colonne gauche (50%) :
+  Fond    : blanc (#FFFFFF), filet aqua gauche 7px
+  Contenu : texte, bullets, stats — police PP Radio Grotesk
+  Padding : 35px à gauche (après filet)
+
+Colonne droite (50%) :
+  Fond    : midnight-blue (#0A1128) ou image plein fond + overlay rgba(10,17,40,0.6)
+  Texte   : blanc (#FFFFFF), chiffres clés en aquamarine-green (#70FFD4)
+
+Séparateur : aucun — le contraste des fonds suffit
+```
+
+### Slide contenu dark
+
+```
+Fond       : midnight-blue (#0A1128)
+Filet haut : rectangle x=0, y=0, w=100%, h=5px, fill: aquamarine-green (#70FFD4)
+Header     : PP Radio Grotesk Bold 14–15px, aquamarine-green (#70FFD4) — position x=35px, y=22px
+Sous-titre : PP Radio Grotesk Regular Italic 12–13px, text-link-dark (#A3B6F4)
+Corps      : PP Radio Grotesk Regular 12–14px, blanc (#FFFFFF)
+Chiffres clés : PP Radio Grotesk Black, aquamarine-green (#70FFD4)
+Logo       : variante fond sombre, bas-gauche, position identique fond blanc
 ```
 
 ### Filet vertical gauche (fond blanc uniquement)
@@ -372,6 +453,49 @@ Le système est white-labelable. Pour un client (ex: Generali), seule la Brand L
 
 La Product Layer (neutrals, semantic, composants) reste identique.
 Les composants data ne dépendent jamais directement des tokens brand.
+
+---
+
+## Formats LinkedIn / Social
+
+### Carrousel LinkedIn
+
+```
+Format   : 1080 × 1350 px (portrait 4:3 LinkedIn)
+Marges   : 80px haut/bas · 72px gauche/droite
+Safe zone texte : zone centrale 936 × 1190 px
+
+Nombre de slides : 5–10 recommandé (max 20 LinkedIn)
+Première et dernière slide : toujours fond dark (#0A1128)
+```
+
+### Slide type dark (fond #0A1128)
+
+```
+Fond       : midnight-blue (#0A1128)
+Titre      : PP Radio Grotesk Bold 52–60px, blanc (#FFFFFF)
+Sous-titre : PP Radio Grotesk Regular 22–26px, aquamarine-green (#70FFD4)
+Corps      : PP Radio Grotesk Regular 18–20px, blanc (#FFFFFF)
+Logo       : bas-gauche, variante fond sombre, w=100px, margin 48px
+Numéro     : PP Radio Grotesk Black 80px, aquamarine-green (#70FFD4), discret coin bas-droit
+```
+
+### Slide type clair (fond #FFFFFF)
+
+```
+Fond       : blanc (#FFFFFF)
+Filet gauche : 7px aquamarine-green (#70FFD4), hauteur 100%
+Titre      : PP Radio Grotesk Bold 44–52px, midnight-blue (#0A1128)
+Sous-titre : PP Radio Grotesk Regular Italic 20–22px, #3B9DCE
+Corps      : PP Radio Grotesk Regular 18–20px, neutral-700 (#374151)
+Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
+```
+
+**À éviter :**
+- Jamais aquamarine (#70FFD4) sur fond blanc (échec WCAG — contraste 1.4:1)
+- Pas de texte sous 18px sur format carrousel (lisibilité mobile)
+- Pas de gradient de fond
+- Jamais plus de 40 mots par slide
 
 ---
 
