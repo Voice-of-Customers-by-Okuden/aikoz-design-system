@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python3 -c \"import pptx; print\\(pptx.__version__\\)\")",
-      "Bash(pip3 install *)"
-    ]
-  }
-}
