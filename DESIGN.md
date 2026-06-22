@@ -207,8 +207,8 @@ text-link-dark:    #A3B6F4   — liens sur fond dark
 Logo_Horizontal.svg          — usage principal (symbole + "Aikoz")
 Logo_Horizontal-byOkuden.svg — co-branding Okuden, supports officiels
 Logo_Vertical.svg            — usage compact vertical
-Logo_Vertical-byokuden.svg   — co-branding vertical
-Logo_Sybol.svg               — picto seul, espaces restreints
+Logo_Vertical-byOkuden.svg   — co-branding vertical
+Logo_Symbol.svg              — picto seul, espaces restreints
 ```
 
 ### Règles d'usage
@@ -555,7 +555,7 @@ Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
     [DA]      V1_WIP_Brand book Aikoz.pdf              — source de vérité DA
     [Contenu] 20250604_ALLIANZ_Aikoz.pdf               — patterns slides chiffrées
     [Contenu] 20250324_COVEA_Aikoz.pdf                 — patterns deck commercial
-    [Contenu] Aikoz_-_Pr_sentation_commerciale_v2.pptx — deck commercial PowerPoint
+    [Contenu] Aikoz_Presentation_commerciale_v2.pptx   — deck commercial PowerPoint
   Post-linkedin/
     Aikoz_AgenticAI.pdf                — carrousel LinkedIn Agentic AI
     Aikoz_IA_caroussel_valeur.pdf      — carrousel LinkedIn valeur IA
@@ -563,5 +563,5 @@ Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
     Aikoz_moyenne_top_10.jpg           — visuel LinkedIn performance
     2026_TDelacour.jpg                 — visuel LinkedIn
   badge/
-    202512_AIKOZ_Badge_Meilleure-Agence_France[19293].png — badge Meilleure Agence France 2025
+    202512_AIKOZ_Badge_Meilleure-Agence_France.png        — badge Meilleure Agence France 2025
 ```
