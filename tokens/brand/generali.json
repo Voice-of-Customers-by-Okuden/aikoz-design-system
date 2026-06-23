@@ -1,0 +1,46 @@
+{
+  "color": {
+    "brand": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.generali-red.900}"
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{color.generali-red.700}"
+      },
+      "primary-subtle": {
+        "$type": "color",
+        "$value": "{color.generali-red.100}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.generali-red.500}"
+      },
+      "secondary-hover": {
+        "$type": "color",
+        "$value": "{color.generali-red.700}"
+      },
+      "secondary-subtle": {
+        "$type": "color",
+        "$value": "{color.generali-red.100}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.neutral.50}"
+      },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.100}"
+      },
+      "accent-subtle": {
+        "$type": "color",
+        "$value": "{color.generali-red.50}"
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{color.generali-red.900}"
+      }
+    }
+  }
+}

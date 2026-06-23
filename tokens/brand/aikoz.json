@@ -1,0 +1,46 @@
+{
+  "color": {
+    "brand": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}"
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "primary-subtle": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.100}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.ultramarine.500}"
+      },
+      "secondary-hover": {
+        "$type": "color",
+        "$value": "{color.ultramarine.600}"
+      },
+      "secondary-subtle": {
+        "$type": "color",
+        "$value": "{color.ultramarine.100}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.aquamarine.300}"
+      },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{color.aquamarine.400}"
+      },
+      "accent-subtle": {
+        "$type": "color",
+        "$value": "{color.aquamarine.50}"
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}"
+      }
+    }
+  }
+}
