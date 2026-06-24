@@ -42,6 +42,7 @@ aikoz-design-system/
 │
 ├── references/
 │   ├── Post-linkedin/                 Carrousels LinkedIn publiés (PDFs sources)
+│   ├── dashboard/                     Screenshot de référence du dashboard Figma (light mode)
 │   └── *.pdf                          Brand book + decks commerciaux de référence
 │
 └── aikoz-design-system-by-claude-design/
@@ -95,8 +96,10 @@ cp DESIGN.md ~/.claude/DESIGN.md
 | aquamarine-green | `#70FFD4` | Accent — **fond sombre uniquement** |
 | ultramarine-blue | `#3B5DCE` | Liens, éléments sur fond clair |
 | frozen-white | `#FFFFFF` | Textes sur fond sombre |
-| Police principale | PP Radio Grotesk | Titres, UI, carrousels |
-| Police secondaire | Satoshi | Corps long, sous-titres |
+| Police slides / print | PP Radio Grotesk | Titres, slides, carrousels |
+| Police UI / web | Inter | Interface, dashboard, corps |
+| Police métriques | JetBrains Mono | KPI, affichage de chiffres |
+| Police secondaire | Satoshi | Communication externe uniquement |
 
 > L'aquamarine `#70FFD4` sur fond blanc = contraste 1.4:1 → échec WCAG. Ne jamais l'utiliser sur fond clair.
 
