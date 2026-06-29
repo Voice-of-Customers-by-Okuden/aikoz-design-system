@@ -1,5 +1,6 @@
 ---
-version: 1.1
+version: "1.2"
+updated: "2026-06-24"
 name: "Aikoz Design System"
 description: >
   Design system de la plateforme Aikoz by Okuden.
@@ -560,4 +561,21 @@ Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
     2026_TDelacour.jpg                 — visuel LinkedIn
   badge/
     202512_AIKOZ_Badge_Meilleure-Agence_France.png        — badge Meilleure Agence France 2025
+  references/dashboard/                                   — capture de référence du dashboard (Figma, mode light)
 ```
+
+---
+
+## Anti-patterns
+
+Ces choix visuels sont **explicitement exclus** de la DA Aikoz. Ils dégradent la lisibilité, la cohérence ou la crédibilité du produit.
+
+| Anti-pattern | Pourquoi c'est exclu | Alternative |
+|---|---|---|
+| Fond crème / beige / ivoire | Casse la neutralité du système | `surface.page` (neutral.50) ou blanc |
+| Typographie serif (Georgia, Playfair…) | Hors charte — registre éditorial, pas produit | PP Radio Grotesk (titres) / Inter (UI) |
+| Touches dorées / gradient doré | Connotation luxe générique, pas Aikoz | Aquamarine comme accent premium |
+| Ombres lourdes (box-shadow > 8px) | L'élévation se marque par les bordures | `border.default` 1px |
+| Border-radius > 12px sur les composants | Registre "app mobile grand public" | `radius.lg` = 12px maximum |
+| Aquamarine sur fond clair | Contraste insuffisant (< 3:1 WCAG) | Aquamarine sur `surface.dark` uniquement |
+| Valeurs de couleur en dur dans le code | Rompt la thémabilité marque blanche | Toujours via tokens DTCG |
