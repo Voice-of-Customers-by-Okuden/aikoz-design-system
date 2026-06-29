@@ -530,10 +530,6 @@ Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
 - Pas de backgrounds alternés en zébré sur tables
 - Pas d'illustrations hand-drawn
 
-### Décoration
-
-- Grid Vision (motif de carrés en pointillés) : retiré de la DA — ne pas utiliser sur aucun support.
-
 ---
 
 ## Assets disponibles
