@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build:tokens": "node build-tokens.mjs",
+    "registry:build": "shadcn build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
