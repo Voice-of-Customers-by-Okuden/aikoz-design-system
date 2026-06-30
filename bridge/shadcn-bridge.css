@@ -16,8 +16,7 @@
      destructive       ← color.error.500          #cc4229
    ============================================================ */
 
-@layer base {
-  :root {
+:root {
     --background:             220 16% 96%;  /* #f4f5f7 — neutral.50         */
     --foreground:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
 
@@ -47,9 +46,9 @@
     --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
 
     --radius: 0.5rem;
-  }
+}
 
-  .dark {
+.dark {
     --background:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
     --foreground:             0 0% 100%;    /* #ffffff                       */
 
@@ -77,5 +76,4 @@
 
     --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
     --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
-  }
 }
