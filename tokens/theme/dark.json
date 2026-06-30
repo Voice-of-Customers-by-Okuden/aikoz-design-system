@@ -1,0 +1,190 @@
+{
+  "color": {
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.950}"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.950}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "active": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}"
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.brand.primary}"
+      },
+      "brand-subtle": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.brand.accent-subtle}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}"
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.brand.secondary}"
+      },
+      "brand-hover": {
+        "$type": "color",
+        "$value": "{color.brand.secondary-hover}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.aquamarine.300}"
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{color.brand.on-accent}"
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.600}"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.brand.secondary}"
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.brand.primary}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.brand.accent}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}"
+      }
+    },
+    "status": {
+      "success": {
+        "$type": "color",
+        "$value": "{color.success.400}"
+      },
+      "success-subtle": {
+        "$type": "color",
+        "$value": "{color.success.950}"
+      },
+      "success-border": {
+        "$type": "color",
+        "$value": "{color.success.700}"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.warning.400}"
+      },
+      "warning-subtle": {
+        "$type": "color",
+        "$value": "{color.warning.950}"
+      },
+      "warning-border": {
+        "$type": "color",
+        "$value": "{color.warning.700}"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{color.error.400}"
+      },
+      "error-subtle": {
+        "$type": "color",
+        "$value": "{color.error.950}"
+      },
+      "error-border": {
+        "$type": "color",
+        "$value": "{color.error.700}"
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{color.info.400}"
+      },
+      "info-subtle": {
+        "$type": "color",
+        "$value": "{color.info.950}"
+      },
+      "info-border": {
+        "$type": "color",
+        "$value": "{color.info.700}"
+      }
+    },
+    "nav": {
+      "surface": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}"
+      },
+      "surface-active": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "on-muted": {
+        "$type": "color",
+        "$value": "{color.ultramarine.300}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.brand.accent}"
+      }
+    }
+  }
+}
