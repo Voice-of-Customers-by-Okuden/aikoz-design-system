@@ -499,28 +499,45 @@
     "generali-red": {
       "50": {
         "$type": "color",
-        "$value": "#FFF0F1"
+        "$value": "#FFF1EE"
       },
       "100": {
         "$type": "color",
-        "$value": "#FFE5E8"
+        "$value": "#FFDFDA"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#FFC3BA"
       },
       "300": {
         "$type": "color",
-        "$value": "#F4A6AE"
+        "$value": "#FC9E90"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#EA6C5D"
       },
       "500": {
         "$type": "color",
-        "$value": "#E11026"
+        "$value": "#C21B17",
+        "$description": "Generali brand red — Pantone 180 C, RGB 194-27-23"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#AA1B17",
+        "$description": "Generali dark red — Pantone 7628 C"
       },
       "700": {
         "$type": "color",
-        "$value": "#A30016"
+        "$value": "#85100D"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#5F0D09"
       },
       "900": {
         "$type": "color",
-        "$value": "#C2001A",
-        "$description": "Generali brand red (marque blanche)"
+        "$value": "#400906"
       }
     }
   },
@@ -615,7 +632,7 @@
     "medium": {
       "$type": "fontWeight",
       "$value": 500,
-      "$description": "Satoshi only — PP Radio Grotesk has no medium weight"
+      "$description": "Inter (UI) / Satoshi (éditorial) — PP Radio Grotesk n'a pas de graisse medium"
     },
     "bold": {
       "$type": "fontWeight",
