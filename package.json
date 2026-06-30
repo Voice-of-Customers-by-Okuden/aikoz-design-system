@@ -1,0 +1,25 @@
+{
+  "name": "aikoz-design-system",
+  "version": "1.0.0",
+  "description": "Dépôt de référence pour tout contenu visuel et éditorial Aikoz by Okuden.   Il contient les sources de vérité — design tokens, voix de marque, logos, polices — que l'équipe injecte dans ses outils IA et ses productions.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build:tokens": "node build-tokens.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/issues"
+  },
+  "homepage": "https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system#readme"
+}
