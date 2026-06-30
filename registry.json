@@ -2,5 +2,24 @@
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "aikoz",
   "homepage": "https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system",
-  "items": []
+  "items": [
+    {
+      "name": "kpi-card",
+      "type": "registry:component",
+      "title": "KPI Card",
+      "description": "Carte d'indicateur Aikoz, 3 tailles (sm/md/lg) de richesse croissante : valeur + label, puis notation étoiles et badge de tendance, puis sparkline. Optionnellement cliquable.",
+      "files": [
+        { "path": "registry/aikoz/kpi-card/kpi-card.tsx", "type": "registry:component" },
+        { "path": "registry/aikoz/lib/utils.ts", "type": "registry:lib" }
+      ],
+      "dependencies": [
+        "recharts",
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-slot",
+        "@material-symbols-svg/react"
+      ]
+    }
+  ]
 }

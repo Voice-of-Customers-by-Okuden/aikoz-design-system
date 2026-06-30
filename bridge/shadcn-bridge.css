@@ -16,8 +16,7 @@
      destructive       ← color.error.500          #cc4229
    ============================================================ */
 
-@layer base {
-  :root {
+:root {
     --background:             220 16% 96%;  /* #f4f5f7 — neutral.50         */
     --foreground:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
 
@@ -46,10 +45,18 @@
     --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
     --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
 
-    --radius: 0.5rem;
-  }
+    --success:                155 86% 26%;  /* #097a4a — fond badge plein light (5,39:1 vs carte blanche) */
+    --success-foreground:     0 0% 100%;    /* #ffffff — texte badge light (5,39:1 sur #097a4a) */
+    --success-bg:             152 81% 96%;  /* #ecfdf5 — zones success, fond section — pas pour badge plein */
 
-  .dark {
+    --destructive-text:       12 80% 34%;   /* #962f1a — rouge foncé texte/icône (7,73:1 sur blanc, AAA) ; --destructive reste pour fonds de boutons */
+
+    --chart-1:                226 60% 52%;  /* #3b5dce — ultramarine.500, courbes en light — convention shadcn --chart-N */
+
+    --radius: 0.5rem;
+}
+
+.dark {
     --background:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
     --foreground:             0 0% 100%;    /* #ffffff                       */
 
@@ -69,7 +76,7 @@
     --accent-foreground:      0 0% 100%;    /* #ffffff                       */
 
     --muted:                  228 56% 15%;  /* #111a3d — midnight-blue.800   */
-    --muted-foreground:       220 7% 35%;   /* #545860 — neutral.600         */
+    --muted-foreground:       218 11% 65%;  /* #9ca3af — gray-400 (valeur dark distincte : #545860 illisible en dark, 2,37:1) */
 
     --border:                 227 45% 21%;  /* #1e294f — midnight-blue.700   */
     --input:                  227 45% 21%;  /* #1e294f — midnight-blue.700   */
@@ -77,5 +84,12 @@
 
     --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
     --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
-  }
+
+    --success:                158 64% 52%;  /* #34d399 — emerald-400, fond badge plein dark (8,82:1 vs carte) */
+    --success-foreground:     165 70% 8%;   /* #04231b — vert très foncé (8,66:1 sur #34d399) — blanc échoue en dark */
+    --success-bg:             166 91% 9%;   /* #022c22 — zones success, fond section — pas pour badge plein */
+
+    --destructive-text:       9 76% 63%;    /* #e8705a — rouge clair texte/icône (5,57:1 sur #111a3d) ; --destructive reste pour fonds de boutons */
+
+    --chart-1:                225 64% 73%;  /* #8aa0e8 — ultramarine clair, lisible sur carte sombre (6,68:1) — convention shadcn --chart-N */
 }
