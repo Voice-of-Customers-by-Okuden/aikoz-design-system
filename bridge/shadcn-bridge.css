@@ -1,0 +1,81 @@
+/* ============================================================
+   shadcn-bridge.css — Variables shadcn/ui dérivées des tokens Aikoz
+   Ne pas éditer à la main. Source de vérité : tokens/
+   Conversions hex→HSL calculées depuis build/primitives.css
+
+   Correspondances :
+     background        ← color.neutral.50        #f4f5f7
+     foreground        ← color.midnight-blue.900  #0a1128
+     primary           ← color.midnight-blue.900  #0a1128
+     secondary         ← color.ultramarine.500    #3b5dce
+     accent            ← color.aquamarine.300     #70ffd4
+     muted             ← color.neutral.50         #f4f5f7
+     muted-foreground  ← color.neutral.600        #545860
+     border / input    ← color.neutral.200        #d5d7dc
+     ring              ← color.ultramarine.500    #3b5dce
+     destructive       ← color.error.500          #cc4229
+   ============================================================ */
+
+@layer base {
+  :root {
+    --background:             220 16% 96%;  /* #f4f5f7 — neutral.50         */
+    --foreground:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+
+    --card:                   0 0% 100%;    /* #ffffff                       */
+    --card-foreground:        226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+
+    --popover:                0 0% 100%;    /* #ffffff                       */
+    --popover-foreground:     226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+
+    --primary:                226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+    --primary-foreground:     0 0% 100%;    /* #ffffff                       */
+
+    --secondary:              226 60% 52%;  /* #3b5dce — ultramarine.500     */
+    --secondary-foreground:   0 0% 100%;    /* #ffffff                       */
+
+    --accent:                 162 100% 72%; /* #70ffd4 — aquamarine.300      */
+    --accent-foreground:      226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+
+    --muted:                  220 16% 96%;  /* #f4f5f7 — neutral.50          */
+    --muted-foreground:       220 7% 35%;   /* #545860 — neutral.600         */
+
+    --border:                 223 9% 85%;   /* #d5d7dc — neutral.200         */
+    --input:                  223 9% 85%;   /* #d5d7dc — neutral.200         */
+    --ring:                   226 60% 52%;  /* #3b5dce — ultramarine.500     */
+
+    --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
+    --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+    --foreground:             0 0% 100%;    /* #ffffff                       */
+
+    --card:                   228 56% 15%;  /* #111a3d — midnight-blue.800   */
+    --card-foreground:        0 0% 100%;    /* #ffffff                       */
+
+    --popover:                228 56% 15%;  /* #111a3d — midnight-blue.800   */
+    --popover-foreground:     0 0% 100%;    /* #ffffff                       */
+
+    --primary:                162 100% 72%; /* #70ffd4 — aquamarine.300      */
+    --primary-foreground:     226 60% 10%;  /* #0a1128 — midnight-blue.900   */
+
+    --secondary:              227 45% 21%;  /* #1e294f — midnight-blue.700   */
+    --secondary-foreground:   0 0% 100%;    /* #ffffff                       */
+
+    --accent:                 227 45% 21%;  /* #1e294f — midnight-blue.700   */
+    --accent-foreground:      0 0% 100%;    /* #ffffff                       */
+
+    --muted:                  228 56% 15%;  /* #111a3d — midnight-blue.800   */
+    --muted-foreground:       220 7% 35%;   /* #545860 — neutral.600         */
+
+    --border:                 227 45% 21%;  /* #1e294f — midnight-blue.700   */
+    --input:                  227 45% 21%;  /* #1e294f — midnight-blue.700   */
+    --ring:                   162 100% 72%; /* #70ffd4 — aquamarine.300      */
+
+    --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
+    --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
+  }
+}

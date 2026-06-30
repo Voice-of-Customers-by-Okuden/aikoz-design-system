@@ -6,6 +6,7 @@
 <title>Aikoz Design Tokens — Démo</title>
 <link rel="stylesheet" href="../fonts-web/fonts.css">
 <link rel="stylesheet" href="../build/index.css">
+<link rel="stylesheet" href="../bridge/shadcn-bridge.css">
 <style>
   body { margin:0; padding:2rem; background:var(--color-surface-page); color:var(--color-text-primary); font-family: "Inter", sans-serif; transition:background .2s,color .2s; }
   .toolbar { display:flex; gap:.75rem; margin-bottom:2rem; }
@@ -54,5 +55,12 @@
   make('texts', ['--color-text-primary','--color-text-secondary','--color-text-tertiary','--color-text-accent']);
   make('status', ['--color-status-success','--color-status-warning','--color-status-error','--color-status-info']);
 </script>
+
+<section style="margin-top:3rem;padding:1.5rem;background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);">
+  <h2 style="color:hsl(var(--foreground));font-family:Inter,sans-serif;">Test bridge shadcn</h2>
+  <button style="background:hsl(var(--primary));color:hsl(var(--primary-foreground));padding:.5rem 1rem;border:none;border-radius:var(--radius);font-family:Inter,sans-serif;">Primary</button>
+  <button style="background:hsl(var(--secondary));color:hsl(var(--secondary-foreground));padding:.5rem 1rem;border:none;border-radius:var(--radius);font-family:Inter,sans-serif;">Secondary</button>
+  <button style="background:hsl(var(--destructive));color:hsl(var(--destructive-foreground));padding:.5rem 1rem;border:none;border-radius:var(--radius);font-family:Inter,sans-serif;">Destructive</button>
+</section>
 </body>
 </html>
