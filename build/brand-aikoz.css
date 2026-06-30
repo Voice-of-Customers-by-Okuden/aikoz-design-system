@@ -1,0 +1,16 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-brand-primary: var(--color-midnight-blue-900);
+  --color-brand-primary-hover: var(--color-midnight-blue-800);
+  --color-brand-primary-subtle: var(--color-midnight-blue-100);
+  --color-brand-secondary: var(--color-ultramarine-500);
+  --color-brand-secondary-hover: var(--color-ultramarine-600);
+  --color-brand-secondary-subtle: var(--color-ultramarine-100);
+  --color-brand-accent: var(--color-aquamarine-300);
+  --color-brand-accent-hover: var(--color-aquamarine-400);
+  --color-brand-accent-subtle: var(--color-aquamarine-50);
+  --color-brand-on-accent: var(--color-midnight-blue-900);
+}
