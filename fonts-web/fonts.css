@@ -1,0 +1,61 @@
+/* Inter */
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("./inter-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("./inter-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("./inter-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("./inter-latin-700-normal.woff2") format("woff2");
+}
+
+/* JetBrains Mono */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("./jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("./jetbrains-mono-latin-500-normal.woff2") format("woff2");
+}
+
+/* PP Radio Grotesk */
+@font-face {
+  font-family: "PP Radio Grotesk";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("./PPRadioGrotesk-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "PP Radio Grotesk";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("./PPRadioGrotesk-Black.woff2") format("woff2");
+}
