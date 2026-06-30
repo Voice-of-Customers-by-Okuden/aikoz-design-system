@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import { type ElementType, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 import { cn } from "@registry/aikoz/lib/utils";
-import { Star, StarFill, ArrowUpward } from "@material-symbols-svg/react/rounded";
+import { Star, StarFill, ArrowUpward, ArrowDownward } from "@material-symbols-svg/react/rounded";
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -11,7 +11,7 @@ const cardVariants = cva(
     "relative flex flex-col",
     "bg-card border border-border",
     "rounded-[var(--radius)]",
-    "shadow-sm hover:shadow-md transition-shadow duration-200",
+    "shadow-sm",
   ],
   {
     variants: {
@@ -53,6 +53,8 @@ export interface KpiCardProps extends VariantProps<typeof cardVariants> {
   sparklineData?: number[];
   icon?: ReactNode;
   className?: string;
+  onClick?: () => void;
+  href?: string;
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -89,19 +91,18 @@ function TrendBadge({ trend }: { trend: number }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-semibold",
-        // TODO: remplacer par var(--success) / var(--success-foreground) une fois ajoutés au bridge
+        "inline-flex items-center gap-0.5 text-xs font-semibold rounded-full px-2 py-0.5 border",
         positive
-          ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400"
-          : "bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400"
+          ? "border-[hsl(var(--success))] bg-[hsl(var(--success)/0.08)] text-[hsl(var(--success))]"
+          : "border-[hsl(var(--destructive-text))] bg-[hsl(var(--destructive-text)/0.08)] text-[hsl(var(--destructive-text))]"
       )}
+      aria-label={positive ? `en hausse de ${trend}%` : `en baisse de ${Math.abs(trend)}%`}
     >
-      <ArrowUpward
-        className={cn("w-3 h-3 transition-transform", !positive && "rotate-180")}
-        aria-hidden="true"
-      />
-      {positive ? "+" : ""}
-      {trend}%
+      {positive
+        ? <ArrowUpward   className="w-3 h-3" aria-hidden="true" />
+        : <ArrowDownward className="w-3 h-3" aria-hidden="true" />
+      }
+      {positive ? "+" : ""}{trend}%
     </span>
   );
 }
@@ -117,6 +118,8 @@ export function KpiCard({
   icon,
   size = "md",
   className,
+  onClick,
+  href,
 }: KpiCardProps) {
   const chartData = (sparklineData ?? []).map((v) => ({ v }));
   const formatted = value.toLocaleString("fr-FR", {
@@ -124,8 +127,39 @@ export function KpiCard({
     maximumFractionDigits: 1,
   });
 
+  // Rendu sémantique selon l'interactivité
+  const isInteractive = !!(onClick || href);
+  const Comp = (href ? "a" : onClick ? "button" : "div") as ElementType;
+
+  const compProps = href
+    ? { href }
+    : onClick
+    ? { onClick, type: "button" as const }
+    : {};
+
+  // États visuels uniquement si interactive — aucun sur le div décoratif
+  const interactiveClasses = isInteractive
+    ? cn(
+        "transition-all cursor-pointer",
+        "hover:shadow-lg hover:border-[hsl(var(--ring))]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]",
+        "focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))]",
+        "active:scale-[0.99]",
+        href && "no-underline",
+        onClick && "text-left w-full",
+      )
+    : "";
+
+  const ariaLabel = isInteractive
+    ? `${label} : ${formatted} sur ${max}`
+    : undefined;
+
   return (
-    <article className={cn(cardVariants({ size }), className)}>
+    <Comp
+      className={cn(cardVariants({ size }), interactiveClasses, className)}
+      aria-label={ariaLabel}
+      {...compProps}
+    >
 
       {/* Label + icône optionnelle */}
       <div className="flex items-center justify-between gap-2">
@@ -179,6 +213,6 @@ export function KpiCard({
         </div>
       )}
 
-    </article>
+    </Comp>
   );
 }
