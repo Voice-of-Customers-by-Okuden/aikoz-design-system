@@ -202,7 +202,7 @@ export function KpiCard({
               <Line
                 type="monotone"
                 dataKey="v"
-                stroke="hsl(var(--secondary))"
+                stroke="hsl(var(--chart-1))"
                 strokeWidth={2}
                 dot={false}
                 isAnimationActive={false}

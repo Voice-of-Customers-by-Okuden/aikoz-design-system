@@ -51,6 +51,8 @@
 
     --destructive-text:       12 80% 34%;   /* #962f1a — rouge foncé texte/icône (7,73:1 sur blanc, AAA) ; --destructive reste pour fonds de boutons */
 
+    --chart-1:                226 60% 52%;  /* #3b5dce — ultramarine.500, courbes en light — convention shadcn --chart-N */
+
     --radius: 0.5rem;
 }
 
@@ -88,4 +90,6 @@
     --success-bg:             166 91% 9%;   /* #022c22 — zones success, fond section — pas pour badge plein */
 
     --destructive-text:       9 76% 63%;    /* #e8705a — rouge clair texte/icône (5,57:1 sur #111a3d) ; --destructive reste pour fonds de boutons */
+
+    --chart-1:                225 64% 73%;  /* #8aa0e8 — ultramarine clair, lisible sur carte sombre (6,68:1) — convention shadcn --chart-N */
 }
