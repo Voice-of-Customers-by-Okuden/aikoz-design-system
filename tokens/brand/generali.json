@@ -9,6 +9,10 @@
         "$type": "color",
         "$value": "{color.generali-red.600}"
       },
+      "primary-active": {
+        "$type": "color",
+        "$value": "{color.generali-red.700}"
+      },
       "primary-subtle": {
         "$type": "color",
         "$value": "{color.generali-red.100}"
@@ -21,6 +25,10 @@
         "$type": "color",
         "$value": "{color.generali-red.800}"
       },
+      "secondary-active": {
+        "$type": "color",
+        "$value": "{color.generali-red.900}"
+      },
       "secondary-subtle": {
         "$type": "color",
         "$value": "{color.generali-red.100}"
@@ -32,6 +40,10 @@
       "accent-hover": {
         "$type": "color",
         "$value": "{color.neutral.100}"
+      },
+      "accent-active": {
+        "$type": "color",
+        "$value": "{color.neutral.200}"
       },
       "accent-subtle": {
         "$type": "color",

@@ -9,6 +9,10 @@
         "$type": "color",
         "$value": "{color.midnight-blue.800}"
       },
+      "primary-active": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}"
+      },
       "primary-subtle": {
         "$type": "color",
         "$value": "{color.midnight-blue.100}"
@@ -21,6 +25,10 @@
         "$type": "color",
         "$value": "{color.ultramarine.600}"
       },
+      "secondary-active": {
+        "$type": "color",
+        "$value": "{color.ultramarine.700}"
+      },
       "secondary-subtle": {
         "$type": "color",
         "$value": "{color.ultramarine.100}"
@@ -32,6 +40,10 @@
       "accent-hover": {
         "$type": "color",
         "$value": "{color.aquamarine.400}"
+      },
+      "accent-active": {
+        "$type": "color",
+        "$value": "{color.aquamarine.500}"
       },
       "accent-subtle": {
         "$type": "color",

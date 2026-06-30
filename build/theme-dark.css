@@ -39,6 +39,8 @@
   --color-nav-border: var(--color-midnight-blue-700);
   --color-nav-on-muted: var(--color-ultramarine-300);
   --color-surface-brand: var(--color-brand-primary);
+  --color-surface-brand-hover: var(--color-brand-primary-hover);
+  --color-surface-brand-active: var(--color-brand-primary-active);
   --color-surface-accent: var(--color-brand-accent-subtle);
   --color-text-brand: var(--color-brand-secondary);
   --color-text-brand-hover: var(--color-brand-secondary-hover);
