@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr" data-brand="aikoz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aikoz Design Tokens — Démo</title>
+<link rel="stylesheet" href="../fonts-web/fonts.css">
+<link rel="stylesheet" href="../build/index.css">
+<style>
+  body { margin:0; padding:2rem; background:var(--color-surface-page); color:var(--color-text-primary); font-family: "Inter", sans-serif; transition:background .2s,color .2s; }
+  .toolbar { display:flex; gap:.75rem; margin-bottom:2rem; }
+  .toolbar button { padding:.5rem 1rem; border:1px solid var(--color-border-default); border-radius:8px; background:var(--color-surface-raised); color:var(--color-text-primary); cursor:pointer; }
+  h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text-secondary); margin:2rem 0 .75rem; }
+  .swatches { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.75rem; }
+  .swatch { border-radius:8px; overflow:hidden; border:1px solid var(--color-border-subtle); }
+  .swatch .chip { height:60px; }
+  .swatch .label { padding:.4rem .6rem; font-size:.7rem; background:var(--color-surface-raised); color:var(--color-text-secondary); }
+  .btn-row { display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; }
+  .btn { padding:.6rem 1.2rem; border:none; border-radius:8px; cursor:pointer; font-size:.9rem; color:var(--color-text-inverse); }
+  .btn.is-disabled { opacity:.38; pointer-events:none; }
+</style>
+</head>
+<body>
+  <div class="toolbar">
+    <button onclick="document.documentElement.dataset.brand = (document.documentElement.dataset.brand==='aikoz'?'generali':'aikoz')">Basculer marque (Aikoz ⇄ Generali)</button>
+    <button onclick="document.documentElement.classList.toggle('dark')">Basculer thème (light ⇄ dark)</button>
+  </div>
+
+  <h2>Bouton primaire — états</h2>
+  <div class="btn-row">
+    <button class="btn" style="background:var(--color-brand-primary)">Default</button>
+    <button class="btn" style="background:var(--color-brand-primary-hover)">Hover</button>
+    <button class="btn" style="background:var(--color-brand-primary-active)">Active</button>
+    <button class="btn is-disabled" style="background:var(--color-brand-primary)">Disabled</button>
+  </div>
+
+  <h2>Marque (rôles brand)</h2>
+  <div class="swatches" id="brand"></div>
+  <h2>Surfaces</h2>
+  <div class="swatches" id="surfaces"></div>
+  <h2>Texte</h2>
+  <div class="swatches" id="texts"></div>
+  <h2>Statuts</h2>
+  <div class="swatches" id="status"></div>
+
+<script>
+  const make = (id, vars) => {
+    document.getElementById(id).innerHTML = vars.map(v =>
+      '<div class="swatch"><div class="chip" style="background:var('+v+')"></div><div class="label">'+v.replace('--color-','')+'</div></div>'
+    ).join('');
+  };
+  make('brand', ['--color-brand-primary','--color-brand-primary-hover','--color-brand-primary-active','--color-brand-primary-subtle','--color-brand-secondary','--color-brand-secondary-hover','--color-brand-secondary-active','--color-brand-accent','--color-brand-accent-hover','--color-brand-accent-active']);
+  make('surfaces', ['--color-surface-page','--color-surface-default','--color-surface-raised','--color-surface-sunken','--color-surface-brand-subtle']);
+  make('texts', ['--color-text-primary','--color-text-secondary','--color-text-tertiary','--color-text-accent']);
+  make('status', ['--color-status-success','--color-status-warning','--color-status-error','--color-status-info']);
+</script>
+</body>
+</html>
