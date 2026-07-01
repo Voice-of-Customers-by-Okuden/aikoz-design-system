@@ -67,6 +67,11 @@
         "$type": "color",
         "$value": "{color.neutral.600}"
       },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "Texte secondaire discret (muted). Mappé sur --muted-foreground."
+      },
       "inverse": {
         "$type": "color",
         "$value": "{color.midnight-blue.900}"
@@ -103,7 +108,8 @@
       },
       "focus": {
         "$type": "color",
-        "$value": "{color.brand.secondary}"
+        "$value": "{color.brand.accent}",
+        "$description": "Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11)."
       },
       "brand": {
         "$type": "color",
@@ -116,6 +122,11 @@
       "disabled": {
         "$type": "color",
         "$value": "{color.midnight-blue.700}"
+      },
+      "input": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Bordure des champs de saisie. Mappé sur --input."
       }
     },
     "status": {

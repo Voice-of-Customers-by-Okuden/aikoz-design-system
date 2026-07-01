@@ -16,12 +16,14 @@
   --color-text-secondary: var(--color-neutral-300);
   --color-text-tertiary: var(--color-neutral-400);
   --color-text-disabled: var(--color-neutral-600);
+  --color-text-muted: var(--color-neutral-300); /** Texte secondaire discret (muted). Mappé sur --muted-foreground. */
   --color-text-inverse: var(--color-midnight-blue-900);
   --color-text-accent: var(--color-aquamarine-300);
   --color-border-default: var(--color-midnight-blue-700);
   --color-border-subtle: var(--color-midnight-blue-800);
   --color-border-strong: var(--color-midnight-blue-600);
   --color-border-disabled: var(--color-midnight-blue-700);
+  --color-border-input: var(--color-midnight-blue-700); /** Bordure des champs de saisie. Mappé sur --input. */
   --color-status-success: var(--color-success-400);
   --color-status-success-subtle: var(--color-success-950);
   --color-status-success-border: var(--color-success-700);
@@ -45,7 +47,7 @@
   --color-text-brand: var(--color-brand-secondary);
   --color-text-brand-hover: var(--color-brand-secondary-hover);
   --color-text-on-accent: var(--color-brand-on-accent);
-  --color-border-focus: var(--color-brand-secondary);
+  --color-border-focus: var(--color-brand-accent); /** Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11). */
   --color-border-brand: var(--color-brand-primary);
   --color-border-accent: var(--color-brand-accent);
   --color-nav-accent: var(--color-brand-accent);
