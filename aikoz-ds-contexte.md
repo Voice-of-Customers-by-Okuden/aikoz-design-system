@@ -62,6 +62,7 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 - Modéliser les tokens de hover (surface.*-hover) selon la règle §6.
 - Construire verify:bridge + doctor.
 - Compléter generali-red (950/1000).
+- Scinder ce fichier : garder ici la doctrine stable, sortir l'état/backlog/prochaines-étapes dans un JOURNAL.md actualisé à chaque fin de session. CLAUDE.md pointera vers les deux.
 
 ## 9. Prochaines étapes (3 max, à réactualiser)
 1. Poser ce contexte + renvoi dans CLAUDE.md (en cours).
