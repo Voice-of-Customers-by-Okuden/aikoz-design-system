@@ -1,0 +1,56 @@
+/* ============================================================
+   shadcn-bridge.generated.css — GÉNÉRÉ depuis tokens/ (DTCG)
+   Fichier de COMPARAISON temporaire — ne remplace pas shadcn-bridge.css
+   ============================================================ */
+
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --background: oklch(0.97 0.0029 264.542); /** shadcn --background */
+  --foreground: oklch(0.1857 0.048 268.675); /** shadcn --foreground */
+  --card: oklch(1 0 0); /** shadcn --card */
+  --card-foreground: oklch(0.1857 0.048 268.675); /** shadcn --card-foreground */
+  --popover: oklch(1 0 0); /** shadcn --popover */
+  --popover-foreground: oklch(0.1857 0.048 268.675); /** shadcn --popover-foreground */
+  --primary: oklch(0.1857 0.048 268.675); /** shadcn --primary */
+  --primary-foreground: oklch(1 0 0); /** shadcn --primary-foreground */
+  --secondary: oklch(0.519 0.1792 267.186); /** shadcn --secondary */
+  --secondary-foreground: oklch(1 0 0); /** shadcn --secondary-foreground */
+  --muted: oklch(0.9402 0.0042 271.368); /** shadcn --muted */
+  --muted-foreground: oklch(0.4597 0.0139 264.429); /** shadcn --muted-foreground */
+  --accent: oklch(0.9098 0.1389 170.506); /** shadcn --accent */
+  --accent-foreground: oklch(0.1857 0.048 268.675); /** shadcn --accent-foreground */
+  --destructive: oklch(0.5732 0.1787 32.538); /** shadcn --destructive */
+  --destructive-foreground: oklch(1 0 0); /** shadcn --destructive-foreground — à auditer */
+  --border: oklch(0.8791 0.0072 268.541); /** shadcn --border */
+  --input: oklch(0.8791 0.0072 268.541); /** shadcn --input */
+  --ring: oklch(0.519 0.1792 267.186); /** shadcn --ring */
+}
+
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+.dark {
+  --background: oklch(0.159 0.0351 268.372); /** shadcn --background */
+  --foreground: oklch(1 0 0); /** shadcn --foreground */
+  --card: oklch(0.2232 0.0804 270.354); /** shadcn --card */
+  --card-foreground: oklch(1 0 0); /** shadcn --card-foreground */
+  --popover: oklch(0.2232 0.0804 270.354); /** shadcn --popover */
+  --popover-foreground: oklch(1 0 0); /** shadcn --popover-foreground */
+  --primary: oklch(0.9098 0.1389 170.506); /** shadcn --primary */
+  --primary-foreground: oklch(0.1857 0.048 268.675); /** shadcn --primary-foreground */
+  --secondary: oklch(0.8412 0.0537 269.976); /** shadcn --secondary */
+  --secondary-foreground: oklch(0.1857 0.048 268.675); /** shadcn --secondary-foreground */
+  --muted: oklch(0.2232 0.0804 270.354); /** shadcn --muted */
+  --muted-foreground: oklch(0.7921 0.0117 269.522); /** shadcn --muted-foreground */
+  --accent: oklch(0.9098 0.1389 170.506); /** shadcn --accent */
+  --accent-foreground: oklch(0.1857 0.048 268.675); /** shadcn --accent-foreground */
+  --destructive: oklch(0.664 0.151 34.373); /** shadcn --destructive */
+  --destructive-foreground: oklch(0.1857 0.048 268.675); /** shadcn --destructive-foreground — à auditer */
+  --border: oklch(0.272 0.0982 270.506); /** shadcn --border */
+  --input: oklch(0.272 0.0982 270.506); /** shadcn --input */
+  --ring: oklch(0.9098 0.1389 170.506); /** shadcn --ring */
+}

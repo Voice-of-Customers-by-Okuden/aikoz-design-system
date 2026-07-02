@@ -3,8 +3,8 @@
  */
 
 .dark {
-  --color-text-primary: #ffffff;
-  --color-nav-on: #ffffff;
+  --color-text-primary: oklch(1 0 0);
+  --color-nav-on: oklch(1 0 0);
   --color-surface-page: var(--color-midnight-blue-950);
   --color-surface-default: var(--color-midnight-blue-900);
   --color-surface-raised: var(--color-midnight-blue-800);

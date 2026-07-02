@@ -3,546 +3,1089 @@
     "midnight-blue": {
       "50": {
         "$type": "color",
-        "$value": "#F0F1F7",
-        "$description": "OKLCH(0.970 0.010 261) — rgb(240,241,247)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9591, 0.0081, 278.636],
+          "alpha": 1,
+          "hex": "#F0F1F7"
+        },
+        "$description": "Bleu nuit — fond de marque très subtil en light (surface.brand-subtle)."
       },
       "100": {
         "$type": "color",
-        "$value": "#DDE0EF",
-        "$description": "OKLCH(0.940 0.020 261) — rgb(221,224,239)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9089, 0.0206, 276.937],
+          "alpha": 1,
+          "hex": "#DDE0EF"
+        },
+        "$description": "Bleu nuit — fond primaire subtil (brand.primary-subtle)."
       },
       "200": {
         "$type": "color",
-        "$value": "#BEC4DE",
-        "$description": "OKLCH(0.880 0.040 261) — rgb(190,196,222)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8239, 0.037, 275.264],
+          "alpha": 1,
+          "hex": "#BEC4DE"
+        },
+        "$description": "Bleu nuit clair — palette de marque primaire, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#96A0CA",
-        "$description": "OKLCH(0.800 0.065 261) — rgb(150,160,202)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.7127, 0.0624, 274.279],
+          "alpha": 1,
+          "hex": "#96A0CA"
+        },
+        "$description": "Bleu nuit clair — palette de marque primaire, sans rôle sémantique dédié."
       },
       "400": {
         "$type": "color",
-        "$value": "#6878B5",
-        "$description": "OKLCH(0.700 0.090 261) — rgb(104,120,181)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5856, 0.0957, 271.971],
+          "alpha": 1,
+          "hex": "#6878B5"
+        },
+        "$description": "Bleu nuit moyen — palette de marque primaire, sans rôle sémantique dédié."
       },
       "500": {
         "$type": "color",
-        "$value": "#3E519A",
-        "$description": "OKLCH(0.590 0.110 261) — rgb(62,81,154)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4579, 0.1206, 270.112],
+          "alpha": 1,
+          "hex": "#3E519A"
+        },
+        "$description": "Bleu nuit moyen — palette de marque primaire, sans rôle sémantique dédié."
       },
       "600": {
         "$type": "color",
-        "$value": "#263478",
-        "$description": "OKLCH(0.480 0.110 261) — rgb(38,52,120)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3552, 0.117, 270.565],
+          "alpha": 1,
+          "hex": "#263478"
+        },
+        "$description": "Bleu nuit soutenu — bordure forte en dark (border.strong)."
       },
       "700": {
         "$type": "color",
-        "$value": "#162056",
-        "$description": "OKLCH(0.360 0.090 261) — rgb(22,32,86)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.272, 0.0982, 270.506],
+          "alpha": 1,
+          "hex": "#162056"
+        },
+        "$description": "Bleu nuit foncé — primaire actif (brand.primary-active) ; bordures et surface active en dark."
       },
       "800": {
         "$type": "color",
-        "$value": "#0E1640",
-        "$description": "OKLCH(0.260 0.068 261) — rgb(14,22,64)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2232, 0.0804, 270.354],
+          "alpha": 1,
+          "hex": "#0E1640"
+        },
+        "$description": "Bleu nuit foncé — primaire survolé (brand.primary-hover) ; surfaces élevées et fonds en dark."
       },
       "900": {
         "$type": "color",
-        "$value": "#0A1128",
-        "$description": "OKLCH(0.142 0.054 261) — rgb(10,17,40) — brand primary"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1857, 0.048, 268.675],
+          "alpha": 1,
+          "hex": "#0A1128"
+        },
+        "$description": "Bleu nuit — couleur primaire de marque : texte principal en light, fond de page en dark."
       },
       "950": {
         "$type": "color",
-        "$value": "#070C1C",
-        "$description": "OKLCH(0.100 0.038 261) — rgb(7,12,28)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.159, 0.0351, 268.372],
+          "alpha": 1,
+          "hex": "#070C1C"
+        },
+        "$description": "Bleu nuit profond — fond de page et surface creux en dark (surface.page/sunken)."
       },
       "1000": {
         "$type": "color",
-        "$value": "#040810",
-        "$description": "OKLCH(0.065 0.020 261) — rgb(4,8,16)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1334, 0.0203, 258.025],
+          "alpha": 1,
+          "hex": "#040810"
+        },
+        "$description": "Bleu nuit quasi noir — palette de marque primaire, sans rôle sémantique dédié."
       }
     },
     "ultramarine": {
       "50": {
         "$type": "color",
-        "$value": "#F0F1F8",
-        "$description": "OKLCH(0.970 0.012 264) — rgb(240,241,248)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9594, 0.0094, 279.688],
+          "alpha": 1,
+          "hex": "#F0F1F8"
+        },
+        "$description": "Bleu outremer — palette de marque secondaire, sans rôle sémantique dédié."
       },
       "100": {
         "$type": "color",
-        "$value": "#DCE0F5",
-        "$description": "OKLCH(0.940 0.025 264) — rgb(220,224,245)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.91, 0.0289, 277.22],
+          "alpha": 1,
+          "hex": "#DCE0F5"
+        },
+        "$description": "Bleu outremer — fond secondaire subtil (brand.secondary-subtle)."
       },
       "200": {
         "$type": "color",
-        "$value": "#BBBFEE",
-        "$description": "OKLCH(0.880 0.055 264) — rgb(187,191,238)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8174, 0.0662, 281.012],
+          "alpha": 1,
+          "hex": "#BBBFEE"
+        },
+        "$description": "Bleu outremer clair — palette de marque secondaire, sans rôle sémantique dédié."
       },
       "225": {
         "$type": "color",
-        "$value": "#BDCAEF",
-        "$description": "Ajout ad hoc (pas issu de la génération de rampe) — rgb(189,202,239), HSL(224 61% 84%). Bleu pâle pour surface.action-secondary en dark."
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8412, 0.0537, 269.976],
+          "alpha": 1,
+          "hex": "#BDCAEF"
+        },
+        "$description": "Bleu outremer pâle — surface d'action secondaire en dark (surface.action-secondary). Ajout ad hoc, hors génération de rampe."
       },
       "300": {
         "$type": "color",
-        "$value": "#8E95E4",
-        "$description": "OKLCH(0.800 0.095 264) — rgb(142,149,228)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.6961, 0.1158, 279.062],
+          "alpha": 1,
+          "hex": "#8E95E4"
+        },
+        "$description": "Bleu outremer clair — texte de navigation discret en dark (nav.on-muted)."
       },
       "400": {
         "$type": "color",
-        "$value": "#6270D9",
-        "$description": "OKLCH(0.700 0.145 264) — rgb(98,112,217)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5863, 0.1594, 274.68],
+          "alpha": 1,
+          "hex": "#6270D9"
+        },
+        "$description": "Bleu outremer moyen — palette de marque secondaire, sans rôle sémantique dédié."
       },
       "500": {
         "$type": "color",
-        "$value": "#3B5DCE",
-        "$description": "OKLCH(0.480 0.190 264) — rgb(59,93,206) — brand secondary"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.519, 0.1792, 267.186],
+          "alpha": 1,
+          "hex": "#3B5DCE"
+        },
+        "$description": "Bleu outremer — couleur secondaire de marque : texte de marque, anneau de focus et accent nav en light."
       },
       "600": {
         "$type": "color",
-        "$value": "#2D49B2",
-        "$description": "OKLCH(0.410 0.180 264) — rgb(45,73,178)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4506, 0.17, 267.567],
+          "alpha": 1,
+          "hex": "#2D49B2"
+        },
+        "$description": "Bleu outremer soutenu — secondaire survolé (brand.secondary-hover)."
       },
       "700": {
         "$type": "color",
-        "$value": "#1F3490",
-        "$description": "OKLCH(0.330 0.155 264) — rgb(31,52,144)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3727, 0.1536, 267.933],
+          "alpha": 1,
+          "hex": "#1F3490"
+        },
+        "$description": "Bleu outremer foncé — secondaire actif (brand.secondary-active)."
       },
       "800": {
         "$type": "color",
-        "$value": "#14236C",
-        "$description": "OKLCH(0.250 0.115 264) — rgb(20,35,108)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2988, 0.1276, 268.233],
+          "alpha": 1,
+          "hex": "#14236C"
+        },
+        "$description": "Bleu outremer foncé — palette de marque secondaire, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#0D1849",
-        "$description": "OKLCH(0.175 0.080 264) — rgb(13,24,73)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2362, 0.0922, 268.534],
+          "alpha": 1,
+          "hex": "#0D1849"
+        },
+        "$description": "Bleu outremer très foncé — palette de marque secondaire, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#08102E",
-        "$description": "OKLCH(0.120 0.050 264) — rgb(8,16,46)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.187, 0.0613, 268.434],
+          "alpha": 1,
+          "hex": "#08102E"
+        },
+        "$description": "Bleu outremer profond — palette de marque secondaire, sans rôle sémantique dédié."
       },
       "1000": {
         "$type": "color",
-        "$value": "#040A1A",
-        "$description": "OKLCH(0.070 0.025 264) — rgb(4,10,26)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1481, 0.0367, 263.397],
+          "alpha": 1,
+          "hex": "#040A1A"
+        },
+        "$description": "Bleu outremer quasi noir — palette de marque secondaire, sans rôle sémantique dédié."
       }
     },
     "aquamarine": {
       "50": {
         "$type": "color",
-        "$value": "#EDFFF9",
-        "$description": "OKLCH(0.975 0.030 168) — rgb(237,255,249)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9851, 0.0204, 173.972],
+          "alpha": 1,
+          "hex": "#EDFFF9"
+        },
+        "$description": "Vert aigue-marine — fond d'accent subtil (brand.accent-subtle, surface.accent)."
       },
       "100": {
         "$type": "color",
-        "$value": "#D4FFF1",
-        "$description": "OKLCH(0.960 0.060 168) — rgb(212,255,241)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.966, 0.0478, 173.535],
+          "alpha": 1,
+          "hex": "#D4FFF1"
+        },
+        "$description": "Vert aigue-marine clair — palette d'accent, sans rôle sémantique dédié."
       },
       "200": {
         "$type": "color",
-        "$value": "#ADFEE6",
-        "$description": "OKLCH(0.940 0.100 168) — rgb(173,254,230)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9382, 0.0858, 173.851],
+          "alpha": 1,
+          "hex": "#ADFEE6"
+        },
+        "$description": "Vert aigue-marine clair — palette d'accent, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#70FFD4",
-        "$description": "OKLCH(0.921 0.143 168) — rgb(112,255,212) — brand accent"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9098, 0.1389, 170.506],
+          "alpha": 1,
+          "hex": "#70FFD4"
+        },
+        "$description": "Vert aigue-marine — couleur d'accent de marque : surface d'action et anneau de focus en dark."
       },
       "400": {
         "$type": "color",
-        "$value": "#45E8B8",
-        "$description": "OKLCH(0.860 0.155 168) — rgb(69,232,184)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.836, 0.1498, 168.799],
+          "alpha": 1,
+          "hex": "#45E8B8"
+        },
+        "$description": "Vert aigue-marine — accent survolé (brand.accent-hover)."
       },
       "500": {
         "$type": "color",
-        "$value": "#18C99A",
-        "$description": "OKLCH(0.760 0.155 168) — rgb(24,201,154)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.744, 0.1472, 167.952],
+          "alpha": 1,
+          "hex": "#18C99A"
+        },
+        "$description": "Vert aigue-marine — accent actif (brand.accent-active)."
       },
       "600": {
         "$type": "color",
-        "$value": "#069E7A",
-        "$description": "OKLCH(0.640 0.140 168) — rgb(6,158,122)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.622, 0.1233, 169.137],
+          "alpha": 1,
+          "hex": "#069E7A"
+        },
+        "$description": "Vert aigue-marine soutenu — texte d'accent en light (text.accent)."
       },
       "700": {
         "$type": "color",
-        "$value": "#05785D",
-        "$description": "OKLCH(0.510 0.115 168) — rgb(5,120,93)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5099, 0.0999, 169.852],
+          "alpha": 1,
+          "hex": "#05785D"
+        },
+        "$description": "Vert aigue-marine foncé — palette d'accent, sans rôle sémantique dédié."
       },
       "800": {
         "$type": "color",
-        "$value": "#035744",
-        "$description": "OKLCH(0.380 0.085 168) — rgb(3,87,68)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4072, 0.0785, 171.198],
+          "alpha": 1,
+          "hex": "#035744"
+        },
+        "$description": "Vert aigue-marine foncé — palette d'accent, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#023A2D",
-        "$description": "OKLCH(0.260 0.060 168) — rgb(2,58,45)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.311, 0.0591, 171.89],
+          "alpha": 1,
+          "hex": "#023A2D"
+        },
+        "$description": "Vert aigue-marine très foncé — palette d'accent, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#01261C",
-        "$description": "OKLCH(0.175 0.038 168) — rgb(1,38,28)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2396, 0.046, 170.616],
+          "alpha": 1,
+          "hex": "#01261C"
+        },
+        "$description": "Vert aigue-marine profond — palette d'accent, sans rôle sémantique dédié."
       },
       "1000": {
         "$type": "color",
-        "$value": "#011410",
-        "$description": "OKLCH(0.100 0.020 168) — rgb(1,20,16)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1722, 0.0296, 178.664],
+          "alpha": 1,
+          "hex": "#011410"
+        },
+        "$description": "Vert aigue-marine quasi noir — palette d'accent, sans rôle sémantique dédié."
       }
     },
     "neutral": {
       "50": {
         "$type": "color",
-        "$value": "#F4F5F7",
-        "$description": "OKLCH(0.975 0.006 261) — rgb(244,245,247)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.97, 0.0029, 264.542],
+          "alpha": 1,
+          "hex": "#F4F5F7"
+        },
+        "$description": "Gris neutre — fond de page en light (surface.page) ; accent de marque Generali."
       },
       "100": {
         "$type": "color",
-        "$value": "#EAEBEE",
-        "$description": "OKLCH(0.950 0.008 261) — rgb(234,235,238)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9402, 0.0042, 271.368],
+          "alpha": 1,
+          "hex": "#EAEBEE"
+        },
+        "$description": "Gris neutre — surfaces creux/survol, bordure subtile et nav active en light."
       },
       "200": {
         "$type": "color",
-        "$value": "#D5D7DC",
-        "$description": "OKLCH(0.900 0.010 261) — rgb(213,215,220)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8791, 0.0072, 268.541],
+          "alpha": 1,
+          "hex": "#D5D7DC"
+        },
+        "$description": "Gris neutre — bordures par défaut, champs de saisie et surface active en light."
       },
       "300": {
         "$type": "color",
-        "$value": "#B8BBC3",
-        "$description": "OKLCH(0.820 0.012 261) — rgb(184,187,195)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.7921, 0.0117, 269.522],
+          "alpha": 1,
+          "hex": "#B8BBC3"
+        },
+        "$description": "Gris neutre — bordure forte en light, texte secondaire en dark."
       },
       "400": {
         "$type": "color",
-        "$value": "#979BA5",
-        "$description": "OKLCH(0.720 0.014 261) — rgb(151,155,165)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.6894, 0.0153, 268.433],
+          "alpha": 1,
+          "hex": "#979BA5"
+        },
+        "$description": "Gris neutre — texte désactivé en light, texte tertiaire en dark."
       },
       "500": {
         "$type": "color",
-        "$value": "#737880",
-        "$description": "OKLCH(0.600 0.015 261) — rgb(115,120,128)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5711, 0.0137, 259.824],
+          "alpha": 1,
+          "hex": "#737880"
+        },
+        "$description": "Gris neutre — texte tertiaire et navigation discrète en light."
       },
       "600": {
         "$type": "color",
-        "$value": "#545860",
-        "$description": "OKLCH(0.490 0.015 261) — rgb(84,88,96)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4597, 0.0139, 264.429],
+          "alpha": 1,
+          "hex": "#545860"
+        },
+        "$description": "Gris neutre — texte secondaire/muted en light, texte désactivé en dark."
       },
       "700": {
         "$type": "color",
-        "$value": "#3A3D45",
-        "$description": "OKLCH(0.380 0.013 261) — rgb(58,61,69)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3603, 0.0144, 269.287],
+          "alpha": 1,
+          "hex": "#3A3D45"
+        },
+        "$description": "Gris neutre foncé — palette neutre, sans rôle sémantique dédié."
       },
       "800": {
         "$type": "color",
-        "$value": "#242730",
-        "$description": "OKLCH(0.270 0.011 261) — rgb(36,39,48)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2736, 0.0172, 270.715],
+          "alpha": 1,
+          "hex": "#242730"
+        },
+        "$description": "Gris neutre foncé — palette neutre, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#171920",
-        "$description": "OKLCH(0.175 0.008 261) — rgb(23,25,32)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2145, 0.0141, 272.633],
+          "alpha": 1,
+          "hex": "#171920"
+        },
+        "$description": "Gris neutre très foncé — palette neutre, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#0E1016",
-        "$description": "OKLCH(0.115 0.006 261) — rgb(14,16,22)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1738, 0.0129, 270.571],
+          "alpha": 1,
+          "hex": "#0E1016"
+        },
+        "$description": "Gris neutre profond — palette neutre, sans rôle sémantique dédié."
       },
       "1000": {
         "$type": "color",
-        "$value": "#07080C",
-        "$description": "OKLCH(0.065 0.004 261) — rgb(7,8,12)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1351, 0.0094, 272.537],
+          "alpha": 1,
+          "hex": "#07080C"
+        },
+        "$description": "Gris neutre quasi noir — palette neutre, sans rôle sémantique dédié."
       }
     },
     "success": {
       "50": {
         "$type": "color",
-        "$value": "#EDFAF3",
-        "$description": "OKLCH(0.975 0.025 155) — rgb(237,250,243)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9735, 0.0165, 162.758],
+          "alpha": 1,
+          "hex": "#EDFAF3"
+        },
+        "$description": "Vert succès — fond de statut en light (status.success-subtle)."
       },
       "100": {
         "$type": "color",
-        "$value": "#D1F5E3",
-        "$description": "OKLCH(0.950 0.050 155) — rgb(209,245,227)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9395, 0.0445, 163.836],
+          "alpha": 1,
+          "hex": "#D1F5E3"
+        },
+        "$description": "Vert succès clair — palette de statut, sans rôle sémantique dédié."
       },
       "200": {
         "$type": "color",
-        "$value": "#9EEAC6",
-        "$description": "OKLCH(0.900 0.085 155) — rgb(158,234,198)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8775, 0.0907, 163.324],
+          "alpha": 1,
+          "hex": "#9EEAC6"
+        },
+        "$description": "Vert succès clair — palette de statut, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#5FDAA7",
-        "$description": "OKLCH(0.830 0.120 155) — rgb(95,218,167)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8048, 0.1334, 163.37],
+          "alpha": 1,
+          "hex": "#5FDAA7"
+        },
+        "$description": "Vert succès — bordure de statut en light (status.success-border)."
       },
       "400": {
         "$type": "color",
-        "$value": "#22C484",
-        "$description": "OKLCH(0.740 0.145 155) — rgb(34,196,132)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.727, 0.1571, 160.075],
+          "alpha": 1,
+          "hex": "#22C484"
+        },
+        "$description": "Vert succès — couleur de statut en dark (status.success)."
       },
       "500": {
         "$type": "color",
-        "$value": "#0DA868",
-        "$description": "OKLCH(0.640 0.150 155) — rgb(13,168,104)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.645, 0.1502, 157.349],
+          "alpha": 1,
+          "hex": "#0DA868"
+        },
+        "$description": "Vert succès — couleur de statut en light (status.success)."
       },
       "600": {
         "$type": "color",
-        "$value": "#088552",
-        "$description": "OKLCH(0.530 0.135 155) — rgb(8,133,82)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5439, 0.1259, 157.658],
+          "alpha": 1,
+          "hex": "#088552"
+        },
+        "$description": "Vert succès soutenu — palette de statut, sans rôle sémantique dédié."
       },
       "700": {
         "$type": "color",
-        "$value": "#06623D",
-        "$description": "OKLCH(0.420 0.110 155) — rgb(6,98,61)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4383, 0.0991, 158.647],
+          "alpha": 1,
+          "hex": "#06623D"
+        },
+        "$description": "Vert succès — bordure de statut en dark (status.success-border)."
       },
       "800": {
         "$type": "color",
-        "$value": "#03432A",
-        "$description": "OKLCH(0.310 0.080 155) — rgb(3,67,42)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3387, 0.0745, 160.184],
+          "alpha": 1,
+          "hex": "#03432A"
+        },
+        "$description": "Vert succès foncé — palette de statut, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#022C1C",
-        "$description": "OKLCH(0.210 0.055 155) — rgb(2,44,28)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2601, 0.0545, 162.54],
+          "alpha": 1,
+          "hex": "#022C1C"
+        },
+        "$description": "Vert succès très foncé — palette de statut, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#011C12",
-        "$description": "OKLCH(0.140 0.035 155) — rgb(1,28,18)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2015, 0.0403, 165.815],
+          "alpha": 1,
+          "hex": "#011C12"
+        },
+        "$description": "Vert succès — fond de statut en dark (status.success-subtle)."
       },
       "1000": {
         "$type": "color",
-        "$value": "#000F09",
-        "$description": "OKLCH(0.080 0.018 155) — rgb(0,15,9)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1497, 0.0298, 169.425],
+          "alpha": 1,
+          "hex": "#000F09"
+        },
+        "$description": "Vert succès quasi noir — palette de statut, sans rôle sémantique dédié."
       }
     },
     "warning": {
       "50": {
         "$type": "color",
-        "$value": "#FEFBE8",
-        "$description": "OKLCH(0.980 0.025 75) — rgb(254,251,232)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9853, 0.0251, 99.517],
+          "alpha": 1,
+          "hex": "#FEFBE8"
+        },
+        "$description": "Jaune avertissement — fond de statut en light (status.warning-subtle)."
       },
       "100": {
         "$type": "color",
-        "$value": "#FEF5C3",
-        "$description": "OKLCH(0.960 0.055 75) — rgb(254,245,195)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.965, 0.065, 98.969],
+          "alpha": 1,
+          "hex": "#FEF5C3"
+        },
+        "$description": "Jaune avertissement clair — palette de statut, sans rôle sémantique dédié."
       },
       "200": {
         "$type": "color",
-        "$value": "#FDE98A",
-        "$description": "OKLCH(0.920 0.095 75) — rgb(253,233,138)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9302, 0.1177, 97.753],
+          "alpha": 1,
+          "hex": "#FDE98A"
+        },
+        "$description": "Jaune avertissement clair — palette de statut, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#FAD94E",
-        "$description": "OKLCH(0.860 0.135 75) — rgb(250,217,78)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.889, 0.1562, 95.528],
+          "alpha": 1,
+          "hex": "#FAD94E"
+        },
+        "$description": "Jaune avertissement — bordure de statut en light (status.warning-border)."
       },
       "400": {
         "$type": "color",
-        "$value": "#F0C420",
-        "$description": "OKLCH(0.790 0.160 75) — rgb(240,196,32)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8352, 0.1649, 91.67],
+          "alpha": 1,
+          "hex": "#F0C420"
+        },
+        "$description": "Jaune avertissement — couleur de statut en dark (status.warning)."
       },
       "500": {
         "$type": "color",
-        "$value": "#D9A900",
-        "$description": "OKLCH(0.710 0.165 75) — rgb(217,169,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.7576, 0.1549, 88.059],
+          "alpha": 1,
+          "hex": "#D9A900"
+        },
+        "$description": "Jaune avertissement — couleur de statut en light (status.warning)."
       },
       "600": {
         "$type": "color",
-        "$value": "#B48800",
-        "$description": "OKLCH(0.610 0.150 75) — rgb(180,136,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.6513, 0.1334, 85.564],
+          "alpha": 1,
+          "hex": "#B48800"
+        },
+        "$description": "Jaune avertissement soutenu — palette de statut, sans rôle sémantique dédié."
       },
       "700": {
         "$type": "color",
-        "$value": "#8C6800",
-        "$description": "OKLCH(0.500 0.125 75) — rgb(140,104,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5392, 0.1106, 84.636],
+          "alpha": 1,
+          "hex": "#8C6800"
+        },
+        "$description": "Jaune avertissement — bordure de statut en dark (status.warning-border)."
       },
       "800": {
         "$type": "color",
-        "$value": "#624900",
-        "$description": "OKLCH(0.370 0.090 75) — rgb(98,73,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4206, 0.0861, 86.043],
+          "alpha": 1,
+          "hex": "#624900"
+        },
+        "$description": "Jaune avertissement foncé — palette de statut, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#3F2F00",
-        "$description": "OKLCH(0.255 0.060 75) — rgb(63,47,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3147, 0.0643, 88.065],
+          "alpha": 1,
+          "hex": "#3F2F00"
+        },
+        "$description": "Jaune avertissement très foncé — palette de statut, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#281E00",
-        "$description": "OKLCH(0.165 0.038 75) — rgb(40,30,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2402, 0.0491, 90.942],
+          "alpha": 1,
+          "hex": "#281E00"
+        },
+        "$description": "Jaune avertissement — fond de statut en dark (status.warning-subtle)."
       },
       "1000": {
         "$type": "color",
-        "$value": "#140F00",
-        "$description": "OKLCH(0.090 0.018 75) — rgb(20,15,0)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1698, 0.0349, 95.531],
+          "alpha": 1,
+          "hex": "#140F00"
+        },
+        "$description": "Jaune avertissement quasi noir — palette de statut, sans rôle sémantique dédié."
       }
     },
     "error": {
       "50": {
         "$type": "color",
-        "$value": "#FDF2EF",
-        "$description": "OKLCH(0.978 0.018 25) — rgb(253,242,239)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9689, 0.0126, 35.732],
+          "alpha": 1,
+          "hex": "#FDF2EF"
+        },
+        "$description": "Rouge erreur — fond de statut en light (status.error-subtle)."
       },
       "100": {
         "$type": "color",
-        "$value": "#FAE2DB",
-        "$description": "OKLCH(0.955 0.038 25) — rgb(250,226,219)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9304, 0.0282, 36.865],
+          "alpha": 1,
+          "hex": "#FAE2DB"
+        },
+        "$description": "Rouge erreur clair — palette de statut, sans rôle sémantique dédié."
       },
       "200": {
         "$type": "color",
-        "$value": "#F5C3B5",
-        "$description": "OKLCH(0.910 0.075 25) — rgb(245,195,181)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8577, 0.0608, 36.177],
+          "alpha": 1,
+          "hex": "#F5C3B5"
+        },
+        "$description": "Rouge erreur clair — palette de statut, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#EC9A84",
-        "$description": "OKLCH(0.840 0.115 25) — rgb(236,154,132)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.7632, 0.1041, 35.728],
+          "alpha": 1,
+          "hex": "#EC9A84"
+        },
+        "$description": "Rouge erreur — bordure de statut en light (status.error-border)."
       },
       "400": {
         "$type": "color",
-        "$value": "#E06C51",
-        "$description": "OKLCH(0.745 0.155 25) — rgb(224,108,81)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.664, 0.151, 34.373],
+          "alpha": 1,
+          "hex": "#E06C51"
+        },
+        "$description": "Rouge erreur — couleur de statut en dark (status.error)."
       },
       "500": {
         "$type": "color",
-        "$value": "#CC4229",
-        "$description": "OKLCH(0.630 0.180 25) — rgb(204,66,41)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5732, 0.1787, 32.538],
+          "alpha": 1,
+          "hex": "#CC4229"
+        },
+        "$description": "Rouge erreur — couleur de statut en light (status.error)."
       },
       "600": {
         "$type": "color",
-        "$value": "#A82D1A",
-        "$description": "OKLCH(0.520 0.175 25) — rgb(168,45,26)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4872, 0.1625, 31.673],
+          "alpha": 1,
+          "hex": "#A82D1A"
+        },
+        "$description": "Rouge erreur soutenu — palette de statut, sans rôle sémantique dédié."
       },
       "700": {
         "$type": "color",
-        "$value": "#831E10",
-        "$description": "OKLCH(0.405 0.148 25) — rgb(131,30,16)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.403, 0.1383, 31.204],
+          "alpha": 1,
+          "hex": "#831E10"
+        },
+        "$description": "Rouge erreur — bordure de statut en dark (status.error-border)."
       },
       "800": {
         "$type": "color",
-        "$value": "#5C1209",
-        "$description": "OKLCH(0.295 0.108 25) — rgb(92,18,9)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3136, 0.1077, 30.682],
+          "alpha": 1,
+          "hex": "#5C1209"
+        },
+        "$description": "Rouge erreur foncé — palette de statut, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#3B0A05",
-        "$description": "OKLCH(0.200 0.072 25) — rgb(59,10,5)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2353, 0.0775, 30.573],
+          "alpha": 1,
+          "hex": "#3B0A05"
+        },
+        "$description": "Rouge erreur très foncé — palette de statut, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#250603",
-        "$description": "OKLCH(0.132 0.045 25) — rgb(37,6,3)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1806, 0.0547, 31.469],
+          "alpha": 1,
+          "hex": "#250603"
+        },
+        "$description": "Rouge erreur — fond de statut en dark (status.error-subtle)."
       },
       "1000": {
         "$type": "color",
-        "$value": "#130301",
-        "$description": "OKLCH(0.075 0.022 25) — rgb(19,3,1)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1311, 0.036, 36.63],
+          "alpha": 1,
+          "hex": "#130301"
+        },
+        "$description": "Rouge erreur quasi noir — palette de statut, sans rôle sémantique dédié."
       }
     },
     "info": {
       "50": {
         "$type": "color",
-        "$value": "#EFF4FB",
-        "$description": "OKLCH(0.975 0.015 220) — rgb(239,244,251)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9654, 0.0108, 256.695],
+          "alpha": 1,
+          "hex": "#EFF4FB"
+        },
+        "$description": "Bleu information — fond de statut en light (status.info-subtle)."
       },
       "100": {
         "$type": "color",
-        "$value": "#D9E9F8",
-        "$description": "OKLCH(0.950 0.030 220) — rgb(217,233,248)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9266, 0.0266, 246.353],
+          "alpha": 1,
+          "hex": "#D9E9F8"
+        },
+        "$description": "Bleu information clair — palette de statut, sans rôle sémantique dédié."
       },
       "200": {
         "$type": "color",
-        "$value": "#ADD1F5",
-        "$description": "OKLCH(0.900 0.060 220) — rgb(173,209,245)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8468, 0.0634, 248.581],
+          "alpha": 1,
+          "hex": "#ADD1F5"
+        },
+        "$description": "Bleu information clair — palette de statut, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#72B4ED",
-        "$description": "OKLCH(0.820 0.095 220) — rgb(114,180,237)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.7482, 0.1068, 245.919],
+          "alpha": 1,
+          "hex": "#72B4ED"
+        },
+        "$description": "Bleu information — bordure de statut en light (status.info-border)."
       },
       "400": {
         "$type": "color",
-        "$value": "#3696E0",
-        "$description": "OKLCH(0.720 0.130 220) — rgb(54,150,224)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.6517, 0.1414, 245.972],
+          "alpha": 1,
+          "hex": "#3696E0"
+        },
+        "$description": "Bleu information — couleur de statut en dark (status.info)."
       },
       "500": {
         "$type": "color",
-        "$value": "#1478C8",
-        "$description": "OKLCH(0.610 0.155 220) — rgb(20,120,200)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5618, 0.1495, 249.537],
+          "alpha": 1,
+          "hex": "#1478C8"
+        },
+        "$description": "Bleu information — couleur de statut en light (status.info)."
       },
       "600": {
         "$type": "color",
-        "$value": "#0D5EA5",
-        "$description": "OKLCH(0.500 0.150 220) — rgb(13,94,165)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4771, 0.1343, 251.552],
+          "alpha": 1,
+          "hex": "#0D5EA5"
+        },
+        "$description": "Bleu information soutenu — palette de statut, sans rôle sémantique dédié."
       },
       "700": {
         "$type": "color",
-        "$value": "#094680",
-        "$description": "OKLCH(0.390 0.125 220) — rgb(9,70,128)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3925, 0.1134, 252.807],
+          "alpha": 1,
+          "hex": "#094680"
+        },
+        "$description": "Bleu information — bordure de statut en dark (status.info-border)."
       },
       "800": {
         "$type": "color",
-        "$value": "#053059",
-        "$description": "OKLCH(0.280 0.090 220) — rgb(5,48,89)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3067, 0.0861, 252.159],
+          "alpha": 1,
+          "hex": "#053059"
+        },
+        "$description": "Bleu information foncé — palette de statut, sans rôle sémantique dédié."
       },
       "900": {
         "$type": "color",
-        "$value": "#031F3C",
-        "$description": "OKLCH(0.185 0.060 220) — rgb(3,31,60)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.2371, 0.0651, 252.117],
+          "alpha": 1,
+          "hex": "#031F3C"
+        },
+        "$description": "Bleu information très foncé — palette de statut, sans rôle sémantique dédié."
       },
       "950": {
         "$type": "color",
-        "$value": "#021427",
-        "$description": "OKLCH(0.120 0.038 220) — rgb(2,20,39)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.1874, 0.0468, 249.751],
+          "alpha": 1,
+          "hex": "#021427"
+        },
+        "$description": "Bleu information — fond de statut en dark (status.info-subtle)."
       },
       "1000": {
         "$type": "color",
-        "$value": "#010A15",
-        "$description": "OKLCH(0.068 0.018 220) — rgb(1,10,21)"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.14, 0.031, 245.528],
+          "alpha": 1,
+          "hex": "#010A15"
+        },
+        "$description": "Bleu information quasi noir — palette de statut, sans rôle sémantique dédié."
       }
     },
     "generali-red": {
       "50": {
         "$type": "color",
-        "$value": "#FFF1EE"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9683, 0.0157, 32.009],
+          "alpha": 1,
+          "hex": "#FFF1EE"
+        },
+        "$description": "Rouge Generali — fond d'accent subtil (brand.accent-subtle, marque Generali)."
       },
       "100": {
         "$type": "color",
-        "$value": "#FFDFDA"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.9287, 0.0362, 28.337],
+          "alpha": 1,
+          "hex": "#FFDFDA"
+        },
+        "$description": "Rouge Generali — fonds primaire et secondaire subtils (marque Generali)."
       },
       "200": {
         "$type": "color",
-        "$value": "#FFC3BA"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.8687, 0.0704, 28.324],
+          "alpha": 1,
+          "hex": "#FFC3BA"
+        },
+        "$description": "Rouge Generali clair — palette de marque Generali, sans rôle sémantique dédié."
       },
       "300": {
         "$type": "color",
-        "$value": "#FC9E90"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.7911, 0.1149, 29.044],
+          "alpha": 1,
+          "hex": "#FC9E90"
+        },
+        "$description": "Rouge Generali clair — palette de marque Generali, sans rôle sémantique dédié."
       },
       "400": {
         "$type": "color",
-        "$value": "#EA6C5D"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.6801, 0.1592, 28.8],
+          "alpha": 1,
+          "hex": "#EA6C5D"
+        },
+        "$description": "Rouge Generali moyen — palette de marque Generali, sans rôle sémantique dédié."
       },
       "500": {
         "$type": "color",
-        "$value": "#C21B17",
-        "$description": "Generali brand red — Pantone 180 C, RGB 194-27-23"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.5215, 0.1995, 28.498],
+          "alpha": 1,
+          "hex": "#C21B17"
+        },
+        "$description": "Rouge Generali — couleur primaire de marque Generali (Pantone 180 C)."
       },
       "600": {
         "$type": "color",
-        "$value": "#AA1B17",
-        "$description": "Generali dark red — Pantone 7628 C"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.4759, 0.1779, 28.298],
+          "alpha": 1,
+          "hex": "#AA1B17"
+        },
+        "$description": "Rouge Generali foncé — primaire survolé (Pantone 7628 C)."
       },
       "700": {
         "$type": "color",
-        "$value": "#85100D"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3957, 0.1505, 28.463],
+          "alpha": 1,
+          "hex": "#85100D"
+        },
+        "$description": "Rouge Generali foncé — primaire actif et couleur secondaire (marque Generali)."
       },
       "800": {
         "$type": "color",
-        "$value": "#5F0D09"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.3152, 0.115, 28.695],
+          "alpha": 1,
+          "hex": "#5F0D09"
+        },
+        "$description": "Rouge Generali foncé — secondaire survolé (marque Generali)."
       },
       "900": {
         "$type": "color",
-        "$value": "#400906"
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.245, 0.0844, 28.706],
+          "alpha": 1,
+          "hex": "#400906"
+        },
+        "$description": "Rouge Generali très foncé — secondaire actif et texte on-accent (marque Generali)."
       }
     }
   },

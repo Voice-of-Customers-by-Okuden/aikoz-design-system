@@ -3,13 +3,13 @@
  */
 
 :root {
-  --color-surface-default: #ffffff;
-  --color-surface-raised: #ffffff;
-  --color-surface-overlay: #ffffff;
-  --color-text-inverse: #ffffff;
-  --color-text-on-action: #ffffff; /** Texte sur surface.action. Blanc en light, midnight en dark. */
-  --color-text-on-action-secondary: #ffffff; /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
-  --color-nav-surface: #ffffff;
+  --color-surface-default: oklch(1 0 0);
+  --color-surface-raised: oklch(1 0 0);
+  --color-surface-overlay: oklch(1 0 0);
+  --color-text-inverse: oklch(1 0 0);
+  --color-text-on-action: oklch(1 0 0); /** Texte sur surface.action. Blanc en light, midnight en dark. */
+  --color-text-on-action-secondary: oklch(1 0 0); /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
+  --color-nav-surface: oklch(1 0 0);
   --color-surface-page: var(--color-neutral-50);
   --color-surface-sunken: var(--color-neutral-100);
   --color-surface-hover: var(--color-neutral-100);
