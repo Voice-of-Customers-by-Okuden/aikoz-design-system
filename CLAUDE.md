@@ -1,3 +1,5 @@
+> **À lire en priorité au démarrage : [aikoz-ds-contexte.md](./aikoz-ds-contexte.md)** — contexte projet, façon de travailler, décisions verrouillées, backlog.
+
 ## Accessibilité
 Avant de figer tout composant : appliquer la checklist de `a11y.md`.
 - Auditer TOUTES les paires de contraste, pas seulement texte/fond : aussi élément/conteneur (badge/carte, bordure/fond, trait/fond) — WCAG 1.4.11, seuil 3:1.
