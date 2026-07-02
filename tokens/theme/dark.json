@@ -162,6 +162,11 @@
         "$type": "color",
         "$value": "{color.success.700}"
       },
+      "success-text": {
+        "$type": "color",
+        "$value": "{color.success.400}",
+        "$description": "Texte/emphase succès, contraste AA sur surface (success.600 light, .400 dark). Mappé sur --success."
+      },
       "warning": {
         "$type": "color",
         "$value": "{color.warning.400}"
@@ -185,6 +190,11 @@
       "error-border": {
         "$type": "color",
         "$value": "{color.error.700}"
+      },
+      "error-text": {
+        "$type": "color",
+        "$value": "{color.error.400}",
+        "$description": "Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text."
       },
       "info": {
         "$type": "color",
@@ -223,6 +233,13 @@
       "accent": {
         "$type": "color",
         "$value": "{color.brand.accent}"
+      }
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.aquamarine.300}",
+        "$description": "Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1."
       }
     }
   }

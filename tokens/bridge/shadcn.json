@@ -93,5 +93,20 @@
     "$type": "color",
     "$value": "{color.border.focus}",
     "$description": "shadcn --ring"
+  },
+  "success": {
+    "$type": "color",
+    "$value": "{color.status.success-text}",
+    "$description": "extension DS — texte/emphase succès (utilisé par KpiCard)"
+  },
+  "destructive-text": {
+    "$type": "color",
+    "$value": "{color.status.error-text}",
+    "$description": "extension DS — texte/emphase erreur (utilisé par KpiCard)"
+  },
+  "chart-1": {
+    "$type": "color",
+    "$value": "{color.chart.1}",
+    "$description": "extension DS — tracé série de données 1"
   }
 }

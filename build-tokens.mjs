@@ -79,8 +79,8 @@ await make('brand-generali.css', [PRIM, brand('generali')], { selector: '[data-b
 await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
 await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector: '.dark',  filter: inPath('theme/dark'), transforms: cssOklch }).buildAllPlatforms();
 
-// Couche 4 (TEMPORAIRE, comparaison uniquement) — bridge shadcn généré depuis le DTCG, oklch() complet.
-// Ne remplace pas bridge/shadcn-bridge.css. Écrit dans bridge/ pour être diffé contre le .bak à la main.
+// Couche 4 — bridge shadcn : RUNTIME généré depuis le DTCG, oklch() complet.
+// C'est le fichier consommé par les composants (playground/demo). Ne pas éditer à la main.
 const bridgeTransforms = ['attribute/cti', 'name/kebab', 'color/oklch'];
 await make('.tmp-shadcn-light.css', [PRIM, brand('aikoz'), theme('light'), bridgeSrc], {
   selector: ':root', filter: inPath('bridge/shadcn'), refs: false,
@@ -91,9 +91,9 @@ await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), bridgeS
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
 
-const bridgeHeader = `/* ============================================================\n   shadcn-bridge.generated.css — GÉNÉRÉ depuis tokens/ (DTCG)\n   Fichier de COMPARAISON temporaire — ne remplace pas shadcn-bridge.css\n   ============================================================ */\n\n`;
+const bridgeHeader = `/* ============================================================\n   shadcn-bridge.css — GÉNÉRÉ depuis tokens/ (DTCG) par build-tokens.mjs\n   NE PAS ÉDITER À LA MAIN — régénérer via: npm run build:tokens\n   ============================================================ */\n\n`;
 fs.writeFileSync(
-  'bridge/shadcn-bridge.generated.css',
+  'bridge/shadcn-bridge.css',
   bridgeHeader +
     fs.readFileSync('bridge/.tmp-shadcn-light.css', 'utf8') +
     '\n' +

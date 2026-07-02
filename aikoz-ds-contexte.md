@@ -26,8 +26,7 @@ Build via Style Dictionary (build-tokens.mjs, config inline) depuis le DTCG (tok
 1. Primitives (tokens/primitives.json → build/primitives.css) : palette brute, rampes 50→1000 (12 paliers) pour midnight-blue, ultramarine, aquamarine, neutral, success, warning, error, info ; generali-red s'arrête à 900. Layout + typo complètes. Couleurs au **format DTCG objet** : `$value` = { colorSpace: "oklch", components: [L, C, H], alpha, hex }. Les `components` OKLCH font foi, `hex` = repli sRGB. `$description` décrit l'**usage** de la teinte. Sortie CSS en `oklch()` complet (transform `color/oklch`, composants source verbatim).
 2. Brand (tokens/brand/aikoz.json → build/brand-aikoz.css) : rôles de marque, constants (ne varient pas par thème).
 3. Theme sémantique (tokens/theme/{light,dark}.json → build/theme-{light,dark}.css) : rôles adaptatifs, préfixe --color-{namespace}-{role}, namespaces surface/text/border/status/nav, sélecteurs :root (light) / .dark (dark).
-4. Bridge : mappe chaque variable shadcn vers un token sémantique, en **oklch() complet** (transform `color/oklch`). Consommation : `var(--x)` brut côté Tailwind/composants — JAMAIS `oklch(var(--x))` / `hsl(var(--x))` ; transparence via `color-mix(in oklch, var(--x), transparent N%)`.
-   ⚠️ Migration génération inachevée : `build:tokens` écrit `bridge/shadcn-bridge.generated.css` (comparaison), mais le **runtime** est encore `bridge/shadcn-bridge.css`, maintenu à part. Tant que la bascule (generated → runtime) n'est pas faite, ce fichier reste hand-maintained — les valeurs oklch et les extensions (--success, --destructive-text, --chart-1) y ont été posées à la main (2026-07-02). Cible : le générer et supprimer l'édition manuelle.
+4. Bridge (tokens/bridge/shadcn.json → bridge/shadcn-bridge.css) : RUNTIME **généré** depuis le DTCG (transform `color/oklch`), consommé par playground/demo. Mappe chaque variable shadcn vers un token sémantique, en **oklch() complet**. Consommation : `var(--x)` brut côté Tailwind/composants — JAMAIS `oklch(var(--x))` / `hsl(var(--x))` ; transparence via `color-mix(in oklch, var(--x), transparent N%)`. Extensions DS (au-delà du set shadcn) : `--success`, `--destructive-text`, `--chart-1`, adossées aux rôles sémantiques `status.success-text` / `status.error-text` / `chart.1` (valeurs par mode light/dark). NE JAMAIS éditer à la main — régénérer.
 Régénération : npm run build:tokens.
 Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour agnosticisme framework + marque blanche.
 
@@ -36,7 +35,7 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 - Docs racine : CLAUDE.md (lu auto, pointe vers ce fichier + a11y.md), DESIGN.md (brand/tokens, verrou Arnaud), a11y.md, README.md.
 - KpiCard : livré. Zéro dépendance à --primary/--secondary/--accent.
 - Bridge réparé (2026-07-02, commit fc1eadc) : généré depuis le DTCG, les 3 bugs dark réglés à la source. Vérifié au rendu : dark = default aquamarine, secondary pâle, outline bordure aquamarine.
-- Migration OKLCH + DTCG objet (2026-07-02, commits 8f8db40 + 1a775c9) : primitives couleur en DTCG objet (components oklch + hex), $description = usage ; sortie CSS tout en oklch() ; runtime bridge + tailwind + composants en `var(--x)` brut + `color-mix` (plus aucun `hsl(var())`/`oklch(var())`). Couleurs préservées (round-trip Δ=0/255), contraste AA revérifié light+dark. Extensions bridge câblées : --success / --destructive-text / --chart-1 (valeurs par mode, a11y). Fonctionne sur Tailwind v3 (color-mix + oklch passent en valeurs arbitraires, vérifié).
+- Migration OKLCH + DTCG objet (2026-07-02) : primitives couleur en DTCG objet (components oklch + hex), $description = usage ; sortie CSS tout en oklch() ; tailwind + composants en `var(--x)` brut + `color-mix` (plus aucun `hsl(var())`/`oklch(var())`). Couleurs préservées (round-trip Δ=0/255), contraste AA revérifié light+dark. **Bridge désormais généré** (fin de l'édition manuelle) avec extensions DS `--success`/`--destructive-text`/`--chart-1` adossées à `status.success-text`/`status.error-text`/`chart.1` (valeurs par mode). Fonctionne sur Tailwind v3 (color-mix + oklch en valeurs arbitraires, vérifié).
 - Button : vague 1 construite mais UX/UI à revoir (hiérarchie light : secondary domine le default). En pause. button.tsx sans report hovers ni max-width.
 - Registry shadcn : build OK. Install tierce bloquée sur divergence Tailwind v3 (Aikoz) vs v4.
 
@@ -52,7 +51,7 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 - Forme/typo : pilule pour actions, radius léger pour champs. Label medium (500), casse normale. Tailles sm 36 / md 44 (défaut) / lg 48px.
 
 ## 7. Pièges & dettes
-- NE JAMAIS éditer bridge/shadcn-bridge.css à la main (cause n°1 des bugs de la journée). Toujours DTCG + build:tokens. ⚠️ Exception subie : `build:tokens` ne génère PAS ce fichier runtime (il écrit `.generated.css` de comparaison), donc l'oklch + les extensions y ont été posés à la main le 2026-07-02. Dette : faire la bascule generated→runtime pour re-fermer la règle.
+- NE JAMAIS éditer bridge/shadcn-bridge.css à la main (cause n°1 des bugs de la journée). Toujours DTCG + build:tokens. ✅ Depuis 2026-07-02, `build:tokens` génère directement ce fichier runtime (fin de l'édition manuelle, dette fermée) ; `shadcn-bridge.generated.css` supprimé. Reste à construire `verify:bridge` (détecter une édition manuelle / un oubli de régénération) idéalement en CI.
 - À construire : npm run verify:bridge (régénère et compare au commité, détecte édition manuelle / oubli de régénération), idéalement en CI.
 - Tailwind v3 : pas de classes interpolées (bg-x/${n} est purgé) — écrire en toutes lettres.
 - git config user.email : commits signés placeholder, pas le vrai mail Okuden.
@@ -60,18 +59,18 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 - README périmé (dit à tort que Claude Code lit DESIGN.md auto — il ne lit que CLAUDE.md).
 
 ## 8. Backlog / à auditer
-- Audit contraste des valeurs changées par la réparation : --muted-foreground dark (neutral.300 non audité, note dans theme/dark.json), --destructive dark (error.400), --secondary-foreground dark (midnight sur pâle).
+- ✅ Audit contraste (2026-07-02, bridge généré) : muted-foreground (neutral.300) 6,5–10:1, destructive/destructive-text, secondary-foreground, success/chart-1 — toutes paires texte AA + interactives OK, light et dark. Reste à surveiller au niveau composant.
+- **border / input à ~1,3:1 (< 3:1)** : filets hairline (neutral.200), préexistant, inchangé par la bascule. La règle CLAUDE.md vise 3:1 sur bordure/fond → décision de design (assombrir --border impacte tout le rendu, sign-off visuel requis). À trancher hors périmètre de la migration OKLCH.
 - Button : hiérarchie light, puis report hovers + max-width dans button.tsx.
 - Modéliser les tokens de hover (surface.*-hover) selon la règle §6.
 - Construire verify:bridge + doctor.
-- Bascule bridge generated→runtime : faire de `shadcn-bridge.generated.css` la source consommée (ou générer directement `shadcn-bridge.css`), y intégrer les extensions --success/--destructive-text/--chart-1 via tokens/bridge/shadcn.json + rôles sémantiques, et supprimer l'édition manuelle.
 - --radius indéfini (utilisé par tailwind.config borderRadius) — non-couleur, à câbler.
 - Compléter generali-red (950/1000).
 - Scinder ce fichier : garder ici la doctrine stable, sortir l'état/backlog/prochaines-étapes dans un JOURNAL.md actualisé à chaque fin de session. CLAUDE.md pointera vers les deux.
 
 ## 9. Prochaines étapes (3 max, à réactualiser)
 1. Reprendre le Button : hiérarchie UX light, puis hovers + max-width.
-2. Bascule bridge generated→runtime (fermer la dette d'édition manuelle) + verify:bridge.
+2. Construire verify:bridge (garde-fou anti-édition manuelle) + doctor.
 3. Décision Tailwind v3/v4 avec Pietro (l'oklch, lui, tourne déjà sur v3).
 
 ## En attente externe
