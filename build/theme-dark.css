@@ -13,12 +13,15 @@
   --color-surface-hover: var(--color-midnight-blue-800);
   --color-surface-active: var(--color-midnight-blue-700);
   --color-surface-brand-subtle: var(--color-midnight-blue-800);
+  --color-surface-action-secondary: var(--color-ultramarine-225); /** Surface d'action secondaire. Ultramarine en light, bleu pâle en dark. */
   --color-text-secondary: var(--color-neutral-300);
   --color-text-tertiary: var(--color-neutral-400);
   --color-text-disabled: var(--color-neutral-600);
-  --color-text-muted: var(--color-neutral-300); /** Texte secondaire discret (muted). Mappé sur --muted-foreground. */
+  --color-text-muted: var(--color-neutral-300); /** Texte secondaire discret (muted). Mappé sur --muted-foreground. AUDIT REQUIS : l'ancien bridge utilisait #9ca3af (contraste 6,68:1 audité sur fond dark) ; aucune primitive neutral n'égale cette valeur (la plus proche, neutral.400 #979BA5, est plus sombre — substitution non sûre sans re-mesure du contraste). */
   --color-text-inverse: var(--color-midnight-blue-900);
   --color-text-accent: var(--color-aquamarine-300);
+  --color-text-on-action: var(--color-midnight-blue-900); /** Texte sur surface.action. Blanc en light, midnight en dark. */
+  --color-text-on-action-secondary: var(--color-midnight-blue-900); /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
   --color-border-default: var(--color-midnight-blue-700);
   --color-border-subtle: var(--color-midnight-blue-800);
   --color-border-strong: var(--color-midnight-blue-600);
@@ -44,6 +47,7 @@
   --color-surface-brand-hover: var(--color-brand-primary-hover);
   --color-surface-brand-active: var(--color-brand-primary-active);
   --color-surface-accent: var(--color-brand-accent-subtle);
+  --color-surface-action: var(--color-brand-accent); /** Surface d'action principale (bouton default). Midnight en light, aquamarine en dark. */
   --color-text-brand: var(--color-brand-secondary);
   --color-text-brand-hover: var(--color-brand-secondary-hover);
   --color-text-on-accent: var(--color-brand-on-accent);

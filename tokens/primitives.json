@@ -78,6 +78,11 @@
         "$value": "#BBBFEE",
         "$description": "OKLCH(0.880 0.055 264) — rgb(187,191,238)"
       },
+      "225": {
+        "$type": "color",
+        "$value": "#BDCAEF",
+        "$description": "Ajout ad hoc (pas issu de la génération de rampe) — rgb(189,202,239), HSL(224 61% 84%). Bleu pâle pour surface.action-secondary en dark."
+      },
       "300": {
         "$type": "color",
         "$value": "#8E95E4",

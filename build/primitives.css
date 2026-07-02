@@ -18,6 +18,7 @@
   --color-ultramarine-50: #f0f1f8; /** OKLCH(0.970 0.012 264) — rgb(240,241,248) */
   --color-ultramarine-100: #dce0f5; /** OKLCH(0.940 0.025 264) — rgb(220,224,245) */
   --color-ultramarine-200: #bbbfee; /** OKLCH(0.880 0.055 264) — rgb(187,191,238) */
+  --color-ultramarine-225: #bdcaef; /** Ajout ad hoc (pas issu de la génération de rampe) — rgb(189,202,239), HSL(224 61% 84%). Bleu pâle pour surface.action-secondary en dark. */
   --color-ultramarine-300: #8e95e4; /** OKLCH(0.800 0.095 264) — rgb(142,149,228) */
   --color-ultramarine-400: #6270d9; /** OKLCH(0.700 0.145 264) — rgb(98,112,217) */
   --color-ultramarine-500: #3b5dce; /** OKLCH(0.480 0.190 264) — rgb(59,93,206) — brand secondary */

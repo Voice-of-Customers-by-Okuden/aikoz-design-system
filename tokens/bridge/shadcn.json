@@ -1,0 +1,97 @@
+{
+  "background": {
+    "$type": "color",
+    "$value": "{color.surface.page}",
+    "$description": "shadcn --background"
+  },
+  "foreground": {
+    "$type": "color",
+    "$value": "{color.text.primary}",
+    "$description": "shadcn --foreground"
+  },
+  "card": {
+    "$type": "color",
+    "$value": "{color.surface.raised}",
+    "$description": "shadcn --card"
+  },
+  "card-foreground": {
+    "$type": "color",
+    "$value": "{color.text.primary}",
+    "$description": "shadcn --card-foreground"
+  },
+  "popover": {
+    "$type": "color",
+    "$value": "{color.surface.raised}",
+    "$description": "shadcn --popover"
+  },
+  "popover-foreground": {
+    "$type": "color",
+    "$value": "{color.text.primary}",
+    "$description": "shadcn --popover-foreground"
+  },
+  "primary": {
+    "$type": "color",
+    "$value": "{color.surface.action}",
+    "$description": "shadcn --primary"
+  },
+  "primary-foreground": {
+    "$type": "color",
+    "$value": "{color.text.on-action}",
+    "$description": "shadcn --primary-foreground"
+  },
+  "secondary": {
+    "$type": "color",
+    "$value": "{color.surface.action-secondary}",
+    "$description": "shadcn --secondary"
+  },
+  "secondary-foreground": {
+    "$type": "color",
+    "$value": "{color.text.on-action-secondary}",
+    "$description": "shadcn --secondary-foreground"
+  },
+  "muted": {
+    "$type": "color",
+    "$value": "{color.surface.hover}",
+    "$description": "shadcn --muted"
+  },
+  "muted-foreground": {
+    "$type": "color",
+    "$value": "{color.text.muted}",
+    "$description": "shadcn --muted-foreground"
+  },
+  "accent": {
+    "$type": "color",
+    "$value": "{color.brand.accent}",
+    "$description": "shadcn --accent"
+  },
+  "accent-foreground": {
+    "$type": "color",
+    "$value": "{color.text.on-accent}",
+    "$description": "shadcn --accent-foreground"
+  },
+  "destructive": {
+    "$type": "color",
+    "$value": "{color.status.error}",
+    "$description": "shadcn --destructive"
+  },
+  "destructive-foreground": {
+    "$type": "color",
+    "$value": "{color.text.inverse}",
+    "$description": "shadcn --destructive-foreground — à auditer"
+  },
+  "border": {
+    "$type": "color",
+    "$value": "{color.border.default}",
+    "$description": "shadcn --border"
+  },
+  "input": {
+    "$type": "color",
+    "$value": "{color.border.input}",
+    "$description": "shadcn --input"
+  },
+  "ring": {
+    "$type": "color",
+    "$value": "{color.border.focus}",
+    "$description": "shadcn --ring"
+  }
+}
