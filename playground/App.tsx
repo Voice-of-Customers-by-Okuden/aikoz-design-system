@@ -1,7 +1,45 @@
 import { useState } from "react";
 import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
+import { Button } from "@registry/aikoz/button/button";
 
 const DEMO_SPARKLINE = [3.6, 3.7, 3.8, 3.7, 3.9, 4.0, 3.9, 4.1, 4.0, 4.2, 4.2, 4.2];
+
+const BUTTON_VARIANTS = ["default", "secondary", "outline", "ghost"] as const;
+const BUTTON_SIZES = ["sm", "md", "lg"] as const;
+
+function ButtonDemoContent() {
+  return (
+    <>
+      {/* Matrice 4 variants × 3 tailles */}
+      <div className="space-y-4">
+        {BUTTON_SIZES.map((size) => (
+          <div key={size} className="flex items-center gap-4 flex-wrap">
+            <span className="w-8 shrink-0 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              {size}
+            </span>
+            {BUTTON_VARIANTS.map((variant) => (
+              <Button key={variant} variant={variant} size={size}>
+                {variant}
+              </Button>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      {/* États du variant default */}
+      <h3 className="text-sm font-semibold text-foreground mt-8 mb-3">
+        Variant default — états
+      </h3>
+      <div className="flex flex-wrap items-center gap-4">
+        <Button>Normal</Button>
+        <Button disabled>Disabled</Button>
+        <Button>
+          Un intitulé de bouton nettement plus long pour tester l'empilement du texte
+        </Button>
+      </div>
+    </>
+  );
+}
 
 export default function App() {
   const [dark, setDark] = useState(false);
@@ -101,6 +139,35 @@ export default function App() {
         {/* Bandeau de statut bridge */}
         <div className="mt-12 p-4 rounded-[var(--radius)] bg-muted text-muted-foreground text-sm border border-border">
           Bridge OK · tokens Aikoz → variables shadcn → classes Tailwind · dark mode via classe <code className="font-mono bg-background px-1 rounded">.dark</code> sur &lt;html&gt;
+        </div>
+
+        {/* Button — matrice 4 variants × 3 tailles, light + dark côte à côte */}
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Button — variants × tailles
+        </h2>
+
+        {/* Zone fond clair */}
+        <div className="rounded-[var(--radius)] border border-border overflow-hidden mb-6">
+          <div className="bg-background text-foreground p-6">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Zone claire
+            </span>
+            <div className="mt-4">
+              <ButtonDemoContent />
+            </div>
+          </div>
+        </div>
+
+        {/* Zone fond dark — .dark scopée à ce conteneur, indépendante du toggle global */}
+        <div className="dark rounded-[var(--radius)] border border-border overflow-hidden mb-6">
+          <div className="bg-background text-foreground p-6">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Zone dark
+            </span>
+            <div className="mt-4">
+              <ButtonDemoContent />
+            </div>
+          </div>
         </div>
 
       </div>
