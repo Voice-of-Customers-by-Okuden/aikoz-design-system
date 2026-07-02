@@ -48,6 +48,16 @@
       "accent": {
         "$type": "color",
         "$value": "{color.brand.accent-subtle}"
+      },
+      "action": {
+        "$type": "color",
+        "$value": "{color.brand.primary}",
+        "$description": "Surface d'action principale (bouton default). Midnight en light, aquamarine en dark."
+      },
+      "action-secondary": {
+        "$type": "color",
+        "$value": "{color.brand.secondary}",
+        "$description": "Surface d'action secondaire. Ultramarine en light, bleu pâle en dark."
       }
     },
     "text": {
@@ -66,6 +76,11 @@
       "disabled": {
         "$type": "color",
         "$value": "{color.neutral.400}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Texte secondaire discret (muted). Mappé sur --muted-foreground."
       },
       "inverse": {
         "$type": "color",
@@ -86,6 +101,16 @@
       "on-accent": {
         "$type": "color",
         "$value": "{color.brand.on-accent}"
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "#FFFFFF",
+        "$description": "Texte sur surface.action. Blanc en light, midnight en dark."
+      },
+      "on-action-secondary": {
+        "$type": "color",
+        "$value": "#FFFFFF",
+        "$description": "Texte sur surface.action-secondary. Blanc en light, midnight en dark."
       }
     },
     "border": {
@@ -103,7 +128,8 @@
       },
       "focus": {
         "$type": "color",
-        "$value": "{color.brand.secondary}"
+        "$value": "{color.brand.secondary}",
+        "$description": "Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11)."
       },
       "brand": {
         "$type": "color",
@@ -116,6 +142,11 @@
       "disabled": {
         "$type": "color",
         "$value": "{color.neutral.200}"
+      },
+      "input": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "Bordure des champs de saisie. Mappé sur --input."
       }
     },
     "status": {
@@ -130,6 +161,11 @@
       "success-border": {
         "$type": "color",
         "$value": "{color.success.300}"
+      },
+      "success-text": {
+        "$type": "color",
+        "$value": "{color.success.600}",
+        "$description": "Texte/emphase succès, contraste AA sur surface (success.600 light, .400 dark). Mappé sur --success."
       },
       "warning": {
         "$type": "color",
@@ -154,6 +190,11 @@
       "error-border": {
         "$type": "color",
         "$value": "{color.error.300}"
+      },
+      "error-text": {
+        "$type": "color",
+        "$value": "{color.error.600}",
+        "$description": "Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text."
       },
       "info": {
         "$type": "color",
@@ -192,6 +233,13 @@
       "accent": {
         "$type": "color",
         "$value": "{color.brand.secondary}"
+      }
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.ultramarine.500}",
+        "$description": "Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1."
       }
     }
   }

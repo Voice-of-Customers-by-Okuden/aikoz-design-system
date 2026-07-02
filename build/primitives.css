@@ -3,112 +3,113 @@
  */
 
 :root {
-  --color-midnight-blue-50: #f0f1f7; /** OKLCH(0.970 0.010 261) — rgb(240,241,247) */
-  --color-midnight-blue-100: #dde0ef; /** OKLCH(0.940 0.020 261) — rgb(221,224,239) */
-  --color-midnight-blue-200: #bec4de; /** OKLCH(0.880 0.040 261) — rgb(190,196,222) */
-  --color-midnight-blue-300: #96a0ca; /** OKLCH(0.800 0.065 261) — rgb(150,160,202) */
-  --color-midnight-blue-400: #6878b5; /** OKLCH(0.700 0.090 261) — rgb(104,120,181) */
-  --color-midnight-blue-500: #3e519a; /** OKLCH(0.590 0.110 261) — rgb(62,81,154) */
-  --color-midnight-blue-600: #263478; /** OKLCH(0.480 0.110 261) — rgb(38,52,120) */
-  --color-midnight-blue-700: #162056; /** OKLCH(0.360 0.090 261) — rgb(22,32,86) */
-  --color-midnight-blue-800: #0e1640; /** OKLCH(0.260 0.068 261) — rgb(14,22,64) */
-  --color-midnight-blue-900: #0a1128; /** OKLCH(0.142 0.054 261) — rgb(10,17,40) — brand primary */
-  --color-midnight-blue-950: #070c1c; /** OKLCH(0.100 0.038 261) — rgb(7,12,28) */
-  --color-midnight-blue-1000: #040810; /** OKLCH(0.065 0.020 261) — rgb(4,8,16) */
-  --color-ultramarine-50: #f0f1f8; /** OKLCH(0.970 0.012 264) — rgb(240,241,248) */
-  --color-ultramarine-100: #dce0f5; /** OKLCH(0.940 0.025 264) — rgb(220,224,245) */
-  --color-ultramarine-200: #bbbfee; /** OKLCH(0.880 0.055 264) — rgb(187,191,238) */
-  --color-ultramarine-300: #8e95e4; /** OKLCH(0.800 0.095 264) — rgb(142,149,228) */
-  --color-ultramarine-400: #6270d9; /** OKLCH(0.700 0.145 264) — rgb(98,112,217) */
-  --color-ultramarine-500: #3b5dce; /** OKLCH(0.480 0.190 264) — rgb(59,93,206) — brand secondary */
-  --color-ultramarine-600: #2d49b2; /** OKLCH(0.410 0.180 264) — rgb(45,73,178) */
-  --color-ultramarine-700: #1f3490; /** OKLCH(0.330 0.155 264) — rgb(31,52,144) */
-  --color-ultramarine-800: #14236c; /** OKLCH(0.250 0.115 264) — rgb(20,35,108) */
-  --color-ultramarine-900: #0d1849; /** OKLCH(0.175 0.080 264) — rgb(13,24,73) */
-  --color-ultramarine-950: #08102e; /** OKLCH(0.120 0.050 264) — rgb(8,16,46) */
-  --color-ultramarine-1000: #040a1a; /** OKLCH(0.070 0.025 264) — rgb(4,10,26) */
-  --color-aquamarine-50: #edfff9; /** OKLCH(0.975 0.030 168) — rgb(237,255,249) */
-  --color-aquamarine-100: #d4fff1; /** OKLCH(0.960 0.060 168) — rgb(212,255,241) */
-  --color-aquamarine-200: #adfee6; /** OKLCH(0.940 0.100 168) — rgb(173,254,230) */
-  --color-aquamarine-300: #70ffd4; /** OKLCH(0.921 0.143 168) — rgb(112,255,212) — brand accent */
-  --color-aquamarine-400: #45e8b8; /** OKLCH(0.860 0.155 168) — rgb(69,232,184) */
-  --color-aquamarine-500: #18c99a; /** OKLCH(0.760 0.155 168) — rgb(24,201,154) */
-  --color-aquamarine-600: #069e7a; /** OKLCH(0.640 0.140 168) — rgb(6,158,122) */
-  --color-aquamarine-700: #05785d; /** OKLCH(0.510 0.115 168) — rgb(5,120,93) */
-  --color-aquamarine-800: #035744; /** OKLCH(0.380 0.085 168) — rgb(3,87,68) */
-  --color-aquamarine-900: #023a2d; /** OKLCH(0.260 0.060 168) — rgb(2,58,45) */
-  --color-aquamarine-950: #01261c; /** OKLCH(0.175 0.038 168) — rgb(1,38,28) */
-  --color-aquamarine-1000: #011410; /** OKLCH(0.100 0.020 168) — rgb(1,20,16) */
-  --color-neutral-50: #f4f5f7; /** OKLCH(0.975 0.006 261) — rgb(244,245,247) */
-  --color-neutral-100: #eaebee; /** OKLCH(0.950 0.008 261) — rgb(234,235,238) */
-  --color-neutral-200: #d5d7dc; /** OKLCH(0.900 0.010 261) — rgb(213,215,220) */
-  --color-neutral-300: #b8bbc3; /** OKLCH(0.820 0.012 261) — rgb(184,187,195) */
-  --color-neutral-400: #979ba5; /** OKLCH(0.720 0.014 261) — rgb(151,155,165) */
-  --color-neutral-500: #737880; /** OKLCH(0.600 0.015 261) — rgb(115,120,128) */
-  --color-neutral-600: #545860; /** OKLCH(0.490 0.015 261) — rgb(84,88,96) */
-  --color-neutral-700: #3a3d45; /** OKLCH(0.380 0.013 261) — rgb(58,61,69) */
-  --color-neutral-800: #242730; /** OKLCH(0.270 0.011 261) — rgb(36,39,48) */
-  --color-neutral-900: #171920; /** OKLCH(0.175 0.008 261) — rgb(23,25,32) */
-  --color-neutral-950: #0e1016; /** OKLCH(0.115 0.006 261) — rgb(14,16,22) */
-  --color-neutral-1000: #07080c; /** OKLCH(0.065 0.004 261) — rgb(7,8,12) */
-  --color-success-50: #edfaf3; /** OKLCH(0.975 0.025 155) — rgb(237,250,243) */
-  --color-success-100: #d1f5e3; /** OKLCH(0.950 0.050 155) — rgb(209,245,227) */
-  --color-success-200: #9eeac6; /** OKLCH(0.900 0.085 155) — rgb(158,234,198) */
-  --color-success-300: #5fdaa7; /** OKLCH(0.830 0.120 155) — rgb(95,218,167) */
-  --color-success-400: #22c484; /** OKLCH(0.740 0.145 155) — rgb(34,196,132) */
-  --color-success-500: #0da868; /** OKLCH(0.640 0.150 155) — rgb(13,168,104) */
-  --color-success-600: #088552; /** OKLCH(0.530 0.135 155) — rgb(8,133,82) */
-  --color-success-700: #06623d; /** OKLCH(0.420 0.110 155) — rgb(6,98,61) */
-  --color-success-800: #03432a; /** OKLCH(0.310 0.080 155) — rgb(3,67,42) */
-  --color-success-900: #022c1c; /** OKLCH(0.210 0.055 155) — rgb(2,44,28) */
-  --color-success-950: #011c12; /** OKLCH(0.140 0.035 155) — rgb(1,28,18) */
-  --color-success-1000: #000f09; /** OKLCH(0.080 0.018 155) — rgb(0,15,9) */
-  --color-warning-50: #fefbe8; /** OKLCH(0.980 0.025 75) — rgb(254,251,232) */
-  --color-warning-100: #fef5c3; /** OKLCH(0.960 0.055 75) — rgb(254,245,195) */
-  --color-warning-200: #fde98a; /** OKLCH(0.920 0.095 75) — rgb(253,233,138) */
-  --color-warning-300: #fad94e; /** OKLCH(0.860 0.135 75) — rgb(250,217,78) */
-  --color-warning-400: #f0c420; /** OKLCH(0.790 0.160 75) — rgb(240,196,32) */
-  --color-warning-500: #d9a900; /** OKLCH(0.710 0.165 75) — rgb(217,169,0) */
-  --color-warning-600: #b48800; /** OKLCH(0.610 0.150 75) — rgb(180,136,0) */
-  --color-warning-700: #8c6800; /** OKLCH(0.500 0.125 75) — rgb(140,104,0) */
-  --color-warning-800: #624900; /** OKLCH(0.370 0.090 75) — rgb(98,73,0) */
-  --color-warning-900: #3f2f00; /** OKLCH(0.255 0.060 75) — rgb(63,47,0) */
-  --color-warning-950: #281e00; /** OKLCH(0.165 0.038 75) — rgb(40,30,0) */
-  --color-warning-1000: #140f00; /** OKLCH(0.090 0.018 75) — rgb(20,15,0) */
-  --color-error-50: #fdf2ef; /** OKLCH(0.978 0.018 25) — rgb(253,242,239) */
-  --color-error-100: #fae2db; /** OKLCH(0.955 0.038 25) — rgb(250,226,219) */
-  --color-error-200: #f5c3b5; /** OKLCH(0.910 0.075 25) — rgb(245,195,181) */
-  --color-error-300: #ec9a84; /** OKLCH(0.840 0.115 25) — rgb(236,154,132) */
-  --color-error-400: #e06c51; /** OKLCH(0.745 0.155 25) — rgb(224,108,81) */
-  --color-error-500: #cc4229; /** OKLCH(0.630 0.180 25) — rgb(204,66,41) */
-  --color-error-600: #a82d1a; /** OKLCH(0.520 0.175 25) — rgb(168,45,26) */
-  --color-error-700: #831e10; /** OKLCH(0.405 0.148 25) — rgb(131,30,16) */
-  --color-error-800: #5c1209; /** OKLCH(0.295 0.108 25) — rgb(92,18,9) */
-  --color-error-900: #3b0a05; /** OKLCH(0.200 0.072 25) — rgb(59,10,5) */
-  --color-error-950: #250603; /** OKLCH(0.132 0.045 25) — rgb(37,6,3) */
-  --color-error-1000: #130301; /** OKLCH(0.075 0.022 25) — rgb(19,3,1) */
-  --color-info-50: #eff4fb; /** OKLCH(0.975 0.015 220) — rgb(239,244,251) */
-  --color-info-100: #d9e9f8; /** OKLCH(0.950 0.030 220) — rgb(217,233,248) */
-  --color-info-200: #add1f5; /** OKLCH(0.900 0.060 220) — rgb(173,209,245) */
-  --color-info-300: #72b4ed; /** OKLCH(0.820 0.095 220) — rgb(114,180,237) */
-  --color-info-400: #3696e0; /** OKLCH(0.720 0.130 220) — rgb(54,150,224) */
-  --color-info-500: #1478c8; /** OKLCH(0.610 0.155 220) — rgb(20,120,200) */
-  --color-info-600: #0d5ea5; /** OKLCH(0.500 0.150 220) — rgb(13,94,165) */
-  --color-info-700: #094680; /** OKLCH(0.390 0.125 220) — rgb(9,70,128) */
-  --color-info-800: #053059; /** OKLCH(0.280 0.090 220) — rgb(5,48,89) */
-  --color-info-900: #031f3c; /** OKLCH(0.185 0.060 220) — rgb(3,31,60) */
-  --color-info-950: #021427; /** OKLCH(0.120 0.038 220) — rgb(2,20,39) */
-  --color-info-1000: #010a15; /** OKLCH(0.068 0.018 220) — rgb(1,10,21) */
-  --color-generali-red-50: #fff1ee;
-  --color-generali-red-100: #ffdfda;
-  --color-generali-red-200: #ffc3ba;
-  --color-generali-red-300: #fc9e90;
-  --color-generali-red-400: #ea6c5d;
-  --color-generali-red-500: #c21b17; /** Generali brand red — Pantone 180 C, RGB 194-27-23 */
-  --color-generali-red-600: #aa1b17; /** Generali dark red — Pantone 7628 C */
-  --color-generali-red-700: #85100d;
-  --color-generali-red-800: #5f0d09;
-  --color-generali-red-900: #400906;
+  --color-midnight-blue-50: oklch(0.9591 0.0081 278.636); /** Bleu nuit — fond de marque très subtil en light (surface.brand-subtle). */
+  --color-midnight-blue-100: oklch(0.9089 0.0206 276.937); /** Bleu nuit — fond primaire subtil (brand.primary-subtle). */
+  --color-midnight-blue-200: oklch(0.8239 0.037 275.264); /** Bleu nuit clair — palette de marque primaire, sans rôle sémantique dédié. */
+  --color-midnight-blue-300: oklch(0.7127 0.0624 274.279); /** Bleu nuit clair — palette de marque primaire, sans rôle sémantique dédié. */
+  --color-midnight-blue-400: oklch(0.5856 0.0957 271.971); /** Bleu nuit moyen — palette de marque primaire, sans rôle sémantique dédié. */
+  --color-midnight-blue-500: oklch(0.4579 0.1206 270.112); /** Bleu nuit moyen — palette de marque primaire, sans rôle sémantique dédié. */
+  --color-midnight-blue-600: oklch(0.3552 0.117 270.565); /** Bleu nuit soutenu — bordure forte en dark (border.strong). */
+  --color-midnight-blue-700: oklch(0.272 0.0982 270.506); /** Bleu nuit foncé — primaire actif (brand.primary-active) ; bordures et surface active en dark. */
+  --color-midnight-blue-800: oklch(0.2232 0.0804 270.354); /** Bleu nuit foncé — primaire survolé (brand.primary-hover) ; surfaces élevées et fonds en dark. */
+  --color-midnight-blue-900: oklch(0.1857 0.048 268.675); /** Bleu nuit — couleur primaire de marque : texte principal en light, fond de page en dark. */
+  --color-midnight-blue-950: oklch(0.159 0.0351 268.372); /** Bleu nuit profond — fond de page et surface creux en dark (surface.page/sunken). */
+  --color-midnight-blue-1000: oklch(0.1334 0.0203 258.025); /** Bleu nuit quasi noir — palette de marque primaire, sans rôle sémantique dédié. */
+  --color-ultramarine-50: oklch(0.9594 0.0094 279.688); /** Bleu outremer — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-ultramarine-100: oklch(0.91 0.0289 277.22); /** Bleu outremer — fond secondaire subtil (brand.secondary-subtle). */
+  --color-ultramarine-200: oklch(0.8174 0.0662 281.012); /** Bleu outremer clair — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-ultramarine-225: oklch(0.8412 0.0537 269.976); /** Bleu outremer pâle — surface d'action secondaire en dark (surface.action-secondary). Ajout ad hoc, hors génération de rampe. */
+  --color-ultramarine-300: oklch(0.6961 0.1158 279.062); /** Bleu outremer clair — texte de navigation discret en dark (nav.on-muted). */
+  --color-ultramarine-400: oklch(0.5863 0.1594 274.68); /** Bleu outremer moyen — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-ultramarine-500: oklch(0.519 0.1792 267.186); /** Bleu outremer — couleur secondaire de marque : texte de marque, anneau de focus et accent nav en light. */
+  --color-ultramarine-600: oklch(0.4506 0.17 267.567); /** Bleu outremer soutenu — secondaire survolé (brand.secondary-hover). */
+  --color-ultramarine-700: oklch(0.3727 0.1536 267.933); /** Bleu outremer foncé — secondaire actif (brand.secondary-active). */
+  --color-ultramarine-800: oklch(0.2988 0.1276 268.233); /** Bleu outremer foncé — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-ultramarine-900: oklch(0.2362 0.0922 268.534); /** Bleu outremer très foncé — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-ultramarine-950: oklch(0.187 0.0613 268.434); /** Bleu outremer profond — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-ultramarine-1000: oklch(0.1481 0.0367 263.397); /** Bleu outremer quasi noir — palette de marque secondaire, sans rôle sémantique dédié. */
+  --color-aquamarine-50: oklch(0.9851 0.0204 173.972); /** Vert aigue-marine — fond d'accent subtil (brand.accent-subtle, surface.accent). */
+  --color-aquamarine-100: oklch(0.966 0.0478 173.535); /** Vert aigue-marine clair — palette d'accent, sans rôle sémantique dédié. */
+  --color-aquamarine-200: oklch(0.9382 0.0858 173.851); /** Vert aigue-marine clair — palette d'accent, sans rôle sémantique dédié. */
+  --color-aquamarine-300: oklch(0.9098 0.1389 170.506); /** Vert aigue-marine — couleur d'accent de marque : surface d'action et anneau de focus en dark. */
+  --color-aquamarine-400: oklch(0.836 0.1498 168.799); /** Vert aigue-marine — accent survolé (brand.accent-hover). */
+  --color-aquamarine-500: oklch(0.744 0.1472 167.952); /** Vert aigue-marine — accent actif (brand.accent-active). */
+  --color-aquamarine-600: oklch(0.622 0.1233 169.137); /** Vert aigue-marine soutenu — texte d'accent en light (text.accent). */
+  --color-aquamarine-700: oklch(0.5099 0.0999 169.852); /** Vert aigue-marine foncé — palette d'accent, sans rôle sémantique dédié. */
+  --color-aquamarine-800: oklch(0.4072 0.0785 171.198); /** Vert aigue-marine foncé — palette d'accent, sans rôle sémantique dédié. */
+  --color-aquamarine-900: oklch(0.311 0.0591 171.89); /** Vert aigue-marine très foncé — palette d'accent, sans rôle sémantique dédié. */
+  --color-aquamarine-950: oklch(0.2396 0.046 170.616); /** Vert aigue-marine profond — palette d'accent, sans rôle sémantique dédié. */
+  --color-aquamarine-1000: oklch(0.1722 0.0296 178.664); /** Vert aigue-marine quasi noir — palette d'accent, sans rôle sémantique dédié. */
+  --color-neutral-50: oklch(0.97 0.0029 264.542); /** Gris neutre — fond de page en light (surface.page) ; accent de marque Generali. */
+  --color-neutral-100: oklch(0.9402 0.0042 271.368); /** Gris neutre — surfaces creux/survol, bordure subtile et nav active en light. */
+  --color-neutral-200: oklch(0.8791 0.0072 268.541); /** Gris neutre — bordures par défaut, champs de saisie et surface active en light. */
+  --color-neutral-300: oklch(0.7921 0.0117 269.522); /** Gris neutre — bordure forte en light, texte secondaire en dark. */
+  --color-neutral-400: oklch(0.6894 0.0153 268.433); /** Gris neutre — texte désactivé en light, texte tertiaire en dark. */
+  --color-neutral-500: oklch(0.5711 0.0137 259.824); /** Gris neutre — texte tertiaire et navigation discrète en light. */
+  --color-neutral-600: oklch(0.4597 0.0139 264.429); /** Gris neutre — texte secondaire/muted en light, texte désactivé en dark. */
+  --color-neutral-700: oklch(0.3603 0.0144 269.287); /** Gris neutre foncé — palette neutre, sans rôle sémantique dédié. */
+  --color-neutral-800: oklch(0.2736 0.0172 270.715); /** Gris neutre foncé — palette neutre, sans rôle sémantique dédié. */
+  --color-neutral-900: oklch(0.2145 0.0141 272.633); /** Gris neutre très foncé — palette neutre, sans rôle sémantique dédié. */
+  --color-neutral-950: oklch(0.1738 0.0129 270.571); /** Gris neutre profond — palette neutre, sans rôle sémantique dédié. */
+  --color-neutral-1000: oklch(0.1351 0.0094 272.537); /** Gris neutre quasi noir — palette neutre, sans rôle sémantique dédié. */
+  --color-success-50: oklch(0.9735 0.0165 162.758); /** Vert succès — fond de statut en light (status.success-subtle). */
+  --color-success-100: oklch(0.9395 0.0445 163.836); /** Vert succès clair — palette de statut, sans rôle sémantique dédié. */
+  --color-success-200: oklch(0.8775 0.0907 163.324); /** Vert succès clair — palette de statut, sans rôle sémantique dédié. */
+  --color-success-300: oklch(0.8048 0.1334 163.37); /** Vert succès — bordure de statut en light (status.success-border). */
+  --color-success-400: oklch(0.727 0.1571 160.075); /** Vert succès — couleur de statut en dark (status.success). */
+  --color-success-500: oklch(0.645 0.1502 157.349); /** Vert succès — couleur de statut en light (status.success). */
+  --color-success-600: oklch(0.5439 0.1259 157.658); /** Vert succès soutenu — palette de statut, sans rôle sémantique dédié. */
+  --color-success-700: oklch(0.4383 0.0991 158.647); /** Vert succès — bordure de statut en dark (status.success-border). */
+  --color-success-800: oklch(0.3387 0.0745 160.184); /** Vert succès foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-success-900: oklch(0.2601 0.0545 162.54); /** Vert succès très foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-success-950: oklch(0.2015 0.0403 165.815); /** Vert succès — fond de statut en dark (status.success-subtle). */
+  --color-success-1000: oklch(0.1497 0.0298 169.425); /** Vert succès quasi noir — palette de statut, sans rôle sémantique dédié. */
+  --color-warning-50: oklch(0.9853 0.0251 99.517); /** Jaune avertissement — fond de statut en light (status.warning-subtle). */
+  --color-warning-100: oklch(0.965 0.065 98.969); /** Jaune avertissement clair — palette de statut, sans rôle sémantique dédié. */
+  --color-warning-200: oklch(0.9302 0.1177 97.753); /** Jaune avertissement clair — palette de statut, sans rôle sémantique dédié. */
+  --color-warning-300: oklch(0.889 0.1562 95.528); /** Jaune avertissement — bordure de statut en light (status.warning-border). */
+  --color-warning-400: oklch(0.8352 0.1649 91.67); /** Jaune avertissement — couleur de statut en dark (status.warning). */
+  --color-warning-500: oklch(0.7576 0.1549 88.059); /** Jaune avertissement — couleur de statut en light (status.warning). */
+  --color-warning-600: oklch(0.6513 0.1334 85.564); /** Jaune avertissement soutenu — palette de statut, sans rôle sémantique dédié. */
+  --color-warning-700: oklch(0.5392 0.1106 84.636); /** Jaune avertissement — bordure de statut en dark (status.warning-border). */
+  --color-warning-800: oklch(0.4206 0.0861 86.043); /** Jaune avertissement foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-warning-900: oklch(0.3147 0.0643 88.065); /** Jaune avertissement très foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-warning-950: oklch(0.2402 0.0491 90.942); /** Jaune avertissement — fond de statut en dark (status.warning-subtle). */
+  --color-warning-1000: oklch(0.1698 0.0349 95.531); /** Jaune avertissement quasi noir — palette de statut, sans rôle sémantique dédié. */
+  --color-error-50: oklch(0.9689 0.0126 35.732); /** Rouge erreur — fond de statut en light (status.error-subtle). */
+  --color-error-100: oklch(0.9304 0.0282 36.865); /** Rouge erreur clair — palette de statut, sans rôle sémantique dédié. */
+  --color-error-200: oklch(0.8577 0.0608 36.177); /** Rouge erreur clair — palette de statut, sans rôle sémantique dédié. */
+  --color-error-300: oklch(0.7632 0.1041 35.728); /** Rouge erreur — bordure de statut en light (status.error-border). */
+  --color-error-400: oklch(0.664 0.151 34.373); /** Rouge erreur — couleur de statut en dark (status.error). */
+  --color-error-500: oklch(0.5732 0.1787 32.538); /** Rouge erreur — couleur de statut en light (status.error). */
+  --color-error-600: oklch(0.4872 0.1625 31.673); /** Rouge erreur soutenu — palette de statut, sans rôle sémantique dédié. */
+  --color-error-700: oklch(0.403 0.1383 31.204); /** Rouge erreur — bordure de statut en dark (status.error-border). */
+  --color-error-800: oklch(0.3136 0.1077 30.682); /** Rouge erreur foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-error-900: oklch(0.2353 0.0775 30.573); /** Rouge erreur très foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-error-950: oklch(0.1806 0.0547 31.469); /** Rouge erreur — fond de statut en dark (status.error-subtle). */
+  --color-error-1000: oklch(0.1311 0.036 36.63); /** Rouge erreur quasi noir — palette de statut, sans rôle sémantique dédié. */
+  --color-info-50: oklch(0.9654 0.0108 256.695); /** Bleu information — fond de statut en light (status.info-subtle). */
+  --color-info-100: oklch(0.9266 0.0266 246.353); /** Bleu information clair — palette de statut, sans rôle sémantique dédié. */
+  --color-info-200: oklch(0.8468 0.0634 248.581); /** Bleu information clair — palette de statut, sans rôle sémantique dédié. */
+  --color-info-300: oklch(0.7482 0.1068 245.919); /** Bleu information — bordure de statut en light (status.info-border). */
+  --color-info-400: oklch(0.6517 0.1414 245.972); /** Bleu information — couleur de statut en dark (status.info). */
+  --color-info-500: oklch(0.5618 0.1495 249.537); /** Bleu information — couleur de statut en light (status.info). */
+  --color-info-600: oklch(0.4771 0.1343 251.552); /** Bleu information soutenu — palette de statut, sans rôle sémantique dédié. */
+  --color-info-700: oklch(0.3925 0.1134 252.807); /** Bleu information — bordure de statut en dark (status.info-border). */
+  --color-info-800: oklch(0.3067 0.0861 252.159); /** Bleu information foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-info-900: oklch(0.2371 0.0651 252.117); /** Bleu information très foncé — palette de statut, sans rôle sémantique dédié. */
+  --color-info-950: oklch(0.1874 0.0468 249.751); /** Bleu information — fond de statut en dark (status.info-subtle). */
+  --color-info-1000: oklch(0.14 0.031 245.528); /** Bleu information quasi noir — palette de statut, sans rôle sémantique dédié. */
+  --color-generali-red-50: oklch(0.9683 0.0157 32.009); /** Rouge Generali — fond d'accent subtil (brand.accent-subtle, marque Generali). */
+  --color-generali-red-100: oklch(0.9287 0.0362 28.337); /** Rouge Generali — fonds primaire et secondaire subtils (marque Generali). */
+  --color-generali-red-200: oklch(0.8687 0.0704 28.324); /** Rouge Generali clair — palette de marque Generali, sans rôle sémantique dédié. */
+  --color-generali-red-300: oklch(0.7911 0.1149 29.044); /** Rouge Generali clair — palette de marque Generali, sans rôle sémantique dédié. */
+  --color-generali-red-400: oklch(0.6801 0.1592 28.8); /** Rouge Generali moyen — palette de marque Generali, sans rôle sémantique dédié. */
+  --color-generali-red-500: oklch(0.5215 0.1995 28.498); /** Rouge Generali — couleur primaire de marque Generali (Pantone 180 C). */
+  --color-generali-red-600: oklch(0.4759 0.1779 28.298); /** Rouge Generali foncé — primaire survolé (Pantone 7628 C). */
+  --color-generali-red-700: oklch(0.3957 0.1505 28.463); /** Rouge Generali foncé — primaire actif et couleur secondaire (marque Generali). */
+  --color-generali-red-800: oklch(0.3152 0.115 28.695); /** Rouge Generali foncé — secondaire survolé (marque Generali). */
+  --color-generali-red-900: oklch(0.245 0.0844 28.706); /** Rouge Generali très foncé — secondaire actif et texte on-accent (marque Generali). */
   --font-family-heading: 'PP Radio Grotesk', sans-serif; /** Titres / slides / print */
   --font-family-body: Inter, sans-serif; /** UI / web / dashboard (DA recente) */
   --font-family-mono: 'JetBrains Mono', monospace; /** KPI / chiffres */

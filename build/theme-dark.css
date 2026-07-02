@@ -3,8 +3,8 @@
  */
 
 .dark {
-  --color-text-primary: #ffffff;
-  --color-nav-on: #ffffff;
+  --color-text-primary: oklch(1 0 0);
+  --color-nav-on: oklch(1 0 0);
   --color-surface-page: var(--color-midnight-blue-950);
   --color-surface-default: var(--color-midnight-blue-900);
   --color-surface-raised: var(--color-midnight-blue-800);
@@ -13,24 +13,31 @@
   --color-surface-hover: var(--color-midnight-blue-800);
   --color-surface-active: var(--color-midnight-blue-700);
   --color-surface-brand-subtle: var(--color-midnight-blue-800);
+  --color-surface-action-secondary: var(--color-ultramarine-225); /** Surface d'action secondaire. Ultramarine en light, bleu pâle en dark. */
   --color-text-secondary: var(--color-neutral-300);
   --color-text-tertiary: var(--color-neutral-400);
   --color-text-disabled: var(--color-neutral-600);
+  --color-text-muted: var(--color-neutral-300); /** Texte secondaire discret (muted). Mappé sur --muted-foreground. AUDIT REQUIS : l'ancien bridge utilisait #9ca3af (contraste 6,68:1 audité sur fond dark) ; aucune primitive neutral n'égale cette valeur (la plus proche, neutral.400 #979BA5, est plus sombre — substitution non sûre sans re-mesure du contraste). */
   --color-text-inverse: var(--color-midnight-blue-900);
   --color-text-accent: var(--color-aquamarine-300);
+  --color-text-on-action: var(--color-midnight-blue-900); /** Texte sur surface.action. Blanc en light, midnight en dark. */
+  --color-text-on-action-secondary: var(--color-midnight-blue-900); /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
   --color-border-default: var(--color-midnight-blue-700);
   --color-border-subtle: var(--color-midnight-blue-800);
   --color-border-strong: var(--color-midnight-blue-600);
   --color-border-disabled: var(--color-midnight-blue-700);
+  --color-border-input: var(--color-midnight-blue-700); /** Bordure des champs de saisie. Mappé sur --input. */
   --color-status-success: var(--color-success-400);
   --color-status-success-subtle: var(--color-success-950);
   --color-status-success-border: var(--color-success-700);
+  --color-status-success-text: var(--color-success-400); /** Texte/emphase succès, contraste AA sur surface (success.600 light, .400 dark). Mappé sur --success. */
   --color-status-warning: var(--color-warning-400);
   --color-status-warning-subtle: var(--color-warning-950);
   --color-status-warning-border: var(--color-warning-700);
   --color-status-error: var(--color-error-400);
   --color-status-error-subtle: var(--color-error-950);
   --color-status-error-border: var(--color-error-700);
+  --color-status-error-text: var(--color-error-400); /** Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text. */
   --color-status-info: var(--color-info-400);
   --color-status-info-subtle: var(--color-info-950);
   --color-status-info-border: var(--color-info-700);
@@ -38,14 +45,16 @@
   --color-nav-surface-active: var(--color-midnight-blue-800);
   --color-nav-border: var(--color-midnight-blue-700);
   --color-nav-on-muted: var(--color-ultramarine-300);
+  --color-chart-1: var(--color-aquamarine-300); /** Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1. */
   --color-surface-brand: var(--color-brand-primary);
   --color-surface-brand-hover: var(--color-brand-primary-hover);
   --color-surface-brand-active: var(--color-brand-primary-active);
   --color-surface-accent: var(--color-brand-accent-subtle);
+  --color-surface-action: var(--color-brand-accent); /** Surface d'action principale (bouton default). Midnight en light, aquamarine en dark. */
   --color-text-brand: var(--color-brand-secondary);
   --color-text-brand-hover: var(--color-brand-secondary-hover);
   --color-text-on-accent: var(--color-brand-on-accent);
-  --color-border-focus: var(--color-brand-secondary);
+  --color-border-focus: var(--color-brand-accent); /** Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11). */
   --color-border-brand: var(--color-brand-primary);
   --color-border-accent: var(--color-brand-accent);
   --color-nav-accent: var(--color-brand-accent);

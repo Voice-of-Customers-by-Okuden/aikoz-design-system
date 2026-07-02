@@ -3,11 +3,13 @@
  */
 
 :root {
-  --color-surface-default: #ffffff;
-  --color-surface-raised: #ffffff;
-  --color-surface-overlay: #ffffff;
-  --color-text-inverse: #ffffff;
-  --color-nav-surface: #ffffff;
+  --color-surface-default: oklch(1 0 0);
+  --color-surface-raised: oklch(1 0 0);
+  --color-surface-overlay: oklch(1 0 0);
+  --color-text-inverse: oklch(1 0 0);
+  --color-text-on-action: oklch(1 0 0); /** Texte sur surface.action. Blanc en light, midnight en dark. */
+  --color-text-on-action-secondary: oklch(1 0 0); /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
+  --color-nav-surface: oklch(1 0 0);
   --color-surface-page: var(--color-neutral-50);
   --color-surface-sunken: var(--color-neutral-100);
   --color-surface-hover: var(--color-neutral-100);
@@ -17,20 +19,24 @@
   --color-text-secondary: var(--color-neutral-600);
   --color-text-tertiary: var(--color-neutral-500);
   --color-text-disabled: var(--color-neutral-400);
+  --color-text-muted: var(--color-neutral-600); /** Texte secondaire discret (muted). Mappé sur --muted-foreground. */
   --color-text-accent: var(--color-aquamarine-600);
   --color-border-default: var(--color-neutral-200);
   --color-border-subtle: var(--color-neutral-100);
   --color-border-strong: var(--color-neutral-300);
   --color-border-disabled: var(--color-neutral-200);
+  --color-border-input: var(--color-neutral-200); /** Bordure des champs de saisie. Mappé sur --input. */
   --color-status-success: var(--color-success-500);
   --color-status-success-subtle: var(--color-success-50);
   --color-status-success-border: var(--color-success-300);
+  --color-status-success-text: var(--color-success-600); /** Texte/emphase succès, contraste AA sur surface (success.600 light, .400 dark). Mappé sur --success. */
   --color-status-warning: var(--color-warning-500);
   --color-status-warning-subtle: var(--color-warning-50);
   --color-status-warning-border: var(--color-warning-300);
   --color-status-error: var(--color-error-500);
   --color-status-error-subtle: var(--color-error-50);
   --color-status-error-border: var(--color-error-300);
+  --color-status-error-text: var(--color-error-600); /** Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text. */
   --color-status-info: var(--color-info-500);
   --color-status-info-subtle: var(--color-info-50);
   --color-status-info-border: var(--color-info-300);
@@ -38,14 +44,17 @@
   --color-nav-border: var(--color-neutral-200);
   --color-nav-on: var(--color-midnight-blue-900);
   --color-nav-on-muted: var(--color-neutral-500);
+  --color-chart-1: var(--color-ultramarine-500); /** Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1. */
   --color-surface-brand: var(--color-brand-primary);
   --color-surface-brand-hover: var(--color-brand-primary-hover);
   --color-surface-brand-active: var(--color-brand-primary-active);
   --color-surface-accent: var(--color-brand-accent-subtle);
+  --color-surface-action: var(--color-brand-primary); /** Surface d'action principale (bouton default). Midnight en light, aquamarine en dark. */
+  --color-surface-action-secondary: var(--color-brand-secondary); /** Surface d'action secondaire. Ultramarine en light, bleu pâle en dark. */
   --color-text-brand: var(--color-brand-secondary);
   --color-text-brand-hover: var(--color-brand-secondary-hover);
   --color-text-on-accent: var(--color-brand-on-accent);
-  --color-border-focus: var(--color-brand-secondary);
+  --color-border-focus: var(--color-brand-secondary); /** Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11). */
   --color-border-brand: var(--color-brand-primary);
   --color-border-accent: var(--color-brand-accent);
   --color-nav-accent: var(--color-brand-secondary);

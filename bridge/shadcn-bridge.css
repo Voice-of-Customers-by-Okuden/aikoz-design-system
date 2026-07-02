@@ -1,95 +1,62 @@
 /* ============================================================
-   shadcn-bridge.css — Variables shadcn/ui dérivées des tokens Aikoz
-   Ne pas éditer à la main. Source de vérité : tokens/
-   Conversions hex→HSL calculées depuis build/primitives.css
-
-   Correspondances :
-     background        ← color.neutral.50        #f4f5f7
-     foreground        ← color.midnight-blue.900  #0a1128
-     primary           ← color.midnight-blue.900  #0a1128
-     secondary         ← color.ultramarine.500    #3b5dce
-     accent            ← color.aquamarine.300     #70ffd4
-     muted             ← color.neutral.50         #f4f5f7
-     muted-foreground  ← color.neutral.600        #545860
-     border / input    ← color.neutral.200        #d5d7dc
-     ring              ← color.ultramarine.500    #3b5dce
-     destructive       ← color.error.500          #cc4229
+   shadcn-bridge.css — GÉNÉRÉ depuis tokens/ (DTCG) par build-tokens.mjs
+   NE PAS ÉDITER À LA MAIN — régénérer via: npm run build:tokens
    ============================================================ */
 
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
 :root {
-    --background:             220 16% 96%;  /* #f4f5f7 — neutral.50         */
-    --foreground:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-
-    --card:                   0 0% 100%;    /* #ffffff                       */
-    --card-foreground:        226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-
-    --popover:                0 0% 100%;    /* #ffffff                       */
-    --popover-foreground:     226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-
-    --primary:                226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-    --primary-foreground:     0 0% 100%;    /* #ffffff                       */
-
-    --secondary:              226 60% 52%;  /* #3b5dce — ultramarine.500     */
-    --secondary-foreground:   0 0% 100%;    /* #ffffff                       */
-
-    --accent:                 162 100% 72%; /* #70ffd4 — aquamarine.300      */
-    --accent-foreground:      226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-
-    --muted:                  220 16% 96%;  /* #f4f5f7 — neutral.50          */
-    --muted-foreground:       220 7% 35%;   /* #545860 — neutral.600         */
-
-    --border:                 223 9% 85%;   /* #d5d7dc — neutral.200         */
-    --input:                  223 9% 85%;   /* #d5d7dc — neutral.200         */
-    --ring:                   226 60% 52%;  /* #3b5dce — ultramarine.500     */
-
-    --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
-    --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
-
-    --success:                155 86% 26%;  /* #097a4a — fond badge plein light (5,39:1 vs carte blanche) */
-    --success-foreground:     0 0% 100%;    /* #ffffff — texte badge light (5,39:1 sur #097a4a) */
-    --success-bg:             152 81% 96%;  /* #ecfdf5 — zones success, fond section — pas pour badge plein */
-
-    --destructive-text:       12 80% 34%;   /* #962f1a — rouge foncé texte/icône (7,73:1 sur blanc, AAA) ; --destructive reste pour fonds de boutons */
-
-    --chart-1:                226 60% 52%;  /* #3b5dce — ultramarine.500, courbes en light — convention shadcn --chart-N */
-
-    --radius: 0.5rem;
+  --background: oklch(0.97 0.0029 264.542); /** shadcn --background */
+  --foreground: oklch(0.1857 0.048 268.675); /** shadcn --foreground */
+  --card: oklch(1 0 0); /** shadcn --card */
+  --card-foreground: oklch(0.1857 0.048 268.675); /** shadcn --card-foreground */
+  --popover: oklch(1 0 0); /** shadcn --popover */
+  --popover-foreground: oklch(0.1857 0.048 268.675); /** shadcn --popover-foreground */
+  --primary: oklch(0.1857 0.048 268.675); /** shadcn --primary */
+  --primary-foreground: oklch(1 0 0); /** shadcn --primary-foreground */
+  --secondary: oklch(0.519 0.1792 267.186); /** shadcn --secondary */
+  --secondary-foreground: oklch(1 0 0); /** shadcn --secondary-foreground */
+  --muted: oklch(0.9402 0.0042 271.368); /** shadcn --muted */
+  --muted-foreground: oklch(0.4597 0.0139 264.429); /** shadcn --muted-foreground */
+  --accent: oklch(0.9098 0.1389 170.506); /** shadcn --accent */
+  --accent-foreground: oklch(0.1857 0.048 268.675); /** shadcn --accent-foreground */
+  --destructive: oklch(0.5732 0.1787 32.538); /** shadcn --destructive */
+  --destructive-foreground: oklch(1 0 0); /** shadcn --destructive-foreground — à auditer */
+  --border: oklch(0.8791 0.0072 268.541); /** shadcn --border */
+  --input: oklch(0.8791 0.0072 268.541); /** shadcn --input */
+  --ring: oklch(0.519 0.1792 267.186); /** shadcn --ring */
+  --success: oklch(0.5439 0.1259 157.658); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
+  --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
+  --chart-1: oklch(0.519 0.1792 267.186); /** extension DS — tracé série de données 1 */
 }
 
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
 .dark {
-    --background:             226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-    --foreground:             0 0% 100%;    /* #ffffff                       */
-
-    --card:                   228 56% 15%;  /* #111a3d — midnight-blue.800   */
-    --card-foreground:        0 0% 100%;    /* #ffffff                       */
-
-    --popover:                228 56% 15%;  /* #111a3d — midnight-blue.800   */
-    --popover-foreground:     0 0% 100%;    /* #ffffff                       */
-
-    --primary:                162 100% 72%; /* #70ffd4 — aquamarine.300      */
-    --primary-foreground:     226 60% 10%;  /* #0a1128 — midnight-blue.900   */
-
-    --secondary:              227 45% 21%;  /* #1e294f — midnight-blue.700   */
-    --secondary-foreground:   0 0% 100%;    /* #ffffff                       */
-
-    --accent:                 227 45% 21%;  /* #1e294f — midnight-blue.700   */
-    --accent-foreground:      0 0% 100%;    /* #ffffff                       */
-
-    --muted:                  228 56% 15%;  /* #111a3d — midnight-blue.800   */
-    --muted-foreground:       218 11% 65%;  /* #9ca3af — gray-400 (valeur dark distincte : #545860 illisible en dark, 2,37:1) */
-
-    --border:                 227 45% 21%;  /* #1e294f — midnight-blue.700   */
-    --input:                  227 45% 21%;  /* #1e294f — midnight-blue.700   */
-    --ring:                   162 100% 72%; /* #70ffd4 — aquamarine.300      */
-
-    --destructive:            9 67% 48%;    /* #cc4229 — error.500           */
-    --destructive-foreground: 0 0% 100%;    /* #ffffff                       */
-
-    --success:                158 64% 52%;  /* #34d399 — emerald-400, fond badge plein dark (8,82:1 vs carte) */
-    --success-foreground:     165 70% 8%;   /* #04231b — vert très foncé (8,66:1 sur #34d399) — blanc échoue en dark */
-    --success-bg:             166 91% 9%;   /* #022c22 — zones success, fond section — pas pour badge plein */
-
-    --destructive-text:       9 76% 63%;    /* #e8705a — rouge clair texte/icône (5,57:1 sur #111a3d) ; --destructive reste pour fonds de boutons */
-
-    --chart-1:                225 64% 73%;  /* #8aa0e8 — ultramarine clair, lisible sur carte sombre (6,68:1) — convention shadcn --chart-N */
+  --background: oklch(0.159 0.0351 268.372); /** shadcn --background */
+  --foreground: oklch(1 0 0); /** shadcn --foreground */
+  --card: oklch(0.2232 0.0804 270.354); /** shadcn --card */
+  --card-foreground: oklch(1 0 0); /** shadcn --card-foreground */
+  --popover: oklch(0.2232 0.0804 270.354); /** shadcn --popover */
+  --popover-foreground: oklch(1 0 0); /** shadcn --popover-foreground */
+  --primary: oklch(0.9098 0.1389 170.506); /** shadcn --primary */
+  --primary-foreground: oklch(0.1857 0.048 268.675); /** shadcn --primary-foreground */
+  --secondary: oklch(0.8412 0.0537 269.976); /** shadcn --secondary */
+  --secondary-foreground: oklch(0.1857 0.048 268.675); /** shadcn --secondary-foreground */
+  --muted: oklch(0.2232 0.0804 270.354); /** shadcn --muted */
+  --muted-foreground: oklch(0.7921 0.0117 269.522); /** shadcn --muted-foreground */
+  --accent: oklch(0.9098 0.1389 170.506); /** shadcn --accent */
+  --accent-foreground: oklch(0.1857 0.048 268.675); /** shadcn --accent-foreground */
+  --destructive: oklch(0.664 0.151 34.373); /** shadcn --destructive */
+  --destructive-foreground: oklch(0.1857 0.048 268.675); /** shadcn --destructive-foreground — à auditer */
+  --border: oklch(0.272 0.0982 270.506); /** shadcn --border */
+  --input: oklch(0.272 0.0982 270.506); /** shadcn --input */
+  --ring: oklch(0.9098 0.1389 170.506); /** shadcn --ring */
+  --success: oklch(0.727 0.1571 160.075); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
+  --destructive-text: oklch(0.664 0.151 34.373); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
+  --chart-1: oklch(0.9098 0.1389 170.506); /** extension DS — tracé série de données 1 */
 }

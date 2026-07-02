@@ -93,8 +93,8 @@ function TrendBadge({ trend }: { trend: number }) {
       className={cn(
         "inline-flex items-center gap-0.5 text-xs font-semibold rounded-full px-2 py-0.5 border",
         positive
-          ? "border-[hsl(var(--success))] bg-[hsl(var(--success)/0.08)] text-[hsl(var(--success))]"
-          : "border-[hsl(var(--destructive-text))] bg-[hsl(var(--destructive-text)/0.08)] text-[hsl(var(--destructive-text))]"
+          ? "border-[var(--success)] bg-[color-mix(in_oklch,var(--success),transparent_92%)] text-[var(--success)]"
+          : "border-[var(--destructive-text)] bg-[color-mix(in_oklch,var(--destructive-text),transparent_92%)] text-[var(--destructive-text)]"
       )}
       aria-label={positive ? `en hausse de ${trend}%` : `en baisse de ${Math.abs(trend)}%`}
     >
@@ -141,9 +141,9 @@ export function KpiCard({
   const interactiveClasses = isInteractive
     ? cn(
         "transition-all cursor-pointer",
-        "hover:shadow-lg hover:border-[hsl(var(--ring))]",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))]",
-        "focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))]",
+        "hover:shadow-lg hover:border-[var(--ring)]",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
+        "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
         "active:scale-[0.99]",
         href && "no-underline",
         onClick && "text-left w-full",
@@ -202,7 +202,7 @@ export function KpiCard({
               <Line
                 type="monotone"
                 dataKey="v"
-                stroke="hsl(var(--chart-1))"
+                stroke="var(--chart-1)"
                 strokeWidth={2}
                 dot={false}
                 isAnimationActive={false}
