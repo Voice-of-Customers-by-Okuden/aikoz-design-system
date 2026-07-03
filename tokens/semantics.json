@@ -232,17 +232,17 @@
     "border-width": {
       "default": {
         "$type": "dimension",
-        "$value": "{border-width.thin}",
+        "$value": "{dimension.border-width.thin}",
         "$description": "Standard border thickness"
       },
       "emphasis": {
         "$type": "dimension",
-        "$value": "{border-width.medium}",
+        "$value": "{dimension.border-width.medium}",
         "$description": "Highlighted or focus-state border"
       },
       "strong": {
         "$type": "dimension",
-        "$value": "{border-width.thick}",
+        "$value": "{dimension.border-width.thick}",
         "$description": "Heavy stroke for bold visual separation"
       }
     }

@@ -28,7 +28,7 @@
   --role-shadow-medium: var(--shadow-md); /** Standard elevation — cards, dropdowns */
   --role-shadow-high: var(--shadow-lg); /** Prominent elevation — floating panels, popovers */
   --role-shadow-highest: var(--shadow-xl); /** Maximum elevation — modals, drawers */
-  --role-border-width-default: var(--border-width-thin); /** Standard border thickness */
-  --role-border-width-emphasis: var(--border-width-medium); /** Highlighted or focus-state border */
-  --role-border-width-strong: var(--border-width-thick); /** Heavy stroke for bold visual separation */
+  --role-border-width-default: var(--dimension-border-width-thin); /** Standard border thickness */
+  --role-border-width-emphasis: var(--dimension-border-width-medium); /** Highlighted or focus-state border */
+  --role-border-width-strong: var(--dimension-border-width-thick); /** Heavy stroke for bold visual separation */
 }
