@@ -1343,38 +1343,40 @@
       "$value": "256px"
     }
   },
-  "radius": {
-    "none": {
-      "$type": "dimension",
-      "$value": "0px"
-    },
-    "xs": {
-      "$type": "dimension",
-      "$value": "2px"
-    },
-    "sm": {
-      "$type": "dimension",
-      "$value": "4px"
-    },
-    "md": {
-      "$type": "dimension",
-      "$value": "8px"
-    },
-    "lg": {
-      "$type": "dimension",
-      "$value": "12px"
-    },
-    "xl": {
-      "$type": "dimension",
-      "$value": "16px"
-    },
-    "2xl": {
-      "$type": "dimension",
-      "$value": "24px"
-    },
-    "full": {
-      "$type": "dimension",
-      "$value": "9999px"
+  "dimension": {
+    "radius": {
+      "none": {
+        "$type": "dimension",
+        "$value": { "value": 0, "unit": "px" }
+      },
+      "xs": {
+        "$type": "dimension",
+        "$value": { "value": 2, "unit": "px" }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": { "value": 4, "unit": "px" }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": { "value": 8, "unit": "px" }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": { "value": 12, "unit": "px" }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": { "value": 16, "unit": "px" }
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": { "value": 24, "unit": "px" }
+      },
+      "full": {
+        "$type": "dimension",
+        "$value": { "value": 9999, "unit": "px" }
+      }
     }
   },
   "shadow": {
