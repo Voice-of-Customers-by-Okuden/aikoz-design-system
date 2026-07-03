@@ -173,11 +173,11 @@
   --dimension-spacing-0-5: 0.125rem;
   --dimension-spacing-1-5: 0.375rem;
   --dimension-spacing-2-5: 0.625rem;
+  --dimension-border-width-thin: 1px;
+  --dimension-border-width-medium: 2px;
+  --dimension-border-width-thick: 4px;
   --shadow-sm: 0px 1px 2px 0px #0A11280F, 0px 1px 1px 0px #0A11280A; /** Subtle lift — rgba(10,17,40,0.06) + rgba(10,17,40,0.04) */
   --shadow-md: 0px 2px 4px -1px #0A112814, 0px 4px 8px -2px #0A11280F; /** Standard elevation — rgba(10,17,40,0.08) + rgba(10,17,40,0.06) */
   --shadow-lg: 0px 4px 8px -2px #0A11281A, 0px 12px 24px -4px #0A112814; /** Prominent elevation — rgba(10,17,40,0.10) + rgba(10,17,40,0.08) */
   --shadow-xl: 0px 8px 16px -4px #0A11281F, 0px 24px 48px -8px #0A11281A; /** Maximum elevation — rgba(10,17,40,0.12) + rgba(10,17,40,0.10) */
-  --border-width-thin: 1px;
-  --border-width-medium: 2px;
-  --border-width-thick: 4px;
 }

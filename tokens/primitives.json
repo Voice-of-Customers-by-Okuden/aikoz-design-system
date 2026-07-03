@@ -1377,6 +1377,20 @@
         "$type": "dimension",
         "$value": { "value": 16, "unit": "rem" }
       }
+    },
+    "border-width": {
+      "thin": {
+        "$type": "dimension",
+        "$value": { "value": 1, "unit": "px" }
+      },
+      "medium": {
+        "$type": "dimension",
+        "$value": { "value": 2, "unit": "px" }
+      },
+      "thick": {
+        "$type": "dimension",
+        "$value": { "value": 4, "unit": "px" }
+      }
     }
   },
   "shadow": {
@@ -1467,20 +1481,6 @@
         }
       ],
       "$description": "Maximum elevation — rgba(10,17,40,0.12) + rgba(10,17,40,0.10)"
-    }
-  },
-  "border-width": {
-    "thin": {
-      "$type": "dimension",
-      "$value": "1px"
-    },
-    "medium": {
-      "$type": "dimension",
-      "$value": "2px"
-    },
-    "thick": {
-      "$type": "dimension",
-      "$value": "4px"
     }
   }
 }
