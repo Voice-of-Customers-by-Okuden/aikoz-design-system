@@ -108,5 +108,10 @@
     "$type": "color",
     "$value": "{color.chart.1}",
     "$description": "extension DS — tracé série de données 1"
+  },
+  "radius": {
+    "$type": "dimension",
+    "$value": "{role.radius.default}",
+    "$description": "extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind)"
   }
 }

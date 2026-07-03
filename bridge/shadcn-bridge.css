@@ -30,6 +30,7 @@
   --success: oklch(0.5439 0.1259 157.658); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
   --chart-1: oklch(0.519 0.1792 267.186); /** extension DS — tracé série de données 1 */
+  --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
 }
 
 /**
@@ -59,4 +60,5 @@
   --success: oklch(0.727 0.1571 160.075); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.664 0.151 34.373); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
   --chart-1: oklch(0.9098 0.1389 170.506); /** extension DS — tracé série de données 1 */
+  --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
 }

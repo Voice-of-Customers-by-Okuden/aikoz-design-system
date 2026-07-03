@@ -5,6 +5,7 @@ const PRIM = 'tokens/primitives.json';
 const brand = b => `tokens/brand/${b}.json`;
 const theme = t => `tokens/theme/${t}.json`;
 const bridgeSrc = 'tokens/bridge/shadcn.json';
+const SEM = 'tokens/semantics.json';
 const inPath = sub => t => t.filePath.includes(sub);
 
 // hex sRGB -> composants OKLCH (matrices de Björn Ottosson). Uniquement pour
@@ -79,14 +80,20 @@ await make('brand-generali.css', [PRIM, brand('generali')], { selector: '[data-b
 await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
 await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector: '.dark',  filter: inPath('theme/dark'), transforms: cssOklch }).buildAllPlatforms();
 
+// Couche 3bis — semantics : rôles MODE-INDÉPENDANTS (radius, shadow, border-width, typography).
+// :root unique (pas de variante light/dark). refs:true → alias émis en var(--…).
+// Pas de transforms custom : le groupe 'css' par défaut rend nativement le format
+// dimension { value, unit } en v5 (vérifié). semantics.json n'a aucun token couleur.
+await make('semantics.css', [PRIM, SEM], { selector: ':root', filter: inPath('semantics'), refs: true }).buildAllPlatforms();
+
 // Couche 4 — bridge shadcn : RUNTIME généré depuis le DTCG, oklch() complet.
 // C'est le fichier consommé par les composants (playground/demo). Ne pas éditer à la main.
-const bridgeTransforms = ['attribute/cti', 'name/kebab', 'color/oklch'];
-await make('.tmp-shadcn-light.css', [PRIM, brand('aikoz'), theme('light'), bridgeSrc], {
+const bridgeTransforms = ['attribute/cti', 'name/kebab', 'color/oklch', 'size/rem'];
+await make('.tmp-shadcn-light.css', [PRIM, brand('aikoz'), theme('light'), SEM, bridgeSrc], {
   selector: ':root', filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
-await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), bridgeSrc], {
+await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), SEM, bridgeSrc], {
   selector: '.dark', filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();

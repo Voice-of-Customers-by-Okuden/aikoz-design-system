@@ -165,14 +165,14 @@
   --spacing-0-5: 2px;
   --spacing-1-5: 6px;
   --spacing-2-5: 10px;
-  --radius-none: 0px;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
+  --dimension-radius-none: 0px;
+  --dimension-radius-xs: 2px;
+  --dimension-radius-sm: 4px;
+  --dimension-radius-md: 8px;
+  --dimension-radius-lg: 12px;
+  --dimension-radius-xl: 16px;
+  --dimension-radius-2xl: 24px;
+  --dimension-radius-full: 9999px;
   --shadow-sm: 0px 1px 2px 0px #0A11280F, 0px 1px 1px 0px #0A11280A; /** Subtle lift — rgba(10,17,40,0.06) + rgba(10,17,40,0.04) */
   --shadow-md: 0px 2px 4px -1px #0A112814, 0px 4px 8px -2px #0A11280F; /** Standard elevation — rgba(10,17,40,0.08) + rgba(10,17,40,0.06) */
   --shadow-lg: 0px 4px 8px -2px #0A11281A, 0px 12px 24px -4px #0A112814; /** Prominent elevation — rgba(10,17,40,0.10) + rgba(10,17,40,0.08) */
