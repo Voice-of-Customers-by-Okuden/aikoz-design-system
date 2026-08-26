@@ -2,8 +2,9 @@ import { useState } from "react";
 import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
 import { Button } from "@registry/aikoz/button/button";
 import Tokens from "./Tokens";
+import Decisions from "./Decisions";
 
-type View = "composants" | "tokens";
+type View = "décisions" | "tokens" | "composants";
 
 const DEMO_SPARKLINE = [3.6, 3.7, 3.8, 3.7, 3.9, 4.0, 3.9, 4.1, 4.0, 4.2, 4.2, 4.2];
 
@@ -46,7 +47,7 @@ function ButtonDemoContent() {
 
 export default function App() {
   const [dark, setDark] = useState(false);
-  const [view, setView] = useState<View>("tokens");
+  const [view, setView] = useState<View>("décisions");
 
   function toggleDark() {
     document.documentElement.classList.toggle("dark", !dark);
@@ -79,7 +80,7 @@ export default function App() {
           aria-label="Vues du playground"
           className="flex gap-1 mb-10 border-b border-border"
         >
-          {(["tokens", "composants"] as const).map((v) => (
+          {(["décisions", "tokens", "composants"] as const).map((v) => (
             <button
               key={v}
               role="tab"
@@ -95,6 +96,8 @@ export default function App() {
             </button>
           ))}
         </div>
+
+        {view === "décisions" && <Decisions dark={dark} />}
 
         {view === "tokens" && <Tokens dark={dark} />}
 
