@@ -37,10 +37,10 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 
 | # | Composant | Famille | Origine | Priorité | Statut | Dépend de |
 |---|---|---|---|---|---|---|
-| 1 | `Button` | Actions | shadcn | v1 | **code + composant Figma** (12 variantes) — ⚠ absent de `registry.json` ; axes désalignés | — |
+| 1 | `Button` | Actions | shadcn | v1 | **livré au registry** — ⚠ axes de variantes toujours désalignés avec le Figma | — |
 | 2 | `KpiCard` | Data display | aikoz | v1 | **code + composant Figma** — ⚠ code et maquette divergent | ScoreStars, DeltaBadge, ProgressBar |
-| 3 | `ScoreStars` | Data display | aikoz | v1 | **existe inliné** dans `kpi-card.tsx` (`StarRating`) — à extraire ; couleur tranchée (`warning-600`) | — |
-| 4 | `DeltaBadge` | Data display | aikoz | v1 | **existe inliné** dans `kpi-card.tsx` (`TrendBadge`) — à extraire ; composant Figma `Tag` | Badge |
+| 3 | `ScoreStars` | Data display | aikoz | v1 | **livré** — rôle `--rating` (700 light / 600 dark) | — |
+| 4 | `DeltaBadge` | Data display | aikoz | v1 | **livré** — état neutre ajouté, ton forçable | Badge |
 | 5 | `Badge` | Data display | shadcn | v1 | **composant Figma** (5 statuts), à créer en code | — |
 | 6 | `Tooltip` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 7 | `Select` | Forms | shadcn | v1 | **maquetté** (`MiniSelect`), à créer | — |
@@ -60,7 +60,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 22 | `Toast` (sonner) | Feedback | shadcn | plus tard | à créer — absent du code et du Figma | — |
 | 23 | `VerbatimCard` | Data display | aikoz | v1 | à créer — retenue au périmètre, cf. décision 5 | ScoreStars, Badge, Tag |
-| 24 | `ProgressBar` | Data display | aikoz | v1 | **composant Figma** (3 niveaux), à créer — promu par la décision 1 | — |
+| 24 | `ProgressBar` | Data display | aikoz | v1 | **livré** — 3 niveaux, rôles `status.*-fill` | — |
 | 25 | `SidebarNav` | Navigation | aikoz | v1 | **composant Figma** `Sidebar`, à créer — promu par la décision 2 | NavItem |
 | 26 | `NavItem` | Navigation | aikoz | v1 | **composant Figma** (3 états), à créer — brique de `SidebarNav` | — |
 
@@ -296,10 +296,15 @@ La couche de tokens est fermée. Plus rien n'empêche de construire.
 
 ## Ordre de construction
 
-1. **Extraire `ScoreStars` et `DeltaBadge`** de `kpi-card.tsx`, avec création du rôle `role.color.rating` (`warning-600`) et ajout de l'état neutre au badge.
-2. **`ProgressBar`** — composant Figma existant, brique de la variante `target`.
-3. **Refondre `KpiCard`** sur les deux axes `variant` × `density` (décision 1).
-4. **Déclarer `Button` dans `registry.json`** — une ligne, il est aujourd'hui non installable.
-5. Le reste du lot v1.
+État au 26/08/2026, tout dans [PR #28](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/28).
+
+- [x] **`ScoreStars`** extrait, rôle `role.color.rating` créé — `warning-700` en light, `warning-600` en dark.
+- [x] **`DeltaBadge`** extrait, état neutre ajouté, ton forçable.
+- [x] **`ProgressBar`** transposé du Figma, famille de rôles `status.*-fill` créée.
+- [x] **`Button` déclaré dans `registry.json`** — il était non installable.
+- [ ] **Refondre `KpiCard`** sur les deux axes `variant` × `density` (décision 1). ← prochaine étape
+- [ ] Le reste du lot v1.
+
+Cinq composants au registry : `button`, `score-stars`, `delta-badge`, `progress-bar`, `kpi-card`.
 
 **Architecture actée** : composants React distribués par le registry shadcn ; le white-label passe par la couche de tokens (`data-brand` + variables CSS), pas par des Web Components. Charts sur le module `chart` de shadcn (recharts), déjà en dépendance.
