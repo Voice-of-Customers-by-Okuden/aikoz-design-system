@@ -70,6 +70,27 @@
       ]
     },
     {
+      "name": "progress-bar",
+      "type": "registry:component",
+      "title": "Progress Bar",
+      "description": "Barre de progression a 3 niveaux (good / warning / critical), deduits de seuils parametrables ou forces. Le niveau ne se lit jamais a la seule couleur : la longueur du remplissage porte la meme information.",
+      "files": [
+        {
+          "path": "registry/aikoz/progress-bar/progress-bar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
       "name": "kpi-card",
       "type": "registry:component",
       "title": "KPI Card",

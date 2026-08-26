@@ -94,6 +94,31 @@
     "$value": "{color.border.focus}",
     "$description": "shadcn --ring"
   },
+  "success-fill": {
+    "$type": "color",
+    "$value": "{color.status.success-fill}",
+    "$description": "extension DS — remplissage porteur succès (jauges, barres)"
+  },
+  "warning-fill": {
+    "$type": "color",
+    "$value": "{color.status.warning-fill}",
+    "$description": "extension DS — remplissage porteur avertissement"
+  },
+  "error-fill": {
+    "$type": "color",
+    "$value": "{color.status.error-fill}",
+    "$description": "extension DS — remplissage porteur erreur"
+  },
+  "track": {
+    "$type": "color",
+    "$value": "{color.surface.track}",
+    "$description": "extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark"
+  },
+  "warning": {
+    "$type": "color",
+    "$value": "{color.status.warning-text}",
+    "$description": "extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar"
+  },
   "success": {
     "$type": "color",
     "$value": "{color.status.success-text}",

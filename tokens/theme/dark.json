@@ -17,6 +17,11 @@
         "$type": "color",
         "$value": "{color.midnight-blue.800}"
       },
+      "track": {
+        "$type": "color",
+        "$value": "{color.neutral.700}",
+        "$description": "Piste d'une jauge — repère d'échelle. 1,60:1 sur --card. Ne pas utiliser --muted ici : en dark il vaut exactement la couleur de --card (1,00:1), la piste y serait strictement invisible."
+      },
       "sunken": {
         "$type": "color",
         "$value": "{color.midnight-blue.950}"
@@ -179,6 +184,11 @@
         "$type": "color",
         "$value": "{color.warning.700}"
       },
+      "warning-text": {
+        "$type": "color",
+        "$value": "{color.warning.400}",
+        "$description": "Texte/emphase avertissement et remplissage porteur (warning.600 light, .400 dark), aligné sur success-text et error-text. Mappé sur --warning. Distinct de --rating, qui reste en 600 dans les deux thèmes : une étoile garde son doré, un avertissement s'inverse comme les autres statuts."
+      },
       "error": {
         "$type": "color",
         "$value": "{color.error.400}"
@@ -190,6 +200,21 @@
       "error-border": {
         "$type": "color",
         "$value": "{color.error.700}"
+      },
+      "success-fill": {
+        "$type": "color",
+        "$value": "{color.success.400}",
+        "$description": "Remplissage porteur succès — 7,70:1 sur la piste."
+      },
+      "warning-fill": {
+        "$type": "color",
+        "$value": "{color.warning.400}",
+        "$description": "Remplissage porteur avertissement — 10,45:1 sur la piste."
+      },
+      "error-fill": {
+        "$type": "color",
+        "$value": "{color.error.400}",
+        "$description": "Remplissage porteur erreur — 5,33:1 sur la piste."
       },
       "error-text": {
         "$type": "color",

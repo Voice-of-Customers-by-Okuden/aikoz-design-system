@@ -3,6 +3,7 @@ import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
 import { Button } from "@registry/aikoz/button/button";
 import { ScoreStars } from "@registry/aikoz/score-stars/score-stars";
 import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
+import { ProgressBar } from "@registry/aikoz/progress-bar/progress-bar";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -203,6 +204,36 @@ export default function App() {
             <DeltaBadge value={12} size="sm" />
             <DeltaBadge value={-8} size="sm" />
             <DeltaBadge value={0} size="sm" />
+          </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          ProgressBar — transposé du composant Figma
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          {([
+            ["95 / 100 · good (auto)", 95, undefined],
+            ["72 / 100 · warning (auto)", 72, undefined],
+            ["35 / 100 · critical (auto)", 35, undefined],
+            ["0 · plancher", 0, undefined],
+            ["130 / 100 · borné", 130, undefined],
+          ] as const).map(([label, v]) => (
+            <div key={label} className="flex items-center gap-4 flex-wrap">
+              <span className="w-52 shrink-0 text-xs text-muted-foreground">{label}</span>
+              <div className="w-52"><ProgressBar value={v} /></div>
+            </div>
+          ))}
+          <div className="flex items-center gap-4 flex-wrap pt-2 border-t border-border">
+            <span className="w-52 shrink-0 text-xs text-muted-foreground">
+              ton forcé — un délai bas est bon
+            </span>
+            <div className="w-52"><ProgressBar value={25} level="good" /></div>
+          </div>
+          <div className="flex items-center gap-4 flex-wrap pt-2 border-t border-border">
+            <span className="w-52 shrink-0 text-xs text-muted-foreground">tailles sm / md / lg</span>
+            <div className="w-32"><ProgressBar value={70} size="sm" /></div>
+            <div className="w-32"><ProgressBar value={70} size="md" /></div>
+            <div className="w-32"><ProgressBar value={70} size="lg" /></div>
           </div>
         </div>
 

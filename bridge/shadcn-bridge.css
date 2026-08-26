@@ -27,6 +27,11 @@
   --border: oklch(0.8791 0.0072 268.541); /** shadcn --border */
   --input: oklch(0.8791 0.0072 268.541); /** shadcn --input */
   --ring: oklch(0.519 0.1792 267.186); /** shadcn --ring */
+  --success-fill: oklch(0.5439 0.1259 157.658); /** extension DS — remplissage porteur succès (jauges, barres) */
+  --warning-fill: oklch(0.5392 0.1106 84.636); /** extension DS — remplissage porteur avertissement */
+  --error-fill: oklch(0.4872 0.1625 31.673); /** extension DS — remplissage porteur erreur */
+  --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
+  --warning: oklch(0.6513 0.1334 85.564); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --success: oklch(0.5439 0.1259 157.658); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
   --rating: oklch(0.6513 0.1334 85.564); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
@@ -59,6 +64,11 @@
   --border: oklch(0.272 0.0982 270.506); /** shadcn --border */
   --input: oklch(0.272 0.0982 270.506); /** shadcn --input */
   --ring: oklch(0.9098 0.1389 170.506); /** shadcn --ring */
+  --success-fill: oklch(0.727 0.1571 160.075); /** extension DS — remplissage porteur succès (jauges, barres) */
+  --warning-fill: oklch(0.8352 0.1649 91.67); /** extension DS — remplissage porteur avertissement */
+  --error-fill: oklch(0.664 0.151 34.373); /** extension DS — remplissage porteur erreur */
+  --track: oklch(0.3603 0.0144 269.287); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
+  --warning: oklch(0.8352 0.1649 91.67); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --success: oklch(0.727 0.1571 160.075); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.664 0.151 34.373); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
   --rating: oklch(0.6513 0.1334 85.564); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */

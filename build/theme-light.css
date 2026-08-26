@@ -11,6 +11,7 @@
   --color-text-on-action-secondary: oklch(1 0 0); /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
   --color-nav-surface: oklch(1 0 0);
   --color-surface-page: var(--color-neutral-50);
+  --color-surface-track: var(--color-neutral-100); /** Piste d'une jauge — repère d'échelle. 1,19:1 sur --card : sous 3:1, assumé. C'est le REMPLISSAGE qui porte la valeur, et il contraste >= 3:1 avec la piste ET avec la carte dans les trois niveaux. */
   --color-surface-sunken: var(--color-neutral-100);
   --color-surface-hover: var(--color-neutral-100);
   --color-surface-active: var(--color-neutral-200);
@@ -33,9 +34,13 @@
   --color-status-warning: var(--color-warning-500);
   --color-status-warning-subtle: var(--color-warning-50);
   --color-status-warning-border: var(--color-warning-300);
+  --color-status-warning-text: var(--color-warning-600); /** Texte/emphase avertissement et remplissage porteur (warning.600 light, .400 dark), aligné sur success-text et error-text. Mappé sur --warning. Distinct de --rating, qui reste en 600 dans les deux thèmes : une étoile garde son doré, un avertissement s'inverse comme les autres statuts. */
   --color-status-error: var(--color-error-500);
   --color-status-error-subtle: var(--color-error-50);
   --color-status-error-border: var(--color-error-300);
+  --color-status-success-fill: var(--color-success-600); /** Remplissage porteur succès — 3,93:1 sur la piste, 4,68:1 sur --card (seuil 3:1, WCAG 1.4.11). */
+  --color-status-warning-fill: var(--color-warning-700); /** Remplissage porteur avertissement — 4,30:1 sur la piste, 5,13:1 sur --card. Un cran plus foncé que warning-text (600) : le jaune est intrinsèquement faible sur clair, 600 ne donnait que 2,73:1 sur la piste. */
+  --color-status-error-fill: var(--color-error-600); /** Remplissage porteur erreur — 5,77:1 sur la piste, 6,87:1 sur --card. */
   --color-status-error-text: var(--color-error-600); /** Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text. */
   --color-status-info: var(--color-info-500);
   --color-status-info-subtle: var(--color-info-50);
