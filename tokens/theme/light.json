@@ -270,8 +270,8 @@
     "rating": {
       "default": {
         "$type": "color",
-        "$value": "{color.warning.600}",
-        "$description": "Couleur de notation — étoiles pleines. warning.600 = 3,25:1 sur --card (seuil 3:1, WCAG 1.4.11 : l'étoile porte l'information quand aucun texte ne double la note). Passe, mais DE JUSTESSE au sens du principe 5 d'a11y.md — marge disponible en thématisant : warning.700 monte à 5,13:1 en light."
+        "$value": "{color.warning.700}",
+        "$description": "Couleur de notation — étoiles pleines. warning.700 : 5,13:1 sur --card, 4,70:1 sur --background, 4,30:1 sur --muted (seuil 3:1, WCAG 1.4.11). Le palier 600 avait été retenu sur la seule mesure contre --card (3,25:1) ; il échoue sur les deux autres surfaces (2,98 et 2,73). ScoreStars étant publié au registry, rien ne garantit qu'il soit posé dans une carte — les trois surfaces sont donc auditées."
       },
       "empty": {
         "$type": "color",

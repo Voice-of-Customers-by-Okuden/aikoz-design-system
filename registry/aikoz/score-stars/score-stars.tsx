@@ -44,8 +44,11 @@ export interface ScoreStarsProps extends VariantProps<typeof starVariants> {
  * Extrait de `kpi-card.tsx`, où il vivait inliné sous le nom `StarRating` et
  * codait sa couleur en `text-amber-400` — une couleur Tailwind brute, seule
  * entorse aux tokens du code livré. Il consomme désormais le rôle dédié
- * `--rating` (warning-600 : 3,25:1 en light, 5,35:1 en dark, seuil 3:1 de
- * WCAG 1.4.11 puisque l'étoile porte l'information).
+ * `--rating`. Audité contre les trois surfaces où un consommateur peut le
+ * poser — carte, page, fond muted — et non contre la seule carte : ce
+ * composant est publié au registry, rien ne garantit son contexte.
+ * Light 5,13 / 4,70 / 4,30:1 · dark 5,35 / 5,99 / 5,35:1, seuil 3:1
+ * (WCAG 1.4.11, l'étoile porte l'information).
  *
  * L'information n'est jamais portée par la seule couleur : le nombre
  * d'étoiles pleines la véhicule, et `aria-label` la donne en toutes lettres.

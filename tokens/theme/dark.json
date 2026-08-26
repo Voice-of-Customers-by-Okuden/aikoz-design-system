@@ -271,7 +271,7 @@
       "default": {
         "$type": "color",
         "$value": "{color.warning.600}",
-        "$description": "Couleur de notation — étoiles pleines. warning.600 = 5,35:1 sur --card, marge confortable. warning.400 monterait à 10,45:1 si le design veut une étoile plus vive."
+        "$description": "Couleur de notation — étoiles pleines. warning.600 : 5,35:1 sur --card, 5,99:1 sur --background, 5,35:1 sur --muted. Conforme sur les trois surfaces — inchangé, seul le light remonte à 700."
       },
       "empty": {
         "$type": "color",

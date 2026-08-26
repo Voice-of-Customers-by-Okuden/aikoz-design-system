@@ -446,7 +446,7 @@ function RatingRamp({ dark }: { dark: boolean }) {
     <div className="w-full flex flex-col gap-3">
       {rows.map(({ step, color, ratio }) => {
         const ok = ratio !== null && ratio >= 3;
-        const chosen = step === 600;
+        const chosen = step === 700;
         return (
           <div
             key={step}
@@ -699,7 +699,7 @@ export default function Decisions({ dark }: { dark: boolean }) {
       <Decision
         n={4}
         status="tranchée"
-        title="ScoreStars — role.color.rating sur warning-600"
+        title="ScoreStars — role.color.rating, 700 en light / 600 en dark"
         question="StarRating colore les étoiles en text-amber-400 : la seule couleur hors tokens de tout le code livré."
         impact={
           <>
@@ -714,7 +714,7 @@ export default function Decisions({ dark }: { dark: boolean }) {
               <code className="font-mono text-xs">role.color.rating</code> →{" "}
               <code className="font-mono text-xs">warning-600</code>.
             </strong>{" "}
-            Seul palier conforme dans les deux thèmes : 3,25:1 en light, 5,35:1 en dark.
+            Corrigé après coup : le palier 600 n'avait été mesuré que contre --card. Sur --background (2,98) et --muted (2,73) il échoue. Retenu : 700 en light (5,13 / 4,70 / 4,30), 600 en dark (5,35 / 5,99 / 5,35).
             La marge est courte en light — si un jour la carte s'assombrit, c'est le
             premier ratio à retester.
           </>
