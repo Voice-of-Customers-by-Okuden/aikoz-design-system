@@ -2,7 +2,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+:root, .light {
   --color-surface-default: oklch(1 0 0);
   --color-surface-raised: oklch(1 0 0);
   --color-surface-overlay: oklch(1 0 0);

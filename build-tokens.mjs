@@ -138,7 +138,11 @@ await make('primitives.css', [PRIM], { selector: ':root', filter: inPath('primit
 await make('brand-aikoz.css',    [PRIM, brand('aikoz')],    { selector: ':root',                    filter: inPath('brand/aikoz'),    transforms: cssOklch }).buildAllPlatforms();
 await make('brand-generali.css', [PRIM, brand('generali')], { selector: '[data-brand="generali"]',  filter: inPath('brand/generali'), transforms: cssOklch }).buildAllPlatforms();
 // Couche 3 — theme (sémantique) : light sur :root, dark sur .dark
-await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
+// `.light` double `:root` : purement additif, aucune valeur ajoutée, mais il donne
+// une échappatoire imbriquée. Sans elle, un bloc « clair » posé dans une page `.dark`
+// hérite du dark — impossible de rendre deux thèmes côte à côte honnêtement.
+// C'est la réciproque manquante de `.dark`.
+await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root, .light',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
 await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector: '.dark',  filter: inPath('theme/dark'), transforms: cssOklch }).buildAllPlatforms();
 
 // Couche 3bis — semantics : rôles MODE-INDÉPENDANTS (radius, shadow, border-width, typography).
@@ -157,7 +161,7 @@ await make('semantics.css', [PRIM, SEM], {
 // C'est le fichier consommé par les composants (playground/demo). Ne pas éditer à la main.
 const bridgeTransforms = ['attribute/cti', 'name/kebab', 'color/oklch', 'size/rem'];
 await make('.tmp-shadcn-light.css', [PRIM, brand('aikoz'), theme('light'), SEM, bridgeSrc], {
-  selector: ':root', filter: inPath('bridge/shadcn'), refs: false,
+  selector: ':root, .light', filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
 await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), SEM, bridgeSrc], {

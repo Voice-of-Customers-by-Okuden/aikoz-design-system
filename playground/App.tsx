@@ -267,8 +267,9 @@ export default function App() {
           Button — variants × tailles
         </h2>
 
-        {/* Zone fond clair */}
-        <div className="rounded-[var(--radius)] border border-border overflow-hidden mb-6">
+        {/* Zone fond clair — `light` explicite : sans elle, la zone hérite du
+            dark quand le toggle global bascule, et « Zone claire » devient faux. */}
+        <div className="light rounded-[var(--radius)] border border-border overflow-hidden mb-6">
           <div className="bg-background text-foreground p-6">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Zone claire

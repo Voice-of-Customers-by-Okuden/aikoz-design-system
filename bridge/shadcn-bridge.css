@@ -7,7 +7,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-:root {
+:root, .light {
   --background: oklch(0.97 0.0029 264.542); /** shadcn --background */
   --foreground: oklch(0.1857 0.048 268.675); /** shadcn --foreground */
   --card: oklch(1 0 0); /** shadcn --card */
