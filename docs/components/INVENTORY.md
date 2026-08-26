@@ -1,6 +1,6 @@
 # Aikoz — Inventaire des composants (dashboard)
 
-> Version 1.1 — dérivée de `aikoz-composants-V1_LB.xlsx` (specs fonctionnelles de Louis), nettoyée, complétée, puis **recroisée avec le code du repo et le fichier Figma** (`ODMOwBvckfjPxTCUP1S1Su`) le 26/08/2026.
+> Version 1.2 — dérivée de `aikoz-composants-V1_LB.xlsx` (specs fonctionnelles de Louis), nettoyée, complétée, **recroisée avec le code du repo et le fichier Figma** (`ODMOwBvckfjPxTCUP1S1Su`), puis enrichie des arbitrages pris le 26/08/2026.
 > Ce fichier est la **source de vérité** du périmètre de la bibliothèque. Il est lu par Claude Code avant toute création de composant.
 
 ---
@@ -39,12 +39,12 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 |---|---|---|---|---|---|---|
 | 1 | `Button` | Actions | shadcn | v1 | **code + composant Figma** (12 variantes) — ⚠ absent de `registry.json` ; axes désalignés | — |
 | 2 | `KpiCard` | Data display | aikoz | v1 | **code + composant Figma** — ⚠ code et maquette divergent | ScoreStars, DeltaBadge, ProgressBar |
-| 3 | `ScoreStars` | Data display | aikoz | v1 | **existe inliné** dans `kpi-card.tsx` (`StarRating`) — à extraire | — |
+| 3 | `ScoreStars` | Data display | aikoz | v1 | **existe inliné** dans `kpi-card.tsx` (`StarRating`) — à extraire ; couleur tranchée (`warning-600`) | — |
 | 4 | `DeltaBadge` | Data display | aikoz | v1 | **existe inliné** dans `kpi-card.tsx` (`TrendBadge`) — à extraire ; composant Figma `Tag` | Badge |
 | 5 | `Badge` | Data display | shadcn | v1 | **composant Figma** (5 statuts), à créer en code | — |
 | 6 | `Tooltip` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 7 | `Select` | Forms | shadcn | v1 | **maquetté** (`MiniSelect`), à créer | — |
-| 8 | `Tabs` | Navigation | shadcn | v1 | **maquetté** (`ViewTab`) — ⚠ la nav des maquettes est une Sidebar | — |
+| 8 | `ViewTabs` | Navigation | shadcn | v1 | **maquetté** (`ViewTab`) — bascule de vue dans la page, cf. décision 2 | — |
 | 9 | `Card` | Layout | shadcn | v1 | à créer — pas de Card générique en Figma | — |
 | 10 | `ChoiceCard` | Navigation | aikoz | v1 | à créer — absent du code et du Figma | Card, Badge |
 | 11 | `DonutChart` | Data display | aikoz | v1 | **maquetté** (`SourcesDonut`), à créer | Select, Tooltip |
@@ -59,12 +59,17 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 20 | `EmptyState` | Feedback | aikoz | v1 | à créer — absent du code et du Figma | Button |
 | 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 22 | `Toast` (sonner) | Feedback | shadcn | plus tard | à créer — absent du code et du Figma | — |
-| 23 | `VerbatimCard` | Data display | aikoz | à confirmer | à créer — voir « Points à trancher » | ScoreStars, Badge, Tag |
+| 23 | `VerbatimCard` | Data display | aikoz | v1 | à créer — retenue au périmètre, cf. décision 5 | ScoreStars, Badge, Tag |
+| 24 | `ProgressBar` | Data display | aikoz | v1 | **composant Figma** (3 niveaux), à créer — promu par la décision 1 | — |
+| 25 | `SidebarNav` | Navigation | aikoz | v1 | **composant Figma** `Sidebar`, à créer — promu par la décision 2 | NavItem |
+| 26 | `NavItem` | Navigation | aikoz | v1 | **composant Figma** (3 états), à créer — brique de `SidebarNav` | — |
 
-**Compte** : 23 composants = **12 d'origine shadcn** + **11 spécifiques Aikoz**.
+**Compte** : 26 composants = **12 d'origine shadcn** + **14 spécifiques Aikoz**.
 *(La v1.0 annonçait « 11 shadcn / 12 spécifiques » — la répartition était inversée d'une unité, `Button` étant d'origine shadcn.)*
 
-État réel : **2 livrés** (`Button`, `KpiCard`), **2 à extraire** de `KpiCard` (`ScoreStars`, `DeltaBadge`), **19 à construire** — dont 5 transposables depuis un composant Figma existant et 4 seulement maquettés.
+État réel : **2 livrés** (`Button`, `KpiCard`), **2 à extraire** de `KpiCard` (`ScoreStars`, `DeltaBadge`), **22 à construire** — dont 8 transposables depuis un composant Figma existant et 4 seulement maquettés.
+
+*Les trois derniers (`ProgressBar`, `SidebarNav`, `NavItem`) sont entrés au périmètre par les décisions 1 et 2 ; ils figuraient déjà comme composants Figma non reflétés dans la v1.0.*
 
 ---
 
@@ -97,7 +102,9 @@ Le Figma traite la surface comme un axe de variante là où le code la traite co
 | Barre de progression | ❌ | ✅ sous la valeur, avec objectif |
 | Sparkline | ✅ (taille `lg`) | ❌ absente |
 
-Les quatre KpiCard des maquettes portent toutes une `ProgressBar` + un sous-texte d'objectif (« Objectif · 90 % », « vs 4,2 marché »). Le code livre à la place des étoiles et une sparkline. **L'un des deux est périmé** — à trancher avant d'extraire quoi que ce soit de ce fichier, puisque `ScoreStars` et `DeltaBadge` en sortent.
+Les quatre KpiCard des maquettes portent toutes une `ProgressBar` + un sous-texte d'objectif (« Objectif · 90 % », « vs 4,2 marché »). Le code livre à la place des étoiles et une sparkline.
+
+> **Résolu** — cf. décision 1. Aucun des deux n'est périmé : ce sont deux variantes légitimes de métriques différentes. Le défaut était l'axe de l'API, pas le contenu de la carte.
 
 ### 3. `ScoreStars` et `DeltaBadge` existent déjà, inlinés
 
@@ -116,7 +123,9 @@ Lecture la plus probable : la segmentation géographique est prévue, sa **repr�
 
 L'inventaire v1.0 listait `Tabs` en v1 et laissait « Tabs ou sidebar ? » en question ouverte. Les maquettes répondent : **les deux dashboards (light et dark) utilisent une `Sidebar`**, composant Figma existant (organisme), avec `NavItem` (molécule, 3 états) — quatre entrées : Marché, Campagnes, Hall of Fames, Paramètres.
 
-`ViewTab` existe bien, mais comme frame non componentisé et en usage secondaire (bascule de vue à l'intérieur d'un panneau), pas comme navigation globale. **Décision à prendre** : si la Sidebar est retenue, `Sidebar` + `NavItem` entrent en v1 et `Tabs` rétrograde au rang de composant local.
+`ViewTab` existe bien, mais comme frame non componentisé et en usage secondaire (bascule de vue à l'intérieur d'un panneau), pas comme navigation globale.
+
+> **Résolu** — cf. décision 2. Les deux entrent en v1 : ce sont deux composants aux contrats d'accessibilité distincts, qui coexistent dans un même écran. `Tabs` ne « rétrograde » pas, il change de périmètre.
 
 ---
 
@@ -140,13 +149,78 @@ Huit composants Figma n'étaient reflétés nulle part dans la liste. Trois d'en
 
 ---
 
-## Points à trancher
+## Décisions prises — 26/08/2026
 
-- **`VerbatimCard`** (affichage d'un avis client : note, source, date, texte, sentiment) — absent de la liste de Louis et du Figma. **Élément nouveau en faveur de sa création** : le Figma contient un atome `Tag` avec exactement trois variantes `Sentiment = Positive / Negative / Neutral`, sans aucun usage dans les maquettes. Un tag de sentiment ne se qualifie que sur un avis unitaire — un agrégat n'a pas de sentiment, il a une moyenne. Cet atome a donc été dessiné pour un affichage d'avis qui n'a jamais été maquetté. À confirmer : le dashboard v1 affiche-t-il les avis unitaires ou seulement les agrégats ?
-- **Charts** : adopter le module `chart` de shadcn (basé sur recharts) comme socle des trois graphiques plutôt que du SVG maison. **Décision réservée à Pietro** — elle conditionne la structure de `DonutChart`, `RankedBarChart` et `Leaderboard`. *Élément factuel pour la décision : `kpi-card.tsx` importe déjà `recharts` (sparkline), et `recharts` est déjà déclaré dans `registry.json`.*
-- **Web Components (Lit / Stencil)** : l'architecture cible pour l'embarquabilité white-label. Si la décision tombe après la construction de ces 23 composants, il faudra les reconstruire. **Décision réservée à Pietro**, à arbitrer **avant** d'attaquer le lot.
-- **Navigation globale** : Sidebar (constatée dans les maquettes) ou Tabs ? Cf. écart 5.
-- **Divergence `KpiCard`** : code (étoiles + sparkline) ou maquette (ProgressBar + objectif) ? Cf. écart 2. Bloque l'extraction de `ScoreStars` et `DeltaBadge`.
+### 1 · `KpiCard` — deux axes, pas deux cartes
+
+La question « code ou maquette » était mal posée : les deux cartes affichent des métriques de **nature différente** et fonctionnent toutes les deux. Le vrai défaut est que l'API indexe la richesse sur `size`, ce qui mélange **la place disponible** et **la nature de la donnée**.
+
+```tsx
+<KpiCard variant="rating" | "target" | "trend" | "raw"
+         density="compact" | "default" | "large" />
+```
+
+`variant` décrit ce que la donnée *est*, `density` la place qu'on lui accorde. Aujourd'hui `size="lg"` force la sparkline : impossible d'afficher une note en étoiles dans une grande carte.
+
+| Métrique | Échelle | Appui |
+|---|---|---|
+| Note moyenne 4,2 | bornée 0–5 | étoiles → `rating` |
+| Taux de réponse 87 % | bornée, avec objectif | barre → `target` |
+| Avis traités 312 | non bornée | tendance → `trend` |
+| Délai 6 h | bornée par un objectif | barre inversée (moins = mieux) → `target` |
+
+**Conséquence : l'extraction de `ScoreStars` et `DeltaBadge` n'est plus bloquée.** Avec `ProgressBar`, ils deviennent les briques d'appui que les variantes composent. `ProgressBar` entre en v1.
+
+**Principe retenu pour le DS** : variantes **fermées** par défaut, plus un slot d'échappement documenté « si tu t'en sers deux fois, ça doit devenir une variante ». Sur un dashboard la cohérence prime sur la flexibilité — un même type de métrique doit se lire pareil d'un écran à l'autre.
+
+**Reste à valider avec Louis** : les 4 cartes des maquettes portent toutes une barre, y compris « Avis traités · 312 » dont le sous-texte est « 30 derniers jours ». Une barre suppose un dénominateur — 312 sur combien ? Le système de variantes force cette question, la maquette actuelle l'esquive.
+
+### 2 · Navigation — `SidebarNav` et `ViewTabs`, les deux
+
+Ce ne sont pas deux options concurrentes mais **deux composants distincts qui coexistent dans le même écran** : la sidebar navigue entre sections, les tabs basculent de vue à l'intérieur d'une page. Ils n'ont pas le même contrat d'accessibilité.
+
+| | `SidebarNav` | `ViewTabs` |
+|---|---|---|
+| Rôle | navigation entre sections | bascule de vue dans la page |
+| Sémantique | `<nav>` + liens | `role="tablist"` / `role="tab"` |
+| État courant | `aria-current="page"` | `aria-selected="true"` |
+| Clavier | Tab de lien en lien | flèches ← → + roving tabindex |
+| Effet | change la route | échange un panneau, même route |
+
+**Règle à appliquer sans exception : c'est le comportement qui décide, jamais l'apparence.** Un « onglet » qui change de route est un lien stylé en onglet ; l'implémenter en `role="tab"` annonce à un lecteur d'écran un panneau qui va s'échanger alors que la page entière est remplacée. C'est un des bugs d'a11y les plus fréquents.
+
+Les deux entrent en v1. Ils partagent les **tokens**, pas le composant : `NavItem` ressemble à un onglet, mais mutualiser ferait fuiter la mauvaise sémantique.
+
+### 3 · Typographie — longhand
+
+Le shorthand CSS `font` ne transporte pas `letter-spacing` et **réinitialise `font-feature-settings` et `font-variant-numeric`** — vérifié en navigateur : `font: var(--role-typography-metric)` casse l'alignement des chiffres, sur le rôle des KPI. Les rôles passent en longhand, 5 variables par rôle. Coût de migration nul, aucun composant ne consomme encore ces variables.
+
+L'unité `em` du tracking est conservée et l'écart au type `dimension` du DTCG documenté : l'alternative conforme (ratio sans unité recomposé en `calc(x * 1em)`) violerait la règle verrouillée « la variable porte la valeur directement utilisable ».
+
+### 4 · `ScoreStars` — `role.color.rating` sur `warning-600`
+
+`text-amber-400`, seule couleur hors tokens du code livré, donne **1,67:1** sur carte : hors sujet au regard du seuil 3:1 de WCAG 1.4.11 (l'étoile porte l'information, ce n'est pas du texte). Rampe mesurée contre `--card` :
+
+| palier | light | dark |
+|---|---|---|
+| 400 | 1,66 ❌ | 10,45 ✅ |
+| 500 | 2,18 ❌ | 7,97 ✅ |
+| **600** | **3,25 ✅** | **5,35 ✅** |
+| 700 | 5,13 ✅ | 3,39 ✅ |
+
+`warning-600` est le seul palier conforme des deux côtés. Marge courte en light : si la carte s'assombrit un jour, c'est le premier ratio à retester.
+
+### 5 · `VerbatimCard` — au périmètre v1
+
+Retenue. L'atome Figma `Tag` (3 variantes de sentiment, sans usage maquetté) n'a de sens que sur un avis unitaire. Reste à confirmer côté produit le moment où le dashboard donne accès aux avis un par un, pour situer la priorité dans le lot.
+
+---
+
+## Points encore à trancher
+
+- **Charts** : adopter le module `chart` de shadcn (basé sur recharts) comme socle des trois graphiques plutôt que du SVG maison. **Décision réservée à Pietro** — elle conditionne la structure de `DonutChart`, `RankedBarChart` et `Leaderboard`. *Élément factuel : `kpi-card.tsx` importe déjà `recharts`, et la dépendance est déjà déclarée dans `registry.json`.*
+- **Web Components (Lit / Stencil)** : l'architecture cible pour l'embarquabilité white-label. Si la décision tombe après la construction de ces composants, il faudra les reconstruire. **Décision réservée à Pietro**, à arbitrer **avant** d'attaquer le lot.
+- **Dénominateur de la variante `target`** pour les métriques non bornées — cf. décision 1, à valider avec Louis.
 
 ---
 
