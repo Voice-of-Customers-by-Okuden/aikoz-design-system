@@ -46,6 +46,8 @@
   --color-nav-border: var(--color-midnight-blue-700);
   --color-nav-on-muted: var(--color-ultramarine-300);
   --color-chart-1: var(--color-aquamarine-300); /** Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1. */
+  --color-rating-default: var(--color-warning-600); /** Couleur de notation — étoiles pleines. warning.600 = 5,35:1 sur --card, marge confortable. warning.400 monterait à 10,45:1 si le design veut une étoile plus vive. */
+  --color-rating-empty: var(--color-neutral-700); /** Étoile vide — repère de l'échelle. 1,60:1, sous 3:1 : assumé décoratif (aria-hidden, le max figure dans l'aria-label). */
   --color-surface-brand: var(--color-brand-primary);
   --color-surface-brand-hover: var(--color-brand-primary-hover);
   --color-surface-brand-active: var(--color-brand-primary-active);

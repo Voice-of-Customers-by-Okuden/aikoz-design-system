@@ -104,6 +104,16 @@
     "$value": "{color.status.error-text}",
     "$description": "extension DS — texte/emphase erreur (utilisé par KpiCard)"
   },
+  "rating": {
+    "$type": "color",
+    "$value": "{color.rating.default}",
+    "$description": "extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée »"
+  },
+  "rating-empty": {
+    "$type": "color",
+    "$value": "{color.rating.empty}",
+    "$description": "extension DS — étoile vide, repère décoratif de l'échelle"
+  },
   "chart-1": {
     "$type": "color",
     "$value": "{color.chart.1}",

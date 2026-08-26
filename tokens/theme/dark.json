@@ -241,6 +241,18 @@
         "$value": "{color.aquamarine.300}",
         "$description": "Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1."
       }
+    },
+    "rating": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.warning.600}",
+        "$description": "Couleur de notation — étoiles pleines. warning.600 = 5,35:1 sur --card, marge confortable. warning.400 monterait à 10,45:1 si le design veut une étoile plus vive."
+      },
+      "empty": {
+        "$type": "color",
+        "$value": "{color.neutral.700}",
+        "$description": "Étoile vide — repère de l'échelle. 1,60:1, sous 3:1 : assumé décoratif (aria-hidden, le max figure dans l'aria-label)."
+      }
     }
   }
 }

@@ -2,7 +2,8 @@ import { type ElementType, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 import { cn } from "@registry/aikoz/lib/utils";
-import { Star, StarFill, ArrowUpward, ArrowDownward } from "@material-symbols-svg/react/rounded";
+import { ScoreStars } from "@registry/aikoz/score-stars/score-stars";
+import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -55,56 +56,6 @@ export interface KpiCardProps extends VariantProps<typeof cardVariants> {
   className?: string;
   onClick?: () => void;
   href?: string;
-}
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function StarRating({ value, max }: { value: number; max: number }) {
-  const rounded = Math.round(value);
-  return (
-    <div
-      className="flex gap-0.5"
-      aria-label={`${value} sur ${max} étoiles`}
-      role="img"
-    >
-      {Array.from({ length: max }).map((_, i) =>
-        i < rounded ? (
-          <StarFill
-            key={i}
-            className="w-4 h-4 text-amber-400"
-            aria-hidden="true"
-          />
-        ) : (
-          <Star
-            key={i}
-            className="w-4 h-4 text-muted-foreground/30"
-            aria-hidden="true"
-          />
-        )
-      )}
-    </div>
-  );
-}
-
-function TrendBadge({ trend }: { trend: number }) {
-  const positive = trend >= 0;
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-0.5 text-xs font-semibold rounded-full px-2 py-0.5 border",
-        positive
-          ? "border-[var(--success)] bg-[color-mix(in_oklch,var(--success),transparent_92%)] text-[var(--success)]"
-          : "border-[var(--destructive-text)] bg-[color-mix(in_oklch,var(--destructive-text),transparent_92%)] text-[var(--destructive-text)]"
-      )}
-      aria-label={positive ? `en hausse de ${trend}%` : `en baisse de ${Math.abs(trend)}%`}
-    >
-      {positive
-        ? <ArrowUpward   className="w-3 h-3" aria-hidden="true" />
-        : <ArrowDownward className="w-3 h-3" aria-hidden="true" />
-      }
-      {positive ? "+" : ""}{trend}%
-    </span>
-  );
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
@@ -189,8 +140,10 @@ export function KpiCard({
       {/* md + lg : étoiles + badge tendance */}
       {(size === "md" || size === "lg") && (
         <div className="flex items-center gap-2 flex-wrap">
-          <StarRating value={value} max={max} />
-          {trend !== undefined && <TrendBadge trend={trend} />}
+          {/* label={null} : la carte porte déjà la note dans son aria-label,
+              les étoiles ne doivent pas l'annoncer une seconde fois. */}
+          <ScoreStars value={value} max={max} label={null} />
+          {trend !== undefined && <DeltaBadge value={trend} />}
         </div>
       )}
 

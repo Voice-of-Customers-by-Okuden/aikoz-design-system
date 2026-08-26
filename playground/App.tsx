@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
 import { Button } from "@registry/aikoz/button/button";
+import { ScoreStars } from "@registry/aikoz/score-stars/score-stars";
+import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -152,6 +154,56 @@ export default function App() {
             />
           </div>
 
+        </div>
+
+        {/* Composants extraits de KpiCard */}
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          ScoreStars — extrait de KpiCard
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          {([
+            ["4,2 · demi-étoile", 4.2, "half"],
+            ["4,2 · arrondi entier", 4.2, "full"],
+            ["0 · plancher", 0, "half"],
+            ["5 · plafond", 5, "half"],
+            ["7 sur 5 · borné", 7, "half"],
+          ] as const).map(([label, v, r]) => (
+            <div key={label} className="flex items-center gap-4 flex-wrap">
+              <span className="w-44 shrink-0 text-xs text-muted-foreground">{label}</span>
+              <ScoreStars value={v} rounding={r} />
+            </div>
+          ))}
+          <div className="flex items-center gap-4 flex-wrap pt-2 border-t border-border">
+            <span className="w-44 shrink-0 text-xs text-muted-foreground">tailles sm / md / lg</span>
+            <ScoreStars value={3.5} size="sm" />
+            <ScoreStars value={3.5} size="md" />
+            <ScoreStars value={3.5} size="lg" />
+          </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          DeltaBadge — extrait de KpiCard, état neutre ajouté
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex items-center gap-3 flex-wrap">
+            <DeltaBadge value={12} />
+            <DeltaBadge value={-8} />
+            <DeltaBadge value={0} />
+            <DeltaBadge value={4.2} unit=" pts" />
+            <DeltaBadge value={0.3} neutralThreshold={0.5} />
+          </div>
+          <div className="flex items-center gap-3 flex-wrap pt-2 border-t border-border">
+            <span className="text-xs text-muted-foreground">
+              ton forcé — un délai qui baisse est un progrès :
+            </span>
+            <DeltaBadge value={-15} unit=" min" tone="positive" />
+          </div>
+          <div className="flex items-center gap-3 flex-wrap pt-2 border-t border-border">
+            <span className="text-xs text-muted-foreground">taille sm</span>
+            <DeltaBadge value={12} size="sm" />
+            <DeltaBadge value={-8} size="sm" />
+            <DeltaBadge value={0} size="sm" />
+          </div>
         </div>
 
         {/* Carte cliquable — test hover + focus clavier */}

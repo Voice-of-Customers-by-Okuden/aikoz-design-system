@@ -4,21 +4,96 @@
   "homepage": "https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system",
   "items": [
     {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "Bouton Aikoz — 4 variantes (default, secondary, outline, ghost) x 3 tailles (sm 36px, md 44px, lg 48px). Coins pilule, anneau de focus clavier, etat disabled ni cliquable ni focusable.",
+      "files": [
+        {
+          "path": "registry/aikoz/button/button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-slot"
+      ]
+    },
+    {
+      "name": "score-stars",
+      "type": "registry:component",
+      "title": "Score Stars",
+      "description": "Notation en etoiles sur une echelle bornee. Demi-etoiles, 3 tailles, couleur portee par le role dedie --rating. L'information n'est jamais portee par la seule couleur : le nombre d'etoiles pleines et l'aria-label la vehiculent.",
+      "files": [
+        {
+          "path": "registry/aikoz/score-stars/score-stars.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@material-symbols-svg/react"
+      ]
+    },
+    {
+      "name": "delta-badge",
+      "type": "registry:component",
+      "title": "Delta Badge",
+      "description": "Etiquette de variation : vert si positif, rouge si negatif, gris si neutre. Seuil de neutralite parametrable et ton forcable, pour les metriques ou baisser est un progres. Fleche haut/bas/tiret doublant la couleur.",
+      "files": [
+        {
+          "path": "registry/aikoz/delta-badge/delta-badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@material-symbols-svg/react"
+      ]
+    },
+    {
       "name": "kpi-card",
       "type": "registry:component",
       "title": "KPI Card",
-      "description": "Carte d'indicateur Aikoz, 3 tailles (sm/md/lg) de richesse croissante : valeur + label, puis notation étoiles et badge de tendance, puis sparkline. Optionnellement cliquable.",
+      "description": "Carte d'indicateur Aikoz, 3 tailles (sm/md/lg) de richesse croissante : valeur + label, puis notation étoiles et étiquette de variation, puis sparkline. Optionnellement cliquable.",
       "files": [
-        { "path": "registry/aikoz/kpi-card/kpi-card.tsx", "type": "registry:component" },
-        { "path": "registry/aikoz/lib/utils.ts", "type": "registry:lib" }
+        {
+          "path": "registry/aikoz/kpi-card/kpi-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
       ],
       "dependencies": [
         "recharts",
         "class-variance-authority",
         "clsx",
         "tailwind-merge",
-        "@radix-ui/react-slot",
-        "@material-symbols-svg/react"
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [
+        "score-stars",
+        "delta-badge"
       ]
     }
   ]
