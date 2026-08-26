@@ -53,6 +53,40 @@ StyleDictionary.registerTransform({
   },
 });
 
+// --- Typographie : shorthand `font` construit depuis les alias NON résolus.
+// Style Dictionary rend d'abord le token objet `typography` en chaîne, puis, pour
+// outputReferences, réinjecte les alias par un String.replace BRUT de la valeur
+// résolue. Sur role.typography.label.sm, line-height.loose vaut `2` : le replace
+// tombe sur le « 2 » de `--dimension-font-size-2xs` et corrompt la déclaration
+// (`var(--dimension-font-size-var(--line-height-loose)xs)/2`). Le piège est
+// structurel — toute paire {taille contenant un chiffre} x {line-height entier}
+// le rejouera. On construit donc le shorthand nous-mêmes à partir de
+// token.original.$value, et on coupe outputReferences sur ces tokens.
+const refToVar = s =>
+  typeof s === 'string' && /^\{[^{}]+\}$/.test(s.trim())
+    ? `var(--${s.trim().slice(1, -1).replace(/\./g, '-')})`
+    : s;
+
+StyleDictionary.registerTransform({
+  name: 'typography/css/shorthand-refs',
+  type: 'value',
+  transitive: true,
+  filter: token => (token.$type ?? token.type) === 'typography',
+  transform: token => {
+    const v = token.original?.$value ?? token.original?.value ?? token.$value ?? token.value;
+    if (typeof v !== 'object' || v === null) return v; // déjà transformé en chaîne
+    // NB : `letterSpacing` n'est pas exprimable dans le shorthand CSS `font` —
+    // il est perdu ici comme il l'était avant. Chantier ouvert, cf. INVENTORY.
+    const weight = v.fontWeight ? `${refToVar(v.fontWeight)} ` : '';
+    const size = v.fontSize ? refToVar(v.fontSize) : '1rem';
+    const lineHeight = v.lineHeight ? `/${refToVar(v.lineHeight)}` : '';
+    const family = v.fontFamily ? ` ${refToVar(v.fontFamily)}` : ' sans-serif';
+    return `${weight}${size}${lineHeight}${family}`;
+  },
+});
+
+const isTypography = token => (token.$type ?? token.type) === 'typography';
+
 // Groupe css avec sortie couleur en oklch() au lieu de hex.
 const cssOklch = StyleDictionary.hooks.transformGroups.css.map(
   n => (n === 'color/css' ? 'color/oklch' : n),
@@ -82,9 +116,20 @@ await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector
 
 // Couche 3bis — semantics : rôles MODE-INDÉPENDANTS (radius, shadow, border-width, typography).
 // :root unique (pas de variante light/dark). refs:true → alias émis en var(--…).
-// Pas de transforms custom : le groupe 'css' par défaut rend nativement le format
-// dimension { value, unit } en v5 (vérifié). semantics.json n'a aucun token couleur.
-await make('semantics.css', [PRIM, SEM], { selector: ':root', filter: inPath('semantics'), refs: true }).buildAllPlatforms();
+// Le groupe 'css' rend nativement le format dimension { value, unit } en v5 (vérifié).
+// semantics.json n'a aucun token couleur.
+// Typographie : on substitue notre shorthand (alias var() posés à la source) au
+// shorthand natif, et on désactive outputReferences sur ces seuls tokens — sinon le
+// String.replace de SD viendrait re-corrompre le résultat. Les autres rôles
+// (radius, border-width) gardent outputReferences : leur valeur est une chaîne
+// simple, le remplacement y passe par une regex sur `{alias}` et reste sûr.
+const cssSemantics = StyleDictionary.hooks.transformGroups.css.map(
+  n => (n === 'typography/css/shorthand' ? 'typography/css/shorthand-refs' : n),
+);
+await make('semantics.css', [PRIM, SEM], {
+  selector: ':root', filter: inPath('semantics'),
+  transforms: cssSemantics, refs: token => !isTypography(token),
+}).buildAllPlatforms();
 
 // Couche 4 — bridge shadcn : RUNTIME généré depuis le DTCG, oklch() complet.
 // C'est le fichier consommé par les composants (playground/demo). Ne pas éditer à la main.

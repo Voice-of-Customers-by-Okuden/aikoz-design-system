@@ -4,20 +4,20 @@
 
 :root {
   --role-shadow-flat: 0px 0px 0px 0px #0A112800; /** No elevation */
-  --role-typography-heading-display: var(--font-weight-black) var(--font-size-7xl)/var(--line-height-none) var(--font-family-heading); /** Display — hero / splash text (72px) */
-  --role-typography-heading-h1: var(--font-weight-bold) var(--font-size-5xl)/var(--line-height-tight) var(--font-family-heading); /** H1 — primary page title (48px) */
-  --role-typography-heading-h2: var(--font-weight-bold) var(--font-size-4xl)/var(--line-height-tight) var(--font-family-heading); /** H2 — section title (36px) */
-  --role-typography-heading-h3: var(--font-weight-bold) var(--font-size-3xl)/var(--line-height-snug) var(--font-family-heading); /** H3 — subsection title (30px) */
-  --role-typography-heading-h4: var(--font-weight-bold) var(--font-size-2xl)/var(--line-height-snug) var(--font-family-heading); /** H4 — card / panel title (24px) */
-  --role-typography-body-lg: var(--font-weight-regular) var(--font-size-lg)/var(--line-height-normal) var(--font-family-body); /** Body large — introductory paragraphs (18px) */
-  --role-typography-body-md: var(--font-weight-regular) var(--font-size-md)/var(--line-height-normal) var(--font-family-body); /** Body medium — default body text (16px) */
-  --role-typography-body-sm: var(--font-weight-regular) var(--font-size-sm)/var(--line-height-relaxed) var(--font-family-body); /** Body small — secondary copy (14px) */
-  --role-typography-body-xs: var(--font-weight-regular) var(--font-size-xs)/var(--line-height-relaxed) var(--font-family-body); /** Body xsmall — footnotes, helper text (12px) */
-  --role-typography-label-lg: var(--font-weight-medium) var(--font-size-sm)/var(--line-height-snug) var(--font-family-body); /** Label large — form labels, nav items (14px medium) */
-  --role-typography-label-md: var(--font-weight-medium) var(--font-size-xs)/var(--line-height-snug) var(--font-family-body); /** Label medium — badges, tabs (12px medium) */
-  --role-typography-label-sm: var(--font-weight-medium) var(--font-size-var(--line-height-loose)xs)/2 var(--font-family-body); /** Label small — chips, micro labels (10px medium) */
-  --role-typography-caption: var(--font-weight-regular) var(--font-size-xs)/var(--line-height-loose) var(--font-family-body); /** Caption — image captions, timestamps (12px regular) */
-  --role-typography-metric: var(--font-weight-medium) var(--font-size-3xl)/var(--line-height-tight) var(--font-family-mono);
+  --role-typography-heading-display: var(--font-weight-black) var(--dimension-font-size-7xl)/var(--line-height-none) var(--font-family-heading); /** Display — hero / splash text (72px) */
+  --role-typography-heading-h1: var(--font-weight-bold) var(--dimension-font-size-5xl)/var(--line-height-tight) var(--font-family-heading); /** H1 — primary page title (48px) */
+  --role-typography-heading-h2: var(--font-weight-bold) var(--dimension-font-size-4xl)/var(--line-height-tight) var(--font-family-heading); /** H2 — section title (36px) */
+  --role-typography-heading-h3: var(--font-weight-bold) var(--dimension-font-size-3xl)/var(--line-height-snug) var(--font-family-heading); /** H3 — subsection title (30px) */
+  --role-typography-heading-h4: var(--font-weight-bold) var(--dimension-font-size-2xl)/var(--line-height-snug) var(--font-family-heading); /** H4 — card / panel title (24px) */
+  --role-typography-body-lg: var(--font-weight-regular) var(--dimension-font-size-lg)/var(--line-height-normal) var(--font-family-body); /** Body large — introductory paragraphs (18px) */
+  --role-typography-body-md: var(--font-weight-regular) var(--dimension-font-size-md)/var(--line-height-normal) var(--font-family-body); /** Body medium — default body text (16px) */
+  --role-typography-body-sm: var(--font-weight-regular) var(--dimension-font-size-sm)/var(--line-height-relaxed) var(--font-family-body); /** Body small — secondary copy (14px) */
+  --role-typography-body-xs: var(--font-weight-regular) var(--dimension-font-size-xs)/var(--line-height-relaxed) var(--font-family-body); /** Body xsmall — footnotes, helper text (12px) */
+  --role-typography-label-lg: var(--font-weight-medium) var(--dimension-font-size-sm)/var(--line-height-snug) var(--font-family-body); /** Label large — form labels, nav items (14px medium) */
+  --role-typography-label-md: var(--font-weight-medium) var(--dimension-font-size-xs)/var(--line-height-snug) var(--font-family-body); /** Label medium — badges, tabs (12px medium) */
+  --role-typography-label-sm: var(--font-weight-medium) var(--dimension-font-size-2xs)/var(--line-height-loose) var(--font-family-body); /** Label small — chips, micro labels (10px medium) */
+  --role-typography-caption: var(--font-weight-regular) var(--dimension-font-size-xs)/var(--line-height-loose) var(--font-family-body); /** Caption — image captions, timestamps (12px regular) */
+  --role-typography-metric: var(--font-weight-medium) var(--dimension-font-size-3xl)/var(--line-height-tight) var(--font-family-mono);
   --role-radius-none: var(--dimension-radius-none); /** No rounding — flush / sharp corners */
   --role-radius-subtle: var(--dimension-radius-sm); /** Minimal rounding for compact or tight elements */
   --role-radius-default: var(--dimension-radius-md); /** Standard rounding — most interactive UI */

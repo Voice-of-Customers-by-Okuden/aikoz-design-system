@@ -113,18 +113,6 @@
   --font-family-heading: 'PP Radio Grotesk', sans-serif; /** Titres / slides / print */
   --font-family-body: Inter, sans-serif; /** UI / web / dashboard (DA recente) */
   --font-family-mono: 'JetBrains Mono', monospace; /** KPI / chiffres */
-  --font-size-2xs: 0.625rem; /** 10px */
-  --font-size-xs: 0.75rem; /** 12px */
-  --font-size-sm: 0.875rem; /** 14px */
-  --font-size-md: 1rem; /** 16px — base */
-  --font-size-lg: 1.125rem; /** 18px */
-  --font-size-xl: 1.25rem; /** 20px */
-  --font-size-2xl: 1.5rem; /** 24px */
-  --font-size-3xl: 1.875rem; /** 30px */
-  --font-size-4xl: 2.25rem; /** 36px */
-  --font-size-5xl: 3rem; /** 48px */
-  --font-size-6xl: 3.75rem; /** 60px */
-  --font-size-7xl: 4.5rem; /** 72px */
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500; /** Inter (UI) / Satoshi (éditorial) — PP Radio Grotesk n'a pas de graisse medium */
@@ -176,6 +164,18 @@
   --dimension-border-width-thin: 1px;
   --dimension-border-width-medium: 2px;
   --dimension-border-width-thick: 4px;
+  --dimension-font-size-2xs: 0.625rem; /** 10px */
+  --dimension-font-size-xs: 0.75rem; /** 12px */
+  --dimension-font-size-sm: 0.875rem; /** 14px */
+  --dimension-font-size-md: 1rem; /** 16px — base */
+  --dimension-font-size-lg: 1.125rem; /** 18px */
+  --dimension-font-size-xl: 1.25rem; /** 20px */
+  --dimension-font-size-2xl: 1.5rem; /** 24px */
+  --dimension-font-size-3xl: 1.875rem; /** 30px */
+  --dimension-font-size-4xl: 2.25rem; /** 36px */
+  --dimension-font-size-5xl: 3rem; /** 48px */
+  --dimension-font-size-6xl: 3.75rem; /** 60px */
+  --dimension-font-size-7xl: 4.5rem; /** 72px */
   --shadow-sm: 0px 1px 2px 0px #0A11280F, 0px 1px 1px 0px #0A11280A; /** Subtle lift — rgba(10,17,40,0.06) + rgba(10,17,40,0.04) */
   --shadow-md: 0px 2px 4px -1px #0A112814, 0px 4px 8px -2px #0A11280F; /** Standard elevation — rgba(10,17,40,0.08) + rgba(10,17,40,0.06) */
   --shadow-lg: 0px 4px 8px -2px #0A11281A, 0px 12px 24px -4px #0A112814; /** Prominent elevation — rgba(10,17,40,0.10) + rgba(10,17,40,0.08) */
