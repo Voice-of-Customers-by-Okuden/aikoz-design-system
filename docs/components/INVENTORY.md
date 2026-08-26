@@ -276,11 +276,30 @@ Reprises telles quelles pour les composants dashboard. Les captures d'écran cor
 
 ---
 
-## Prérequis avant construction
+## Fondation — soldée
 
-**Fondation typographique — soldée.** La branche `feat/dimensions-typography` est commitée ([PR #22](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/22)) : `font-size` est passé sous `dimension.font-size.*` au format `{ value, unit }`, et `--role-typography-label-sm` — corrompu depuis l'origine — est corrigé à la racine dans le générateur.
+La couche de tokens est fermée. Plus rien n'empêche de construire.
 
-**Reste ouvert : le letter-spacing.** Deux problèmes distincts, aucun bloquant pour démarrer, tous deux à solder avant de figer les composants qui portent du texte :
+| Chantier | État | PR |
+|---|---|---|
+| `font-size` sous `dimension.font-size.*` | livré | [#22](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/22) |
+| `--role-typography-label-sm` corrompu | corrigé à la racine | [#22](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/22) |
+| `semantics.css` jamais importé | corrigé | [#22](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/22) |
+| Rôles typographiques en longhand | livré | [#25](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/25) |
+| Playground — onglets Tokens et Décisions | livré | [#24](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/24) |
 
-1. Le shorthand CSS `font` **ne peut pas transporter `letter-spacing`**. Les 6 valeurs déclarées dans `semantics.json` sont silencieusement perdues à la génération (Style Dictionary les classe en `unknownProps` ; le warning est masqué par `verbosity: 'silent'`). Vérifié en navigateur : les 14 rôles calculent `letter-spacing: normal`.
-2. L'unité `em` des primitives `letter-spacing.*` n'est pas conforme au type `dimension` du DTCG, qui n'admet que `px` et `rem`.
+**Letter-spacing** — restauré. Les 14 rôles sortent en longhand, 5 variables chacun, et le tracking s'applique en suivant la taille : `-2,88px` sur `heading-display` (72px × -0,04em), `0,5px` sur `label-sm` (10px × 0,05em). Le shorthand `font` est abandonné : outre le tracking, il réinitialisait `font-feature-settings` et `font-variant-numeric`, cassant l'alignement des chiffres sur le rôle `metric`.
+
+**Unité `em`** — conservée, écart au type `dimension` du DTCG documenté. L'alternative conforme (ratio sans unité recomposé en `calc(x * 1em)`) violerait la règle « la variable porte la valeur directement utilisable ». `em` transite en outre nativement vers Figma, qui stocke le letter-spacing en pourcentage de la taille.
+
+---
+
+## Ordre de construction
+
+1. **Extraire `ScoreStars` et `DeltaBadge`** de `kpi-card.tsx`, avec création du rôle `role.color.rating` (`warning-600`) et ajout de l'état neutre au badge.
+2. **`ProgressBar`** — composant Figma existant, brique de la variante `target`.
+3. **Refondre `KpiCard`** sur les deux axes `variant` × `density` (décision 1).
+4. **Déclarer `Button` dans `registry.json`** — une ligne, il est aujourd'hui non installable.
+5. Le reste du lot v1.
+
+**Architecture actée** : composants React distribués par le registry shadcn ; le white-label passe par la couche de tokens (`data-brand` + variables CSS), pas par des Web Components. Charts sur le module `chart` de shadcn (recharts), déjà en dépendance.
