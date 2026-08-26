@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
 import { Button } from "@registry/aikoz/button/button";
+import Tokens from "./Tokens";
+
+type View = "composants" | "tokens";
 
 const DEMO_SPARKLINE = [3.6, 3.7, 3.8, 3.7, 3.9, 4.0, 3.9, 4.1, 4.0, 4.2, 4.2, 4.2];
 
@@ -43,6 +46,7 @@ function ButtonDemoContent() {
 
 export default function App() {
   const [dark, setDark] = useState(false);
+  const [view, setView] = useState<View>("tokens");
 
   function toggleDark() {
     document.documentElement.classList.toggle("dark", !dark);
@@ -54,20 +58,51 @@ export default function App() {
       <div className="max-w-4xl mx-auto p-8">
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">KPI Card — sm / md / lg</h1>
+            <h1 className="text-2xl font-bold text-foreground">Aikoz Design System</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Aikoz Design System · Registry PoC
+              Playground · état d'avancement en temps réel
             </p>
           </div>
           <button
             onClick={toggleDark}
-            className="border border-border text-foreground bg-card rounded-[var(--radius)] px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+            className="border border-border text-foreground bg-card rounded-[var(--radius)] px-4 py-2 text-sm font-medium hover:bg-muted transition-colors shrink-0"
           >
             {dark ? "☀ Mode clair" : "☾ Mode sombre"}
           </button>
         </div>
+
+        {/* Bascule de vue */}
+        <div
+          role="tablist"
+          aria-label="Vues du playground"
+          className="flex gap-1 mb-10 border-b border-border"
+        >
+          {(["tokens", "composants"] as const).map((v) => (
+            <button
+              key={v}
+              role="tab"
+              aria-selected={view === v}
+              onClick={() => setView(v)}
+              className={`px-4 py-2 text-sm font-medium capitalize -mb-px border-b-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded-t-[var(--radius)] ${
+                view === v
+                  ? "border-[var(--secondary)] text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {v}
+            </button>
+          ))}
+        </div>
+
+        {view === "tokens" && <Tokens dark={dark} />}
+
+        {view === "composants" && (
+        <>
+        <h2 className="text-lg font-semibold text-foreground mb-4">
+          KPI Card — sm / md / lg
+        </h2>
 
         {/* Grille des 3 tailles */}
         <div className="flex flex-wrap gap-6 items-start">
@@ -169,6 +204,8 @@ export default function App() {
             </div>
           </div>
         </div>
+        </>
+        )}
 
       </div>
     </div>
