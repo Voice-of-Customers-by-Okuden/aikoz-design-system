@@ -338,22 +338,24 @@ const NUMBERS = ["1 248", "312", "4 807", "1 111"];
 function TypeSample({ longhand }: { longhand: boolean }) {
   const base: React.CSSProperties = longhand
     ? {
-        fontFamily: "var(--font-family-body)",
-        fontSize: "var(--dimension-font-size-2xs)",
-        fontWeight: "var(--font-weight-medium)" as any,
-        lineHeight: "var(--line-height-loose)" as any,
-        letterSpacing: "var(--letter-spacing-wider)",
+        fontFamily: "var(--role-typography-label-sm-font-family)",
+        fontSize: "var(--role-typography-label-sm-font-size)",
+        fontWeight: "var(--role-typography-label-sm-font-weight)" as any,
+        lineHeight: "var(--role-typography-label-sm-line-height)" as any,
+        letterSpacing: "var(--role-typography-label-sm-letter-spacing)",
       }
-    : { font: "var(--role-typography-label-sm)" };
+    : // Le shorthand n'existe plus dans le build : valeurs figées pour conserver
+      // la démonstration de ce qu'il jetait.
+      { font: "500 0.625rem/2 Inter, sans-serif" };
 
   const numeric: React.CSSProperties = longhand
     ? {
-        fontFamily: "var(--font-family-mono)",
+        fontFamily: "var(--role-typography-metric-font-family)",
         fontSize: "var(--dimension-font-size-xl)",
-        fontWeight: "var(--font-weight-medium)" as any,
-        lineHeight: "var(--line-height-tight)" as any,
+        fontWeight: "var(--role-typography-metric-font-weight)" as any,
+        lineHeight: "var(--role-typography-metric-line-height)" as any,
       }
-    : { font: "var(--role-typography-metric)" };
+    : { font: '500 1.25rem/1.15 "JetBrains Mono", monospace' };
 
   const [read, setRead] = useState<{ ls: string; vn: string } | null>(null);
   const id = `ls-${longhand ? "b" : "a"}`;
@@ -662,7 +664,7 @@ export default function Decisions({ dark }: { dark: boolean }) {
         n={3}
         status="tranchée"
         title="Typographie — longhand"
-        question="Le shorthand CSS font ne transporte pas le letter-spacing, et efface les chiffres tabulaires."
+        question="Le shorthand CSS font ne transportait pas le letter-spacing, et effaçait les chiffres tabulaires. Livré : les 14 rôles sortent désormais en longhand, 5 variables chacun."
         impact={
           <>
             5 variables par rôle au lieu d'1 (70 au total), deux lignes au lieu d'une côté
@@ -680,13 +682,13 @@ export default function Decisions({ dark }: { dark: boolean }) {
         }
       >
         <Face>
-          <Panel tag="A" label="Shorthand font" source="build actuel" tone="écarté">
+          <Panel tag="A" label="Shorthand font" source="ancien build · valeurs figées" tone="écarté">
             <TypeSample longhand={false} />
           </Panel>
           <Panel
             tag="B"
             label="Longhand"
-            source="une propriété CSS par token"
+            source="livré — var(--role-typography-*-…)"
             tone="retenu"
           >
             <TypeSample longhand={true} />

@@ -197,22 +197,47 @@ function ColorGrid({
  * ferait un composant — puis relit les valeurs calculées. C'est ce qui rend
  * visible ce que le shorthand `font` laisse tomber en silence.
  */
+const TYPO_PROPS = [
+  "font-family",
+  "font-size",
+  "font-weight",
+  "line-height",
+  "letter-spacing",
+] as const;
+
+/** Regroupe les variables longhand par rôle : --role-typography-<rôle>-<prop>. */
+function groupTypographyRoles(vars: Record<string, string>) {
+  const roles = new Map<string, Record<string, string>>();
+  for (const [name, value] of byPrefix(vars, "--role-typography-")) {
+    const prop = TYPO_PROPS.find((p) => name.endsWith(`-${p}`));
+    if (!prop) continue;
+    const role = name.slice("--role-typography-".length, name.length - prop.length - 1);
+    if (!roles.has(role)) roles.set(role, {});
+    roles.get(role)![prop] = value;
+  }
+  return [...roles.entries()];
+}
+
+/**
+ * Applique chaque rôle en longhand — exactement comme le ferait un composant —
+ * puis relit les valeurs calculées. Le letter-spacing et les chiffres tabulaires
+ * doivent survivre : c'est tout l'objet du passage au longhand.
+ */
 function TypographyRoles({ vars }: { vars: Record<string, string> }) {
-  const roles = byPrefix(vars, "--role-typography-");
+  const roles = groupTypographyRoles(vars);
   const [computed, setComputed] = useState<Record<string, any>>({});
 
   useEffect(() => {
     const out: Record<string, any> = {};
-    for (const [name] of roles) {
-      const el = document.getElementById(`type-sample-${name}`);
+    for (const [role] of roles) {
+      const el = document.getElementById(`type-sample-${role}`);
       if (!el) continue;
       const cs = getComputedStyle(el);
-      out[name] = {
+      out[role] = {
         fontSize: cs.fontSize,
         lineHeight: cs.lineHeight,
         fontWeight: cs.fontWeight,
         letterSpacing: cs.letterSpacing,
-        featureSettings: cs.fontFeatureSettings,
       };
     }
     setComputed(out);
@@ -228,42 +253,46 @@ function TypographyRoles({ vars }: { vars: Record<string, string> }) {
     );
   }
 
-  const anyLetterSpacing = Object.values(computed).some(
-    (c: any) => c?.letterSpacing && c.letterSpacing !== "normal"
-  );
+  // Régression à surveiller : si un rôle déclare un tracking non nul et calcule
+  // `normal`, c'est que le longhand a été contourné quelque part.
+  const lost = roles.filter(([role, props]) => {
+    const declared = props["letter-spacing"];
+    const c = computed[role];
+    if (!declared || !c) return false;
+    return parseFloat(declared) !== 0 && c.letterSpacing === "normal";
+  });
 
   return (
     <>
-      {!anyLetterSpacing && Object.keys(computed).length > 0 && (
+      {lost.length > 0 && (
         <Flag>
-          <strong>Letter-spacing perdu sur les {roles.length} rôles.</strong> Tous
-          calculent <code className="font-mono">normal</code> alors que 6 valeurs sont
-          déclarées dans <code className="font-mono">semantics.json</code>. Le shorthand
-          CSS <code className="font-mono">font</code> ne peut pas le transporter — il
-          efface aussi <code className="font-mono">font-feature-settings</code> (chiffres
-          tabulaires). Chantier ouvert.
+          <strong>{lost.length} rôle(s) perdent leur letter-spacing.</strong> Le
+          longhand a été contourné quelque part — vérifier le format dans{" "}
+          <code className="font-mono">build-tokens.mjs</code>.
         </Flag>
       )}
       <div className="space-y-5">
-        {roles.map(([name]) => {
-          const label = name.replace("--role-typography-", "");
-          const c = computed[name];
+        {roles.map(([role, props]) => {
+          const c = computed[role];
+          const style: React.CSSProperties = {
+            fontFamily: props["font-family"],
+            fontSize: props["font-size"],
+            fontWeight: props["font-weight"] as any,
+            lineHeight: props["line-height"] as any,
+            letterSpacing: props["letter-spacing"],
+          };
           return (
             <div
-              key={name}
+              key={role}
               className="border-b border-border pb-5 last:border-0 flex flex-col gap-2"
             >
               <div className="flex items-baseline gap-3 flex-wrap">
                 <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  {label}
+                  {role}
                 </span>
-                <VarName name={name} />
+                <VarName name={`--role-typography-${role}-*`} />
               </div>
-              <div
-                id={`type-sample-${name}`}
-                style={{ font: `var(${name})` }}
-                className="text-foreground overflow-hidden text-ellipsis"
-              >
+              <div id={`type-sample-${role}`} style={style} className="text-foreground">
                 Les avis clients façonnent la réputation — 4,2/5
               </div>
               {c && (
@@ -273,9 +302,10 @@ function TypographyRoles({ vars }: { vars: Record<string, string> }) {
                   <span>weight {c.fontWeight}</span>
                   <span
                     className={
-                      c.letterSpacing === "normal"
+                      c.letterSpacing === "normal" &&
+                      parseFloat(props["letter-spacing"] || "0") !== 0
                         ? "text-[var(--destructive-text)]"
-                        : undefined
+                        : "text-[var(--success)]"
                     }
                   >
                     tracking {c.letterSpacing}
@@ -529,7 +559,7 @@ export default function Tokens({ dark }: { dark: boolean }) {
 
       <Section
         title="Rôles typographiques"
-        note="Chaque rôle est appliqué via la propriété CSS font, exactement comme le ferait un composant, puis relu en valeurs calculées."
+        note="Chaque rôle est appliqué en longhand, exactement comme le ferait un composant, puis relu en valeurs calculées. Le tracking doit apparaître en vert : c'est ce que le shorthand font jetait."
       >
         <TypographyRoles vars={vars} />
       </Section>

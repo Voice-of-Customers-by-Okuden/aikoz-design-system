@@ -1,5 +1,6 @@
 import StyleDictionary from 'style-dictionary';
 import fs from 'node:fs';
+import { fileHeader } from 'style-dictionary/utils';
 
 const PRIM = 'tokens/primitives.json';
 const brand = b => `tokens/brand/${b}.json`;
@@ -53,52 +54,78 @@ StyleDictionary.registerTransform({
   },
 });
 
-// --- Typographie : shorthand `font` construit depuis les alias NON résolus.
-// Style Dictionary rend d'abord le token objet `typography` en chaîne, puis, pour
-// outputReferences, réinjecte les alias par un String.replace BRUT de la valeur
-// résolue. Sur role.typography.label.sm, line-height.loose vaut `2` : le replace
-// tombe sur le « 2 » de `--dimension-font-size-2xs` et corrompt la déclaration
-// (`var(--dimension-font-size-var(--line-height-loose)xs)/2`). Le piège est
-// structurel — toute paire {taille contenant un chiffre} x {line-height entier}
-// le rejouera. On construit donc le shorthand nous-mêmes à partir de
-// token.original.$value, et on coupe outputReferences sur ces tokens.
+// --- Typographie : rôles émis en LONGHAND, une propriété CSS par token.
+//
+// Le shorthand `font` est écarté pour deux raisons mesurées en navigateur :
+// il ne transporte pas `letter-spacing` (Style Dictionary le classait en
+// unknownProps et le jetait, warning masqué par verbosity:'silent'), et il
+// RÉINITIALISE `font-feature-settings` / `font-variant-numeric` — donc
+// `font: var(--role-typography-metric)` cassait l'alignement des chiffres
+// sur le rôle des KPI.
+//
+// Un token typography doit produire PLUSIEURS variables : c'est un format,
+// pas un transform (un transform rend une valeur pour un token).
 const refToVar = s =>
   typeof s === 'string' && /^\{[^{}]+\}$/.test(s.trim())
     ? `var(--${s.trim().slice(1, -1).replace(/\./g, '-')})`
-    : s;
+    : null;
 
-StyleDictionary.registerTransform({
-  name: 'typography/css/shorthand-refs',
-  type: 'value',
-  transitive: true,
-  filter: token => (token.$type ?? token.type) === 'typography',
-  transform: token => {
-    const v = token.original?.$value ?? token.original?.value ?? token.$value ?? token.value;
-    if (typeof v !== 'object' || v === null) return v; // déjà transformé en chaîne
-    // NB : `letterSpacing` n'est pas exprimable dans le shorthand CSS `font` —
-    // il est perdu ici comme il l'était avant. Chantier ouvert, cf. INVENTORY.
-    const weight = v.fontWeight ? `${refToVar(v.fontWeight)} ` : '';
-    const size = v.fontSize ? refToVar(v.fontSize) : '1rem';
-    const lineHeight = v.lineHeight ? `/${refToVar(v.lineHeight)}` : '';
-    const family = v.fontFamily ? ` ${refToVar(v.fontFamily)}` : ' sans-serif';
-    return `${weight}${size}${lineHeight}${family}`;
+// Propriété CSS émise pour chaque clé DTCG du token typography.
+const TYPO_PROPS = {
+  fontFamily: 'font-family',
+  fontSize: 'font-size',
+  fontWeight: 'font-weight',
+  lineHeight: 'line-height',
+  letterSpacing: 'letter-spacing',
+};
+
+StyleDictionary.registerFormat({
+  name: 'css/variables-aikoz-semantics',
+  format: async ({ dictionary, file, options }) => {
+    const header = await fileHeader({ file });
+    const lines = [];
+
+    for (const token of dictionary.allTokens) {
+      const type = token.$type ?? token.type;
+      const original = token.original?.$value ?? token.original?.value;
+      const note = token.$description ? ` /** ${token.$description} */` : '';
+
+      if (type === 'typography' && original && typeof original === 'object') {
+        // 5 variables, alias posés directement — aucune substitution de chaîne,
+        // donc aucune collision possible entre une valeur et un nom de variable.
+        if (lines.length) lines.push('');
+        if (token.$description) lines.push(`  /* ${token.$description} */`);
+        for (const [key, prop] of Object.entries(TYPO_PROPS)) {
+          const ref = original[key];
+          if (ref == null) continue;
+          const value = refToVar(ref) ?? ref;
+          lines.push(`  --${token.name}-${prop}: ${value};`);
+        }
+        continue;
+      }
+
+      // Autres rôles : alias simple -> var(--…), sinon valeur transformée.
+      if (lines.length && lines[lines.length - 1].includes('letter-spacing')) lines.push('');
+      const value = refToVar(original) ?? (token.$value ?? token.value);
+      lines.push(`  --${token.name}: ${value};${note}`);
+    }
+
+    return `${header}${options.selector} {\n${lines.join('\n')}\n}\n`;
   },
 });
-
-const isTypography = token => (token.$type ?? token.type) === 'typography';
 
 // Groupe css avec sortie couleur en oklch() au lieu de hex.
 const cssOklch = StyleDictionary.hooks.transformGroups.css.map(
   n => (n === 'color/css' ? 'color/oklch' : n),
 );
 
-function make(destination, source, { selector, filter, refs = true, transforms, buildPath = 'build/' }) {
+function make(destination, source, { selector, filter, refs = true, transforms, buildPath = 'build/', format = 'css/variables' }) {
   return new StyleDictionary({
     source,
     platforms: { css: {
       ...(transforms ? { transforms } : { transformGroup: 'css' }),
       buildPath,
-      files: [{ destination, format: 'css/variables', filter,
+      files: [{ destination, format, filter,
         options: { selector, outputReferences: refs } }]
     }},
     log: { verbosity: 'silent' }
@@ -118,17 +145,12 @@ await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector
 // :root unique (pas de variante light/dark). refs:true → alias émis en var(--…).
 // Le groupe 'css' rend nativement le format dimension { value, unit } en v5 (vérifié).
 // semantics.json n'a aucun token couleur.
-// Typographie : on substitue notre shorthand (alias var() posés à la source) au
-// shorthand natif, et on désactive outputReferences sur ces seuls tokens — sinon le
-// String.replace de SD viendrait re-corrompre le résultat. Les autres rôles
-// (radius, border-width) gardent outputReferences : leur valeur est une chaîne
-// simple, le remplacement y passe par une regex sur `{alias}` et reste sûr.
-const cssSemantics = StyleDictionary.hooks.transformGroups.css.map(
-  n => (n === 'typography/css/shorthand' ? 'typography/css/shorthand-refs' : n),
-);
+// Format maison : les rôles typographiques sortent en longhand (5 variables),
+// les autres en une variable. Les alias sont posés directement en var(--…),
+// donc outputReferences est inutile ici — et surtout inoffensif.
 await make('semantics.css', [PRIM, SEM], {
   selector: ':root', filter: inPath('semantics'),
-  transforms: cssSemantics, refs: token => !isTypography(token),
+  format: 'css/variables-aikoz-semantics',
 }).buildAllPlatforms();
 
 // Couche 4 — bridge shadcn : RUNTIME généré depuis le DTCG, oklch() complet.
