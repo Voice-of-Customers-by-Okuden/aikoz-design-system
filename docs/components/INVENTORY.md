@@ -218,8 +218,8 @@ Retenue. L'atome Figma `Tag` (3 variantes de sentiment, sans usage maquetté) n'
 
 ## Points encore à trancher
 
-- **Charts** : adopter le module `chart` de shadcn (basé sur recharts) comme socle des trois graphiques plutôt que du SVG maison. **Décision réservée à Pietro** — elle conditionne la structure de `DonutChart`, `RankedBarChart` et `Leaderboard`. *Élément factuel : `kpi-card.tsx` importe déjà `recharts`, et la dépendance est déjà déclarée dans `registry.json`.*
-- **Web Components (Lit / Stencil)** : l'architecture cible pour l'embarquabilité white-label. Si la décision tombe après la construction de ces composants, il faudra les reconstruire. **Décision réservée à Pietro**, à arbitrer **avant** d'attaquer le lot.
+- **Charts** : adopter le module `chart` de shadcn (basé sur recharts) comme socle des trois graphiques plutôt que du SVG maison. Conditionne la structure de `DonutChart`, `RankedBarChart` et `Leaderboard`. **Ne se tranche pas dans le DS — remonte à Alice**, qui décide de la façon de la valider (le brouillon source suggérait d'en passer par Pietro, autorité technique). *Élément factuel versé au dossier : `kpi-card.tsx` importe déjà `recharts`, et la dépendance est déjà déclarée dans `registry.json`.*
+- **Web Components (Lit / Stencil)** : l'architecture cible pour l'embarquabilité white-label. Si la décision tombe après la construction de ces composants, il faudra les reconstruire. **Ne se tranche pas dans le DS — remonte à Alice**, à arbitrer **avant** d'attaquer le lot. C'est la plus urgente des deux.
 - **Dénominateur de la variante `target`** pour les métriques non bornées — cf. décision 1, à valider avec Louis.
 
 ---
