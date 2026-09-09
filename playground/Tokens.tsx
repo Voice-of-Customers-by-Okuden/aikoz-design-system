@@ -39,7 +39,7 @@ function collectNames(sheet: CSSStyleSheet, acc: Set<string>, seen: Set<CSSStyle
   }
 }
 
-function useCssVars(dark: boolean) {
+function useCssVars(themeKey: string) {
   const [vars, setVars] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -55,8 +55,8 @@ function useCssVars(dark: boolean) {
       if (v) out[n] = v;
     });
     setVars(out);
-    // `dark` en dépendance : les valeurs résolues changent avec le thème
-  }, [dark]);
+    // themeKey = thème + registre : les valeurs résolues changent avec les deux
+  }, [themeKey]);
 
   return vars;
 }
@@ -542,8 +542,16 @@ function Contrast({ vars, dark }: { vars: Record<string, string>; dark: boolean 
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default function Tokens({ dark }: { dark: boolean }) {
-  const vars = useCssVars(dark);
+export default function Tokens({
+  dark,
+  register = "produit",
+}: {
+  dark: boolean;
+  register?: string;
+}) {
+  // Le registre change les valeurs résolues autant que le thème : il doit
+  // entrer dans la clé de recalcul, sinon la page affiche des mesures périmées.
+  const vars = useCssVars(`${dark}|${register}`);
   const total = Object.keys(vars).length;
 
   return (

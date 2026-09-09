@@ -51,6 +51,16 @@ function ButtonDemoContent() {
 export default function App() {
   const [dark, setDark] = useState(false);
   const [view, setView] = useState<View>("décisions");
+  const [register, setRegister] = useState<"produit" | "marketing">("produit");
+
+  // Le registre marketing s'applique par attribut, comme data-brand : additif,
+  // il n'écrase ni light ni dark et s'imbrique dans une page produit.
+  function toggleRegister() {
+    const next = register === "produit" ? "marketing" : "produit";
+    if (next === "marketing") document.documentElement.setAttribute("data-register", "marketing");
+    else document.documentElement.removeAttribute("data-register");
+    setRegister(next);
+  }
 
   function toggleDark() {
     document.documentElement.classList.toggle("dark", !dark);
@@ -69,12 +79,25 @@ export default function App() {
               Playground · état d'avancement en temps réel
             </p>
           </div>
-          <button
-            onClick={toggleDark}
-            className="border border-border text-foreground bg-card rounded-[var(--radius)] px-4 py-2 text-sm font-medium hover:bg-muted transition-colors shrink-0"
-          >
-            {dark ? "☀ Mode clair" : "☾ Mode sombre"}
-          </button>
+          <div className="flex gap-2 shrink-0 flex-wrap">
+            <button
+              onClick={toggleRegister}
+              className={`border rounded-[var(--radius)] px-4 py-2 text-sm font-medium transition-colors ${
+                register === "marketing"
+                  ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+                  : "border-border bg-card text-foreground hover:bg-muted"
+              }`}
+              aria-pressed={register === "marketing"}
+            >
+              {register === "marketing" ? "◐ Registre marketing" : "◑ Registre produit"}
+            </button>
+            <button
+              onClick={toggleDark}
+              className="border border-border text-foreground bg-card rounded-[var(--radius)] px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+            >
+              {dark ? "☀ Mode clair" : "☾ Mode sombre"}
+            </button>
+          </div>
         </div>
 
         {/* Bascule de vue */}
@@ -102,7 +125,7 @@ export default function App() {
 
         {view === "décisions" && <Decisions dark={dark} />}
 
-        {view === "tokens" && <Tokens dark={dark} />}
+        {view === "tokens" && <Tokens dark={dark} register={register} />}
 
         {view === "composants" && (
         <>
@@ -155,6 +178,44 @@ export default function App() {
             />
           </div>
 
+        </div>
+
+        {/* Le registre marketing, avec de VRAIS composants — la preuve que le
+            même code se réhabille sans être réécrit. */}
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Registre marketing — mêmes composants, autre habillage
+        </h2>
+        <div
+          data-register="marketing"
+          className="rounded-[var(--radius)] border border-border overflow-hidden mb-6"
+        >
+          <div className="bg-background text-foreground p-6 flex flex-col gap-5">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              data-register="marketing" · sombre par défaut, accent tenu
+            </span>
+            <div className="flex flex-wrap gap-4 items-start">
+              <KpiCard size="md" label="Note moyenne" value={4.2} max={5} trend={12} />
+              <div className="flex flex-col gap-3 justify-center">
+                <ScoreStars value={4.2} size="lg" />
+                <div className="flex gap-2 flex-wrap">
+                  <DeltaBadge value={12} />
+                  <DeltaBadge value={-8} />
+                  <DeltaBadge value={0} />
+                </div>
+                <div className="w-52"><ProgressBar value={87} /></div>
+              </div>
+            </div>
+            <div className="flex gap-3 flex-wrap items-center">
+              <Button>Demander une démo</Button>
+              <Button variant="secondary">Notre solution</Button>
+              <Button variant="outline">FAQ</Button>
+              <Button variant="ghost">Contact</Button>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-xl">
+              Le texte discret est <strong>bleuté</strong> et non gris : c'est la différence de
+              registre la plus visible. L'aquamarine ne peint qu'une chose — le bouton d'action.
+            </p>
+          </div>
         </div>
 
         {/* Composants extraits de KpiCard */}
