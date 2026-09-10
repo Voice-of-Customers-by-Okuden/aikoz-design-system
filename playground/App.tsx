@@ -925,7 +925,7 @@ export default function App() {
         </div>
 
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
-          BrandLogo — 19 assureurs, logo monochrome par masque CSS
+          BrandLogo — 19 assureurs du marché
         </h2>
         <div className="flex flex-col gap-5 rounded-[var(--radius)] border border-border bg-card p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground m-0">
@@ -937,7 +937,7 @@ export default function App() {
             ))}
           </div>
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground m-0 pt-3 border-t border-border">
-            shape=plate — logo masqué, rapport d'origine
+            shape=plate — le logo, monochrome ou en couleur selon le fichier
           </p>
           <div className="flex flex-wrap gap-3">
             {BRANDS.map((b) => (
@@ -957,10 +957,13 @@ export default function App() {
             <BrandLogo brand="inconnue" showName />
           </div>
           <p className="text-xs text-muted-foreground m-0 pt-3 border-t border-border">
-            MMA et Swiss Life n'ont aucun fichier récupérable — leurs sites bloquent l'accès
-            automatisé. Elles retombent sur leurs initiales, et rien ne casse. Le noir ou le
-            blanc du contenu est <strong>mesuré</strong> depuis la luminance de la teinte, pas
-            choisi marque par marque.
+            Une plaque montre <strong>toujours</strong> le logo quand un fichier existe :
+            monochrome sur la teinte de la marque quand le fichier s'y prête, en couleur
+            d'origine sur fond clair sinon — un logo bâti sur une forme pleine n'existe que
+            par ses couleurs internes. Seule Swiss Life reste en initiales : son site bloque
+            tout accès automatisé, il n'y a pas de fichier. Le noir ou le blanc du contenu
+            est <strong>mesuré</strong> depuis la luminance de la teinte, jamais choisi
+            marque par marque.
           </p>
         </div>
 

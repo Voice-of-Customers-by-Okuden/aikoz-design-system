@@ -21,7 +21,7 @@ const pastilleVariants = cva(
         /** Rond compact — porte les INITIALES. Cf. la note du composant. */
         circle: "aspect-square",
         /** Plaque large — porte le LOGO, à son rapport d'origine. */
-        plate: "px-3 rounded-[var(--radius)]",
+        plate: "rounded-[var(--radius)]",
       },
     },
     compoundVariants: [
@@ -29,10 +29,10 @@ const pastilleVariants = cva(
       { shape: "circle", size: "md", class: "size-8" },
       { shape: "circle", size: "lg", class: "size-10" },
       { shape: "circle", size: "xl", class: "size-14" },
-      { shape: "plate", size: "sm", class: "h-6 min-w-14" },
-      { shape: "plate", size: "md", class: "h-8 min-w-20" },
-      { shape: "plate", size: "lg", class: "h-10 min-w-24" },
-      { shape: "plate", size: "xl", class: "h-14 min-w-36" },
+      { shape: "plate", size: "sm", class: "h-7 min-w-16 px-2" },
+      { shape: "plate", size: "md", class: "h-9 min-w-24 px-2.5" },
+      { shape: "plate", size: "lg", class: "h-12 min-w-32 px-3" },
+      { shape: "plate", size: "xl", class: "h-16 min-w-44 px-4" },
     ],
     defaultVariants: { size: "md", shape: "circle" },
   }
@@ -72,13 +72,23 @@ export interface BrandLogoProps extends VariantProps<typeof pastilleVariants> {
  * distinguait à l'intérieur.
  *
  *   `circle`  rond compact → **initiales**, toujours lisibles à 24 px
- *   `plate`   plaque large → **logo masqué**, à son rapport d'origine
+ *   `plate`   plaque large → **le logo**, à son rapport d'origine
  *
- * La règle est nette et sans heuristique : pas de détection de rapport, pas
- * de bascule automatique. Un rond ne montre jamais un logo ; une plaque en
- * montre un quand le fichier s'y prête, et retombe sur les initiales sinon —
- * cf. `maskable` dans le registre. Six marques sur dix-neuf sont dans ce cas,
- * et c'est une donnée du fichier, pas un défaut du composant.
+ * Une plaque montre TOUJOURS le logo quand un fichier existe. Deux rendus,
+ * selon ce que le fichier permet — et c'est `maskable` qui tranche, sur
+ * mesure et non sur impression :
+ *
+ *   masquable      logo monochrome sur la teinte de la marque
+ *   non masquable  logo en couleur d'origine sur plaque claire
+ *
+ * Le second cas n'est pas un repli honteux : un logo bâti sur une forme
+ * pleine — le carré d'AXA, le triangle de MAIF — n'existe QUE par ses
+ * couleurs internes, et le montrer tel quel est plus juste que le réduire à
+ * une silhouette. La plaque reste claire dans les quatre combinaisons, parce
+ * que ces logos sont dessinés pour un fond clair et qu'aucun ne dispose
+ * d'une variante inversée.
+ *
+ * Seules les marques SANS fichier retombent sur les initiales.
  *
  * **Le logo est rendu en monochrome, par masque CSS.** Le fichier sert de
  * `mask-image` et la couleur vient du dessous : un seul fichier suffit pour
@@ -132,12 +142,21 @@ export function BrandLogo({
   }
 
   const encre = surTeinte(m.color);
+  // Plaque en couleur d'origine : fichier présent, mais non masquable.
+  const plaqueCouleur = shape === "plate" && !!m.asset && m.maskable === false;
 
   return (
     <span className={cn("inline-flex items-center gap-2", showName && "min-w-0")}>
       <span
         className={cn(pastilleVariants({ size, shape }), className)}
-        style={{ backgroundColor: m.color, color: encre }}
+        style={
+          plaqueCouleur
+            ? // Blanc franc, et non `--card` : ces logos sont dessinés pour un
+              // fond blanc, et `--card` vaut midnight-blue en sombre — le bleu
+              // d'AXA y disparaîtrait.
+              { backgroundColor: "#FFFFFF", color: "#0B0B0B" }
+            : { backgroundColor: m.color, color: encre }
+        }
         // Quand le nom est écrit à côté, la pastille se tait : sinon un
         // lecteur d'écran annonce « AXA, AXA ».
         role={decorative || showName ? undefined : "img"}
@@ -147,7 +166,7 @@ export function BrandLogo({
         {m.asset && m.maskable !== false && shape === "plate" ? (
           <span
             aria-hidden="true"
-            className="block h-[58%] w-full"
+            className="block h-[68%] w-full"
             style={{
               backgroundColor: encre,
               WebkitMaskImage: `url(${m.asset})`,
@@ -159,6 +178,16 @@ export function BrandLogo({
               WebkitMaskPosition: "center",
               maskPosition: "center",
             }}
+          />
+        ) : m.asset && shape === "plate" ? (
+          // Fichier non masquable : on montre le logo tel quel. `object-contain`
+          // pour ne jamais le déformer, et une hauteur en pourcentage plutôt
+          // qu'un carré, pour qu'un logotype large occupe la plaque.
+          <img
+            src={m.asset}
+            alt=""
+            aria-hidden="true"
+            className="block h-[72%] w-auto max-w-full object-contain"
           />
         ) : (
           m.initials

@@ -27,10 +27,12 @@ export interface Brand {
   /** Fichier sous `/brands/`. Absent = repli sur les initiales. */
   asset?: string;
   /**
-   * `false` — le fichier existe mais ne supporte pas le masquage monochrome,
-   * et la plaque retombe donc sur les initiales.
+   * `false` — le fichier existe mais ne supporte pas le masquage monochrome.
+   * La plaque affiche alors le logo **en couleur d'origine sur fond clair**,
+   * et surtout pas des initiales : un logo bâti sur une forme pleine n'existe
+   * que par ses couleurs internes, le montrer tel quel est plus juste.
    *
-   * La cause est unique et se MESURE : la couverture d'encre du fichier —
+   * La cause principale se MESURE : la couverture d'encre du fichier —
    * la part de sa boîte englobante réellement opaque. Au-delà d'un certain
    * seuil, le dessin repose sur une forme pleine dont le masque ne garde que
    * la silhouette, et le résultat est un aplat muet.
@@ -38,13 +40,22 @@ export interface Brand {
    * Mesuré sur les 17 fichiers, rendus dans un canvas de 120 px de large.
    * La coupure est franche, il n'y a rien entre les deux groupes :
    *
-   *     AXA 1,00 · MAAF 1,00 · MACIF 0,96 · MAIF 0,47 · GMF 0,43   ← aplats
+   *     AXA 1,00 · MAAF 1,00 · MACIF 0,96 · MAIF 0,47 · MMA 0,44
+   *     · GMF 0,43                                       ← couleur d'origine
    *     ————————————————— seuil 0,40 —————————————————
-   *     Allianz 0,29 · Matmut 0,28 · … · Malakoff 0,10             ← lisibles
+   *     Malakoff 0,30 · Allianz 0,29 · Matmut 0,28 · … · AG2R 0,14
+   *                                                      ← monochrome
    *
    * Le chiffre est reporté en fin de ligne pour chaque marque. Un fichier
    * remplacé doit être remesuré : c'est une propriété du FICHIER, pas de la
-   * marque. Les cinq recalés restent dans le dépôt — ils serviront le jour
+   * marque.
+   *
+   * **La mesure ne suffit pas toute seule, et Groupama le montre.** Son
+   * fichier mesure 0,26 — bien sous le seuil — parce que le logotype, tout
+   * en traits fins, dilue la moyenne. Mais le SYMBOLE qui le précède est une
+   * forme pleine, et le masque le réduit à un carré blanc. La couverture
+   * globale ne voit pas qu'un logo peut être mixte. Le chiffre reste le bon
+   * filtre de premier tri ; il ne remplace pas un coup d'œil au rendu. Les cinq recalés restent dans le dépôt — ils serviront le jour
    * où on affichera les logos en couleur d'origine.
    */
   maskable?: boolean;
@@ -56,8 +67,8 @@ export const BRANDS: Brand[] = [
   { id: "axa",              name: "AXA",              color: "#00008F", initials: "AX", asset: "/brands/axa.svg", maskable: false }, // encre 1.00
   { id: "macif",            name: "MACIF",            color: "#005F9E", initials: "MC", asset: "/brands/macif.png", maskable: false }, // encre 0.96
   { id: "matmut",           name: "Matmut",           color: "#000069", initials: "MT", asset: "/brands/matmut.svg" }, // encre 0.28
-  { id: "groupama",         name: "Groupama",         color: "#2A6654", initials: "GA", asset: "/brands/groupama.svg" }, // encre 0.26
-  { id: "mma",              name: "MMA",              color: "#E2001A", initials: "MM" },
+  { id: "groupama",         name: "Groupama",         color: "#2A6654", initials: "GA", asset: "/brands/groupama.svg", maskable: false }, // encre 0.26 — mais symbole plein, cf. note
+  { id: "mma",              name: "MMA",              color: "#E2001A", initials: "MM", asset: "/brands/mma.svg", maskable: false }, // encre 0.44
   { id: "generali",         name: "Generali",         color: "#C12129", initials: "GE", asset: "/brands/generali.svg" }, // encre 0.18
   { id: "maaf",             name: "MAAF",             color: "#0093D0", initials: "MA", asset: "/brands/maaf.png", maskable: false }, // encre 1.00
   { id: "gmf",              name: "GMF",              color: "#004696", initials: "GM", asset: "/brands/gmf.svg", maskable: false }, // encre 0.43
@@ -66,7 +77,7 @@ export const BRANDS: Brand[] = [
   { id: "abeille",          name: "Abeille",          color: "#FFD500", initials: "AB", asset: "/brands/abeille.svg" }, // encre 0.24
   { id: "harmonie-mutuelle",name: "Harmonie Mutuelle",color: "#E94E24", initials: "HM", asset: "/brands/harmonie-mutuelle.png" }, // encre 0.25
   { id: "aesio",            name: "AÉSIO",            color: "#E62C33", initials: "AE", asset: "/brands/aesio.svg" }, // encre 0.28
-  { id: "malakoff-humanis", name: "Malakoff Humanis", color: "#6E7B85", initials: "MH", asset: "/brands/malakoff-humanis.png" }, // encre 0.10
+  { id: "malakoff-humanis", name: "Malakoff Humanis", color: "#6E7B85", initials: "MH", asset: "/brands/malakoff-humanis.png" }, // encre 0.30 (0,10 avant rognage des marges)
   { id: "macsf",            name: "MACSF",            color: "#E10000", initials: "MS", asset: "/brands/macsf.svg" }, // encre 0.14
   { id: "ag2r",             name: "AG2R La Mondiale", color: "#5A3318", initials: "AG", asset: "/brands/ag2r.svg" }, // encre 0.14
   { id: "la-medicale",      name: "La Médicale",      color: "#C8102E", initials: "LM", asset: "/brands/la-medicale.png" }, // encre 0.18
