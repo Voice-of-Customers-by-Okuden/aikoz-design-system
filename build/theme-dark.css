@@ -27,7 +27,7 @@
   --color-border-subtle: var(--color-midnight-blue-800);
   --color-border-strong: var(--color-midnight-blue-600);
   --color-border-disabled: var(--color-midnight-blue-700);
-  --color-border-input: var(--color-midnight-blue-700); /** Bordure des champs de saisie. Mappé sur --input. */
+  --color-border-input: var(--color-midnight-blue-400); /** Bordure de champ — 4,09:1 sur carte, 4,58 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier des séparateurs ne donnait que 1,14:1, une bordure de champ invisible. Défaut systémique relevé en auditant les quatre combinaisons registre × thème — il touchait produit clair, produit sombre et marketing clair, seul le marketing sombre avait déjà été corrigé. */
   --color-status-success: var(--color-success-400);
   --color-status-success-subtle: var(--color-success-950);
   --color-status-success-border: var(--color-success-700);

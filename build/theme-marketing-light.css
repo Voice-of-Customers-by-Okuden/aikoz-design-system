@@ -2,31 +2,31 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-:root, .light {
-  --color-surface-default: oklch(1 0 0);
-  --color-surface-raised: oklch(1 0 0);
+[data-register="marketing"] {
+  --color-surface-page: oklch(1 0 0); /** Fond de page blanc pur. Inverse du produit, dont la page est cassée et les cartes blanches : le site respire, le dashboard hiérarchise. */
   --color-surface-overlay: oklch(1 0 0);
   --color-text-inverse: oklch(1 0 0);
-  --color-text-on-action: oklch(1 0 0); /** Texte sur surface.action. Blanc en light, midnight en dark. */
+  --color-text-on-action: oklch(1 0 0); /** Sur le CTA ultramarine. */
   --color-text-on-action-secondary: oklch(1 0 0); /** Texte sur surface.action-secondary. Blanc en light, midnight en dark. */
   --color-nav-surface: oklch(1 0 0);
-  --color-surface-page: var(--color-neutral-50);
+  --color-surface-default: var(--color-neutral-50); /** Carte légèrement teintée sur page blanche — l'inverse du registre produit. */
+  --color-surface-raised: var(--color-neutral-50); /** Carte sur page blanche. */
   --color-surface-track: var(--color-neutral-100); /** Piste d'une jauge — repère d'échelle. 1,19:1 sur --card : sous 3:1, assumé. C'est le REMPLISSAGE qui porte la valeur, et il contraste >= 3:1 avec la piste ET avec la carte dans les trois niveaux. */
   --color-surface-sunken: var(--color-neutral-100);
   --color-surface-hover: var(--color-neutral-100);
   --color-surface-active: var(--color-neutral-200);
   --color-surface-brand-subtle: var(--color-midnight-blue-50);
   --color-text-primary: var(--color-midnight-blue-900);
-  --color-text-secondary: var(--color-neutral-600);
-  --color-text-tertiary: var(--color-neutral-500);
+  --color-text-secondary: var(--color-midnight-blue-500); /** Texte secondaire TEINTÉ BLEU et non gris, comme dans le registre sombre. C'est la marque du registre marketing : rester dans la famille jusque dans le texte discret. */
+  --color-text-tertiary: var(--color-midnight-blue-400); /** Légendes, dates. */
   --color-text-disabled: var(--color-neutral-400);
-  --color-text-muted: var(--color-neutral-600); /** Texte secondaire discret (muted). Mappé sur --muted-foreground. */
-  --color-text-accent: var(--color-aquamarine-600);
+  --color-text-muted: var(--color-midnight-blue-500); /** Alias de secondary. */
+  --color-text-accent: var(--color-aquamarine-700); /** Mot mis en exergue. L'aquamarine ne survit sur clair qu'à ce palier — jamais en aplat. */
   --color-border-default: var(--color-neutral-200);
   --color-border-subtle: var(--color-neutral-100);
   --color-border-strong: var(--color-neutral-300);
   --color-border-disabled: var(--color-neutral-200);
-  --color-border-input: var(--color-neutral-500); /** Bordure de champ — 4,44:1 sur carte, 4,07 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier des séparateurs ne donnait que 1,44:1, une bordure de champ invisible. Défaut systémique relevé en auditant les quatre combinaisons registre × thème — il touchait produit clair, produit sombre et marketing clair, seul le marketing sombre avait déjà été corrigé. */
+  --color-border-input: var(--color-neutral-500); /** Bordure de champ — 4,07:1 sur carte, 4,44 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier des séparateurs ne donnait que 1,32:1, une bordure de champ invisible. Défaut systémique relevé en auditant les quatre combinaisons registre × thème — il touchait produit clair, produit sombre et marketing clair, seul le marketing sombre avait déjà été corrigé. */
   --color-status-success: var(--color-success-500);
   --color-status-success-subtle: var(--color-success-50);
   --color-status-success-border: var(--color-success-300);
@@ -50,20 +50,20 @@
   --color-nav-border: var(--color-neutral-200);
   --color-nav-on: var(--color-midnight-blue-900);
   --color-nav-on-muted: var(--color-neutral-500);
-  --color-chart-1: var(--color-ultramarine-500); /** Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1. */
-  --color-rating-default: var(--color-warning-700); /** Couleur de notation — étoiles pleines. warning.700 : 5,13:1 sur --card, 4,70:1 sur --background, 4,30:1 sur --muted (seuil 3:1, WCAG 1.4.11). Le palier 600 avait été retenu sur la seule mesure contre --card (3,25:1) ; il échoue sur les deux autres surfaces (2,98 et 2,73). ScoreStars étant publié au registry, rien ne garantit qu'il soit posé dans une carte — les trois surfaces sont donc auditées. */
-  --color-rating-empty: var(--color-neutral-300); /** Étoile vide — repère de l'échelle. 1,92:1, sous 3:1 : assumé décoratif (aria-hidden, le max figure dans l'aria-label). Le passer à neutral.500 donnerait 4,44:1 mais l'étoile vide pèserait presque autant que la pleine. */
+  --color-rating-default: var(--color-warning-700); /** Étoiles pleines — même palier que le produit clair, le fond est aussi clair. */
+  --color-rating-empty: var(--color-neutral-300); /** Étoile vide, décorative. */
   --color-surface-brand: var(--color-brand-primary);
   --color-surface-brand-hover: var(--color-brand-primary-hover);
   --color-surface-brand-active: var(--color-brand-primary-active);
   --color-surface-accent: var(--color-brand-accent-subtle);
-  --color-surface-action: var(--color-brand-primary); /** Surface d'action principale (bouton default). Midnight en light, aquamarine en dark. */
-  --color-surface-action-secondary: var(--color-brand-secondary); /** Surface d'action secondaire. Ultramarine en light, bleu pâle en dark. */
+  --color-surface-action: var(--color-brand-secondary); /** CTA en ULTRAMARINE, pas en aquamarine. Le bundle marketing l'écrit noir sur blanc : l'aquamarine est réservée aux fonds sombres — sur blanc elle tombe à 1,24:1. Le seul aplat d'action du registre clair. */
+  --color-surface-action-secondary: var(--color-brand-primary); /** Action secondaire — le midnight. */
   --color-text-brand: var(--color-brand-secondary);
   --color-text-brand-hover: var(--color-brand-secondary-hover);
   --color-text-on-accent: var(--color-brand-on-accent);
-  --color-border-focus: var(--color-brand-secondary); /** Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11). */
+  --color-border-focus: var(--color-brand-secondary); /** Anneau de focus. */
   --color-border-brand: var(--color-brand-primary);
-  --color-border-accent: var(--color-brand-accent);
+  --color-border-accent: var(--color-brand-secondary); /** Liseré d'accent en ultramarine : sur clair l'aquamarine ne tient pas le 3:1. */
   --color-nav-accent: var(--color-brand-secondary);
+  --color-chart-1: var(--color-brand-secondary); /** Tracé de série. L'aquamarine étant hors-jeu sur clair, la courbe passe en ultramarine. */
 }

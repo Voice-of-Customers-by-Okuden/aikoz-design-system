@@ -238,7 +238,7 @@ export default function App() {
         >
           <div className="bg-background text-foreground p-6 flex flex-col gap-5">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              data-register="marketing" · sombre par défaut, accent tenu
+              data-register="marketing" · suit le thème de la page
             </span>
             <div className="flex flex-wrap gap-4 items-start">
               <KpiCard variant="rating" label="Note moyenne" value={4.2} trend={0.1} trendUnit="" />
@@ -322,6 +322,49 @@ export default function App() {
           La deuxième est tronquée à 2 lignes — en CSS, le texte complet reste dans le DOM.
           La troisième est cliquable : elle porte alors l'énoncé complet et ses briques se taisent.
         </p>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Registre × thème — quatre combinaisons, deux axes indépendants
+        </h2>
+        <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+          Le registre dit <em>quel public</em>, le thème dit <em>clair ou sombre</em>. Les deux se
+          croisent : un site marketing peut être clair, un dashboard peut être sombre. La première
+          version confondait « marketing » et « sombre ».
+        </p>
+        <div className="grid sm:grid-cols-2 gap-4 mb-10">
+          {([
+            ["Produit clair", "light", false],
+            ["Produit sombre", "dark", false],
+            ["Marketing clair", "light", true],
+            ["Marketing sombre", "dark", true],
+          ] as const).map(([titre, theme, mk]) => (
+            <div key={titre} className="flex flex-col gap-2">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {titre}
+              </span>
+              <div
+                className={`${theme} rounded-[var(--radius)] border border-border overflow-hidden`}
+                {...(mk ? { "data-register": "marketing" } : {})}
+              >
+                <div className="bg-background text-foreground p-4 flex flex-col gap-3">
+                  <KpiCard
+                    density="compact"
+                    variant="rating"
+                    label="Note moyenne"
+                    value={4.2}
+                    trend={0.1}
+                    trendUnit=""
+                  />
+                  <div className="flex gap-2 flex-wrap items-center">
+                    <Button size="sm">Action</Button>
+                    <Badge tone="success" size="sm" icon="✓">Répondu</Badge>
+                  </div>
+                  <div className="w-full"><ProgressBar value={87} max={100} /></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
         {/* Composants extraits de KpiCard */}
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">

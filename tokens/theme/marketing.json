@@ -1,5 +1,5 @@
 {
-  "$description": "Registre MARKETING — site vitrine, lead magnet, carrousels LinkedIn. Sombre par défaut, accent expressif mais tenu. Frère de theme/dark.json : mêmes rôles, même palette de primitives, discipline différente. Émis sur [data-register=\"marketing\"], additif : ne remplace ni light ni dark. Aucune primitive nouvelle — la palette Aikoz couvrait déjà tous les rôles, importer les hexadécimaux du bundle Claude Design aurait créé une seconde palette divergente.",
+  "$description": "Registre MARKETING, variante SOMBRE. Frère de theme/marketing-light.json. Registre et thème sont deux axes INDÉPENDANTS — un site marketing peut être clair. Émis sur .dark[data-register=\"marketing\"] et sur le descendant, pour battre en spécificité le registre clair. Même palette de primitives que le reste, discipline différente : texte discret bleuté, un seul aplat en aquamarine (le CTA).",
   "color": {
     "surface": {
       "page": {
