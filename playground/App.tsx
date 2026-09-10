@@ -88,7 +88,7 @@ export default function App() {
               className={`border rounded-[var(--radius)] px-4 py-2 text-sm font-medium transition-colors ${
                 register === "marketing"
                   ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
-                  : "border-border bg-card text-foreground hover:bg-muted"
+                  : "border-border bg-card text-foreground hover:bg-[var(--surface-hover)]"
               }`}
               aria-pressed={register === "marketing"}
             >
@@ -96,7 +96,7 @@ export default function App() {
             </button>
             <button
               onClick={toggleDark}
-              className="border border-border text-foreground bg-card rounded-[var(--radius)] px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
+              className="border border-border text-foreground bg-card rounded-[var(--radius)] px-4 py-2 text-sm font-medium hover:bg-[var(--surface-hover)] transition-colors"
             >
               {dark ? "☀ Mode clair" : "☾ Mode sombre"}
             </button>

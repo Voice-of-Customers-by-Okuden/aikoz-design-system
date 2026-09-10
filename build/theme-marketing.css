@@ -2,7 +2,7 @@
  * Do not edit directly, this file was auto-generated.
  */
 
-.dark[data-register="marketing"], .dark [data-register="marketing"] {
+[data-register="marketing"] {
   --color-text-primary: oklch(1 0 0); /** Texte principal. Blanc pur, comme le bundle marketing existant. */
   --color-text-on-action-secondary: oklch(1 0 0); /** Sur l'ultramarine, le texte passe en blanc et non en midnight. */
   --color-nav-on: oklch(1 0 0);

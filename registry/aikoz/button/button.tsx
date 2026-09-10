@@ -31,13 +31,23 @@ const buttonVariants = cva(
           "bg-[var(--secondary)] text-[var(--secondary-foreground)]",
           "hover:bg-[color-mix(in_oklch,var(--secondary),transparent_10%)] active:bg-[color-mix(in_oklch,var(--secondary),transparent_20%)]",
         ],
+        // Le survol de ces deux variantes est porté par la BORDURE, pas par une
+        // teinte. Mesuré : un voile d'accent à 12 % donne 1,025:1 sur fond
+        // clair — invisible. Monter l'opacité n'y change rien (1,073 à 40 %) :
+        // l'aquamarine a presque la même luminance que le fond clair, on
+        // déplace la teinte sans déplacer la clarté. La bordure forte, elle,
+        // tient 4,07 à 4,58:1 selon le thème.
         outline: [
           "border border-[var(--border)] bg-transparent text-[var(--foreground)]",
-          "hover:bg-[color-mix(in_oklch,var(--accent),transparent_88%)] active:bg-[color-mix(in_oklch,var(--accent),transparent_80%)]",
+          "hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)]",
+          "active:bg-[var(--surface-active,var(--surface-hover))]",
         ],
         ghost: [
-          "bg-transparent text-[var(--foreground)]",
-          "hover:bg-[color-mix(in_oklch,var(--accent),transparent_88%)] active:bg-[color-mix(in_oklch,var(--accent),transparent_80%)]",
+          // Bordure transparente au repos : elle apparaît au survol sans
+          // décaler la mise en page d'un pixel.
+          "border border-transparent bg-transparent text-[var(--foreground)]",
+          "hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)]",
+          "active:bg-[var(--surface-active,var(--surface-hover))]",
         ],
       },
       size: {
