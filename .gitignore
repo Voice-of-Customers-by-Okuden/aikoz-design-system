@@ -4,3 +4,9 @@ node_modules/
 .claude/
 aikoz-design-system-by-claude-design/
 public/r/
+
+# Traces locales d'outillage et sauvegardes
+.agents/
+skills-lock.json
+*.bak
+button-full.txt

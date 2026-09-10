@@ -7,6 +7,9 @@ import { ProgressBar } from "@registry/aikoz/progress-bar/progress-bar";
 import { Badge } from "@registry/aikoz/badge/badge";
 import { VerbatimCard } from "@registry/aikoz/verbatim-card/verbatim-card";
 import { Input } from "@registry/aikoz/input/input";
+import { Card } from "@registry/aikoz/card/card";
+import { Avatar } from "@registry/aikoz/avatar/avatar";
+import { Dialog } from "@registry/aikoz/dialog/dialog";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -401,6 +404,56 @@ export default function App() {
             description="Déterminée par votre fiche — readOnly, donc focusable et soumise."
           />
           <Input label="Champ désactivé" defaultValue="Indisponible" disabled />
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Card · Avatar · Dialog
+        </h2>
+        <div className="flex flex-wrap gap-4 items-start mb-4">
+          {(["raised", "flat", "bare"] as const).map((s) => (
+            <Card key={s} surface={s} className="w-52">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                surface={s}
+              </span>
+              <p className="text-sm text-foreground m-0">
+                Le niveau de titre n'est pas figé par la carte.
+              </p>
+            </Card>
+          ))}
+        </div>
+
+        <Card as="article" surface="flat" className="mb-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            {(["sm", "md", "lg", "xl"] as const).map((s) => (
+              <Avatar key={s} size={s} name="Allianz Lyon Centre" />
+            ))}
+            <Avatar name="AXA Part-Dieu" />
+            <Avatar name="Banque de France" />
+            <Avatar name="Generali" />
+            <span className="text-xs text-muted-foreground">
+              initiales calculées, particules ignorées — « Banque de France » → BF
+            </span>
+          </div>
+        </Card>
+
+        <div className="flex gap-3 flex-wrap mb-10">
+          {(["center", "right", "bottom"] as const).map((p) => (
+            <Dialog
+              key={p}
+              placement={p}
+              trigger={<Button variant="outline">Modale {p}</Button>}
+              title="Demandez votre démo"
+              description="30 minutes, en visio, avec un de nos consultants."
+              footer={
+                <>
+                  <Button variant="ghost">Annuler</Button>
+                  <Button>Confirmer</Button>
+                </>
+              }
+            >
+              <Input label="Adresse e-mail" type="email" autoComplete="email" required />
+            </Dialog>
+          ))}
         </div>
 
         {/* Composants extraits de KpiCard */}

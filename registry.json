@@ -133,6 +133,71 @@
       ]
     },
     {
+      "name": "card",
+      "type": "registry:component",
+      "title": "Card",
+      "description": "Conteneur de carte — 3 surfaces (raised, flat, bare) x 3 densites. Prop `as` pour sortir en article ou section : le choix est semantique. Sans sous-composants Title/Header : le niveau de titre depend du plan de la page, pas de la carte.",
+      "files": [
+        {
+          "path": "registry/aikoz/card/card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:component",
+      "title": "Avatar",
+      "description": "Avatar avec repli sur les initiales, calculees en ignorant les particules. 4 tailles. Bati sur Radix pour la bascule image/repli. Prop `decorative` quand le nom est deja ecrit a cote.",
+      "files": [
+        {
+          "path": "registry/aikoz/avatar/avatar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-avatar"
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:component",
+      "title": "Dialog",
+      "description": "Modale et panneau lateral — 3 placements (center, right, bottom). Bati sur Radix : piege de focus, retour du focus au declencheur, Echap, verrouillage du defilement. Titre obligatoire : c'est le nom accessible de la modale.",
+      "files": [
+        {
+          "path": "registry/aikoz/dialog/dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-dialog"
+      ]
+    },
+    {
       "name": "kpi-card",
       "type": "registry:component",
       "title": "KPI Card",
