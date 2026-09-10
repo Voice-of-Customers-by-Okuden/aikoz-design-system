@@ -703,6 +703,65 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "slot-picker",
+      "type": "registry:component",
+      "title": "SlotPicker",
+      "description": "Choix d'un creneau. UN SEUL fieldset pour tous les jours : le choix est unique sur l'ensemble, et un name commun laisse les fleches traverser toute la grille d'un jour a l'autre. Les jours nomment leur liste par aria-labelledby, ce qui donne le contexte sans decouper le groupe. Un creneau complet reste ANNONCE (« 11:00, complet ») : le retirer ferait croire que le cabinet n'ouvre pas a cette heure-la.",
+      "files": [
+        {
+          "path": "registry/aikoz/slot-picker/slot-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "booking-flow",
+      "type": "registry:component",
+      "title": "BookingFlow",
+      "description": "Prise de rendez-vous — modale du tunnel du prototype site, 2 etats de confirmation. NE PARLE A PERSONNE : ni serveur ni fetch, l'appelant passe un status et recoit un onSubmit. Le changement d'etat est annonce par role=status ET recoit le focus — deux canaux pour deux facons de naviguer : sans le focus, l'utilisateur resterait sur un bouton disparu. Validation a la soumission, jamais a la frappe.",
+      "files": [
+        {
+          "path": "registry/aikoz/booking-flow/booking-flow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/slot-picker/slot-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/dialog/dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/input/input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/button/button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-slot"
+      ]
     }
   ]
 }

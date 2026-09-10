@@ -112,7 +112,8 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 29 | ~~`SourceToggle`~~ | Forms · site | aikoz | — | **fondu dans `ChoiceGroup`** — `selection="multiple"` + `meta={<Badge/>}`, cf. écart 6 | ChoiceGroup |
 | 30 | `Input` | Forms | shadcn | v1 | **livré** — 4 états, libellé obligatoire, erreur en `role=alert` | — |
 | 31 | `Accordion` | Layout · site | shadcn | v1 | **livré** — `hidden` sur le panneau fermé, bouton enveloppé dans un titre | — |
-| 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
+| 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **livré** — ne parle à personne : `status` en entrée, `onSubmit` en sortie | Dialog, Input, SlotPicker |
+| 32b | `SlotPicker` | Forms · site | aikoz | v1 | **livré** — brique extraite de `BookingFlow` ; un seul fieldset pour tous les jours | — |
 | 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **livré** — ne défile pas : WCAG 2.2.2, cf. le composant | BrandLogo |
 | 34 | `FeaturePanel` | Layout · site | aikoz | v1 | **livré** — le niveau des sous-titres se déduit de celui de la section | — |
 | 35 | `SiteNav` | Navigation · site | aikoz | v1 | **livré** — porte le lien d'évitement ; menu mobile en disclosure, pas en modale | — |
@@ -130,7 +131,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **31 livrés** — les 28 précédents plus `SiteNav`, `SiteFooter` et `FeaturePanel`. **4 à construire** hors charts : `MapWidget`, `BookingFlow`, `Toast` (reporté) — et les **5 charts, qui restent à l'arbitrage d'Alice**.
+État réel : **33 livrés** — les 31 précédents plus `SlotPicker` et `BookingFlow`.
+
+**Il ne reste plus rien à construire sans arbitrage.** Ce qui subsiste : les **charts** (`DonutChart`, `RankedBarChart`, `LineChart`, `ComparisonLineChart`, `StackedBarChart`, `ChartLegend`) et **`MapWidget`**, qui est de la dataviz géographique — tous réservés à Alice. Plus `Toast`, que l'inventaire avait lui-même reporté à « plus tard ».
 
 *Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces. Les suivants couvrent les deux périmètres — `Table`, `Select` et `DateRangePicker` côté dashboard, `Accordion`, `Stepper` et `ChoiceGroup` côté site.*
 
