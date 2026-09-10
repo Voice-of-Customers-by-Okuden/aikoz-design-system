@@ -22,6 +22,8 @@ import { Breadcrumb } from "@registry/aikoz/breadcrumb/breadcrumb";
 import { Accordion } from "@registry/aikoz/accordion/accordion";
 import { Stepper } from "@registry/aikoz/stepper/stepper";
 import { ChoiceGroup } from "@registry/aikoz/choice-group/choice-group";
+import { BrandLogo } from "@registry/aikoz/brand-logo/brand-logo";
+import { BRANDS } from "@registry/aikoz/brand-logo/brands";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -920,6 +922,46 @@ export default function App() {
               ]}
             />
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          BrandLogo — 19 assureurs, logo monochrome par masque CSS
+        </h2>
+        <div className="flex flex-col gap-5 rounded-[var(--radius)] border border-border bg-card p-5">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground m-0">
+            shape=circle — initiales
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {BRANDS.map((b) => (
+              <BrandLogo key={b.id} brand={b.id} size="lg" />
+            ))}
+          </div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground m-0 pt-3 border-t border-border">
+            shape=plate — logo masqué, rapport d'origine
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {BRANDS.map((b) => (
+              <BrandLogo key={b.id} brand={b.id} shape="plate" size="lg" />
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-border">
+            {(["sm", "md", "lg", "xl"] as const).map((s) => (
+              <BrandLogo key={s} brand="generali" size={s} />
+            ))}
+            <span className="text-xs text-muted-foreground">tailles sm → xl</span>
+          </div>
+          <div className="flex flex-wrap gap-4 pt-3 border-t border-border">
+            <BrandLogo brand="axa" showName />
+            <BrandLogo brand="mma" showName />
+            <BrandLogo brand="swisslife" showName />
+            <BrandLogo brand="inconnue" showName />
+          </div>
+          <p className="text-xs text-muted-foreground m-0 pt-3 border-t border-border">
+            MMA et Swiss Life n'ont aucun fichier récupérable — leurs sites bloquent l'accès
+            automatisé. Elles retombent sur leurs initiales, et rien ne casse. Le noir ou le
+            blanc du contenu est <strong>mesuré</strong> depuis la luminance de la teinte, pas
+            choisi marque par marque.
+          </p>
         </div>
 
         {/* Bandeau de statut bridge */}
