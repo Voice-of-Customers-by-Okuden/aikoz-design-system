@@ -376,6 +376,70 @@
         "tailwind-merge",
         "@radix-ui/react-popover"
       ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:component",
+      "title": "Skeleton",
+      "description": "Bloc d'attente. Integralement invisible aux technologies d'assistance, et ce n'est pas un oubli : c'est au CONTENEUR de dire qu'un chargement est en cours, une fois, par aria-busy. Animation coupee par motion-reduce (WCAG 2.3.3). Fond sur --track et non --muted : en sombre ce dernier vaut exactement --card.",
+      "files": [
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:component",
+      "title": "EmptyState",
+      "description": "Etat vide. Il nomme ce qui manque (« Aucun avis sur cette periode », pas « Aucune donnee ») et indique la sortie : un etat vide sans action ni consigne est un cul-de-sac. Le ton error se lit dans le texte, jamais a la seule couleur du cadre. Le niveau de titre est un prop, par defaut p — il depend du plan de la page.",
+      "files": [
+        {
+          "path": "registry/aikoz/empty-state/empty-state.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:component",
+      "title": "Table",
+      "description": "Tableau de donnees — un vrai <table>. <caption> obligatoire plutot qu'aria-label, th scope=col et scope=row (« Amsterdam, taux de reponse, 94 % » au lieu de « 94 % »), tri annonce par aria-sort avec un bouton dans l'en-tete, conteneur de debordement focusable et nomme, chiffres tabulaires sur les colonnes numeriques. Etats de chargement et vide integres.",
+      "files": [
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }

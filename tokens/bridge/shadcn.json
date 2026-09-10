@@ -164,6 +164,26 @@
     "$value": "{color.nav.accent}",
     "$description": "extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat"
   },
+  "success-subtle": {
+    "$type": "color",
+    "$value": "{color.status.success-subtle}",
+    "$description": "extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui"
+  },
+  "warning-subtle": {
+    "$type": "color",
+    "$value": "{color.status.warning-subtle}",
+    "$description": "extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui"
+  },
+  "error-subtle": {
+    "$type": "color",
+    "$value": "{color.status.error-subtle}",
+    "$description": "extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui"
+  },
+  "info-subtle": {
+    "$type": "color",
+    "$value": "{color.status.info-subtle}",
+    "$description": "extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui"
+  },
   "track": {
     "$type": "color",
     "$value": "{color.surface.track}",
