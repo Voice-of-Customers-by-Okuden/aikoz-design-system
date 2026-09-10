@@ -18,6 +18,9 @@ import { DateRangePicker } from "@registry/aikoz/date-range-picker/date-range-pi
 import { Table, type TableSort } from "@registry/aikoz/table/table";
 import { Skeleton, SkeletonText } from "@registry/aikoz/skeleton/skeleton";
 import { EmptyState } from "@registry/aikoz/empty-state/empty-state";
+import { Breadcrumb } from "@registry/aikoz/breadcrumb/breadcrumb";
+import { Accordion } from "@registry/aikoz/accordion/accordion";
+import { Stepper } from "@registry/aikoz/stepper/stepper";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -820,6 +823,60 @@ export default function App() {
             <code className="font-mono px-1">aria-busy</code> une fois — comme le fait le
             tableau en chargement ci-dessus.
           </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Breadcrumb, Accordion, Stepper
+        </h2>
+        <div className="flex flex-col gap-6">
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <Breadcrumb
+              items={[
+                { label: "Tableau de bord", href: "#tb" },
+                { label: "Hall of Fames", href: "#hof" },
+                { label: "Lyon Part-Dieu" },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              Le dernier élément n'est pas un lien — il porte
+              <code className="font-mono px-1">aria-current="page"</code>. Les liens sont
+              soulignés au repos : dans un fil d'Ariane, rien d'autre ne les distingue.
+            </p>
+          </div>
+
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <Stepper
+              current={2}
+              steps={[
+                { label: "Établissement", href: "#s1" },
+                { label: "Sources", href: "#s2" },
+                { label: "Périmètre" },
+                { label: "Coordonnées" },
+                { label: "Confirmation" },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              Le nav s'annonce « Progression — étape 3 sur 5 ». Les deux étapes faites sont
+              cliquables, les deux à venir ne le sont pas : un tunnel se remonte, il ne se
+              saute pas.
+            </p>
+          </div>
+
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <Accordion
+              defaultValue={["q1"]}
+              items={[
+                { value: "q1", title: "Combien d'avis faut-il pour un premier rapport ?", content: "Vingt avis suffisent à dégager des thèmes stables. En dessous, une seule expérience atypique déplace la moyenne." },
+                { value: "q2", title: "Les avis sans texte comptent-ils ?", content: "Ils comptent dans la note, pas dans l'analyse sémantique." },
+                { value: "q3", title: "À quelle fréquence les sources sont-elles interrogées ?", content: "Toutes les six heures, avec un rattrapage complet chaque nuit." },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              Une seule ouverte à la fois. Le panneau fermé porte
+              <code className="font-mono px-1">hidden</code> : il sort de la tabulation, pas
+              seulement de la vue.
+            </p>
+          </div>
         </div>
 
         {/* Bandeau de statut bridge */}
