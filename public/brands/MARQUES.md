@@ -38,8 +38,16 @@ qui ne casse rien.
 
 Sept fichiers — AXA, MAAF, MACIF, MAIF, MMA, GMF, Groupama — ne supportent pas
 le rendu monochrome : le dessin repose sur une forme pleine dont un masque ne
-garderait que la silhouette. Ils sont affichés **en couleur d'origine sur fond
-clair**, jamais remplacés par des initiales.
+garderait que la silhouette. Ils sont affichés **en couleur d'origine**, jamais
+remplacés par des initiales.
+
+**Et ce n'est pas réparable par une retouche du fichier.** Le SVG d'AXA est un
+carré bleu, une diagonale rouge et des lettres blanches : retirer le carré pour
+le rendre masquable laisserait les seules lettres, c'est-à-dire une autre
+marque. Un logo dont le sens est porté par la couleur ne se monochromise pas.
+C'est pour cette raison que la plaque a **une seule surface pour tous** — claire,
+avec un trait — au lieu de porter la teinte de marque : mélanger douze blocs
+colorés et sept plaques blanches faisait sept trous dans la grille.
 
 Six d'entre eux sont détectés par la mesure (couverture d'encre ≥ 0,40).
 Groupama non : son logotype en traits fins dilue la moyenne à 0,26 alors que

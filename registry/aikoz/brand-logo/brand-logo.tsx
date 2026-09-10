@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@registry/aikoz/lib/utils";
-import { BRAND_BY_ID, cheminLogo, surTeinte, type Brand } from "@registry/aikoz/brand-logo/brands";
+import { BRAND_BY_ID, cheminLogo, contraste, surTeinte, type Brand } from "@registry/aikoz/brand-logo/brands";
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -21,7 +21,15 @@ const pastilleVariants = cva(
         /** Rond compact — porte les INITIALES. Cf. la note du composant. */
         circle: "aspect-square",
         /** Plaque large — porte le LOGO, à son rapport d'origine. */
-        plate: "rounded-[var(--radius)]",
+        // La plaque a une surface CLAIRE et un trait, dans les deux thèmes.
+        // Ce n'est pas une hésitation : sept logos sur dix-neuf ne se
+        // monochromisent pas — celui d'AXA est un carré bleu à diagonale
+        // rouge, le réduire à ses lettres blanches donnerait une autre
+        // marque — et ils ont donc besoin d'un fond clair. Mettre la teinte
+        // de marque sur les douze autres et du blanc sur ces sept faisait
+        // sept trous dans la grille. Une seule surface pour tous, et le
+        // trait la délimite sur une page claire comme sur une page sombre.
+        plate: "rounded-[var(--radius)] bg-white border border-[var(--border-strong)]",
       },
     },
     compoundVariants: [
@@ -71,15 +79,15 @@ export interface BrandLogoProps extends VariantProps<typeof pastilleVariants> {
  * masque ne garde que la silhouette, il perd tout ce que la couleur
  * distinguait à l'intérieur.
  *
- *   `circle`  rond compact → **initiales**, toujours lisibles à 24 px
- *   `plate`   plaque large → **le logo**, à son rapport d'origine
+ *   `circle`  rond compact, à la TEINTE de la marque → **initiales**
+ *   `plate`   plaque claire à trait → **le logo**, à son rapport d'origine
  *
  * Une plaque montre TOUJOURS le logo quand un fichier existe. Deux rendus,
  * selon ce que le fichier permet — et c'est `maskable` qui tranche, sur
  * mesure et non sur impression :
  *
- *   masquable      logo monochrome sur la teinte de la marque
- *   non masquable  logo en couleur d'origine sur plaque claire
+ *   masquable      logo monochrome, encré à la teinte de la marque
+ *   non masquable  logo en couleur d'origine
  *
  * Le second cas n'est pas un repli honteux : un logo bâti sur une forme
  * pleine — le carré d'AXA, le triangle de MAIF — n'existe QUE par ses
@@ -142,19 +150,28 @@ export function BrandLogo({
   }
 
   const encre = surTeinte(m.color);
-  // Plaque en couleur d'origine : fichier présent, mais non masquable.
-  const plaqueCouleur = shape === "plate" && !!m.asset && m.maskable === false;
+
+  // Encre de la plaque. La teinte de marque d'abord — c'est elle qui
+  // identifie — mais seulement si elle tient 3:1 sur la surface claire
+  // (WCAG 1.4.11, un logo est un élément non textuel porteur de sens).
+  // Le jaune d'Abeille n'y arrive pas : #FFD500 sur blanc, c'est 1,42:1,
+  // soit un logo invisible. Il retombe donc sur l'encre sombre. Décidé par
+  // la mesure, comme `surTeinte()`, et non marque par marque : une teinte
+  // ajoutée demain ne pourra pas arriver illisible.
+  const PLAQUE = "#FFFFFF";
+  const ENCRE_SOMBRE = "#0B0B0B";
+  const encrePlaque =
+    contraste(m.color, PLAQUE) >= 3 ? m.color : ENCRE_SOMBRE;
 
   return (
     <span className={cn("inline-flex items-center gap-2", showName && "min-w-0")}>
       <span
         className={cn(pastilleVariants({ size, shape }), className)}
+        // Le rond porte la teinte de marque ; la plaque porte une surface
+        // claire et se sert de la teinte comme ENCRE.
         style={
-          plaqueCouleur
-            ? // Blanc franc, et non `--card` : ces logos sont dessinés pour un
-              // fond blanc, et `--card` vaut midnight-blue en sombre — le bleu
-              // d'AXA y disparaîtrait.
-              { backgroundColor: "#FFFFFF", color: "#0B0B0B" }
+          shape === "plate"
+            ? { color: encrePlaque }
             : { backgroundColor: m.color, color: encre }
         }
         // Quand le nom est écrit à côté, la pastille se tait : sinon un
@@ -168,7 +185,7 @@ export function BrandLogo({
             aria-hidden="true"
             className="block h-[68%] w-full"
             style={{
-              backgroundColor: encre,
+              backgroundColor: "currentColor",
               WebkitMaskImage: `url(${cheminLogo(m.asset)})`,
               maskImage: `url(${cheminLogo(m.asset)})`,
               WebkitMaskSize: "contain",
@@ -180,9 +197,8 @@ export function BrandLogo({
             }}
           />
         ) : m.asset && shape === "plate" ? (
-          // Fichier non masquable : on montre le logo tel quel. `object-contain`
-          // pour ne jamais le déformer, et une hauteur en pourcentage plutôt
-          // qu'un carré, pour qu'un logotype large occupe la plaque.
+          // Fichier non masquable : le logo est montré tel quel, en couleur
+          // d'origine, sur la même surface claire que les autres.
           <img
             src={cheminLogo(m.asset)}
             alt=""
