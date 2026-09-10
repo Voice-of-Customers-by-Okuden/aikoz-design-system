@@ -355,6 +355,27 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "date-range-picker",
+      "type": "registry:component",
+      "title": "DateRangePicker",
+      "description": "Selecteur de periode — transpose de la pastille « 30 derniers jours » de la barre haute. Pas de calendrier, delibrement : sur un tableau de bord la quasi-totalite des selections tombe sur un prereglage. Les prereglages sont de vrais boutons radio (choix unique, fleches natives, annonce « 2 sur 5 ») ; la saisie libre passe par deux champs date NATIFS, qui ouvrent le selecteur du systeme sur mobile.",
+      "files": [
+        {
+          "path": "registry/aikoz/date-range-picker/date-range-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-popover"
+      ]
     }
   ]
 }

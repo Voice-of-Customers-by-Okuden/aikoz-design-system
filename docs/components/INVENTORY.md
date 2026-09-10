@@ -97,7 +97,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 15 | `Avatar` | Data display | shadcn | v1 | **livré** — repli sur initiales, 4 tailles | — |
 | 16 | `Table` | Data display | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 17 | `Breadcrumb` | Navigation | shadcn | v1 | à créer — absent du code et du Figma | — |
-| 18 | `TimeRangePicker` | Forms | aikoz | v1 | **maquetté** (pill « 30 derniers jours » du topbar), à créer | Select ou Calendar+Popover |
+| 18 | `DateRangePicker` | Forms | aikoz | v1 | **livré** — préréglages en radio + saisie libre native ; pas de calendrier en grille, cf. le composant | Popover |
 | 19 | `Skeleton` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 20 | `EmptyState` | Feedback | aikoz | v1 | à créer — absent du code et du Figma | Button |
 | 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | **livré** — 3 placements, sur Radix | — |
@@ -129,7 +129,7 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **16 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`), **20 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **17 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`, `DateRangePicker`), **19 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
 *Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
