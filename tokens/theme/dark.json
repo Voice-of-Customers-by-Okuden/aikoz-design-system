@@ -150,8 +150,8 @@
       },
       "input": {
         "$type": "color",
-        "$value": "{color.midnight-blue.700}",
-        "$description": "Bordure des champs de saisie. Mappé sur --input."
+        "$value": "{color.midnight-blue.400}",
+        "$description": "Bordure de champ — 4,09:1 sur carte, 4,58 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier des séparateurs ne donnait que 1,14:1, une bordure de champ invisible. Défaut systémique relevé en auditant les quatre combinaisons registre × thème — il touchait produit clair, produit sombre et marketing clair, seul le marketing sombre avait déjà été corrigé."
       }
     },
     "status": {

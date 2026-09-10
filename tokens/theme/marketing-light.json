@@ -3,15 +3,18 @@
     "surface": {
       "page": {
         "$type": "color",
-        "$value": "{color.neutral.50}"
+        "$value": "#FFFFFF",
+        "$description": "Fond de page blanc pur. Inverse du produit, dont la page est cassée et les cartes blanches : le site respire, le dashboard hiérarchise."
       },
       "default": {
         "$type": "color",
-        "$value": "#FFFFFF"
+        "$value": "{color.neutral.50}",
+        "$description": "Carte légèrement teintée sur page blanche — l'inverse du registre produit."
       },
       "raised": {
         "$type": "color",
-        "$value": "#FFFFFF"
+        "$value": "{color.neutral.50}",
+        "$description": "Carte sur page blanche."
       },
       "overlay": {
         "$type": "color",
@@ -56,13 +59,13 @@
       },
       "action": {
         "$type": "color",
-        "$value": "{color.brand.primary}",
-        "$description": "Surface d'action principale (bouton default). Midnight en light, aquamarine en dark."
+        "$value": "{color.brand.secondary}",
+        "$description": "CTA en ULTRAMARINE, pas en aquamarine. Le bundle marketing l'écrit noir sur blanc : l'aquamarine est réservée aux fonds sombres — sur blanc elle tombe à 1,24:1. Le seul aplat d'action du registre clair."
       },
       "action-secondary": {
         "$type": "color",
-        "$value": "{color.brand.secondary}",
-        "$description": "Surface d'action secondaire. Ultramarine en light, bleu pâle en dark."
+        "$value": "{color.brand.primary}",
+        "$description": "Action secondaire — le midnight."
       }
     },
     "text": {
@@ -72,11 +75,13 @@
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.neutral.600}"
+        "$value": "{color.midnight-blue.500}",
+        "$description": "Texte secondaire TEINTÉ BLEU et non gris, comme dans le registre sombre. C'est la marque du registre marketing : rester dans la famille jusque dans le texte discret."
       },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.midnight-blue.400}",
+        "$description": "Légendes, dates."
       },
       "disabled": {
         "$type": "color",
@@ -84,8 +89,8 @@
       },
       "muted": {
         "$type": "color",
-        "$value": "{color.neutral.600}",
-        "$description": "Texte secondaire discret (muted). Mappé sur --muted-foreground."
+        "$value": "{color.midnight-blue.500}",
+        "$description": "Alias de secondary."
       },
       "inverse": {
         "$type": "color",
@@ -101,7 +106,8 @@
       },
       "accent": {
         "$type": "color",
-        "$value": "{color.aquamarine.600}"
+        "$value": "{color.aquamarine.700}",
+        "$description": "Mot mis en exergue. L'aquamarine ne survit sur clair qu'à ce palier — jamais en aplat."
       },
       "on-accent": {
         "$type": "color",
@@ -110,7 +116,7 @@
       "on-action": {
         "$type": "color",
         "$value": "#FFFFFF",
-        "$description": "Texte sur surface.action. Blanc en light, midnight en dark."
+        "$description": "Sur le CTA ultramarine."
       },
       "on-action-secondary": {
         "$type": "color",
@@ -134,7 +140,7 @@
       "focus": {
         "$type": "color",
         "$value": "{color.brand.secondary}",
-        "$description": "Anneau de focus clavier. Aquamarine en dark pour contraste sur fond sombre (WCAG 1.4.11)."
+        "$description": "Anneau de focus."
       },
       "brand": {
         "$type": "color",
@@ -142,7 +148,8 @@
       },
       "accent": {
         "$type": "color",
-        "$value": "{color.brand.accent}"
+        "$value": "{color.brand.secondary}",
+        "$description": "Liseré d'accent en ultramarine : sur clair l'aquamarine ne tient pas le 3:1."
       },
       "disabled": {
         "$type": "color",
@@ -151,7 +158,7 @@
       "input": {
         "$type": "color",
         "$value": "{color.neutral.500}",
-        "$description": "Bordure de champ — 4,44:1 sur carte, 4,07 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier des séparateurs ne donnait que 1,44:1, une bordure de champ invisible. Défaut systémique relevé en auditant les quatre combinaisons registre × thème — il touchait produit clair, produit sombre et marketing clair, seul le marketing sombre avait déjà été corrigé."
+        "$description": "Bordure de champ — 4,07:1 sur carte, 4,44 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier des séparateurs ne donnait que 1,32:1, une bordure de champ invisible. Défaut systémique relevé en auditant les quatre combinaisons registre × thème — il touchait produit clair, produit sombre et marketing clair, seul le marketing sombre avait déjà été corrigé."
       }
     },
     "status": {
@@ -268,21 +275,22 @@
     "chart": {
       "1": {
         "$type": "color",
-        "$value": "{color.ultramarine.500}",
-        "$description": "Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1."
+        "$value": "{color.brand.secondary}",
+        "$description": "Tracé de série. L'aquamarine étant hors-jeu sur clair, la courbe passe en ultramarine."
       }
     },
     "rating": {
       "default": {
         "$type": "color",
         "$value": "{color.warning.700}",
-        "$description": "Couleur de notation — étoiles pleines. warning.700 : 5,13:1 sur --card, 4,70:1 sur --background, 4,30:1 sur --muted (seuil 3:1, WCAG 1.4.11). Le palier 600 avait été retenu sur la seule mesure contre --card (3,25:1) ; il échoue sur les deux autres surfaces (2,98 et 2,73). ScoreStars étant publié au registry, rien ne garantit qu'il soit posé dans une carte — les trois surfaces sont donc auditées."
+        "$description": "Étoiles pleines — même palier que le produit clair, le fond est aussi clair."
       },
       "empty": {
         "$type": "color",
         "$value": "{color.neutral.300}",
-        "$description": "Étoile vide — repère de l'échelle. 1,92:1, sous 3:1 : assumé décoratif (aria-hidden, le max figure dans l'aria-label). Le passer à neutral.500 donnerait 4,44:1 mais l'étoile vide pèserait presque autant que la pleine."
+        "$description": "Étoile vide, décorative."
       }
     }
-  }
+  },
+  "$description": "Registre MARKETING, variante CLAIRE. Frère de theme/marketing.json, qui en est la variante sombre. Registre et thème sont deux axes INDÉPENDANTS : la première version confondait « marketing » et « sombre », ce qui interdisait un site clair. Construit sur theme/light.json, dont il ne s'écarte que par discipline — texte discret bleuté, CTA en ultramarine, aquamarine bannie des aplats."
 }

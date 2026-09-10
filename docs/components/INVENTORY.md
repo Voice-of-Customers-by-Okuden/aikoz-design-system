@@ -32,13 +32,21 @@ Ce que le tunnel ajoute, ce sont les composants de **parcours et de page** : ét
 
 Un même composant sert les deux surfaces, dans deux registres visuels distincts. Ce ne sont pas deux palettes : c'est **une palette de primitives, deux couches sémantiques**.
 
+**Registre et thème sont deux axes indépendants** — quatre combinaisons, pas deux. La première version confondait « marketing » et « sombre », ce qui interdisait un site clair : la même erreur de cadrage que l'API `size` de `KpiCard`.
+
 | | Registre produit | Registre marketing |
 |---|---|---|
 | Surface | dashboard, Power BI | site, lead magnet, carrousels |
-| Bascule | `:root` / `.dark` | `[data-register="marketing"]` |
-| Fond | clair par défaut | sombre par défaut, midnight de marque |
-| Texte discret | gris neutre | **teinté bleu** (`ultramarine.200`) |
-| Aquamarine | signal rare | **un seul aplat : le CTA** |
+| Bascule | *(rien)* | `data-register="marketing"` |
+| Texte discret | gris neutre | **teinté bleu** |
+| Aquamarine | signal rare | accent, jamais un aplat sur clair |
+
+| | Thème clair | Thème sombre |
+|---|---|---|
+| Bascule | *(rien)* ou `.light` | `.dark` |
+| CTA marketing | **ultramarine** — l'aquamarine tombe à 1,24:1 sur blanc | **aquamarine** |
+
+Un site marketing sombre se déclare `<html class="dark" data-register="marketing">`. Les 76 paires des quatre combinaisons sont auditées sans échec.
 
 La règle qui vaut pour les deux, et que le lead magnet violait : **une couleur qui sert à tout ne signale plus rien.** Dans le prototype de Louis, l'accent apparaissait 102 fois sur 14 propriétés CSS — texte, fond, contour, ombre. Le registre marketing lui rend un rôle unique.
 
