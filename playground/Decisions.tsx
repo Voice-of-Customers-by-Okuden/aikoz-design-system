@@ -560,15 +560,15 @@ export default function Decisions({ dark }: { dark: boolean }) {
   return (
     <div>
       <p className="text-sm text-muted-foreground mb-10 max-w-2xl">
-        Trois décisions prises, deux reformulées. Tout est rendu avec les vrais tokens —
+        Les cinq décisions sont prises. Tout est rendu avec les vrais tokens —
         bascule le thème pour vérifier en dark. Ces maquettes servent à rendre un choix
         visible ; ce ne sont pas des composants du design system.
       </p>
 
       <Decision
         n={1}
-        status="reformulée"
-        title="KpiCard — le mauvais axe"
+        status="tranchée"
+        title="KpiCard — deux axes, variant × density"
         question={
           <>
             Ce n'était pas « quelle carte ». Les deux affichent des métriques de nature
@@ -622,7 +622,7 @@ export default function Decisions({ dark }: { dark: boolean }) {
 
       <Decision
         n={2}
-        status="reformulée"
+        status="tranchée"
         title="Navigation — deux composants, deux contrats"
         question={
           <>

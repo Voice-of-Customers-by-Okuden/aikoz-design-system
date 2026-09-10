@@ -6,6 +6,7 @@ import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
 import { ProgressBar } from "@registry/aikoz/progress-bar/progress-bar";
 import { Badge } from "@registry/aikoz/badge/badge";
 import { VerbatimCard } from "@registry/aikoz/verbatim-card/verbatim-card";
+import { Input } from "@registry/aikoz/input/input";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -364,6 +365,42 @@ export default function App() {
               </div>
             </div>
           ))}
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Input — 4 états du Figma
+        </h2>
+        <div className="flex flex-col gap-5 rounded-[var(--radius)] border border-border bg-card p-5 max-w-md">
+          <Input
+            label="Le nom de votre agence"
+            description="Tel qu'il apparaît sur votre fiche Google."
+            placeholder="Allianz Lyon Centre"
+            autoComplete="organization"
+            required
+          />
+          <Input
+            label="Rechercher"
+            labelHidden
+            type="search"
+            placeholder="Rechercher une agence, une marque…"
+            autoComplete="off"
+            leadingIcon={<span aria-hidden="true">⌕</span>}
+          />
+          <Input
+            label="Adresse e-mail"
+            type="email"
+            autoComplete="email"
+            defaultValue="camille.brun@"
+            error="L'adresse doit contenir un domaine, par exemple camille.brun@neoassur.fr"
+            required
+          />
+          <Input
+            label="Marque rattachée"
+            defaultValue="Allianz"
+            readOnly
+            description="Déterminée par votre fiche — readOnly, donc focusable et soumise."
+          />
+          <Input label="Champ désactivé" defaultValue="Indisponible" disabled />
         </div>
 
         {/* Composants extraits de KpiCard */}

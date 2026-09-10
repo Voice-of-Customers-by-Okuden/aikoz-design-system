@@ -112,6 +112,27 @@
       ]
     },
     {
+      "name": "input",
+      "type": "registry:component",
+      "title": "Input",
+      "description": "Champ de saisie — 4 etats (defaut, focus, erreur, desactive). Libelle visible obligatoire, consigne avant le champ, erreur annoncee en role=alert et associee par aria-describedby. Ne valide rien lui-meme : la validation se fait a la sortie du champ, jamais a la frappe.",
+      "files": [
+        {
+          "path": "registry/aikoz/input/input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
       "name": "kpi-card",
       "type": "registry:component",
       "title": "KPI Card",
