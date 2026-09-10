@@ -93,7 +93,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 10b | `ChoiceGroup` | Forms | aikoz | v1 | **livré** — fieldset + legend ; remplace BrandPicker et SourceToggle | ChoiceCard |
 | 11 | `DonutChart` | Data display | aikoz | v1 | **maquetté** (`SourcesDonut`), à créer | Select, Tooltip |
 | 12 | `RankedBarChart` | Data display | aikoz | v1 | à créer — absent du code et du Figma | TimeRangePicker, Tooltip |
-| 13 | `Leaderboard` | Data display | aikoz | v1 | **composants Figma** `RankRow` + `RankingCard`, à créer en code | Avatar, DeltaBadge |
+| 13 | `Leaderboard` | Data display | aikoz | v1 | **livré** — bâti sur `Table` ; pas de `RankRow` exporté, cf. le composant | Table, DeltaBadge, BrandLogo |
 | 14 | `MapWidget` | Data display | aikoz | v1 | ⚠ **à créer — aucune carte dans le Figma** (statut v1.0 erroné) | Breadcrumb, Table |
 | 15 | `Avatar` | Data display | shadcn | v1 | **livré** — repli sur initiales, 4 tailles | — |
 | 16 | `Table` | Data display | shadcn | v1 | **livré** — caption, scope col/row, aria-sort, conteneur focusable | Skeleton |
@@ -113,7 +113,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 30 | `Input` | Forms | shadcn | v1 | **livré** — 4 états, libellé obligatoire, erreur en `role=alert` | — |
 | 31 | `Accordion` | Layout · site | shadcn | v1 | **livré** — `hidden` sur le panneau fermé, bouton enveloppé dans un titre | — |
 | 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
-| 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **prototype site** — bandeau de preuve client | — |
+| 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **livré** — ne défile pas : WCAG 2.2.2, cf. le composant | BrandLogo |
 | 34 | `FeaturePanel` | Layout · site | aikoz | v1 | **prototype site** — « Quatre leviers », page Notre Solution | — |
 | 35 | `SiteNav` | Navigation · site | aikoz | v1 | **prototype site** — en-tête des 3 pages. ⚠ distinct de `SidebarNav` : navigation de site, pas d'application | — |
 | 36 | `SiteFooter` | Navigation · site | aikoz | v1 | **prototype site** — pied des 3 pages | — |
@@ -130,7 +130,7 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **25 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`, `DateRangePicker`, `Table`, `Skeleton`, `EmptyState`, `Breadcrumb`, `Accordion`, `Stepper`, `ChoiceCard`, `ChoiceGroup`), **10 à construire**, dont **5 charts qui restent à l'arbitrage d'Alice**.
+État réel : **28 livrés** — les 25 précédents plus `BrandLogo`, `Leaderboard` et `LogoMarquee`. **7 à construire**, dont **5 charts qui restent à l'arbitrage d'Alice** : ne restent donc que `MapWidget`, `FeaturePanel`, `SiteNav`, `SiteFooter`, `BookingFlow` et `Toast` (reporté).
 
 *Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces. Les suivants couvrent les deux périmètres — `Table`, `Select` et `DateRangePicker` côté dashboard, `Accordion`, `Stepper` et `ChoiceGroup` côté site.*
 

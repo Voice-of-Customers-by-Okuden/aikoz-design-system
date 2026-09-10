@@ -24,6 +24,8 @@ import { Stepper } from "@registry/aikoz/stepper/stepper";
 import { ChoiceGroup } from "@registry/aikoz/choice-group/choice-group";
 import { BrandLogo } from "@registry/aikoz/brand-logo/brand-logo";
 import { BRANDS } from "@registry/aikoz/brand-logo/brands";
+import { Leaderboard } from "@registry/aikoz/leaderboard/leaderboard";
+import { LogoMarquee } from "@registry/aikoz/logo-marquee/logo-marquee";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -964,6 +966,37 @@ export default function App() {
             tout accès automatisé, il n'y a pas de fichier. Le noir ou le blanc du contenu
             est <strong>mesuré</strong> depuis la luminance de la teinte, jamais choisi
             marque par marque.
+          </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Leaderboard — bâti sur Table, podium doublé par le chiffre
+        </h2>
+        <Leaderboard
+          caption="Taux de réponse aux avis, 30 derniers jours"
+          valueLabel="Taux de réponse"
+          entries={[
+            { id: "1", rank: 1, name: "Lyon Part-Dieu", code: "LYO-PDX", organization: "Réseau Sud-Est", brand: "axa", value: "94 %", delta: 2 },
+            { id: "2", rank: 2, name: "Paris Opéra", code: "PAR-OPE", organization: "Réseau Île-de-France", brand: "generali", value: "91 %", delta: 5 },
+            { id: "3", rank: 3, name: "Bordeaux Chartrons", code: "BDX-CHA", organization: "Réseau Sud-Ouest", brand: "maif", value: "88 %", delta: -1 },
+            { id: "4", rank: 4, name: "Marseille Prado", code: "MRS-PRA", organization: "Réseau Sud-Est", brand: "macif", value: "84 %", delta: 0, highlighted: true },
+            { id: "5", rank: 5, name: "Lille Grand Place", code: "LIL-GPL", organization: "Réseau Nord", brand: "matmut", value: "79 %", delta: -3 },
+          ]}
+        />
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          LogoMarquee — il ne défile pas, et c'est une décision
+        </h2>
+        <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+          <LogoMarquee
+            label="Assureurs analysés par Aikoz"
+            showLabel
+            brands={BRANDS.map((b) => b.id)}
+          />
+          <p className="text-xs text-muted-foreground mt-4 mb-0">
+            WCAG 2.2.2 impose un moyen de pause pour tout mouvement de plus de 5 secondes —
+            donc un bouton, un état, un arrêt de tabulation de plus, pour une décoration. La
+            preuve, ce sont les marques, pas leur déplacement.
           </p>
         </div>
 
