@@ -72,8 +72,8 @@
       },
       "action-secondary": {
         "$type": "color",
-        "$value": "{color.brand.secondary}",
-        "$description": "Action secondaire — l'ultramarine, pas l'accent."
+        "$value": "{color.ultramarine.225}",
+        "$description": "Surface d'action secondaire. ultramarine.225 comme en produit sombre, et non la teinte de marque : sur une carte sombre, ultramarine.500 ne donne que 3,02:1 — sous le seuil de 4,5 dès qu'on s'en sert comme couleur de TEXTE, ce que fait tout lien secondaire. Le registre marketing avait gardé la valeur claire par omission ; le thème sombre l'éclaircissait déjà, le registre ne suivait pas."
       }
     },
     "text": {
@@ -131,8 +131,8 @@
       },
       "on-action-secondary": {
         "$type": "color",
-        "$value": "#FFFFFF",
-        "$description": "Sur l'ultramarine, le texte passe en blanc et non en midnight."
+        "$value": "{color.midnight-blue.900}",
+        "$description": "Texte sur surface d'action secondaire. Le blanc convenait tant que cette surface était ultramarine.500 ; elle est passée à ultramarine.225 pour être lisible sur carte sombre, et le blanc y tombait alors à 1,63:1. Les deux tokens vont par paire — changer la surface sans changer son texte déplace le défaut au lieu de le corriger. midnight-blue.900 : 11,44:1, comme en produit sombre."
       }
     },
     "border": {

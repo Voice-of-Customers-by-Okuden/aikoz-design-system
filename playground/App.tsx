@@ -32,6 +32,8 @@ import { FeaturePanel } from "@registry/aikoz/feature-panel/feature-panel";
 import { BookingFlow, type BookingStatus } from "@registry/aikoz/booking-flow/booking-flow";
 import { SlotPicker } from "@registry/aikoz/slot-picker/slot-picker";
 import { LineChart } from "@registry/aikoz/line-chart/line-chart";
+import { BarChart } from "@registry/aikoz/bar-chart/bar-chart";
+import { DonutChart } from "@registry/aikoz/donut-chart/donut-chart";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 import { auditerToutesCombinaisons, type EchecContraste } from "./audit";
@@ -1134,6 +1136,28 @@ export default function App() {
               { mois: "Juin", sudest: 91, idf: 83, nord: 72, ouest: 77 },
             ]}
           />
+          <div className="pt-6 mt-6 border-t border-border">
+            <LineChart
+              caption="Taux de réponse Sud-Est, comparé à l'année précédente"
+              xKey="mois"
+              formatValue={(v) => `${v} %`}
+              series={[{ key: "sudest", label: "2026" }]}
+              reference={{ key: "n1", label: "2025" }}
+              data={[
+                { mois: "Janv.", sudest: 71, n1: 63 },
+                { mois: "Févr.", sudest: 74, n1: 65 },
+                { mois: "Mars", sudest: 79, n1: 69 },
+                { mois: "Avr.", sudest: 83, n1: 74 },
+                { mois: "Mai", sudest: 88, n1: 76 },
+                { mois: "Juin", sudest: 91, n1: 80 },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              Pas de <code className="font-mono px-1">ComparisonLineChart</code> : une série de
+              référence en retrait, et l'écart <strong>calculé et énoncé</strong> dans le résumé —
+              sinon la comparaison n'existe que pour qui voit les deux courbes.
+            </p>
+          </div>
           <p className="text-xs text-muted-foreground mt-4 mb-0">
             La couleur ne distingue pas les séries : mesuré, la meilleure séparation
             atteignable entre six séries de cette palette est de <strong>1,17:1</strong> — elles
@@ -1142,6 +1166,71 @@ export default function App() {
             rien de tout ça, le graphique est masqué et c'est le <strong>tableau</strong> qui est
             le contenu.
           </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          BarChart et DonutChart
+        </h2>
+        <div className="flex flex-col gap-8">
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <BarChart
+              caption="Avis reçus par source et par trimestre"
+              xKey="trim"
+              xLabel="Trimestre"
+              series={[
+                { key: "google", label: "Google" },
+                { key: "trustpilot", label: "Trustpilot" },
+                { key: "pj", label: "Pages Jaunes" },
+              ]}
+              data={[
+                { trim: "T1", google: 820, trustpilot: 210, pj: 64 },
+                { trim: "T2", google: 940, trustpilot: 268, pj: 71 },
+                { trim: "T3", google: 1120, trustpilot: 302, pj: 58 },
+                { trim: "T4", google: 1240, trustpilot: 318, pj: 96 },
+              ]}
+            />
+          </div>
+
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <BarChart
+              caption="Classement des agences par taux de réponse"
+              xKey="agence"
+              xLabel="Agence"
+              orientation="horizontal"
+              layout="grouped"
+              formatValue={(v) => `${v} %`}
+              series={[{ key: "taux", label: "Taux de réponse" }]}
+              data={[
+                { agence: "Lyon Part-Dieu", taux: 94 },
+                { agence: "Paris Opéra", taux: 91 },
+                { agence: "Bordeaux Chartrons", taux: 88 },
+                { agence: "Marseille Prado", taux: 84 },
+                { agence: "Lille Grand Place", taux: 79 },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              Pas de <code className="font-mono px-1">RankedBarChart</code> : c'est
+              <code className="font-mono px-1">BarChart</code> horizontal, trié, à une série.
+              Deux props, pas un composant de plus.
+            </p>
+          </div>
+
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5 max-w-md">
+            <DonutChart
+              caption="Répartition des avis par source"
+              centerValue="1 654"
+              centerLabel="avis"
+              parts={[
+                { key: "google", label: "Google", value: 1240 },
+                { key: "trustpilot", label: "Trustpilot", value: 318 },
+                { key: "pj", label: "Pages Jaunes", value: 96 },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              Chaque part porte <strong>son pourcentage écrit</strong> dans la légende : au-delà
+              de quatre parts, ou dès que deux sont proches, l'œil ne compare pas des angles.
+            </p>
+          </div>
         </div>
 
         {/* Audit de contraste sur le rendu */}
