@@ -5,12 +5,16 @@
  * « Aikoz - Chat » (`la-medicale`, `malakoff-humanis`, `swisslife`). Deux
  * vocabulaires pour les mêmes marques finiraient forcément par diverger.
  *
- * `color` — la teinte de la pastille. Les valeurs marquées PROVISOIRE ont été
- * extraites automatiquement du SVG officiel en prenant la couleur la plus
- * fréquente : c'est une heuristique, et elle se trompe. AXA en est l'exemple —
- * son bleu marine est la couleur de marque, mais le rouge de la diagonale
- * occupe plus de surface dans le fichier. À remplacer par la liste de
- * référence.
+ * `color` — la teinte de la pastille, LUE dans le fichier de la marque et non
+ * déduite au jugé. Chaque valeur a été confrontée aux couleurs réellement
+ * présentes : 14 correspondaient, 5 étaient fausses. La pire était Malakoff
+ * Humanis, à qui j'avais attribué un gris qui n'existe nulle part dans son
+ * logo — il est orange à 100 %.
+ *
+ * Deux cas où la mesure ne tranche pas seule : MMA, dont le logo est trois
+ * pastilles de couleurs égales (vert, orange, bleu) — le bleu institutionnel
+ * est retenu ; et La Médicale, partagée entre un rouge à 49 % et un orange à
+ * 30 %.
  *
  * `asset` — NOM DE FICHIER seul, pas un chemin. Le dossier est fourni par le
  * consommateur via `definirBaseDesLogos()` : un composant de design system ne
@@ -72,22 +76,22 @@ export const BRANDS: Brand[] = [
   { id: "credit-agricole",  name: "Crédit Agricole",  color: "#006C50", initials: "CA", asset: "credit-agricole.svg" }, // encre 0.26
   { id: "allianz",          name: "Allianz",          color: "#004A93", initials: "AZ", asset: "allianz.svg" }, // encre 0.29
   { id: "axa",              name: "AXA",              color: "#00008F", initials: "AX", asset: "axa-mask.png" }, // masque fabriqué, encre 0.86
-  { id: "macif",            name: "MACIF",            color: "#005F9E", initials: "MC", asset: "macif-mask.png" }, // masque fabriqué, encre 0.89
+  { id: "macif",            name: "MACIF",            color: "#29377E", initials: "MC", asset: "macif-mask.png" }, // masque fabriqué, encre 0.89
   { id: "matmut",           name: "Matmut",           color: "#000069", initials: "MT", asset: "matmut.svg" }, // encre 0.28
   { id: "groupama",         name: "Groupama",         color: "#2A6654", initials: "GA", asset: "groupama-mask.png" }, // masque fabriqué, encre 0.37
-  { id: "mma",              name: "MMA",              color: "#E2001A", initials: "MM", asset: "mma-mask.png" }, // masque fabriqué, encre 0.62
+  { id: "mma",              name: "MMA",              color: "#003875", initials: "MM", asset: "mma-mask.png" }, // masque fabriqué, encre 0.62
   { id: "generali",         name: "Generali",         color: "#C12129", initials: "GE", asset: "generali.svg" }, // encre 0.18
-  { id: "maaf",             name: "MAAF",             color: "#0093D0", initials: "MA", asset: "maaf-mask.png" }, // masque fabriqué, encre 0.85
+  { id: "maaf",             name: "MAAF",             color: "#009CAC", initials: "MA", asset: "maaf-mask.png" }, // masque fabriqué, encre 0.85
   { id: "gmf",              name: "GMF",              color: "#004696", initials: "GM", asset: "gmf-mask.png" }, // masque fabriqué, encre 0.37
   { id: "maif",             name: "MAIF",             color: "#ED2131", initials: "MI", asset: "maif-mask.png" }, // masque fabriqué, encre 0.37
   { id: "swisslife",        name: "Swiss Life",       color: "#E50028", initials: "SL", asset: "swisslife.svg" }, // encre 0.18
   { id: "abeille",          name: "Abeille",          color: "#FFD500", initials: "AB", asset: "abeille.svg" }, // encre 0.24
   { id: "harmonie-mutuelle",name: "Harmonie Mutuelle",color: "#E94E24", initials: "HM", asset: "harmonie-mutuelle.png" }, // encre 0.25
   { id: "aesio",            name: "AÉSIO",            color: "#E62C33", initials: "AE", asset: "aesio.svg" }, // encre 0.28
-  { id: "malakoff-humanis", name: "Malakoff Humanis", color: "#6E7B85", initials: "MH", asset: "malakoff-humanis.png" }, // encre 0.30 (0,10 avant rognage des marges)
+  { id: "malakoff-humanis", name: "Malakoff Humanis", color: "#FF4B33", initials: "MH", asset: "malakoff-humanis.png" }, // encre 0.30 (0,10 avant rognage des marges)
   { id: "macsf",            name: "MACSF",            color: "#E10000", initials: "MS", asset: "macsf.svg" }, // encre 0.14
   { id: "ag2r",             name: "AG2R La Mondiale", color: "#5A3318", initials: "AG", asset: "ag2r.svg" }, // encre 0.14
-  { id: "la-medicale",      name: "La Médicale",      color: "#C8102E", initials: "LM", asset: "la-medicale.png" }, // encre 0.18
+  { id: "la-medicale",      name: "La Médicale",      color: "#C11E0C", initials: "LM", asset: "la-medicale.png" }, // encre 0.18
 ];
 
 /**
