@@ -44,11 +44,17 @@ export interface ScoreStarsProps extends VariantProps<typeof starVariants> {
  * Extrait de `kpi-card.tsx`, où il vivait inliné sous le nom `StarRating` et
  * codait sa couleur en `text-amber-400` — une couleur Tailwind brute, seule
  * entorse aux tokens du code livré. Il consomme désormais le rôle dédié
- * `--rating`. Audité contre les trois surfaces où un consommateur peut le
- * poser — carte, page, fond muted — et non contre la seule carte : ce
- * composant est publié au registry, rien ne garantit son contexte.
- * Light 5,13 / 4,70 / 4,30:1 · dark 5,35 / 5,99 / 5,35:1, seuil 3:1
- * (WCAG 1.4.11, l'étoile porte l'information).
+ * `--rating`.
+ *
+ * ÉCART ASSUMÉ EN THÈME CLAIR. Depuis le 10/09/2026, le doré est en
+ * warning.500 : 2,18:1 sur carte, sous le seuil 3:1 de WCAG 1.4.11. Décision
+ * de design d'Alice, l'équipe jugeant le palier conforme trop terne. Le
+ * sombre reste conforme (5,35 / 5,99 / 5,35:1).
+ *
+ * Conséquence pratique : **afficher la note en toutes lettres à côté des
+ * étoiles** partout où c'est possible. `KpiCard` le fait déjà — le chiffre
+ * est au-dessus. `VerbatimCard` ne l'affiche pas : c'est le seul endroit où
+ * les étoiles sont le unique support visible de la note.
  *
  * L'information n'est jamais portée par la seule couleur : le nombre
  * d'étoiles pleines la véhicule, et `aria-label` la donne en toutes lettres.

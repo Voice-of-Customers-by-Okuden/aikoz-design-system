@@ -37,8 +37,8 @@
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
   --success: oklch(0.4383 0.0991 158.647); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
-  --rating: oklch(0.5392 0.1106 84.636); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
-  --rating-empty: oklch(0.7921 0.0117 269.522); /** extension DS — étoile vide, repère décoratif de l'échelle */
+  --rating: oklch(0.7576 0.1549 88.059); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
+  --rating-empty: oklch(0.8791 0.0072 268.541); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --chart-1: oklch(0.519 0.1792 267.186); /** extension DS — tracé série de données 1 */
   --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
 }
@@ -117,8 +117,8 @@
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
   --success: oklch(0.4383 0.0991 158.647); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
-  --rating: oklch(0.5392 0.1106 84.636); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
-  --rating-empty: oklch(0.7921 0.0117 269.522); /** extension DS — étoile vide, repère décoratif de l'échelle */
+  --rating: oklch(0.7576 0.1549 88.059); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
+  --rating-empty: oklch(0.8791 0.0072 268.541); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --chart-1: oklch(0.519 0.1792 267.186); /** extension DS — tracé série de données 1 */
   --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
 }
