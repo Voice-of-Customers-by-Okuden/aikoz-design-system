@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "title": "Card",
+  "description": "Conteneur de carte — 3 surfaces (raised, flat, bare) x 3 densites. Prop `as` pour sortir en article ou section : le choix est semantique. Sans sous-composants Title/Header : le niveau de titre depend du plan de la page, pas de la carte.",
+  "dependencies": [
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "registry/aikoz/card/card.tsx",
+      "content": "import { forwardRef, type ElementType, type HTMLAttributes } from \"react\";\nimport { cva, type VariantProps } from \"class-variance-authority\";\nimport { cn } from \"@registry/aikoz/lib/utils\";\n\n// ─── Variants ────────────────────────────────────────────────────────────────\n\nconst cardVariants = cva(\"flex flex-col bg-card text-card-foreground\", {\n  variants: {\n    surface: {\n      /** Carte standard, posée sur la page. */\n      raised: \"border border-border rounded-[var(--radius)] shadow-sm\",\n      /** Sans ombre — pour une grille dense où l'empilement d'ombres fatigue. */\n      flat: \"border border-border rounded-[var(--radius)]\",\n      /** Ni bord ni ombre : un simple regroupement, quand le conteneur cadre déjà. */\n      bare: \"rounded-[var(--radius)]\",\n    },\n    density: {\n      compact: \"p-4 gap-2\",\n      default: \"p-5 gap-3\",\n      large: \"p-6 gap-4\",\n    },\n  },\n  defaultVariants: { surface: \"raised\", density: \"default\" },\n});\n\nexport interface CardProps\n  extends HTMLAttributes<HTMLElement>,\n    VariantProps<typeof cardVariants> {\n  /**\n   * Élément rendu. `div` par défaut — mais une carte qui présente un contenu\n   * autonome (un avis, un article) doit sortir en `article`, et une carte qui\n   * regroupe une section nommée en `section`. Le choix est sémantique, pas\n   * décoratif : il change les repères de navigation d'un lecteur d'écran.\n   */\n  as?: \"div\" | \"article\" | \"section\" | \"li\";\n}\n\n/**\n * Conteneur de carte.\n *\n * Volontairement sans sous-composants `Header` / `Title` / `Footer` : le\n * niveau de titre dépend du plan de la page, pas de la carte. Un `CardTitle`\n * qui figerait un `h3` casserait la hiérarchie dès qu'une carte est utilisée\n * ailleurs. C'est à l'appelant de poser le bon niveau.\n */\nexport const Card = forwardRef<HTMLElement, CardProps>(function Card(\n  { as = \"div\", surface, density, className, ...props },\n  ref\n) {\n  // `as` est polymorphe : les types d'événements diffèrent d'un élément à\n  // l'autre (un HTMLLIElement n'est pas un HTMLDivElement). On type le\n  // composant sur HTMLElement et on élargit ici, plutôt que d'imposer à\n  // l'appelant des handlers spécifiques au div.\n  const Tag = as as ElementType;\n  return (\n    <Tag\n      ref={ref as never}\n      className={cn(cardVariants({ surface, density }), className)}\n      {...props}\n    />\n  );\n});\n\nexport { cardVariants };\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "registry/aikoz/lib/utils.ts",
+      "content": "import { clsx, type ClassValue } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:component"
+}

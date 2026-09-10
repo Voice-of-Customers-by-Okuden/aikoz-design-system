@@ -12,9 +12,16 @@
  * occupe plus de surface dans le fichier. À remplacer par la liste de
  * référence.
  *
- * `asset` — chemin sous `/brands/`. Absent, le composant retombe sur les
- * initiales, ce qui n'est pas un pis-aller : la pastille reste identifiable et
- * lisible dans les quatre combinaisons registre × thème.
+ * `asset` — NOM DE FICHIER seul, pas un chemin. Le dossier est fourni par le
+ * consommateur via `definirBaseDesLogos()` : un composant de design system ne
+ * peut pas décider où une application range ses images. La valeur codée en
+ * dur, `/brands/…`, ne marchait qu'à la racine d'un domaine — elle cassait
+ * dès qu'on servait le tout depuis un sous-chemin, et chez tout consommateur
+ * dont les assets ne sont pas à la racine.
+ *
+ * Absent, le composant retombe sur les initiales, ce qui n'est pas un
+ * pis-aller : la pastille reste identifiable et lisible dans les quatre
+ * combinaisons registre × thème.
  */
 
 export interface Brand {
@@ -24,7 +31,7 @@ export interface Brand {
   color: string;
   /** Initiales du repli. Deux caractères, calculés à la main pour rester lisibles. */
   initials: string;
-  /** Fichier sous `/brands/`. Absent = repli sur les initiales. */
+  /** Nom du fichier, sans dossier. Absent = repli sur les initiales. */
   asset?: string;
   /**
    * `false` — le fichier existe mais ne supporte pas le masquage monochrome.
@@ -62,26 +69,48 @@ export interface Brand {
 }
 
 export const BRANDS: Brand[] = [
-  { id: "credit-agricole",  name: "Crédit Agricole",  color: "#006C50", initials: "CA", asset: "/brands/credit-agricole.svg" }, // encre 0.26
-  { id: "allianz",          name: "Allianz",          color: "#004A93", initials: "AZ", asset: "/brands/allianz.svg" }, // encre 0.29
-  { id: "axa",              name: "AXA",              color: "#00008F", initials: "AX", asset: "/brands/axa.svg", maskable: false }, // encre 1.00
-  { id: "macif",            name: "MACIF",            color: "#005F9E", initials: "MC", asset: "/brands/macif.png", maskable: false }, // encre 0.96
-  { id: "matmut",           name: "Matmut",           color: "#000069", initials: "MT", asset: "/brands/matmut.svg" }, // encre 0.28
-  { id: "groupama",         name: "Groupama",         color: "#2A6654", initials: "GA", asset: "/brands/groupama.svg", maskable: false }, // encre 0.26 — mais symbole plein, cf. note
-  { id: "mma",              name: "MMA",              color: "#E2001A", initials: "MM", asset: "/brands/mma.svg", maskable: false }, // encre 0.44
-  { id: "generali",         name: "Generali",         color: "#C12129", initials: "GE", asset: "/brands/generali.svg" }, // encre 0.18
-  { id: "maaf",             name: "MAAF",             color: "#0093D0", initials: "MA", asset: "/brands/maaf.png", maskable: false }, // encre 1.00
-  { id: "gmf",              name: "GMF",              color: "#004696", initials: "GM", asset: "/brands/gmf.svg", maskable: false }, // encre 0.43
-  { id: "maif",             name: "MAIF",             color: "#ED2131", initials: "MI", asset: "/brands/maif.svg", maskable: false }, // encre 0.47
+  { id: "credit-agricole",  name: "Crédit Agricole",  color: "#006C50", initials: "CA", asset: "credit-agricole.svg" }, // encre 0.26
+  { id: "allianz",          name: "Allianz",          color: "#004A93", initials: "AZ", asset: "allianz.svg" }, // encre 0.29
+  { id: "axa",              name: "AXA",              color: "#00008F", initials: "AX", asset: "axa.svg", maskable: false }, // encre 1.00
+  { id: "macif",            name: "MACIF",            color: "#005F9E", initials: "MC", asset: "macif.png", maskable: false }, // encre 0.96
+  { id: "matmut",           name: "Matmut",           color: "#000069", initials: "MT", asset: "matmut.svg" }, // encre 0.28
+  { id: "groupama",         name: "Groupama",         color: "#2A6654", initials: "GA", asset: "groupama.svg", maskable: false }, // encre 0.26 — mais symbole plein, cf. note
+  { id: "mma",              name: "MMA",              color: "#E2001A", initials: "MM", asset: "mma.svg", maskable: false }, // encre 0.44
+  { id: "generali",         name: "Generali",         color: "#C12129", initials: "GE", asset: "generali.svg" }, // encre 0.18
+  { id: "maaf",             name: "MAAF",             color: "#0093D0", initials: "MA", asset: "maaf.png", maskable: false }, // encre 1.00
+  { id: "gmf",              name: "GMF",              color: "#004696", initials: "GM", asset: "gmf.svg", maskable: false }, // encre 0.43
+  { id: "maif",             name: "MAIF",             color: "#ED2131", initials: "MI", asset: "maif.svg", maskable: false }, // encre 0.47
   { id: "swisslife",        name: "Swiss Life",       color: "#004750", initials: "SL" },
-  { id: "abeille",          name: "Abeille",          color: "#FFD500", initials: "AB", asset: "/brands/abeille.svg" }, // encre 0.24
-  { id: "harmonie-mutuelle",name: "Harmonie Mutuelle",color: "#E94E24", initials: "HM", asset: "/brands/harmonie-mutuelle.png" }, // encre 0.25
-  { id: "aesio",            name: "AÉSIO",            color: "#E62C33", initials: "AE", asset: "/brands/aesio.svg" }, // encre 0.28
-  { id: "malakoff-humanis", name: "Malakoff Humanis", color: "#6E7B85", initials: "MH", asset: "/brands/malakoff-humanis.png" }, // encre 0.30 (0,10 avant rognage des marges)
-  { id: "macsf",            name: "MACSF",            color: "#E10000", initials: "MS", asset: "/brands/macsf.svg" }, // encre 0.14
-  { id: "ag2r",             name: "AG2R La Mondiale", color: "#5A3318", initials: "AG", asset: "/brands/ag2r.svg" }, // encre 0.14
-  { id: "la-medicale",      name: "La Médicale",      color: "#C8102E", initials: "LM", asset: "/brands/la-medicale.png" }, // encre 0.18
+  { id: "abeille",          name: "Abeille",          color: "#FFD500", initials: "AB", asset: "abeille.svg" }, // encre 0.24
+  { id: "harmonie-mutuelle",name: "Harmonie Mutuelle",color: "#E94E24", initials: "HM", asset: "harmonie-mutuelle.png" }, // encre 0.25
+  { id: "aesio",            name: "AÉSIO",            color: "#E62C33", initials: "AE", asset: "aesio.svg" }, // encre 0.28
+  { id: "malakoff-humanis", name: "Malakoff Humanis", color: "#6E7B85", initials: "MH", asset: "malakoff-humanis.png" }, // encre 0.30 (0,10 avant rognage des marges)
+  { id: "macsf",            name: "MACSF",            color: "#E10000", initials: "MS", asset: "macsf.svg" }, // encre 0.14
+  { id: "ag2r",             name: "AG2R La Mondiale", color: "#5A3318", initials: "AG", asset: "ag2r.svg" }, // encre 0.14
+  { id: "la-medicale",      name: "La Médicale",      color: "#C8102E", initials: "LM", asset: "la-medicale.png" }, // encre 0.18
 ];
+
+/**
+ * Dossier des logos. `/brands/` par défaut — ce qui convient au dépôt tel
+ * quel — et modifiable une fois, au démarrage de l'application.
+ *
+ * L'état est au niveau du module, ce qui est un compromis assumé : c'est la
+ * forme la plus simple pour un réglage qui vaut pour toute l'application, et
+ * elle évite de faire descendre un prop à travers `LogoMarquee`, `Leaderboard`
+ * et tout ce qui affichera une marque demain. La contrepartie est qu'on ne
+ * peut pas servir deux bases différentes dans la même page ; aucun usage
+ * connu ne le demande, et le jour où il se présentera ce sera un contexte
+ * React, pas un prop de plus.
+ */
+let baseDesLogos = "/brands/";
+
+export function definirBaseDesLogos(base: string): void {
+  baseDesLogos = base.endsWith("/") ? base : base + "/";
+}
+
+export function cheminLogo(fichier: string): string {
+  return baseDesLogos + fichier;
+}
 
 export const BRAND_BY_ID: Record<string, Brand> = Object.fromEntries(
   BRANDS.map((b) => [b.id, b])

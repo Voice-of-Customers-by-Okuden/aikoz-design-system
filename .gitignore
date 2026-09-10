@@ -3,7 +3,16 @@ node_modules/
 ~$*
 .claude/
 aikoz-design-system-by-claude-design/
-public/r/
+# public/r/ N'EST PLUS IGNORÉ : c'est le registry installable, la seule chose
+# qu'un consommateur peut réellement récupérer depuis GitHub. L'ignorer
+# revenait à publier les sources sans le moyen de les installer.
+
+# L'aperçu statique se REGÉNÈRE (`npm run build:preview`). Le committer
+# reviendrait à verser 2 Mo de binaires dupliqués dans l'historique pour un
+# bundle minifié qu'aucun agent ne sait lire et que GitHub n'affiche pas.
+# Le jour où GitHub Pages sera activé, ce sera un artefact de CI, pas un
+# commit.
+docs/preview/
 
 # Traces locales d'outillage et sauvegardes
 .agents/

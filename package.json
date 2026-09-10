@@ -8,7 +8,9 @@
     "dev": "vite",
     "build:tokens": "node build-tokens.mjs",
     "registry:build": "shadcn build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:preview": "npm run build:tokens && vite build",
+    "build": "npm run build:tokens && npm run registry:build && vite build"
   },
   "devDependencies": {
     "@types/react": "^18.3.31",

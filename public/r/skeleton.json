@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "skeleton",
+  "title": "Skeleton",
+  "description": "Bloc d'attente. Integralement invisible aux technologies d'assistance, et ce n'est pas un oubli : c'est au CONTENEUR de dire qu'un chargement est en cours, une fois, par aria-busy. Animation coupee par motion-reduce (WCAG 2.3.3). Fond sur --track et non --muted : en sombre ce dernier vaut exactement --card.",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "files": [
+    {
+      "path": "registry/aikoz/skeleton/skeleton.tsx",
+      "content": "import { type HTMLAttributes } from \"react\";\nimport { cn } from \"@registry/aikoz/lib/utils\";\n\n// ─── Types ────────────────────────────────────────────────────────────────────\n\nexport interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {\n  /** Forme du bloc. `text` prend la hauteur d'une ligne, `circle` un rond. */\n  shape?: \"block\" | \"text\" | \"circle\";\n}\n\n// ─── Composant ────────────────────────────────────────────────────────────────\n\n/**\n * Bloc d'attente.\n *\n * **Il est intégralement invisible aux technologies d'assistance**, et ce\n * n'est pas un oubli : annoncer « rectangle gris » quatorze fois ne renseigne\n * personne. C'est au CONTENEUR de dire qu'un chargement est en cours, une\n * fois, par `aria-busy=\"true\"` — et de dire ce qui a chargé une fois fini,\n * par une région live. Un squelette qui parle est un squelette qui bavarde.\n *\n * L'animation est coupée par `motion-reduce` : une pulsation permanente sur\n * toute une page déclenche des malaises chez les personnes sensibles au\n * mouvement (WCAG 2.3.3). Sans elle le bloc reste parfaitement lisible — il\n * n'a jamais porté d'information dans son mouvement.\n *\n * `--track` et non `--muted` : en thème sombre ce dernier vaut exactement\n * `--card`, le squelette y serait strictement invisible. C'est le même piège\n * que la piste de `ProgressBar`.\n */\nexport function Skeleton({ shape = \"block\", className, ...props }: SkeletonProps) {\n  return (\n    <div\n      aria-hidden=\"true\"\n      className={cn(\n        \"bg-[var(--track)] motion-safe:animate-pulse\",\n        shape === \"circle\" && \"rounded-full aspect-square\",\n        shape === \"text\" && \"h-4 rounded-[calc(var(--radius)/2)]\",\n        shape === \"block\" && \"rounded-[var(--radius)]\",\n        className\n      )}\n      {...props}\n    />\n  );\n}\n\nexport interface SkeletonTextProps {\n  /** Nombre de lignes. */\n  lines?: number;\n  className?: string;\n}\n\n/**\n * Paragraphe d'attente. La dernière ligne est plus courte — un bloc de\n * lignes toutes égales ne ressemble à aucun texte réel, et l'œil met plus\n * longtemps à comprendre qu'il regarde une attente.\n */\nexport function SkeletonText({ lines = 3, className }: SkeletonTextProps) {\n  return (\n    <div className={cn(\"flex flex-col gap-2\", className)}>\n      {Array.from({ length: lines }, (_, i) => (\n        <Skeleton key={i} shape=\"text\" className={i === lines - 1 ? \"w-3/5\" : \"w-full\"} />\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "registry/aikoz/lib/utils.ts",
+      "content": "import { clsx, type ClassValue } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:component"
+}
