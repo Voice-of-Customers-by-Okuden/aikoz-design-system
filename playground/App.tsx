@@ -15,6 +15,9 @@ import { Tooltip } from "@registry/aikoz/tooltip/tooltip";
 import { SidebarNav } from "@registry/aikoz/sidebar-nav/sidebar-nav";
 import { ViewTabs } from "@registry/aikoz/view-tabs/view-tabs";
 import { DateRangePicker } from "@registry/aikoz/date-range-picker/date-range-picker";
+import { Table, type TableSort } from "@registry/aikoz/table/table";
+import { Skeleton, SkeletonText } from "@registry/aikoz/skeleton/skeleton";
+import { EmptyState } from "@registry/aikoz/empty-state/empty-state";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -63,6 +66,7 @@ export default function App() {
   const [dark, setDark] = useState(false);
   const [view, setView] = useState<View>("décisions");
   const [register, setRegister] = useState<"produit" | "marketing">("produit");
+  const [tri, setTri] = useState<TableSort>({ key: "taux", direction: "desc" });
 
   // Le registre marketing s'applique par attribut, comme data-brand : additif,
   // il n'écrase ni light ni dark et s'imbrique dans une page produit.
@@ -720,6 +724,101 @@ export default function App() {
             Pas de calendrier en grille : le cas fréquent est le préréglage, et les deux champs
             de saisie sont natifs — sélecteur du système sur mobile, format local connu,
             clavier acquis. La borne « Au » ne peut pas précéder la borne « Du ».
+          </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Table — un vrai &lt;table&gt;, pas une grille de div
+        </h2>
+        <div className="flex flex-col gap-6">
+          <Table
+            caption="Taux de réponse par agence, 30 derniers jours"
+            rowHeaderKey="agence"
+            sort={tri}
+            onSortChange={setTri}
+            getRowKey={(r) => r.agence}
+            columns={[
+              { key: "agence", header: "Agence", sortable: true },
+              { key: "avis", header: "Avis", numeric: true, sortable: true },
+              { key: "taux", header: "Taux de réponse", numeric: true, sortable: true },
+              { key: "note", header: "Note", numeric: true },
+            ]}
+            rows={[...[
+              { agence: "Lyon Part-Dieu", avis: 312, taux: "94 %", note: "4,6" },
+              { agence: "Paris Opéra", avis: 287, taux: "88 %", note: "4,2" },
+              { agence: "Marseille Prado", avis: 154, taux: "71 %", note: "3,9" },
+              { agence: "Lille Grand Place", avis: 98, taux: "62 %", note: "4,1" },
+            ]].sort((a, b) => {
+              const k = tri.key as keyof typeof a;
+              const cmp = String(a[k]).localeCompare(String(b[k]), "fr", { numeric: true });
+              return tri.direction === "asc" ? cmp : -cmp;
+            })}
+          />
+
+          <Table
+            caption="Chargement en cours"
+            captionHidden
+            loading
+            loadingRows={3}
+            getRowKey={(_, i) => String(i)}
+            columns={[
+              { key: "agence", header: "Agence" },
+              { key: "avis", header: "Avis", numeric: true },
+              { key: "taux", header: "Taux de réponse", numeric: true },
+            ]}
+            rows={[]}
+          />
+
+          <Table
+            caption="Aucun résultat"
+            captionHidden
+            getRowKey={(_, i) => String(i)}
+            columns={[
+              { key: "agence", header: "Agence" },
+              { key: "avis", header: "Avis", numeric: true },
+            ]}
+            rows={[]}
+            empty={
+              <EmptyState
+                title="Aucun avis sur cette période"
+                description="Élargissez la période d'analyse ou retirez le filtre par source."
+                action={<Button size="sm" variant="outline">Élargir à 90 jours</Button>}
+              />
+            }
+          />
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          EmptyState — il nomme ce qui manque, et indique la sortie
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <EmptyState
+            title="Aucune campagne active"
+            description="Lancez une campagne de sollicitation pour commencer à collecter des avis."
+            action={<Button size="sm">Créer une campagne</Button>}
+          />
+          <EmptyState
+            tone="error"
+            title="Le chargement a échoué"
+            description="La source Google n'a pas répondu. Réessayez dans un instant."
+            action={<Button size="sm" variant="outline">Réessayer</Button>}
+          />
+          <EmptyState density="compact" title="Aucun thème détecté" description="Il faut au moins 20 avis pour dégager des thèmes." />
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Skeleton — muet pour les lecteurs d'écran, par choix
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex items-center gap-3">
+            <Skeleton shape="circle" className="size-10" />
+            <div className="flex-1"><SkeletonText lines={2} /></div>
+          </div>
+          <Skeleton className="h-24 w-full" />
+          <p className="text-xs text-muted-foreground m-0 pt-2 border-t border-border">
+            Aucun de ces blocs n'est annoncé. C'est au conteneur de porter
+            <code className="font-mono px-1">aria-busy</code> une fois — comme le fait le
+            tableau en chargement ci-dessus.
           </p>
         </div>
 
