@@ -38,9 +38,12 @@
   --color-status-error: var(--color-error-500);
   --color-status-error-subtle: var(--color-error-50);
   --color-status-error-border: var(--color-error-300);
-  --color-status-success-fill: var(--color-success-600); /** Remplissage porteur succès — 3,93:1 sur la piste, 4,68:1 sur --card (seuil 3:1, WCAG 1.4.11). */
-  --color-status-warning-fill: var(--color-warning-700); /** Remplissage porteur avertissement — 4,30:1 sur la piste, 5,13:1 sur --card. Un cran plus foncé que warning-text (600) : le jaune est intrinsèquement faible sur clair, 600 ne donnait que 2,73:1 sur la piste. */
-  --color-status-error-fill: var(--color-error-600); /** Remplissage porteur erreur — 5,77:1 sur la piste, 6,87:1 sur --card. */
+  --color-status-success-fill: var(--color-success-600); /** Aplat d'une jauge. Le jaune vif du thème sombre est repris ici — il ne tient pas 3:1 seul sur une piste claire (1,40:1), c'est le CONTOUR qui porte la limite. idem clair */
+  --color-status-success-fill-edge: var(--color-success-700); /** Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. idem clair */
+  --color-status-warning-fill: var(--color-warning-500); /** Aplat d'une jauge. Un seul or par thème : c'est exactement la teinte des étoiles (rating.default = warning.500 en clair), comme en sombre où barre et étoiles partagent le .400. L'aplat seul ne donne que 1,83:1 contre la piste — c'est le CONTOUR (warning.700, 4,30:1) qui porte WCAG 1.4.11, pas l'aplat. */
+  --color-status-warning-fill-edge: var(--color-warning-700); /** Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. idem clair */
+  --color-status-error-fill: var(--color-error-600); /** Aplat d'une jauge. Le jaune vif du thème sombre est repris ici — il ne tient pas 3:1 seul sur une piste claire (1,40:1), c'est le CONTOUR qui porte la limite. idem clair */
+  --color-status-error-fill-edge: var(--color-error-700); /** Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. idem clair */
   --color-status-error-text: var(--color-error-600); /** Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text. */
   --color-status-info: var(--color-info-500);
   --color-status-info-text: var(--color-info-600); /** Texte/emphase information (info.600 light, .400 dark), aligné sur success-text, warning-text et error-text. Mappé sur --info. Il manquait : les quatre statuts n'avaient pas tous leur déclinaison texte. */

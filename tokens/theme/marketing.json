@@ -196,6 +196,11 @@
         "$type": "color",
         "$value": "{color.success.400}"
       },
+      "success-fill-edge": {
+        "$type": "color",
+        "$value": "{color.success.400}",
+        "$description": "Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. idem sombre"
+      },
       "warning": {
         "$type": "color",
         "$value": "{color.warning.400}"
@@ -215,6 +220,11 @@
       "warning-fill": {
         "$type": "color",
         "$value": "{color.warning.400}"
+      },
+      "warning-fill-edge": {
+        "$type": "color",
+        "$value": "{color.warning.400}",
+        "$description": "Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. idem sombre"
       },
       "error": {
         "$type": "color",
@@ -236,6 +246,11 @@
       "error-fill": {
         "$type": "color",
         "$value": "{color.error.400}"
+      },
+      "error-fill-edge": {
+        "$type": "color",
+        "$value": "{color.error.400}",
+        "$description": "Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. idem sombre"
       },
       "info": {
         "$type": "color",
