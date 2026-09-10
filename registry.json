@@ -569,6 +569,80 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "leaderboard",
+      "type": "registry:component",
+      "title": "Leaderboard",
+      "description": "Classement d'etablissements, bati sur Table : un classement porte plusieurs attributs comparables par ligne, c'est la definition d'un tableau. PAS de RankRow exporte, contrairement au Figma — une ligne qui n'a de sens que dans son tableau est un rendu de cellule, pas un composant. Le podium or/argent/bronze est double par le chiffre du rang et un sr-only : il ne tient pas a la couleur.",
+      "files": [
+        {
+          "path": "registry/aikoz/leaderboard/leaderboard.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/delta-badge/delta-badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/badge/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brand-logo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brands.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "logo-marquee",
+      "type": "registry:component",
+      "title": "LogoMarquee",
+      "description": "Bandeau de preuve client. IL NE DEFILE PAS : WCAG 2.2.2 impose un moyen de pause pour tout mouvement de plus de 5 secondes, soit un bouton et un arret de tabulation de plus pour une decoration — et la preuve ce sont les marques, pas leur deplacement. Passe a la ligne, ce qui regle le reflow. C'est une liste dans une section nommee, pas une suite d'images.",
+      "files": [
+        {
+          "path": "registry/aikoz/logo-marquee/logo-marquee.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brand-logo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brands.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }
