@@ -3,6 +3,7 @@
    Switch marque  : <html data-brand="generali">
    Switch thème   : <html class="dark"> */
 @import "./primitives.css";
+@import "./semantics.css";
 @import "./brand-aikoz.css";
 @import "./brand-generali.css";
 @import "./theme-light.css";

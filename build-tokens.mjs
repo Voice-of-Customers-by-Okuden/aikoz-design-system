@@ -1,5 +1,6 @@
 import StyleDictionary from 'style-dictionary';
 import fs from 'node:fs';
+import { fileHeader } from 'style-dictionary/utils';
 
 const PRIM = 'tokens/primitives.json';
 const brand = b => `tokens/brand/${b}.json`;
@@ -53,18 +54,78 @@ StyleDictionary.registerTransform({
   },
 });
 
+// --- Typographie : rôles émis en LONGHAND, une propriété CSS par token.
+//
+// Le shorthand `font` est écarté pour deux raisons mesurées en navigateur :
+// il ne transporte pas `letter-spacing` (Style Dictionary le classait en
+// unknownProps et le jetait, warning masqué par verbosity:'silent'), et il
+// RÉINITIALISE `font-feature-settings` / `font-variant-numeric` — donc
+// `font: var(--role-typography-metric)` cassait l'alignement des chiffres
+// sur le rôle des KPI.
+//
+// Un token typography doit produire PLUSIEURS variables : c'est un format,
+// pas un transform (un transform rend une valeur pour un token).
+const refToVar = s =>
+  typeof s === 'string' && /^\{[^{}]+\}$/.test(s.trim())
+    ? `var(--${s.trim().slice(1, -1).replace(/\./g, '-')})`
+    : null;
+
+// Propriété CSS émise pour chaque clé DTCG du token typography.
+const TYPO_PROPS = {
+  fontFamily: 'font-family',
+  fontSize: 'font-size',
+  fontWeight: 'font-weight',
+  lineHeight: 'line-height',
+  letterSpacing: 'letter-spacing',
+};
+
+StyleDictionary.registerFormat({
+  name: 'css/variables-aikoz-semantics',
+  format: async ({ dictionary, file, options }) => {
+    const header = await fileHeader({ file });
+    const lines = [];
+
+    for (const token of dictionary.allTokens) {
+      const type = token.$type ?? token.type;
+      const original = token.original?.$value ?? token.original?.value;
+      const note = token.$description ? ` /** ${token.$description} */` : '';
+
+      if (type === 'typography' && original && typeof original === 'object') {
+        // 5 variables, alias posés directement — aucune substitution de chaîne,
+        // donc aucune collision possible entre une valeur et un nom de variable.
+        if (lines.length) lines.push('');
+        if (token.$description) lines.push(`  /* ${token.$description} */`);
+        for (const [key, prop] of Object.entries(TYPO_PROPS)) {
+          const ref = original[key];
+          if (ref == null) continue;
+          const value = refToVar(ref) ?? ref;
+          lines.push(`  --${token.name}-${prop}: ${value};`);
+        }
+        continue;
+      }
+
+      // Autres rôles : alias simple -> var(--…), sinon valeur transformée.
+      if (lines.length && lines[lines.length - 1].includes('letter-spacing')) lines.push('');
+      const value = refToVar(original) ?? (token.$value ?? token.value);
+      lines.push(`  --${token.name}: ${value};${note}`);
+    }
+
+    return `${header}${options.selector} {\n${lines.join('\n')}\n}\n`;
+  },
+});
+
 // Groupe css avec sortie couleur en oklch() au lieu de hex.
 const cssOklch = StyleDictionary.hooks.transformGroups.css.map(
   n => (n === 'color/css' ? 'color/oklch' : n),
 );
 
-function make(destination, source, { selector, filter, refs = true, transforms, buildPath = 'build/' }) {
+function make(destination, source, { selector, filter, refs = true, transforms, buildPath = 'build/', format = 'css/variables' }) {
   return new StyleDictionary({
     source,
     platforms: { css: {
       ...(transforms ? { transforms } : { transformGroup: 'css' }),
       buildPath,
-      files: [{ destination, format: 'css/variables', filter,
+      files: [{ destination, format, filter,
         options: { selector, outputReferences: refs } }]
     }},
     log: { verbosity: 'silent' }
@@ -77,20 +138,30 @@ await make('primitives.css', [PRIM], { selector: ':root', filter: inPath('primit
 await make('brand-aikoz.css',    [PRIM, brand('aikoz')],    { selector: ':root',                    filter: inPath('brand/aikoz'),    transforms: cssOklch }).buildAllPlatforms();
 await make('brand-generali.css', [PRIM, brand('generali')], { selector: '[data-brand="generali"]',  filter: inPath('brand/generali'), transforms: cssOklch }).buildAllPlatforms();
 // Couche 3 — theme (sémantique) : light sur :root, dark sur .dark
-await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
+// `.light` double `:root` : purement additif, aucune valeur ajoutée, mais il donne
+// une échappatoire imbriquée. Sans elle, un bloc « clair » posé dans une page `.dark`
+// hérite du dark — impossible de rendre deux thèmes côte à côte honnêtement.
+// C'est la réciproque manquante de `.dark`.
+await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root, .light',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
 await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector: '.dark',  filter: inPath('theme/dark'), transforms: cssOklch }).buildAllPlatforms();
 
 // Couche 3bis — semantics : rôles MODE-INDÉPENDANTS (radius, shadow, border-width, typography).
 // :root unique (pas de variante light/dark). refs:true → alias émis en var(--…).
-// Pas de transforms custom : le groupe 'css' par défaut rend nativement le format
-// dimension { value, unit } en v5 (vérifié). semantics.json n'a aucun token couleur.
-await make('semantics.css', [PRIM, SEM], { selector: ':root', filter: inPath('semantics'), refs: true }).buildAllPlatforms();
+// Le groupe 'css' rend nativement le format dimension { value, unit } en v5 (vérifié).
+// semantics.json n'a aucun token couleur.
+// Format maison : les rôles typographiques sortent en longhand (5 variables),
+// les autres en une variable. Les alias sont posés directement en var(--…),
+// donc outputReferences est inutile ici — et surtout inoffensif.
+await make('semantics.css', [PRIM, SEM], {
+  selector: ':root', filter: inPath('semantics'),
+  format: 'css/variables-aikoz-semantics',
+}).buildAllPlatforms();
 
 // Couche 4 — bridge shadcn : RUNTIME généré depuis le DTCG, oklch() complet.
 // C'est le fichier consommé par les composants (playground/demo). Ne pas éditer à la main.
 const bridgeTransforms = ['attribute/cti', 'name/kebab', 'color/oklch', 'size/rem'];
 await make('.tmp-shadcn-light.css', [PRIM, brand('aikoz'), theme('light'), SEM, bridgeSrc], {
-  selector: ':root', filter: inPath('bridge/shadcn'), refs: false,
+  selector: ':root, .light', filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
 await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), SEM, bridgeSrc], {
