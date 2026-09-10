@@ -291,6 +291,70 @@
         "tailwind-merge",
         "@radix-ui/react-tooltip"
       ]
+    },
+    {
+      "name": "nav-item",
+      "type": "registry:component",
+      "title": "NavItem",
+      "description": "Entree de navigation — brique de SidebarNav, transposee du composant Figma (3 etats). C'est un <a>, jamais un <button> : cette entree change de route. L'etat courant tient a trois canaux qui se doublent — aria-current=page, un trait vertical en --nav-accent, et la graisse. Le voile de fond ne compte pas : 1,19:1 en clair, il est decoratif.",
+      "files": [
+        {
+          "path": "registry/aikoz/nav-item/nav-item.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "sidebar-nav",
+      "type": "registry:component",
+      "title": "SidebarNav",
+      "description": "Barre de navigation laterale — nav + liens + aria-current=page, tabulation lien apres lien, change la route. Ne se mutualise PAS avec ViewTabs, qui echange un panneau : ils partagent les tokens, pas le code. Ne gere ni repli en icones ni tiroir mobile — cela depend du gabarit de page, pas de la barre.",
+      "files": [
+        {
+          "path": "registry/aikoz/sidebar-nav/sidebar-nav.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/nav-item/nav-item.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "view-tabs",
+      "type": "registry:component",
+      "title": "ViewTabs",
+      "description": "Bascule de vue dans la page — role=tablist, aria-selected, tabindex tournant, fleches + Debut/Fin. Activation automatique ou manuelle. La regle qui decide est le COMPORTEMENT, jamais l'apparence : un onglet qui change de route est un lien stylé en onglet, il releve de SidebarNav.",
+      "files": [
+        {
+          "path": "registry/aikoz/view-tabs/view-tabs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }

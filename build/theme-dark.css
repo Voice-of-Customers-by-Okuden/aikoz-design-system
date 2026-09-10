@@ -52,7 +52,7 @@
   --color-status-info-border: var(--color-info-700);
   --color-nav-surface: var(--color-midnight-blue-900);
   --color-nav-surface-active: var(--color-midnight-blue-800);
-  --color-nav-border: var(--color-midnight-blue-700);
+  --color-nav-border: var(--color-midnight-blue-700); /** Séparateur INTERNE de la barre de navigation — entre deux groupes d'entrées. 1,44:1 en clair, 1,22:1 en sombre : volontairement discret, et hors du champ de WCAG 1.4.11, qui vise les limites nécessaires pour identifier un composant ou son état. Ici les composants sont les liens, et ils sont perceptibles. La limite EXTERNE de la barre, elle, est portée par --border-strong : la surface de la barre ne se détache de la page que de 1,09:1, il faut donc un trait qui la délimite. */
   --color-nav-on-muted: var(--color-ultramarine-300);
   --color-chart-1: var(--color-aquamarine-300); /** Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1. */
   --color-rating-default: var(--color-warning-400); /** Étoiles pleines. Passé de .600 à .400 : l'étoile était plus TERNE que la barre de progression du même thème, soit l'inverse exact du clair. Les deux tokens avaient dérivé l'un de l'autre au fil des correctifs. .400 tient 10,45:1 contre la carte — le changement est gratuit. */

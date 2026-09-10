@@ -12,6 +12,8 @@ import { Avatar } from "@registry/aikoz/avatar/avatar";
 import { Dialog } from "@registry/aikoz/dialog/dialog";
 import { Select } from "@registry/aikoz/select/select";
 import { Tooltip } from "@registry/aikoz/tooltip/tooltip";
+import { SidebarNav } from "@registry/aikoz/sidebar-nav/sidebar-nav";
+import { ViewTabs } from "@registry/aikoz/view-tabs/view-tabs";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -634,6 +636,72 @@ export default function App() {
             <code className="font-mono px-1">aria-label</code>. Un bouton en icône seule aurait
             besoin des deux.
           </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          SidebarNav — navigue entre sections, change la route
+        </h2>
+        <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex gap-0 rounded-[var(--radius)] overflow-hidden border border-border">
+            <SidebarNav
+              label="Navigation principale"
+              current="marche"
+              groups={[
+                {
+                  label: "Pilotage",
+                  entries: [
+                    { id: "marche", label: "Marché", href: "#marche" },
+                    { id: "campagnes", label: "Campagnes", href: "#campagnes", count: 3 },
+                    { id: "hall", label: "Hall of Fames", href: "#hall" },
+                  ],
+                },
+                {
+                  label: "Configuration",
+                  entries: [{ id: "params", label: "Paramètres", href: "#params" }],
+                },
+              ]}
+            />
+            <div className="flex-1 p-5 bg-background text-sm text-muted-foreground">
+              Zone de contenu. La limite de la barre est portée par
+              <code className="font-mono px-1">--border-strong</code> : sa surface ne se
+              détache de la page que de 1,09:1.
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-4 mb-0">
+            L'entrée courante se signale par trois canaux :
+            <code className="font-mono px-1">aria-current="page"</code>, le trait vertical
+            et la graisse. Le voile de fond ne compte pas — 1,19:1 en clair.
+          </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          ViewTabs — échange un panneau, même route
+        </h2>
+        <div className="flex flex-col gap-6 rounded-[var(--radius)] border border-border bg-card p-5">
+          <ViewTabs
+            label="Vues du classement"
+            tabs={[
+              { value: "synthese", label: "Synthèse", content: <p className="text-sm text-muted-foreground m-0">Panneau « Synthèse ». Flèches ← → pour changer de vue : le focus et la sélection avancent ensemble.</p> },
+              { value: "detail", label: "Détail", content: <p className="text-sm text-muted-foreground m-0">Panneau « Détail ».</p> },
+              { value: "export", label: "Export", content: <p className="text-sm text-muted-foreground m-0">Panneau « Export ».</p> },
+              { value: "archive", label: "Archive", disabled: true, content: <p className="text-sm text-muted-foreground m-0">Inatteignable.</p> },
+            ]}
+          />
+          <div className="pt-4 border-t border-border">
+            <p className="text-xs text-muted-foreground mt-0 mb-3">
+              Activation <strong>manuelle</strong> — la flèche déplace le focus, Entrée valide.
+              À réserver aux panneaux qui déclenchent un chargement.
+            </p>
+            <ViewTabs
+              label="Vues à chargement différé"
+              activation="manual"
+              tabs={[
+                { value: "a", label: "Requête A", content: <p className="text-sm text-muted-foreground m-0">Chargé seulement après validation.</p> },
+                { value: "b", label: "Requête B", content: <p className="text-sm text-muted-foreground m-0">Panneau B.</p> },
+                { value: "c", label: "Requête C", content: <p className="text-sm text-muted-foreground m-0">Panneau C.</p> },
+              ]}
+            />
+          </div>
         </div>
 
         {/* Bandeau de statut bridge */}
