@@ -44,6 +44,7 @@
   --color-status-error-fill: var(--color-error-400); /** Remplissage porteur erreur — 5,33:1 sur la piste. */
   --color-status-error-text: var(--color-error-400); /** Texte/emphase erreur, contraste AA sur surface (error.600 light, .400 dark). Mappé sur --destructive-text. */
   --color-status-info: var(--color-info-400);
+  --color-status-info-text: var(--color-info-400); /** Texte/emphase information (info.600 light, .400 dark), aligné sur success-text, warning-text et error-text. Mappé sur --info. Il manquait : les quatre statuts n'avaient pas tous leur déclinaison texte. */
   --color-status-info-subtle: var(--color-info-950);
   --color-status-info-border: var(--color-info-700);
   --color-nav-surface: var(--color-midnight-blue-900);

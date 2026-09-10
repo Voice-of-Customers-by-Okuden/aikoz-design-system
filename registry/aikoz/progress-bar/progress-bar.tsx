@@ -33,6 +33,16 @@ const FILL: Record<ProgressLevel, string> = {
 
 export type ProgressLevel = "good" | "warning" | "critical";
 
+/**
+ * `meter` — une MESURE dans une échelle connue : taux de réponse, note, jauge.
+ * `progressbar` — l'avancement d'une TÂCHE : téléversement, import, calcul.
+ *
+ * ARIA distingue les deux et les lecteurs d'écran ne les annoncent pas pareil.
+ * Le défaut est `meter` : dans ce design system la barre sert des indicateurs,
+ * pas des traitements en cours.
+ */
+export type ProgressRole = "meter" | "progressbar";
+
 export interface ProgressBarProps extends VariantProps<typeof trackVariants> {
   /** Valeur atteinte. Bornée à [0, max]. */
   value: number;
@@ -62,6 +72,8 @@ export interface ProgressBarProps extends VariantProps<typeof trackVariants> {
   label?: string | null;
   /** Texte substitué à la valeur brute dans l'annonce (« 87 %, objectif 90 % »). */
   valueText?: string;
+  /** Rôle ARIA — cf. `ProgressRole`. `meter` par défaut. */
+  role?: ProgressRole;
   className?: string;
 }
 
@@ -85,6 +97,7 @@ export function ProgressBar({
   size = "md",
   label,
   valueText,
+  role = "meter",
   className,
 }: ProgressBarProps) {
   const clamped = Math.min(Math.max(value, 0), max);
@@ -105,7 +118,7 @@ export function ProgressBar({
   return (
     <div
       className={cn(trackVariants({ size }), className)}
-      role={decorative ? undefined : "progressbar"}
+      role={decorative ? undefined : role}
       aria-hidden={decorative ? true : undefined}
       aria-label={accessibleLabel}
       aria-valuenow={decorative ? undefined : clamped}

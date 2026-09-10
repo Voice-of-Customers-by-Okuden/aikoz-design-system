@@ -241,6 +241,11 @@
         "$type": "color",
         "$value": "{color.info.400}"
       },
+      "info-text": {
+        "$type": "color",
+        "$value": "{color.info.400}",
+        "$description": "Texte/emphase information (info.600 light, .400 dark), aligné sur success-text, warning-text et error-text. Mappé sur --info. Il manquait : les quatre statuts n'avaient pas tous leur déclinaison texte."
+      },
       "info-subtle": {
         "$type": "color",
         "$value": "{color.info.950}"

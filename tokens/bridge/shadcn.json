@@ -119,6 +119,11 @@
     "$value": "{color.status.warning-text}",
     "$description": "extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar"
   },
+  "info": {
+    "$type": "color",
+    "$value": "{color.status.info-text}",
+    "$description": "extension DS — texte/emphase information, ton `info` de Badge"
+  },
   "success": {
     "$type": "color",
     "$value": "{color.status.success-text}",

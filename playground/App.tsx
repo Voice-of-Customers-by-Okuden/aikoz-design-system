@@ -4,6 +4,7 @@ import { Button } from "@registry/aikoz/button/button";
 import { ScoreStars } from "@registry/aikoz/score-stars/score-stars";
 import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
 import { ProgressBar } from "@registry/aikoz/progress-bar/progress-bar";
+import { Badge } from "@registry/aikoz/badge/badge";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -261,6 +262,28 @@ export default function App() {
               registre la plus visible. L'aquamarine ne peint qu'une chose — le bouton d'action.
             </p>
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Badge — 5 tons, transposé du Figma
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex gap-3 flex-wrap items-center">
+            <Badge tone="success" icon="✓">Actif</Badge>
+            <Badge tone="warning" icon="!">À surveiller</Badge>
+            <Badge tone="error" icon="✕">Critique</Badge>
+            <Badge tone="info" icon="i">Info</Badge>
+            <Badge tone="neutral">Neutre</Badge>
+          </div>
+          <div className="flex gap-3 flex-wrap items-center pt-2 border-t border-border">
+            <span className="text-xs text-muted-foreground">taille sm</span>
+            <Badge tone="success" size="sm" icon="✓">Répondu</Badge>
+            <Badge tone="error" size="sm" icon="✕">Sans réponse</Badge>
+          </div>
+          <p className="text-xs text-muted-foreground max-w-xl pt-2 border-t border-border">
+            Le contour porte le contraste, le fond à 8 % est décoratif — sans lui la pastille
+            flotterait sur la carte à 1,05:1. Écart assumé au Figma, qui les dessine sans contour.
+          </p>
         </div>
 
         {/* Composants extraits de KpiCard */}

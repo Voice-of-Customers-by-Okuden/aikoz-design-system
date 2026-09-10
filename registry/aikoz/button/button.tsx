@@ -58,12 +58,17 @@ export interface ButtonProps
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, type, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
+        /* Sans type explicite, un <button> dans un <form> vaut type="submit"
+           et soumet le formulaire au moindre clic. Le défaut sûr est "button" ;
+           un bouton de soumission le déclare. Ne s'applique pas à asChild, où
+           l'élément rendu n'est pas forcément un bouton. */
+        {...(asChild ? {} : { type: type ?? "button" })}
         {...props}
       />
     );

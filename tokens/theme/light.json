@@ -169,8 +169,8 @@
       },
       "success-text": {
         "$type": "color",
-        "$value": "{color.success.600}",
-        "$description": "Texte/emphase succès, contraste AA sur surface (success.600 light, .400 dark). Mappé sur --success."
+        "$value": "{color.success.700}",
+        "$description": "Texte/emphase succès. Passé de .600 à .700 : sur un voile de badge à 8 % le .600 tombait à 4,20:1, sous le seuil texte. En .700 — 7,44:1 sur carte, 6,82 sur page, 6,55 sur voile. Un rôle « texte » doit tenir 4,5:1 sur TOUTES les surfaces où il peut atterrir, voile compris."
       },
       "warning": {
         "$type": "color",
@@ -186,8 +186,8 @@
       },
       "warning-text": {
         "$type": "color",
-        "$value": "{color.warning.600}",
-        "$description": "Texte/emphase avertissement et remplissage porteur (warning.600 light, .400 dark), aligné sur success-text et error-text. Mappé sur --warning. Distinct de --rating, qui reste en 600 dans les deux thèmes : une étoile garde son doré, un avertissement s'inverse comme les autres statuts."
+        "$value": "{color.warning.700}",
+        "$description": "Texte/emphase avertissement. Passé de .600 à .700 : le .600 ne faisait que 3,25:1 sur la carte — le rôle ne tenait pas son contrat de texte, indépendamment de tout composant. En .700 — 5,13:1 sur carte, 4,70 sur page, 4,62 sur voile. Le jaune est intrinsèquement faible sur clair."
       },
       "error": {
         "$type": "color",
@@ -224,6 +224,11 @@
       "info": {
         "$type": "color",
         "$value": "{color.info.500}"
+      },
+      "info-text": {
+        "$type": "color",
+        "$value": "{color.info.600}",
+        "$description": "Texte/emphase information (info.600 light, .400 dark), aligné sur success-text, warning-text et error-text. Mappé sur --info. Il manquait : les quatre statuts n'avaient pas tous leur déclinaison texte."
       },
       "info-subtle": {
         "$type": "color",

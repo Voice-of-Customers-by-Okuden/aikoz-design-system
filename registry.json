@@ -48,6 +48,27 @@
       ]
     },
     {
+      "name": "badge",
+      "type": "registry:component",
+      "title": "Badge",
+      "description": "Etiquette de statut a 5 tons (success, warning, error, info, neutral). Le contour porte le contraste, le fond a 8% reste decoratif. A distinguer de DeltaBadge, qui porte une variation et non un etat.",
+      "files": [
+        {
+          "path": "registry/aikoz/badge/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
       "name": "delta-badge",
       "type": "registry:component",
       "title": "Delta Badge",
