@@ -774,6 +774,105 @@
           "type": "registry:component"
         },
         {
+          "path": "registry/aikoz/chart-frame/chart-frame.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "recharts"
+      ]
+    },
+    {
+      "name": "chart-frame",
+      "type": "registry:component",
+      "title": "ChartFrame",
+      "description": "Coque commune a tous les graphiques : le contrat d'accessibilite est tenu PAR CONSTRUCTION plutot que repete et oublie une fois sur cinq. Graphique masque et tableau comme contenu reel, legende AVANT le graphique, trois canaux par serie dans un ordre fixe, aucune animation. Fournit aussi les trames SVG pour les aplats — une barre n'a pas de trace ou poser un pointille.",
+      "files": [
+        {
+          "path": "registry/aikoz/chart-frame/chart-frame.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "recharts"
+      ]
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:component",
+      "title": "BarChart",
+      "description": "Barres empilees ou groupees, verticales ou horizontales. Le second canal d'un aplat est une TRAME, pas un pointille. Separateur clair de 2px entre segments empiles : deux teintes voisines fusionneraient sinon. En empile, le TOTAL a sa colonne dans le tableau. Il n'y a pas de RankedBarChart : c'est ce composant, horizontal, trie, a une serie.",
+      "files": [
+        {
+          "path": "registry/aikoz/bar-chart/bar-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/chart-frame/chart-frame.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "recharts"
+      ]
+    },
+    {
+      "name": "donut-chart",
+      "type": "registry:component",
+      "title": "DonutChart",
+      "description": "Anneau de repartition. Un anneau se lit mal — l'oeil compare des longueurs bien mieux que des angles — d'ou le pourcentage ECRIT sur chaque part dans la legende, et le chiffre au centre qui est souvent la seule chose retenue. Au-dela de quatre parts, preferer une barre horizontale.",
+      "files": [
+        {
+          "path": "registry/aikoz/donut-chart/donut-chart.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/chart-frame/chart-frame.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "registry/aikoz/table/table.tsx",
           "type": "registry:component"
         },

@@ -4,7 +4,6 @@
 
 .dark[data-register="marketing"], .dark [data-register="marketing"] {
   --color-text-primary: oklch(1 0 0); /** Texte principal. Blanc pur, comme le bundle marketing existant. */
-  --color-text-on-action-secondary: oklch(1 0 0); /** Sur l'ultramarine, le texte passe en blanc et non en midnight. */
   --color-nav-on: oklch(1 0 0);
   --color-surface-page: var(--color-midnight-blue-900); /** Fond de page. Le midnight de marque lui-même, là où le dashboard dark descend en .950 : le site assume la couleur de marque en fond plein, le produit non. */
   --color-surface-default: var(--color-midnight-blue-800); /** Surface de contenu posée sur la page. */
@@ -16,6 +15,7 @@
   --color-surface-active: var(--color-midnight-blue-600); /** Surface enfoncée. */
   --color-surface-brand-subtle: var(--color-midnight-blue-800); /** Teinte de marque discrète. */
   --color-surface-accent: var(--color-aquamarine-900); /** Fond teinté d'accent, très sombre — pour une zone à souligner sans la peindre en aqua. */
+  --color-surface-action-secondary: var(--color-ultramarine-225); /** Surface d'action secondaire. ultramarine.225 comme en produit sombre, et non la teinte de marque : sur une carte sombre, ultramarine.500 ne donne que 3,02:1 — sous le seuil de 4,5 dès qu'on s'en sert comme couleur de TEXTE, ce que fait tout lien secondaire. Le registre marketing avait gardé la valeur claire par omission ; le thème sombre l'éclaircissait déjà, le registre ne suivait pas. */
   --color-text-secondary: var(--color-ultramarine-200); /** Texte secondaire TEINTÉ BLEU, et non gris comme en dashboard dark. C'est la différence de registre la plus visible : le site reste dans la famille de marque jusque dans son texte discret. */
   --color-text-tertiary: var(--color-midnight-blue-300); /** Légendes, dates, mentions. */
   --color-text-disabled: var(--color-midnight-blue-500);
@@ -25,6 +25,7 @@
   --color-text-brand-hover: var(--color-ultramarine-225);
   --color-text-accent: var(--color-aquamarine-300); /** Texte d'accent — chiffres de section, mots mis en exergue. Réservé, jamais du texte courant. */
   --color-text-on-action: var(--color-midnight-blue-900);
+  --color-text-on-action-secondary: var(--color-midnight-blue-900); /** Texte sur surface d'action secondaire. Le blanc convenait tant que cette surface était ultramarine.500 ; elle est passée à ultramarine.225 pour être lisible sur carte sombre, et le blanc y tombait alors à 1,63:1. Les deux tokens vont par paire — changer la surface sans changer son texte déplace le défaut au lieu de le corriger. midnight-blue.900 : 11,44:1, comme en produit sombre. */
   --color-border-default: var(--color-midnight-blue-700); /** Séparateur décoratif — 1,14:1 sur carte, sous 3:1, assumé et cohérent avec light et dark (mesurés 1,44 et 1,14). Une bordure qui doit être PERÇUE utilise strong ou input, pas celle-ci. */
   --color-border-subtle: var(--color-midnight-blue-800);
   --color-border-strong: var(--color-midnight-blue-300); /** Séparateur porteur — 6,77:1 sur carte, 7,28:1 sur page. C'est la bordure à utiliser quand le trait porte de l'information (délimiter une zone cliquable, cerner un badge). */
@@ -69,7 +70,6 @@
   --color-surface-brand-hover: var(--color-brand-primary-hover);
   --color-surface-brand-active: var(--color-brand-primary-active);
   --color-surface-action: var(--color-brand-accent); /** LE SEUL aplat en aquamarine du registre : le CTA. C'est la règle qui manquait au lead magnet, où l'accent servait à la fois de texte, de fond, de contour et d'ombre — une couleur qui sert à tout ne signale plus rien. */
-  --color-surface-action-secondary: var(--color-brand-secondary); /** Action secondaire — l'ultramarine, pas l'accent. */
   --color-text-on-accent: var(--color-brand-on-accent); /** Texte posé sur le CTA aquamarine. */
   --color-border-focus: var(--color-brand-accent); /** Anneau de focus clavier. */
   --color-border-accent: var(--color-brand-accent); /** Liseré d'accent — le trait gauche d'un bloc mis en avant. */

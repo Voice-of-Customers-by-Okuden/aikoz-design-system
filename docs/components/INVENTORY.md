@@ -91,8 +91,8 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 9 | `Card` | Layout | shadcn | v1 | **livré** — 3 surfaces × 3 densités, prop `as` sémantique | — |
 | 10 | `ChoiceCard` | Navigation | aikoz | v1 | **livré** — vrai `<input>` en sr-only ; la coche porte l'état, pas le trait | — |
 | 10b | `ChoiceGroup` | Forms | aikoz | v1 | **livré** — fieldset + legend ; remplace BrandPicker et SourceToggle | ChoiceCard |
-| 11 | `DonutChart` | Data display | aikoz | v1 | **maquetté** (`SourcesDonut`), à créer | Select, Tooltip |
-| 12 | `RankedBarChart` | Data display | aikoz | v1 | à créer — absent du code et du Figma | TimeRangePicker, Tooltip |
+| 11 | `DonutChart` | Data display | aikoz | v1 | **livré** — pourcentage écrit sur chaque part | ChartFrame |
+| 12 | ~~`RankedBarChart`~~ | Data display | aikoz | — | **fondu dans `BarChart`** — horizontal, trié, une série | BarChart |
 | 13 | `Leaderboard` | Data display | aikoz | v1 | **livré** — bâti sur `Table` ; pas de `RankRow` exporté, cf. le composant | Table, DeltaBadge, BrandLogo |
 | 14 | `MapWidget` | Data display | aikoz | v1 | ⚠ **à créer — aucune carte dans le Figma** (statut v1.0 erroné) | Breadcrumb, Table |
 | 15 | `Avatar` | Data display | shadcn | v1 | **livré** — repli sur initiales, 4 tailles | — |
