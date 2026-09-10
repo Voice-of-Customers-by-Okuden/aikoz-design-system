@@ -31,6 +31,7 @@ import { SiteFooter } from "@registry/aikoz/site-footer/site-footer";
 import { FeaturePanel } from "@registry/aikoz/feature-panel/feature-panel";
 import { BookingFlow, type BookingStatus } from "@registry/aikoz/booking-flow/booking-flow";
 import { SlotPicker } from "@registry/aikoz/slot-picker/slot-picker";
+import { LineChart } from "@registry/aikoz/line-chart/line-chart";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 import { auditerToutesCombinaisons, type EchecContraste } from "./audit";
@@ -1107,6 +1108,40 @@ export default function App() {
               </Button>
             ))}
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          LineChart — premier chart, à valider avant les cinq autres
+        </h2>
+        <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+          <LineChart
+            caption="Taux de réponse aux avis, par réseau"
+            xKey="mois"
+            xLabel="Mois"
+            formatValue={(v) => `${v} %`}
+            series={[
+              { key: "sudest", label: "Sud-Est" },
+              { key: "idf", label: "Île-de-France" },
+              { key: "nord", label: "Nord" },
+              { key: "ouest", label: "Ouest" },
+            ]}
+            data={[
+              { mois: "Janv.", sudest: 71, idf: 64, nord: 58, ouest: 66 },
+              { mois: "Févr.", sudest: 74, idf: 66, nord: 57, ouest: 68 },
+              { mois: "Mars", sudest: 79, idf: 71, nord: 61, ouest: 70 },
+              { mois: "Avr.", sudest: 83, idf: 74, nord: 66, ouest: 69 },
+              { mois: "Mai", sudest: 88, idf: 78, nord: 70, ouest: 73 },
+              { mois: "Juin", sudest: 91, idf: 83, nord: 72, ouest: 77 },
+            ]}
+          />
+          <p className="text-xs text-muted-foreground mt-4 mb-0">
+            La couleur ne distingue pas les séries : mesuré, la meilleure séparation
+            atteignable entre six séries de cette palette est de <strong>1,17:1</strong> — elles
+            se confondent en niveaux de gris. Ce sont le <strong>pointillé</strong> et la
+            <strong> forme du marqueur</strong> qui portent la distinction. Et pour qui ne voit
+            rien de tout ça, le graphique est masqué et c'est le <strong>tableau</strong> qui est
+            le contenu.
+          </p>
         </div>
 
         {/* Audit de contraste sur le rendu */}

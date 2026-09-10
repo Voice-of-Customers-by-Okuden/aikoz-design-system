@@ -184,6 +184,36 @@
     "$value": "{color.status.info-subtle}",
     "$description": "extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui"
   },
+  "chart-1": {
+    "$type": "color",
+    "$value": "{color.chart.1}",
+    "$description": "extension DS — trace de la serie 1 ; la couleur ne distingue PAS les series a elle seule, cf. le token"
+  },
+  "chart-2": {
+    "$type": "color",
+    "$value": "{color.chart.2}",
+    "$description": "extension DS — trace de la serie 2 ; la couleur ne distingue PAS les series a elle seule, cf. le token"
+  },
+  "chart-3": {
+    "$type": "color",
+    "$value": "{color.chart.3}",
+    "$description": "extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token"
+  },
+  "chart-4": {
+    "$type": "color",
+    "$value": "{color.chart.4}",
+    "$description": "extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token"
+  },
+  "chart-5": {
+    "$type": "color",
+    "$value": "{color.chart.5}",
+    "$description": "extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token"
+  },
+  "chart-6": {
+    "$type": "color",
+    "$value": "{color.chart.6}",
+    "$description": "extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token"
+  },
   "track": {
     "$type": "color",
     "$value": "{color.surface.track}",
