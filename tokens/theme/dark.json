@@ -28,7 +28,8 @@
       },
       "hover": {
         "$type": "color",
-        "$value": "{color.midnight-blue.800}"
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Survol d'une surface. Valait midnight-blue.800 — exactement la même valeur que surface.raised : un état de survol identique au repos n'est pas un état de survol. Passé au palier au-dessus."
       },
       "active": {
         "$type": "color",
@@ -129,7 +130,8 @@
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.midnight-blue.600}"
+        "$value": "{color.midnight-blue.400}",
+        "$description": "Bordure porteuse — 4,58:1 contre la page. Un rôle nommé « strong » doit être PERÇU : les paliers précédents plafonnaient sous 2:1, ce qui en faisait un séparateur discret de plus. C'est cette bordure qui porte le survol des boutons outline et ghost."
       },
       "focus": {
         "$type": "color",
