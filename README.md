@@ -4,6 +4,8 @@ Dépôt de référence pour tout contenu visuel et éditorial Aikoz by Okuden.
 Il contient les sources de vérité — design tokens, voix de marque, logos, polices — que l'équipe injecte dans ses outils IA et ses productions.
 
 > **Règle d'or** : toute modification passe par une branche + PR. Les fichiers marqués 🔒 ne se modifient pas sans validation d'Arnaud.
+>
+> **Le design system a une propriétaire unique : Alice (`@Alicokuden`).** Tokens, composants, bridge et doctrine d'accessibilité ne se modifient pas sans sa revue. Cf. [Gouvernance](#gouvernance).
 
 ---
 
@@ -15,6 +17,7 @@ Il contient les sources de vérité — design tokens, voix de marque, logos, po
 4. [Utiliser brand-voice-guidelines.md](#brand-voice)
 5. [Workflow Git](#workflow-git)
 6. [Ce qui est protégé](#protégé)
+7. [Gouvernance](#gouvernance)
 
 ---
 
@@ -214,3 +217,37 @@ Toujours via branche + PR, même pour les petites modifications.
 ---
 
 *Repo maintenu par Alice Maréchaud (Okuden) — questions : alice.marechaud@okuden.fr*
+
+
+---
+
+<a name="gouvernance"></a>
+## Gouvernance
+
+### Une propriétaire, une porte d'entrée
+
+Le design system — `tokens/`, `registry/`, `bridge/`, `build-tokens.mjs`, `a11y.md`, `docs/components/` — appartient à **Alice (`@Alicokuden`)**. Toute modification passe par une PR qu'elle relit.
+
+Ce n'est pas une question de hiérarchie mais de cohérence : un token modifié sans mesure casse un contraste ailleurs, un composant ajouté sans passer par les rôles sémantiques sort du système. Les écarts constatés jusqu'ici — une couleur Tailwind en dur, un rôle texte à 3,25:1, une bordure de champ invisible — sont tous venus d'une modification faite hors du cadre.
+
+### Ce qui est en place, et ce qui ne l'est pas
+
+`.github/CODEOWNERS` désigne Alice comme relectrice. GitHub la demande donc **automatiquement** sur chaque PR touchant ces chemins.
+
+**Mais rien n'empêche techniquement un push direct sur `main` aujourd'hui.** Au 10/09/2026, cinq comptes en ont le droit :
+
+| Droit | Comptes | Peut pousser sur `main` |
+|---|---|---|
+| admin | `OkudenAdmin`, `OkudenPietroFiani`, `VoCbyOkuden` | oui, et forcer |
+| write | `Alicokuden`, `lilicegonzales` | oui |
+| read | `LouisBrachOkuden`, `OkudenCyrilDever`, `Sp1raly-VoC` | non — PR uniquement |
+
+### Ce qu'il faut demander à un admin
+
+Rendre la règle exécutoire suppose une **règle de branche sur `main`**, que seuls les trois comptes admin peuvent créer :
+
+- exiger une pull request avant fusion ;
+- exiger l'approbation des propriétaires de code (`Require review from Code Owners`) ;
+- interdire le push forcé et la suppression de branche.
+
+Tant que ce n'est pas fait, `CODEOWNERS` reste une convention : il demande la revue, il ne la rend pas obligatoire.

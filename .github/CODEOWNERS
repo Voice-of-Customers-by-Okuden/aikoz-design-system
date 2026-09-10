@@ -1,0 +1,23 @@
+# Propriété du design system — Aikoz
+#
+# GitHub demande automatiquement la revue des personnes listées ici dès qu'une
+# PR touche les chemins correspondants.
+#
+# CE QUE CE FICHIER FAIT       : ajoute Alice comme relectrice obligatoire sur
+#                                chaque PR touchant le design system.
+# CE QU'IL NE FAIT PAS         : empêcher un push direct sur `main`. Cela exige
+#                                une règle de branche, donc les droits admin.
+#                                Cf. la section « Gouvernance » du README.
+
+# Tout le dépôt
+*                       @Alicokuden
+
+# Le cœur du système — tokens, composants, doctrine
+/tokens/                @Alicokuden
+/registry/              @Alicokuden
+/bridge/                @Alicokuden
+/build-tokens.mjs       @Alicokuden
+/a11y.md                @Alicokuden
+/DESIGN.md              @Alicokuden
+/docs/components/       @Alicokuden
+/registry.json          @Alicokuden
