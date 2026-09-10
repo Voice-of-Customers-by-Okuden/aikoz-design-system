@@ -440,6 +440,66 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:component",
+      "title": "Breadcrumb",
+      "description": "Fil d'Ariane — nav nomme + ol + le dernier element n'est PAS un lien : rendre la page courante cliquable produit un lien qui ne mene nulle part. Separateur decoratif et masque. Les liens sont soulignes au repos, la couleur seule ne suffit pas. Ne replie pas les niveaux intermediaires.",
+      "files": [
+        {
+          "path": "registry/aikoz/breadcrumb/breadcrumb.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:component",
+      "title": "Accordion",
+      "description": "Accordeon — transpose de la FAQ du prototype site. aria-expanded, aria-controls, et `hidden` sur le panneau ferme : un panneau seulement masque en height:0 reste focusable, le focus disparait dans du contenu invisible. Le bouton est ENVELOPPE dans un titre, pas remplace par lui — le niveau est un prop, car les intitules forment le plan de la section. Pas d'animation de hauteur.",
+      "files": [
+        {
+          "path": "registry/aikoz/accordion/accordion.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:component",
+      "title": "Stepper",
+      "description": "Fil de progression — 5 etapes du tunnel du prototype site. « Etape 2 sur 5 » est ecrit dans le nom du nav, pas seulement dessine : sans lui un lecteur d'ecran entend cinq intitules sans savoir ou on en est. Trois etats portes chacun par deux canaux (coche, aria-current=step, texte sr-only). Une etape a venir n'est jamais un lien.",
+      "files": [
+        {
+          "path": "registry/aikoz/stepper/stepper.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }

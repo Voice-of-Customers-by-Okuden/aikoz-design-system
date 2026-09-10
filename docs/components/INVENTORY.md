@@ -96,7 +96,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 14 | `MapWidget` | Data display | aikoz | v1 | ⚠ **à créer — aucune carte dans le Figma** (statut v1.0 erroné) | Breadcrumb, Table |
 | 15 | `Avatar` | Data display | shadcn | v1 | **livré** — repli sur initiales, 4 tailles | — |
 | 16 | `Table` | Data display | shadcn | v1 | **livré** — caption, scope col/row, aria-sort, conteneur focusable | Skeleton |
-| 17 | `Breadcrumb` | Navigation | shadcn | v1 | à créer — absent du code et du Figma | — |
+| 17 | `Breadcrumb` | Navigation | shadcn | v1 | **livré** — dernier élément non cliquable, liens soulignés au repos | — |
 | 18 | `DateRangePicker` | Forms | aikoz | v1 | **livré** — préréglages en radio + saisie libre native ; pas de calendrier en grille, cf. le composant | Popover |
 | 19 | `Skeleton` | Feedback | shadcn | v1 | **livré** — muet pour les lecteurs d'écran, aria-busy au conteneur | — |
 | 20 | `EmptyState` | Feedback | aikoz | v1 | **livré** — nomme ce qui manque, indique la sortie | Button |
@@ -106,11 +106,11 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 24 | `ProgressBar` | Data display | aikoz | v1 | **livré** — 3 niveaux, rôles `status.*-fill` | — |
 | 25 | `SidebarNav` | Navigation | aikoz | v1 | **livré** — ni repli en icônes ni tiroir mobile : cela relève du gabarit | NavItem |
 | 26 | `NavItem` | Navigation | aikoz | v1 | **livré** — état courant sur 3 canaux (aria-current, trait, graisse) | — |
-| 27 | `Stepper` | Parcours · site | aikoz | v1 | **prototype site** — progression des 5 étapes du tunnel | — |
+| 27 | `Stepper` | Parcours · site | aikoz | v1 | **livré** — « étape 3 sur 5 » dans le nom du nav, pas seulement dessiné | — |
 | 28 | `BrandPicker` | Forms · site | aikoz | v1 | **prototype site** — grille de logos, « Sélectionnez votre marque » | — |
 | 29 | `SourceToggle` | Forms · site | aikoz | v1 | **prototype site** — Google / Trustpilot / Pages Jaunes, sélection multiple | Badge |
 | 30 | `Input` | Forms | shadcn | v1 | **livré** — 4 états, libellé obligatoire, erreur en `role=alert` | — |
-| 31 | `Accordion` | Layout · site | shadcn | v1 | **prototype site** — FAQ groupée, une seule ouverte à la fois | — |
+| 31 | `Accordion` | Layout · site | shadcn | v1 | **livré** — `hidden` sur le panneau fermé, bouton enveloppé dans un titre | — |
 | 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
 | 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **prototype site** — bandeau de preuve client | — |
 | 34 | `FeaturePanel` | Layout · site | aikoz | v1 | **prototype site** — « Quatre leviers », page Notre Solution | — |
@@ -129,7 +129,7 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **20 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`, `DateRangePicker`, `Table`, `Skeleton`, `EmptyState`), **16 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **23 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`, `DateRangePicker`, `Table`, `Skeleton`, `EmptyState`, `Breadcrumb`, `Accordion`, `Stepper`), **13 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
 *Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
