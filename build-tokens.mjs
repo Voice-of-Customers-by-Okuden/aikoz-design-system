@@ -144,11 +144,25 @@ await make('brand-generali.css', [PRIM, brand('generali')], { selector: '[data-b
 // C'est la réciproque manquante de `.dark`.
 await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root, .light',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
 await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector: '.dark',  filter: inPath('theme/dark'), transforms: cssOklch }).buildAllPlatforms();
-// Registre MARKETING — site vitrine, lead magnet, carrousels. Sombre par défaut,
-// accent expressif mais tenu. Frère de dark : mêmes rôles, même palette de
-// primitives, discipline différente. Additif : ne remplace ni light ni dark, et
-// s'imbrique (une section marketing dans une page produit, ou l'inverse).
-await make('theme-marketing.css', [PRIM, brand('aikoz'), theme('marketing')], { selector: '[data-register="marketing"]', filter: inPath('theme/marketing'), transforms: cssOklch }).buildAllPlatforms();
+// Registre MARKETING — site vitrine, lead magnet, carrousels.
+//
+// Registre et thème sont deux axes INDÉPENDANTS : produit|marketing × clair|sombre
+// = quatre combinaisons.
+//
+// Spécificité — le clair sort sur [data-register] seul (0,1,0), le sombre sur
+// .dark[data-register] et .dark [data-register] (0,2,0). Le sombre bat donc le
+// clair dès que .dark est posé, sur l'élément lui-même comme sur un ancêtre.
+//
+// Le filtre du sombre vise marketing.json NOMMÉMENT : inPath('theme/marketing')
+// attraperait aussi marketing-light.json.
+await make('theme-marketing-light.css', [PRIM, brand('aikoz'), theme('marketing-light')], {
+  selector: '[data-register="marketing"]',
+  filter: inPath('theme/marketing-light'), transforms: cssOklch,
+}).buildAllPlatforms();
+await make('theme-marketing.css', [PRIM, brand('aikoz'), theme('marketing')], {
+  selector: '.dark[data-register="marketing"], .dark [data-register="marketing"]',
+  filter: t => t.filePath.includes('theme/marketing.json'), transforms: cssOklch,
+}).buildAllPlatforms();
 
 // Couche 3bis — semantics : rôles MODE-INDÉPENDANTS (radius, shadow, border-width, typography).
 // :root unique (pas de variante light/dark). refs:true → alias émis en var(--…).
@@ -173,8 +187,13 @@ await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), SEM, br
   selector: '.dark', filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
-await make('.tmp-shadcn-marketing.css', [PRIM, brand('aikoz'), theme('marketing'), SEM, bridgeSrc], {
+await make('.tmp-shadcn-marketing-light.css', [PRIM, brand('aikoz'), theme('marketing-light'), SEM, bridgeSrc], {
   selector: '[data-register="marketing"]', filter: inPath('bridge/shadcn'), refs: false,
+  transforms: bridgeTransforms, buildPath: 'bridge/',
+}).buildAllPlatforms();
+await make('.tmp-shadcn-marketing.css', [PRIM, brand('aikoz'), theme('marketing'), SEM, bridgeSrc], {
+  selector: '.dark[data-register="marketing"], .dark [data-register="marketing"]',
+  filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
 
@@ -186,10 +205,70 @@ fs.writeFileSync(
     '\n' +
     fs.readFileSync('bridge/.tmp-shadcn-dark.css', 'utf8') +
     '\n' +
+    fs.readFileSync('bridge/.tmp-shadcn-marketing-light.css', 'utf8') +
+    '\n' +
     fs.readFileSync('bridge/.tmp-shadcn-marketing.css', 'utf8')
 );
 fs.unlinkSync('bridge/.tmp-shadcn-light.css');
 fs.unlinkSync('bridge/.tmp-shadcn-dark.css');
+fs.unlinkSync('bridge/.tmp-shadcn-marketing-light.css');
 fs.unlinkSync('bridge/.tmp-shadcn-marketing.css');
 
-console.log('build OK');
+// ─── Garde-fou de sortie ─────────────────────────────────────────────────────
+//
+// Le bridge a déjà été livré avec la source SOMBRE servie sur le sélecteur
+// CLAIR : le générateur avait été modifié sans être commité, et l'audit de
+// contraste ne l'a pas vu — une palette sombre étiquetée « clair » reste
+// parfaitement cohérente avec elle-même, donc elle passe tous les ratios.
+//
+// Vérifier la cohérence interne ne suffit pas : il faut vérifier que chaque
+// combinaison porte les BONNES valeurs. C'est ce que fait ce contrôle.
+const bridge = fs.readFileSync('bridge/shadcn-bridge.css', 'utf8');
+
+const BLOCS = [
+  { nom: 'produit clair',    selecteur: ':root, .light',                    clair: true  },
+  { nom: 'produit sombre',   selecteur: '.dark',                            clair: false },
+  { nom: 'marketing clair',  selecteur: '[data-register="marketing"]',      clair: true  },
+  { nom: 'marketing sombre', selecteur: '.dark[data-register="marketing"]', clair: false },
+];
+
+const echecs = [];
+const fonds = new Map();
+
+for (const { nom, selecteur, clair } of BLOCS) {
+  // on isole le bloc par son sélecteur exact en début de ligne
+  const re = new RegExp(
+    `^${selecteur.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^{]*\\{([\\s\\S]*?)^\\}`,
+    'm',
+  );
+  const m = bridge.match(re);
+  if (!m) { echecs.push(`bloc « ${nom} » absent du bridge`); continue; }
+
+  const bg = m[1].match(/--background:\s*oklch\(([\d.]+)/);
+  if (!bg) { echecs.push(`« ${nom} » : --background introuvable`); continue; }
+
+  const L = parseFloat(bg[1]);
+  fonds.set(nom, L);
+  // La luminance OKLCH tranche sans ambiguïté : un fond clair est au-dessus de
+  // 0,5, un fond sombre en dessous. C'est ce test qui aurait attrapé l'inversion.
+  if (clair && L < 0.5) echecs.push(`« ${nom} » a un fond SOMBRE (L=${L}) — sources inversées ?`);
+  if (!clair && L > 0.5) echecs.push(`« ${nom} » a un fond CLAIR (L=${L}) — sources inversées ?`);
+}
+
+// deux combinaisons qui rendent exactement la même chose = une qui ne sert à rien
+const vus = new Map();
+for (const [nom, L] of fonds) {
+  if (vus.has(L)) echecs.push(`« ${nom} » et « ${vus.get(L)} » ont le même fond (L=${L})`);
+  else vus.set(L, nom);
+}
+
+if (echecs.length) {
+  console.error('\nbuild ÉCHOUÉ — le bridge ne rend pas ce qu\'il annonce :');
+  for (const e of echecs) console.error('  ✗ ' + e);
+  process.exit(1);
+}
+
+console.log(
+  'build OK — 4 combinaisons vérifiées : ' +
+    [...fonds].map(([n, L]) => `${n} L=${L}`).join(' · '),
+);

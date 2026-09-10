@@ -88,6 +88,46 @@
  */
 
 [data-register="marketing"] {
+  --background: oklch(1 0 0); /** shadcn --background */
+  --foreground: oklch(0.1857 0.048 268.675); /** shadcn --foreground */
+  --card: oklch(0.97 0.0029 264.542); /** shadcn --card */
+  --card-foreground: oklch(0.1857 0.048 268.675); /** shadcn --card-foreground */
+  --popover: oklch(0.97 0.0029 264.542); /** shadcn --popover */
+  --popover-foreground: oklch(0.1857 0.048 268.675); /** shadcn --popover-foreground */
+  --primary: oklch(0.519 0.1792 267.186); /** shadcn --primary */
+  --primary-foreground: oklch(1 0 0); /** shadcn --primary-foreground */
+  --secondary: oklch(0.1857 0.048 268.675); /** shadcn --secondary */
+  --secondary-foreground: oklch(1 0 0); /** shadcn --secondary-foreground */
+  --muted: oklch(0.9402 0.0042 271.368); /** shadcn --muted */
+  --muted-foreground: oklch(0.4579 0.1206 270.112); /** shadcn --muted-foreground */
+  --surface-hover: oklch(0.9402 0.0042 271.368); /** extension DS — fond au survol d'une surface. Rôle qui manquait : les composants détournaient --muted, qui est un CREUX décoratif et non un état. */
+  --accent: oklch(0.9098 0.1389 170.506); /** shadcn --accent */
+  --accent-foreground: oklch(0.1857 0.048 268.675); /** shadcn --accent-foreground */
+  --destructive: oklch(0.5732 0.1787 32.538); /** shadcn --destructive */
+  --destructive-foreground: oklch(1 0 0); /** shadcn --destructive-foreground — à auditer */
+  --border: oklch(0.8791 0.0072 268.541); /** shadcn --border */
+  --border-strong: oklch(0.5711 0.0137 259.824); /** extension DS — bordure porteuse, >= 3:1 contre la page. Porte le survol des boutons sans fond. */
+  --input: oklch(0.5711 0.0137 259.824); /** shadcn --input */
+  --ring: oklch(0.519 0.1792 267.186); /** shadcn --ring */
+  --success-fill: oklch(0.5439 0.1259 157.658); /** extension DS — remplissage porteur succès (jauges, barres) */
+  --warning-fill: oklch(0.5392 0.1106 84.636); /** extension DS — remplissage porteur avertissement */
+  --error-fill: oklch(0.4872 0.1625 31.673); /** extension DS — remplissage porteur erreur */
+  --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
+  --warning: oklch(0.5392 0.1106 84.636); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
+  --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
+  --success: oklch(0.4383 0.0991 158.647); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
+  --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
+  --rating: oklch(0.5392 0.1106 84.636); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
+  --rating-empty: oklch(0.7921 0.0117 269.522); /** extension DS — étoile vide, repère décoratif de l'échelle */
+  --chart-1: oklch(0.519 0.1792 267.186); /** extension DS — tracé série de données 1 */
+  --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+}
+
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+.dark[data-register="marketing"], .dark [data-register="marketing"] {
   --background: oklch(0.1857 0.048 268.675); /** shadcn --background */
   --foreground: oklch(1 0 0); /** shadcn --foreground */
   --card: oklch(0.2232 0.0804 270.354); /** shadcn --card */
