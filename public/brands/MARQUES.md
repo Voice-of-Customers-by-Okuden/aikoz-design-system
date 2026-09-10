@@ -24,15 +24,17 @@ sans suggérer d'affiliation, de partenariat ni d'approbation.
 | origine | marques |
 |---|---|
 | Wikimedia Commons | Crédit Agricole, Groupama, MAIF, AG2R La Mondiale |
+| Wikipédia FR | Swiss Life — `Fichier:Logo Swiss Life.svg`, SVG produit par Sa-se sous Inkscape |
 | Site officiel de la marque | Matmut, AÉSIO, MACSF, GMF, MMA, Malakoff Humanis, La Médicale |
 | Fournis par le client | Generali, Europ Assistance |
 | Fonds documentaire Okuden | AXA, Allianz, Abeille, MACIF, MAAF, Harmonie Mutuelle |
 | Projet Claude Design Aikoz | MAAF, Harmonie Mutuelle, Groupama |
 
-**Absente** : Swiss Life. Son site refuse tout accès automatisé (HTTP 403) et
-Wikimedia n'a que des sous-marques — Swiss Life Select, Swiss Life Asset
-Managers. À récupérer à la main. En attendant elle s'affiche en initiales, ce
-qui ne casse rien.
+**Les 19 marques sont couvertes.** Swiss Life a longtemps manqué : son site
+refuse tout accès automatisé (HTTP 403) et Commons n'a que des sous-marques —
+Swiss Life Select, Swiss Life Asset Managers. Le fichier était en réalité sur
+**Wikipédia FR** et non sur Commons, ce qu'une recherche Commons ne pouvait pas
+trouver. Alice a fourni la référence.
 
 ## Le champ `maskable`
 
