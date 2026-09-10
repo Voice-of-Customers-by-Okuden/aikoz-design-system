@@ -73,7 +73,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | # | Composant | Famille | Origine | Priorité | Statut | Dépend de |
 |---|---|---|---|---|---|---|
 | 1 | `Button` | Actions | shadcn | v1 | **livré au registry** — ⚠ axes de variantes toujours désalignés avec le Figma | — |
-| 2 | `KpiCard` | Data display | aikoz | v1 | **code + composant Figma** — ⚠ code et maquette divergent | ScoreStars, DeltaBadge, ProgressBar |
+| 2 | `KpiCard` | Data display | aikoz | v1 | **livré** — `variant` × `density`, décision 1 appliquée | ScoreStars, DeltaBadge, ProgressBar |
 | 3 | `ScoreStars` | Data display | aikoz | v1 | **livré** — rôle `--rating` (700 light / 600 dark) | — |
 | 4 | `DeltaBadge` | Data display | aikoz | v1 | **livré** — état neutre ajouté, ton forçable | Badge |
 | 5 | `Badge` | Data display | shadcn | v1 | **composant Figma** (5 statuts), à créer en code | — |
@@ -367,8 +367,8 @@ Cinq composants au registry : `button`, `score-stars`, `delta-badge`, `progress-
 
 Le branchement du système se fait **en priorité sur le site**, le dashboard pur suit. L'ordre découle de ce que le tunnel consomme.
 
-1. **Refondre `KpiCard`** sur `variant` × `density` (décision 1). Le tunnel affiche des métriques de trois natures, la refonte est un prérequis des deux surfaces.
-2. **`VerbatimCard`** — « Vos 3 derniers avis Google ». Les briques (`ScoreStars`, `Badge`) sont prêtes.
+1. [x] **`KpiCard` refondu** sur `variant` × `density` — 4 variantes × 3 densités, niveau déduit de l'objectif.
+2. **`VerbatimCard`** ← prochaine étape — « Vos 3 derniers avis Google ». Les briques (`ScoreStars`, `Badge`) sont prêtes.
 3. **`Card`, `Badge`, `Input`, `Avatar`, `Dialog`** — les partagés d'origine shadcn, travail d'habillage.
 4. **`Leaderboard`, `RankedBarChart`** — le `marqueDash` du tunnel les demande, et le dashboard aussi.
 5. **Composants de tunnel** : `Stepper`, `ChoiceCard`, `BrandPicker`, `SourceToggle`, `BookingFlow`.
