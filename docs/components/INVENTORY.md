@@ -89,7 +89,8 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 7 | `Select` | Forms | shadcn | v1 | **livré** | — |
 | 8 | `ViewTabs` | Navigation | shadcn | v1 | **livré** — tabindex tournant, activation auto ou manuelle | — |
 | 9 | `Card` | Layout | shadcn | v1 | **livré** — 3 surfaces × 3 densités, prop `as` sémantique | — |
-| 10 | `ChoiceCard` | Navigation | aikoz | v1 | à créer — absent du code et du Figma | Card, Badge |
+| 10 | `ChoiceCard` | Navigation | aikoz | v1 | **livré** — vrai `<input>` en sr-only ; la coche porte l'état, pas le trait | — |
+| 10b | `ChoiceGroup` | Forms | aikoz | v1 | **livré** — fieldset + legend ; remplace BrandPicker et SourceToggle | ChoiceCard |
 | 11 | `DonutChart` | Data display | aikoz | v1 | **maquetté** (`SourcesDonut`), à créer | Select, Tooltip |
 | 12 | `RankedBarChart` | Data display | aikoz | v1 | à créer — absent du code et du Figma | TimeRangePicker, Tooltip |
 | 13 | `Leaderboard` | Data display | aikoz | v1 | **composants Figma** `RankRow` + `RankingCard`, à créer en code | Avatar, DeltaBadge |
@@ -107,8 +108,8 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 25 | `SidebarNav` | Navigation | aikoz | v1 | **livré** — ni repli en icônes ni tiroir mobile : cela relève du gabarit | NavItem |
 | 26 | `NavItem` | Navigation | aikoz | v1 | **livré** — état courant sur 3 canaux (aria-current, trait, graisse) | — |
 | 27 | `Stepper` | Parcours · site | aikoz | v1 | **livré** — « étape 3 sur 5 » dans le nom du nav, pas seulement dessiné | — |
-| 28 | `BrandPicker` | Forms · site | aikoz | v1 | **prototype site** — grille de logos, « Sélectionnez votre marque » | — |
-| 29 | `SourceToggle` | Forms · site | aikoz | v1 | **prototype site** — Google / Trustpilot / Pages Jaunes, sélection multiple | Badge |
+| 28 | ~~`BrandPicker`~~ | Forms · site | aikoz | — | **fondu dans `ChoiceGroup`** — `selection="single"` + `layout="grid"`, cf. écart 6 | ChoiceGroup |
+| 29 | ~~`SourceToggle`~~ | Forms · site | aikoz | — | **fondu dans `ChoiceGroup`** — `selection="multiple"` + `meta={<Badge/>}`, cf. écart 6 | ChoiceGroup |
 | 30 | `Input` | Forms | shadcn | v1 | **livré** — 4 états, libellé obligatoire, erreur en `role=alert` | — |
 | 31 | `Accordion` | Layout · site | shadcn | v1 | **livré** — `hidden` sur le panneau fermé, bouton enveloppé dans un titre | — |
 | 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
@@ -129,9 +130,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **23 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`, `DateRangePicker`, `Table`, `Skeleton`, `EmptyState`, `Breadcrumb`, `Accordion`, `Stepper`), **13 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **25 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`, `DateRangePicker`, `Table`, `Skeleton`, `EmptyState`, `Breadcrumb`, `Accordion`, `Stepper`, `ChoiceCard`, `ChoiceGroup`), **10 à construire**, dont **5 charts qui restent à l'arbitrage d'Alice**.
 
-*Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+*Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces. Les suivants couvrent les deux périmètres — `Table`, `Select` et `DateRangePicker` côté dashboard, `Accordion`, `Stepper` et `ChoiceGroup` côté site.*
 
 *Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 
@@ -238,6 +239,16 @@ La question « code ou maquette » était mal posée : les deux cartes affichent
 **Principe retenu pour le DS** : variantes **fermées** par défaut, plus un slot d'échappement documenté « si tu t'en sers deux fois, ça doit devenir une variante ». Sur un dashboard la cohérence prime sur la flexibilité — un même type de métrique doit se lire pareil d'un écran à l'autre.
 
 **Reste à valider avec Louis** : les 4 cartes des maquettes portent toutes une barre, y compris « Avis traités · 312 » dont le sous-texte est « 30 derniers jours ». Une barre suppose un dénominateur — 312 sur combien ? Le système de variantes force cette question, la maquette actuelle l'esquive.
+
+### 6 · `BrandPicker` + `SourceToggle` = `ChoiceGroup`
+
+Mis côte à côte, les deux ne diffèrent que par **deux choses** : l'arité de la sélection (une marque contre plusieurs sources) et le contenu des cartes (un logo contre un libellé et un compte). Deux props, donc — pas deux composants. C'est exactement le raisonnement de la décision 1 sur `KpiCard` : deux axes indépendants valent mieux que le produit de leurs combinaisons.
+
+Ce qui a été vérifié avant de les fondre, parce que l'inverse arrive souvent : leurs **contrats d'accessibilité sont-ils différents ?** Non — les deux sont un `<fieldset>` avec `<legend>`, l'un peuplé de `radio`, l'autre de `checkbox`, et c'est précisément le prop `selection` qui bascule. Là où `SidebarNav` et `ViewTabs` avaient deux sémantiques irréconciliables, ici il n'y en a qu'une, paramétrée.
+
+La sortie de secours de `BrandPicker` — « Je ne trouve pas ma marque » — est un `escape` rendu **hors du `<fieldset>`** : ce n'est pas une septième marque, et la mêler aux options la ferait compter dans « 7 sur 7 ».
+
+**Réversible.** Si l'un des deux acquiert un comportement propre — une recherche dans la grille de marques, par exemple — il se détachera.
 
 ### 2 · Navigation — `SidebarNav` et `ViewTabs`, les deux
 
