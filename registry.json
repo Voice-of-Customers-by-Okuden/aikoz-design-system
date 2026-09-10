@@ -643,6 +643,66 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "site-nav",
+      "type": "registry:component",
+      "title": "SiteNav",
+      "description": "En-tete de site — distinct de SidebarNav : premier element du document, porte le LIEN D'EVITEMENT (WCAG 2.4.1, il doit etre le premier focusable, donc il ne peut pas vivre ailleurs), et se replie en menu sur petit ecran. Le menu mobile est un disclosure et non une modale : il ne piege pas le focus, se ferme sur Echap et rend le focus au bouton. Menu ferme = attribut hidden, donc hors tabulation.",
+      "files": [
+        {
+          "path": "registry/aikoz/site-nav/site-nav.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "site-footer",
+      "type": "registry:component",
+      "title": "SiteFooter",
+      "description": "Pied de page de site. footer en fin de document = repere contentinfo implicite, a condition de n'etre imbrique dans aucun article ni section — une des rares balises ou le placement change le role. Intitules de colonne en span relie par aria-labelledby, pas en titres : le plan du document n'a pas a etre peuple par cinq intitules de pied de page. Un lien vers un nouvel onglet le dit dans son nom accessible.",
+      "files": [
+        {
+          "path": "registry/aikoz/site-footer/site-footer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "feature-panel",
+      "type": "registry:component",
+      "title": "FeaturePanel",
+      "description": "Panneau de leviers — « Quatre leviers » de la page Notre Solution. Le plan se DEDUIT : l'appelant donne le niveau du titre de section, les titres de leviers prennent le suivant, plafonne a h6. On ne peut donc pas sauter un niveau, c'est arithmetique. Une ul et non une grille de div : « quatre leviers » n'est pas une figure de style, un lecteur d'ecran annonce « liste de 4 elements ».",
+      "files": [
+        {
+          "path": "registry/aikoz/feature-panel/feature-panel.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }
