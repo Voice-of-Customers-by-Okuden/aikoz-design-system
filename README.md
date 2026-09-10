@@ -17,7 +17,8 @@ Il contient les sources de vérité — design tokens, voix de marque, logos, po
 4. [Utiliser brand-voice-guidelines.md](#brand-voice)
 5. [Workflow Git](#workflow-git)
 6. [Ce qui est protégé](#protégé)
-7. [Gouvernance](#gouvernance)
+7. [Consommer le design system](#consommer)
+8. [Gouvernance](#gouvernance)
 
 ---
 
@@ -222,6 +223,82 @@ Toujours via branche + PR, même pour les petites modifications.
 ---
 
 <a name="gouvernance"></a>
+<a id="consommer"></a>
+## Consommer le design system
+
+Trois commandes, trois artefacts.
+
+```bash
+npm run build:tokens     # tokens DTCG → build/*.css + bridge + couleurs Tailwind
+npm run registry:build   # composants → public/r/*.json, installables
+npm run build:preview    # aperçu statique → docs/preview/ (non versionné)
+npm run build            # les trois d'affilée
+```
+
+### Installer un composant
+
+`public/r/` est **versionné** : c'est le registry installable, et c'est la seule
+chose qu'un consommateur peut réellement récupérer depuis GitHub. Il contient
+33 composants au format shadcn.
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/Voice-of-Customers-by-Okuden/aikoz-design-system/main/public/r/button.json
+```
+
+### Les tokens en CSS
+
+Un seul import suffit ; il tire les quatre combinaisons registre × thème.
+
+```css
+@import "./build/index.css";
+@import "./bridge/shadcn-bridge.css";
+```
+
+```html
+<html>                                          <!-- produit clair -->
+<html class="dark">                             <!-- produit sombre -->
+<html data-register="marketing">                <!-- marketing clair -->
+<html class="dark" data-register="marketing">   <!-- marketing sombre -->
+```
+
+**Les couleurs Tailwind sont générées**, pas listées à la main :
+`build/tailwind-colors.mjs` se déduit du bridge et `tailwind.config.ts`
+l'importe. Ajouter un rôle au bridge suffit à le rendre utilisable en classe.
+Une garde de build échoue si la config cesse d'importer le fichier — parce que
+la divergence est déjà arrivée, et qu'elle est invisible : `bg-card` n'existait
+pas côté Tailwind alors qu'elle était écrite sur 51 éléments.
+
+### Les logos de marque
+
+`BrandLogo` ne code aucun chemin en dur. Le dossier se règle une fois, au
+démarrage de l'application :
+
+```ts
+import { definirBaseDesLogos } from "@registry/aikoz/brand-logo/brands";
+definirBaseDesLogos("/mon-dossier/logos/");
+```
+
+Les fichiers sont dans `public/brands/`, et `public/brands/MARQUES.md` documente
+leur provenance ainsi que la procédure de retrait.
+
+### L'aperçu
+
+`npm run build:preview` produit `docs/preview/`, **non versionné** : ce sont
+2 Mo de binaires dupliqués, pour un bundle minifié qu'aucun agent ne sait lire
+et que GitHub n'affiche pas. Servir l'aperçu en ligne demande d'activer GitHub
+Pages ; le build est déjà prêt pour un sous-chemin :
+
+```bash
+npx vite build --base=/aikoz-design-system/preview/
+```
+
+### Vérifier l'accessibilité
+
+Le playground (`npm run dev`, puis la racine) porte un bouton **Lancer
+l'audit** : il compare chaque texte visible à son fond **composé** dans les
+quatre combinaisons. Le module est réutilisable — `playground/audit.ts` — et
+documente trois pièges de calcul qui ont chacun produit un faux diagnostic.
+
 ## Gouvernance
 
 ### Une propriétaire, une porte d'entrée

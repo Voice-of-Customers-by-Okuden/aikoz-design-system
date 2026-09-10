@@ -1,0 +1,767 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "aikoz",
+  "homepage": "https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "Bouton Aikoz — 4 variantes (default, secondary, outline, ghost) x 3 tailles (sm 36px, md 44px, lg 48px). Coins pilule, anneau de focus clavier, etat disabled ni cliquable ni focusable.",
+      "files": [
+        {
+          "path": "registry/aikoz/button/button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-slot"
+      ]
+    },
+    {
+      "name": "score-stars",
+      "type": "registry:component",
+      "title": "Score Stars",
+      "description": "Notation en etoiles sur une echelle bornee. Demi-etoiles, 3 tailles, couleur portee par le role dedie --rating. L'information n'est jamais portee par la seule couleur : le nombre d'etoiles pleines et l'aria-label la vehiculent.",
+      "files": [
+        {
+          "path": "registry/aikoz/score-stars/score-stars.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@material-symbols-svg/react"
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:component",
+      "title": "Badge",
+      "description": "Etiquette de statut a 5 tons (success, warning, error, info, neutral). Le contour porte le contraste, le fond a 8% reste decoratif. A distinguer de DeltaBadge, qui porte une variation et non un etat.",
+      "files": [
+        {
+          "path": "registry/aikoz/badge/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "delta-badge",
+      "type": "registry:component",
+      "title": "Delta Badge",
+      "description": "Etiquette de variation : vert si positif, rouge si negatif, gris si neutre. Seuil de neutralite parametrable et ton forcable, pour les metriques ou baisser est un progres. Fleche haut/bas/tiret doublant la couleur.",
+      "files": [
+        {
+          "path": "registry/aikoz/delta-badge/delta-badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@material-symbols-svg/react"
+      ]
+    },
+    {
+      "name": "progress-bar",
+      "type": "registry:component",
+      "title": "Progress Bar",
+      "description": "Barre de progression a 3 niveaux (good / warning / critical), deduits de seuils parametrables ou forces. Le niveau ne se lit jamais a la seule couleur : la longueur du remplissage porte la meme information.",
+      "files": [
+        {
+          "path": "registry/aikoz/progress-bar/progress-bar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:component",
+      "title": "Input",
+      "description": "Champ de saisie — 4 etats (defaut, focus, erreur, desactive). Libelle visible obligatoire, consigne avant le champ, erreur annoncee en role=alert et associee par aria-describedby. Ne valide rien lui-meme : la validation se fait a la sortie du champ, jamais a la frappe.",
+      "files": [
+        {
+          "path": "registry/aikoz/input/input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:component",
+      "title": "Card",
+      "description": "Conteneur de carte — 3 surfaces (raised, flat, bare) x 3 densites. Prop `as` pour sortir en article ou section : le choix est semantique. Sans sous-composants Title/Header : le niveau de titre depend du plan de la page, pas de la carte.",
+      "files": [
+        {
+          "path": "registry/aikoz/card/card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:component",
+      "title": "Avatar",
+      "description": "Avatar avec repli sur les initiales, calculees en ignorant les particules. 4 tailles. Bati sur Radix pour la bascule image/repli. Prop `decorative` quand le nom est deja ecrit a cote.",
+      "files": [
+        {
+          "path": "registry/aikoz/avatar/avatar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-avatar"
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:component",
+      "title": "Dialog",
+      "description": "Modale et panneau lateral — 3 placements (center, right, bottom). Bati sur Radix : piege de focus, retour du focus au declencheur, Echap, verrouillage du defilement. Titre obligatoire : c'est le nom accessible de la modale.",
+      "files": [
+        {
+          "path": "registry/aikoz/dialog/dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-dialog"
+      ]
+    },
+    {
+      "name": "kpi-card",
+      "type": "registry:component",
+      "title": "KPI Card",
+      "description": "Carte d'indicateur Aikoz, 3 tailles (sm/md/lg) de richesse croissante : valeur + label, puis notation étoiles et étiquette de variation, puis sparkline. Optionnellement cliquable.",
+      "files": [
+        {
+          "path": "registry/aikoz/kpi-card/kpi-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "recharts",
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": [
+        "score-stars",
+        "delta-badge"
+      ]
+    },
+    {
+      "name": "verbatim-card",
+      "type": "registry:component",
+      "title": "Verbatim Card",
+      "description": "Carte d'avis client : note en etoiles, etat de reponse, texte, source et themes. Rendue en <article> — un avis est un contenu autonome. Troncature CSS : le texte complet reste dans le DOM.",
+      "files": [
+        {
+          "path": "registry/aikoz/verbatim-card/verbatim-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "score-stars",
+        "badge"
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:component",
+      "title": "Select",
+      "description": "Liste de selection — transposee du MiniSelect des maquettes. Bati sur Radix : vrai listbox, navigation clavier complete, coche en plus de la graisse. Libelle visible obligatoire, aligne au pixel sur Input. Pour un choix long et sans mise en forme (pays, annee), preferer un select natif.",
+      "files": [
+        {
+          "path": "registry/aikoz/select/select.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-select"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:component",
+      "title": "Tooltip",
+      "description": "Infobulle. Ne porte JAMAIS une information necessaire : elle n'existe ni au tactile, ni a l'impression. Bati sur Radix, qui fournit les trois obligations de WCAG 1.4.13 : fermeture par Echap, survol du contenu possible, persistance. Un declencheur disabled n'ouvre rien — utiliser aria-disabled.",
+      "files": [
+        {
+          "path": "registry/aikoz/tooltip/tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-tooltip"
+      ]
+    },
+    {
+      "name": "nav-item",
+      "type": "registry:component",
+      "title": "NavItem",
+      "description": "Entree de navigation — brique de SidebarNav, transposee du composant Figma (3 etats). C'est un <a>, jamais un <button> : cette entree change de route. L'etat courant tient a trois canaux qui se doublent — aria-current=page, un trait vertical en --nav-accent, et la graisse. Le voile de fond ne compte pas : 1,19:1 en clair, il est decoratif.",
+      "files": [
+        {
+          "path": "registry/aikoz/nav-item/nav-item.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "sidebar-nav",
+      "type": "registry:component",
+      "title": "SidebarNav",
+      "description": "Barre de navigation laterale — nav + liens + aria-current=page, tabulation lien apres lien, change la route. Ne se mutualise PAS avec ViewTabs, qui echange un panneau : ils partagent les tokens, pas le code. Ne gere ni repli en icones ni tiroir mobile — cela depend du gabarit de page, pas de la barre.",
+      "files": [
+        {
+          "path": "registry/aikoz/sidebar-nav/sidebar-nav.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/nav-item/nav-item.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "view-tabs",
+      "type": "registry:component",
+      "title": "ViewTabs",
+      "description": "Bascule de vue dans la page — role=tablist, aria-selected, tabindex tournant, fleches + Debut/Fin. Activation automatique ou manuelle. La regle qui decide est le COMPORTEMENT, jamais l'apparence : un onglet qui change de route est un lien stylé en onglet, il releve de SidebarNav.",
+      "files": [
+        {
+          "path": "registry/aikoz/view-tabs/view-tabs.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "date-range-picker",
+      "type": "registry:component",
+      "title": "DateRangePicker",
+      "description": "Selecteur de periode — transpose de la pastille « 30 derniers jours » de la barre haute. Pas de calendrier, delibrement : sur un tableau de bord la quasi-totalite des selections tombe sur un prereglage. Les prereglages sont de vrais boutons radio (choix unique, fleches natives, annonce « 2 sur 5 ») ; la saisie libre passe par deux champs date NATIFS, qui ouvrent le selecteur du systeme sur mobile.",
+      "files": [
+        {
+          "path": "registry/aikoz/date-range-picker/date-range-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-popover"
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:component",
+      "title": "Skeleton",
+      "description": "Bloc d'attente. Integralement invisible aux technologies d'assistance, et ce n'est pas un oubli : c'est au CONTENEUR de dire qu'un chargement est en cours, une fois, par aria-busy. Animation coupee par motion-reduce (WCAG 2.3.3). Fond sur --track et non --muted : en sombre ce dernier vaut exactement --card.",
+      "files": [
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:component",
+      "title": "EmptyState",
+      "description": "Etat vide. Il nomme ce qui manque (« Aucun avis sur cette periode », pas « Aucune donnee ») et indique la sortie : un etat vide sans action ni consigne est un cul-de-sac. Le ton error se lit dans le texte, jamais a la seule couleur du cadre. Le niveau de titre est un prop, par defaut p — il depend du plan de la page.",
+      "files": [
+        {
+          "path": "registry/aikoz/empty-state/empty-state.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:component",
+      "title": "Table",
+      "description": "Tableau de donnees — un vrai <table>. <caption> obligatoire plutot qu'aria-label, th scope=col et scope=row (« Amsterdam, taux de reponse, 94 % » au lieu de « 94 % »), tri annonce par aria-sort avec un bouton dans l'en-tete, conteneur de debordement focusable et nomme, chiffres tabulaires sur les colonnes numeriques. Etats de chargement et vide integres.",
+      "files": [
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:component",
+      "title": "Breadcrumb",
+      "description": "Fil d'Ariane — nav nomme + ol + le dernier element n'est PAS un lien : rendre la page courante cliquable produit un lien qui ne mene nulle part. Separateur decoratif et masque. Les liens sont soulignes au repos, la couleur seule ne suffit pas. Ne replie pas les niveaux intermediaires.",
+      "files": [
+        {
+          "path": "registry/aikoz/breadcrumb/breadcrumb.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:component",
+      "title": "Accordion",
+      "description": "Accordeon — transpose de la FAQ du prototype site. aria-expanded, aria-controls, et `hidden` sur le panneau ferme : un panneau seulement masque en height:0 reste focusable, le focus disparait dans du contenu invisible. Le bouton est ENVELOPPE dans un titre, pas remplace par lui — le niveau est un prop, car les intitules forment le plan de la section. Pas d'animation de hauteur.",
+      "files": [
+        {
+          "path": "registry/aikoz/accordion/accordion.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:component",
+      "title": "Stepper",
+      "description": "Fil de progression — 5 etapes du tunnel du prototype site. « Etape 2 sur 5 » est ecrit dans le nom du nav, pas seulement dessine : sans lui un lecteur d'ecran entend cinq intitules sans savoir ou on en est. Trois etats portes chacun par deux canaux (coche, aria-current=step, texte sr-only). Une etape a venir n'est jamais un lien.",
+      "files": [
+        {
+          "path": "registry/aikoz/stepper/stepper.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "choice-card",
+      "type": "registry:component",
+      "title": "ChoiceCard",
+      "description": "Option presentee en carte. Sous la carte il y a un VRAI input, mis en sr-only et non display:none : il reste focusable, se coche a la barre d'espace, et les fleches parcourent les radios du groupe sans une ligne de clavier ecrite. L'etat retenu tient sur deux canaux — teinte du trait ET coche, qui est une difference de forme. border-2 en permanence, seule la teinte change : pas de decalage d'un pixel a la selection.",
+      "files": [
+        {
+          "path": "registry/aikoz/choice-card/choice-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "choice-group",
+      "type": "registry:component",
+      "title": "ChoiceGroup",
+      "description": "Groupe de choix en cartes — REMPLACE BrandPicker et SourceToggle de l'inventaire : les deux ne different que par l'arite de la selection et le contenu des cartes, soit deux props, pas deux composants. fieldset + legend, la seule construction qui fasse annoncer la question a l'entree du groupe. La sortie de secours (« Je ne trouve pas ma marque ») est rendue HORS du fieldset : ce n'est pas une option de plus.",
+      "files": [
+        {
+          "path": "registry/aikoz/choice-group/choice-group.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/choice-card/choice-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "brand-logo",
+      "type": "registry:component",
+      "title": "BrandLogo",
+      "description": "Pastille de marque — registre des 19 assureurs du marche francais, identifiants repris du workflow n8n Aikoz. Deux formes : circle porte les INITIALES (un logo masque dans un rond de 40px devient une tache), plate porte le logo monochrome par masque CSS a son rapport d'origine. Le noir ou le blanc du contenu est MESURE depuis la luminance de la teinte. Le champ maskable est adosse a une mesure de couverture d'encre : au-dela de 0,40 le masque ne rend qu'une silhouette.",
+      "files": [
+        {
+          "path": "registry/aikoz/brand-logo/brand-logo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brands.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "leaderboard",
+      "type": "registry:component",
+      "title": "Leaderboard",
+      "description": "Classement d'etablissements, bati sur Table : un classement porte plusieurs attributs comparables par ligne, c'est la definition d'un tableau. PAS de RankRow exporte, contrairement au Figma — une ligne qui n'a de sens que dans son tableau est un rendu de cellule, pas un composant. Le podium or/argent/bronze est double par le chiffre du rang et un sr-only : il ne tient pas a la couleur.",
+      "files": [
+        {
+          "path": "registry/aikoz/leaderboard/leaderboard.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/skeleton/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/delta-badge/delta-badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/badge/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brand-logo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brands.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "logo-marquee",
+      "type": "registry:component",
+      "title": "LogoMarquee",
+      "description": "Bandeau de preuve client. IL NE DEFILE PAS : WCAG 2.2.2 impose un moyen de pause pour tout mouvement de plus de 5 secondes, soit un bouton et un arret de tabulation de plus pour une decoration — et la preuve ce sont les marques, pas leur deplacement. Passe a la ligne, ce qui regle le reflow. C'est une liste dans une section nommee, pas une suite d'images.",
+      "files": [
+        {
+          "path": "registry/aikoz/logo-marquee/logo-marquee.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brand-logo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brands.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "site-nav",
+      "type": "registry:component",
+      "title": "SiteNav",
+      "description": "En-tete de site — distinct de SidebarNav : premier element du document, porte le LIEN D'EVITEMENT (WCAG 2.4.1, il doit etre le premier focusable, donc il ne peut pas vivre ailleurs), et se replie en menu sur petit ecran. Le menu mobile est un disclosure et non une modale : il ne piege pas le focus, se ferme sur Echap et rend le focus au bouton. Menu ferme = attribut hidden, donc hors tabulation.",
+      "files": [
+        {
+          "path": "registry/aikoz/site-nav/site-nav.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "site-footer",
+      "type": "registry:component",
+      "title": "SiteFooter",
+      "description": "Pied de page de site. footer en fin de document = repere contentinfo implicite, a condition de n'etre imbrique dans aucun article ni section — une des rares balises ou le placement change le role. Intitules de colonne en span relie par aria-labelledby, pas en titres : le plan du document n'a pas a etre peuple par cinq intitules de pied de page. Un lien vers un nouvel onglet le dit dans son nom accessible.",
+      "files": [
+        {
+          "path": "registry/aikoz/site-footer/site-footer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "feature-panel",
+      "type": "registry:component",
+      "title": "FeaturePanel",
+      "description": "Panneau de leviers — « Quatre leviers » de la page Notre Solution. Le plan se DEDUIT : l'appelant donne le niveau du titre de section, les titres de leviers prennent le suivant, plafonne a h6. On ne peut donc pas sauter un niveau, c'est arithmetique. Une ul et non une grille de div : « quatre leviers » n'est pas une figure de style, un lecteur d'ecran annonce « liste de 4 elements ».",
+      "files": [
+        {
+          "path": "registry/aikoz/feature-panel/feature-panel.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "slot-picker",
+      "type": "registry:component",
+      "title": "SlotPicker",
+      "description": "Choix d'un creneau. UN SEUL fieldset pour tous les jours : le choix est unique sur l'ensemble, et un name commun laisse les fleches traverser toute la grille d'un jour a l'autre. Les jours nomment leur liste par aria-labelledby, ce qui donne le contexte sans decouper le groupe. Un creneau complet reste ANNONCE (« 11:00, complet ») : le retirer ferait croire que le cabinet n'ouvre pas a cette heure-la.",
+      "files": [
+        {
+          "path": "registry/aikoz/slot-picker/slot-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "booking-flow",
+      "type": "registry:component",
+      "title": "BookingFlow",
+      "description": "Prise de rendez-vous — modale du tunnel du prototype site, 2 etats de confirmation. NE PARLE A PERSONNE : ni serveur ni fetch, l'appelant passe un status et recoit un onSubmit. Le changement d'etat est annonce par role=status ET recoit le focus — deux canaux pour deux facons de naviguer : sans le focus, l'utilisateur resterait sur un bouton disparu. Validation a la soumission, jamais a la frappe.",
+      "files": [
+        {
+          "path": "registry/aikoz/booking-flow/booking-flow.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/slot-picker/slot-picker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/dialog/dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/input/input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/button/button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-slot"
+      ]
+    }
+  ]
+}

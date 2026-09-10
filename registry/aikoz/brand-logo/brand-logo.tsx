@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@registry/aikoz/lib/utils";
-import { BRAND_BY_ID, surTeinte, type Brand } from "@registry/aikoz/brand-logo/brands";
+import { BRAND_BY_ID, cheminLogo, surTeinte, type Brand } from "@registry/aikoz/brand-logo/brands";
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -169,8 +169,8 @@ export function BrandLogo({
             className="block h-[68%] w-full"
             style={{
               backgroundColor: encre,
-              WebkitMaskImage: `url(${m.asset})`,
-              maskImage: `url(${m.asset})`,
+              WebkitMaskImage: `url(${cheminLogo(m.asset)})`,
+              maskImage: `url(${cheminLogo(m.asset)})`,
               WebkitMaskSize: "contain",
               maskSize: "contain",
               WebkitMaskRepeat: "no-repeat",
@@ -184,7 +184,7 @@ export function BrandLogo({
           // pour ne jamais le déformer, et une hauteur en pourcentage plutôt
           // qu'un carré, pour qu'un logotype large occupe la plaque.
           <img
-            src={m.asset}
+            src={cheminLogo(m.asset)}
             alt=""
             aria-hidden="true"
             className="block h-[72%] w-auto max-w-full object-contain"
@@ -201,5 +201,5 @@ export function BrandLogo({
 }
 
 export { pastilleVariants as brandLogoVariants };
-export { BRANDS, BRAND_BY_ID, surTeinte } from "@registry/aikoz/brand-logo/brands";
+export { BRANDS, BRAND_BY_ID, surTeinte, definirBaseDesLogos, cheminLogo } from "@registry/aikoz/brand-logo/brands";
 export type { Brand } from "@registry/aikoz/brand-logo/brands";
