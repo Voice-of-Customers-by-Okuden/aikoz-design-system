@@ -87,7 +87,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 5 | `Badge` | Data display | shadcn | v1 | **livré** — 5 tons, contour porteur du contraste | — |
 | 6 | `Tooltip` | Feedback | shadcn | v1 | **livré** | — |
 | 7 | `Select` | Forms | shadcn | v1 | **livré** | — |
-| 8 | `ViewTabs` | Navigation | shadcn | v1 | **maquetté** (`ViewTab`) — bascule de vue dans la page, cf. décision 2 | — |
+| 8 | `ViewTabs` | Navigation | shadcn | v1 | **livré** — tabindex tournant, activation auto ou manuelle | — |
 | 9 | `Card` | Layout | shadcn | v1 | **livré** — 3 surfaces × 3 densités, prop `as` sémantique | — |
 | 10 | `ChoiceCard` | Navigation | aikoz | v1 | à créer — absent du code et du Figma | Card, Badge |
 | 11 | `DonutChart` | Data display | aikoz | v1 | **maquetté** (`SourcesDonut`), à créer | Select, Tooltip |
@@ -104,8 +104,8 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 22 | `Toast` (sonner) | Feedback | shadcn | plus tard | à créer — absent du code et du Figma | — |
 | 23 | `VerbatimCard` | Data display | aikoz | v1 | **livré** — rendue en `<article>`, troncature CSS | ScoreStars, Badge |
 | 24 | `ProgressBar` | Data display | aikoz | v1 | **livré** — 3 niveaux, rôles `status.*-fill` | — |
-| 25 | `SidebarNav` | Navigation | aikoz | v1 | **composant Figma** `Sidebar`, à créer — promu par la décision 2 | NavItem |
-| 26 | `NavItem` | Navigation | aikoz | v1 | **composant Figma** (3 états), à créer — brique de `SidebarNav` | — |
+| 25 | `SidebarNav` | Navigation | aikoz | v1 | **livré** — ni repli en icônes ni tiroir mobile : cela relève du gabarit | NavItem |
+| 26 | `NavItem` | Navigation | aikoz | v1 | **livré** — état courant sur 3 canaux (aria-current, trait, graisse) | — |
 | 27 | `Stepper` | Parcours · site | aikoz | v1 | **prototype site** — progression des 5 étapes du tunnel | — |
 | 28 | `BrandPicker` | Forms · site | aikoz | v1 | **prototype site** — grille de logos, « Sélectionnez votre marque » | — |
 | 29 | `SourceToggle` | Forms · site | aikoz | v1 | **prototype site** — Google / Trustpilot / Pages Jaunes, sélection multiple | Badge |
@@ -129,9 +129,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **13 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`), **23 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **16 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`, `SidebarNav`, `NavItem`, `ViewTabs`), **20 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
-*Les 13 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+*Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
 *Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 

@@ -134,6 +134,36 @@
     "$value": "{color.status.error-fill-edge}",
     "$description": "extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas"
   },
+  "nav-surface": {
+    "$type": "color",
+    "$value": "{color.nav.surface}",
+    "$description": "extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte"
+  },
+  "nav-surface-active": {
+    "$type": "color",
+    "$value": "{color.nav.surface-active}",
+    "$description": "extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair)"
+  },
+  "nav-border": {
+    "$type": "color",
+    "$value": "{color.nav.border}",
+    "$description": "extension DS — separateur de la barre de navigation"
+  },
+  "nav-on": {
+    "$type": "color",
+    "$value": "{color.nav.on}",
+    "$description": "extension DS — texte de la navigation"
+  },
+  "nav-on-muted": {
+    "$type": "color",
+    "$value": "{color.nav.on-muted}",
+    "$description": "extension DS — texte de navigation en retrait — entree non courante"
+  },
+  "nav-accent": {
+    "$type": "color",
+    "$value": "{color.nav.accent}",
+    "$description": "extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat"
+  },
   "track": {
     "$type": "color",
     "$value": "{color.surface.track}",

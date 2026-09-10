@@ -50,9 +50,9 @@
   --color-status-info-subtle: var(--color-info-50);
   --color-status-info-border: var(--color-info-300);
   --color-nav-surface-active: var(--color-neutral-100);
-  --color-nav-border: var(--color-neutral-200);
+  --color-nav-border: var(--color-neutral-200); /** Séparateur INTERNE de la barre de navigation — entre deux groupes d'entrées. 1,44:1 en clair, 1,22:1 en sombre : volontairement discret, et hors du champ de WCAG 1.4.11, qui vise les limites nécessaires pour identifier un composant ou son état. Ici les composants sont les liens, et ils sont perceptibles. La limite EXTERNE de la barre, elle, est portée par --border-strong : la surface de la barre ne se détache de la page que de 1,09:1, il faut donc un trait qui la délimite. */
   --color-nav-on: var(--color-midnight-blue-900);
-  --color-nav-on-muted: var(--color-neutral-500);
+  --color-nav-on-muted: var(--color-neutral-600); /** Texte de navigation en retrait — entrée non courante. neutral.500 n'atteignait que 4,44:1 sur la barre, sous le seuil 4,5 de WCAG 1.4.3 : un libellé de menu est du texte, pas un ornement. neutral.600 : 7,14:1. */
   --color-chart-1: var(--color-ultramarine-500); /** Série de données 1 (tracé). ultramarine.500 light, aquamarine.300 dark — contraste graphique >= 3:1 sur carte. Mappé sur --chart-1. */
   --color-rating-default: var(--color-warning-500); /** Couleur de notation — étoiles pleines. ARBITRAGE DESIGN ASSUMÉ, décidé par Alice le 10/09/2026 : l'équipe trouvait warning.700 trop terne. warning.500 mesure 2,18:1 sur --card et 2,00:1 sur --background — SOUS le seuil 3:1 de WCAG 1.4.11. Le doré prime ici sur la conformité, en connaissance de cause. Ce que ça n'entame pas : l'information n'est pas portée par la seule couleur — l'étoile pleine et l'étoile vide diffèrent par la FORME (aplat contre contour), et ScoreStars expose la note en aria-label. Ce qui reste dégradé : un utilisateur malvoyant peut peiner à percevoir les étoiles elles-mêmes. Le dark n'est pas concerné, il reste conforme. */
   --color-rating-empty: var(--color-neutral-200); /** Étoile vide — éclaircie de neutral.300 à .200 pour que le doré ressorte davantage, ce qui était la demande. Effet secondaire utile : l'écart plein/vide passe de 1,14 à 1,52:1. */
