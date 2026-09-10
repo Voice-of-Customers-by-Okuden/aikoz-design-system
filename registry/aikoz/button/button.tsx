@@ -8,7 +8,13 @@ import { cn } from "@registry/aikoz/lib/utils";
 const buttonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2",
-    "rounded-full font-medium whitespace-nowrap",
+    "rounded-full font-medium",
+    // Pas de `whitespace-nowrap` : avec lui, un libellé long sortait du
+    // conteneur et se faisait rogner — un bouton qui découpe son propre
+    // libellé est cassé, et sur mobile le texte disparaissait purement.
+    // Le repli gracieux est le retour à la ligne : la pastille s'allonge,
+    // ce qui signale au passage qu'il faut raccourcir l'intitulé.
+    "max-w-full text-center text-balance",
     "transition-colors duration-150",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
     "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
@@ -35,9 +41,9 @@ const buttonVariants = cva(
         ],
       },
       size: {
-        sm: "h-9 px-4 text-sm",
-        md: "h-11 px-6 text-sm",
-        lg: "h-12 px-8 text-base",
+        sm: "min-h-9 px-4 py-2 text-sm",
+        md: "min-h-11 px-6 py-2.5 text-sm",
+        lg: "min-h-12 px-8 py-3 text-base",
       },
     },
     defaultVariants: {
