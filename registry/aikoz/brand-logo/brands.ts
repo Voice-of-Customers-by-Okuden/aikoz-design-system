@@ -90,20 +90,35 @@ export const BRAND_BY_ID: Record<string, Brand> = Object.fromEntries(
 /**
  * Noir ou blanc sur une teinte donnée, décidé par la MESURE et non à l'œil.
  *
- * On calcule la luminance relative WCAG de la couleur, puis on retient celui
- * des deux qui contraste le plus. C'est ce qui rend le jaune d'Abeille
- * (#FFD500) et le marine de Matmut (#000069) également lisibles sans que
- * personne ait à trancher marque par marque — et ce qui empêche une couleur
- * ajoutée demain d'arriver avec du texte illisible.
+ * On calcule le contraste de la teinte contre les DEUX encres réellement
+ * utilisées, et on retient la meilleure. « Réellement utilisées » n'est pas
+ * une précaution de style : la première version décidait en comparant au noir
+ * PUR puis rendait un noir adouci (#0B0B0B), et perdait 0,3 point au passage.
+ * AÉSIO en faisait les frais — 4,49:1 mesuré là où le calcul annonçait 4,79,
+ * donc sous le seuil sans que rien ne le signale. Décider sur une valeur
+ * qu'on ne rend pas, c'est mesurer autre chose que ce qu'on affiche.
+ *
+ * L'encre sombre est donc le noir franc. Sur une pastille de 24 px portant
+ * deux lettres à 11 px, la lisibilité prime sur la douceur du gris.
  */
-export function surTeinte(hex: string): "#FFFFFF" | "#0B0B0B" {
+const NOIR = "#000000";
+const BLANC = "#FFFFFF";
+
+function luminance(hex: string): number {
   const h = hex.replace("#", "");
   const v = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
   const [r, g, b] = [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16) / 255);
   const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
-  const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
-  // Contraste contre blanc et contre quasi-noir, on garde le meilleur.
-  const surBlanc = 1.05 / (L + 0.05);
-  const surNoir = (L + 0.05) / 0.05;
-  return surNoir >= surBlanc ? "#0B0B0B" : "#FFFFFF";
+  return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+}
+
+/** Contraste WCAG entre deux couleurs hexadécimales. */
+export function contraste(a: string, b: string): number {
+  const x = luminance(a);
+  const y = luminance(b);
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+}
+
+export function surTeinte(hex: string): typeof NOIR | typeof BLANC {
+  return contraste(hex, NOIR) >= contraste(hex, BLANC) ? NOIR : BLANC;
 }
