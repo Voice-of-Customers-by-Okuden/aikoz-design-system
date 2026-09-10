@@ -293,8 +293,33 @@
     "chart": {
       "1": {
         "$type": "color",
-        "$value": "{color.brand.secondary}",
-        "$description": "Tracé de série. L'aquamarine étant hors-jeu sur clair, la courbe passe en ultramarine."
+        "$value": "{color.ultramarine.600}",
+        "$description": "Série de données 1. Palette CATÉGORIELLE : les six teintes sont choisies dans six familles différentes et vérifiées à 3:1 minimum sur la carte. Ce qu'elles ne peuvent PAS faire, et c'est mesuré : se distinguer les unes des autres à l'œil seul — la meilleure séparation atteignable entre six séries de cette palette est de 1,17:1, donc elles se confondent en niveaux de gris. La distinction repose sur le TRACÉ (pointillés) et le MARQUEUR (forme), la couleur ne faisant que renforcer. WCAG 1.4.1."
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.aquamarine.700}",
+        "$description": "Série de données 2. Palette CATÉGORIELLE : les six teintes sont choisies dans six familles différentes et vérifiées à 3:1 minimum sur la carte. Ce qu'elles ne peuvent PAS faire, et c'est mesuré : se distinguer les unes des autres à l'œil seul — la meilleure séparation atteignable entre six séries de cette palette est de 1,17:1, donc elles se confondent en niveaux de gris. La distinction repose sur le TRACÉ (pointillés) et le MARQUEUR (forme), la couleur ne faisant que renforcer. WCAG 1.4.1."
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.warning.700}",
+        "$description": "Série de données 3. Palette CATÉGORIELLE : les six teintes sont choisies dans six familles différentes et vérifiées à 3:1 minimum sur la carte. Ce qu'elles ne peuvent PAS faire, et c'est mesuré : se distinguer les unes des autres à l'œil seul — la meilleure séparation atteignable entre six séries de cette palette est de 1,17:1, donc elles se confondent en niveaux de gris. La distinction repose sur le TRACÉ (pointillés) et le MARQUEUR (forme), la couleur ne faisant que renforcer. WCAG 1.4.1."
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.error.700}",
+        "$description": "Série de données 4. Palette CATÉGORIELLE : les six teintes sont choisies dans six familles différentes et vérifiées à 3:1 minimum sur la carte. Ce qu'elles ne peuvent PAS faire, et c'est mesuré : se distinguer les unes des autres à l'œil seul — la meilleure séparation atteignable entre six séries de cette palette est de 1,17:1, donc elles se confondent en niveaux de gris. La distinction repose sur le TRACÉ (pointillés) et le MARQUEUR (forme), la couleur ne faisant que renforcer. WCAG 1.4.1."
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.info.600}",
+        "$description": "Série de données 5. Palette CATÉGORIELLE : les six teintes sont choisies dans six familles différentes et vérifiées à 3:1 minimum sur la carte. Ce qu'elles ne peuvent PAS faire, et c'est mesuré : se distinguer les unes des autres à l'œil seul — la meilleure séparation atteignable entre six séries de cette palette est de 1,17:1, donc elles se confondent en niveaux de gris. La distinction repose sur le TRACÉ (pointillés) et le MARQUEUR (forme), la couleur ne faisant que renforcer. WCAG 1.4.1."
+      },
+      "6": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Série de données 6. Palette CATÉGORIELLE : les six teintes sont choisies dans six familles différentes et vérifiées à 3:1 minimum sur la carte. Ce qu'elles ne peuvent PAS faire, et c'est mesuré : se distinguer les unes des autres à l'œil seul — la meilleure séparation atteignable entre six séries de cette palette est de 1,17:1, donc elles se confondent en niveaux de gris. La distinction repose sur le TRACÉ (pointillés) et le MARQUEUR (forme), la couleur ne faisant que renforcer. WCAG 1.4.1."
       }
     },
     "rating": {
