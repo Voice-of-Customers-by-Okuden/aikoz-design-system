@@ -26,6 +26,9 @@ import { BrandLogo } from "@registry/aikoz/brand-logo/brand-logo";
 import { BRANDS } from "@registry/aikoz/brand-logo/brands";
 import { Leaderboard } from "@registry/aikoz/leaderboard/leaderboard";
 import { LogoMarquee } from "@registry/aikoz/logo-marquee/logo-marquee";
+import { SiteNav } from "@registry/aikoz/site-nav/site-nav";
+import { SiteFooter } from "@registry/aikoz/site-footer/site-footer";
+import { FeaturePanel } from "@registry/aikoz/feature-panel/feature-panel";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -998,6 +1001,51 @@ export default function App() {
             donc un bouton, un état, un arrêt de tabulation de plus, pour une décoration. La
             preuve, ce sont les marques, pas leur déplacement.
           </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          SiteNav, FeaturePanel, SiteFooter — la coque du site
+        </h2>
+        <div className="flex flex-col gap-8">
+          <div className="rounded-[var(--radius)] border border-border overflow-hidden">
+            <SiteNav
+              links={[
+                { label: "Notre solution", href: "#solution", current: true },
+                { label: "Secteurs", href: "#secteurs" },
+                { label: "Ressources", href: "#ressources" },
+              ]}
+              actions={<Button size="sm">Demander une démo</Button>}
+              skipTo="#demo-contenu"
+            />
+            <div id="demo-contenu" className="p-4 text-xs text-muted-foreground bg-background">
+              Le lien d'évitement est le premier élément focusable de l'en-tête : tabule
+              depuis le haut de la page pour le voir apparaître. Sous 768 px, la navigation
+              se replie en menu.
+            </div>
+          </div>
+
+          <FeaturePanel
+            title="Quatre leviers"
+            intro="Ce que le pilotage des avis change vraiment, une fois branché sur vos données."
+            features={[
+              { metric: "×3", title: "Taux de réponse", description: "Les agences pilotées répondent trois fois plus vite qu'avant la mise en place." },
+              { metric: "48 h", title: "Détection des signaux", description: "Un décrochage local est remonté avant qu'il ne devienne une tendance." },
+              { metric: "12", title: "Sources unifiées", description: "Google, Trustpilot, annuaires : une seule note, un seul verbatim de référence." },
+              { metric: "0", title: "Ressaisie", description: "Les tableaux de bord se branchent sur l'existant, sans double saisie." },
+            ]}
+          />
+
+          <div className="rounded-[var(--radius)] border border-border overflow-hidden">
+            <SiteFooter
+              tagline="Le pilotage des avis clients pour les réseaux d'assurance, d'assistance et de mobilité."
+              groups={[
+                { label: "Solution", links: [{ label: "Tableau de bord", href: "#tb" }, { label: "Hall of Fames", href: "#hof" }, { label: "Alertes", href: "#al" }] },
+                { label: "Secteurs", links: [{ label: "Assurance", href: "#as" }, { label: "Mobilité", href: "#mo" }, { label: "Santé", href: "#sa" }] },
+                { label: "Ressources", links: [{ label: "Études", href: "#et" }, { label: "Documentation", href: "#doc", external: true }] },
+              ]}
+              legal={[{ label: "Mentions légales", href: "#ml" }, { label: "Confidentialité", href: "#cf" }, { label: "Cookies", href: "#ck" }]}
+            />
+          </div>
         </div>
 
         {/* Bandeau de statut bridge */}

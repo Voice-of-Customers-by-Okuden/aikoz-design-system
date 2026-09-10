@@ -114,9 +114,9 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 31 | `Accordion` | Layout · site | shadcn | v1 | **livré** — `hidden` sur le panneau fermé, bouton enveloppé dans un titre | — |
 | 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
 | 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **livré** — ne défile pas : WCAG 2.2.2, cf. le composant | BrandLogo |
-| 34 | `FeaturePanel` | Layout · site | aikoz | v1 | **prototype site** — « Quatre leviers », page Notre Solution | — |
-| 35 | `SiteNav` | Navigation · site | aikoz | v1 | **prototype site** — en-tête des 3 pages. ⚠ distinct de `SidebarNav` : navigation de site, pas d'application | — |
-| 36 | `SiteFooter` | Navigation · site | aikoz | v1 | **prototype site** — pied des 3 pages | — |
+| 34 | `FeaturePanel` | Layout · site | aikoz | v1 | **livré** — le niveau des sous-titres se déduit de celui de la section | — |
+| 35 | `SiteNav` | Navigation · site | aikoz | v1 | **livré** — porte le lien d'évitement ; menu mobile en disclosure, pas en modale | — |
+| 36 | `SiteFooter` | Navigation · site | aikoz | v1 | **livré** — 0 titre dans le plan du document, colonnes nommées par aria-labelledby | — |
 
 **Compte** : 36 composants = **14 d'origine shadcn** + **22 spécifiques Aikoz**.
 
@@ -130,7 +130,7 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **28 livrés** — les 25 précédents plus `BrandLogo`, `Leaderboard` et `LogoMarquee`. **7 à construire**, dont **5 charts qui restent à l'arbitrage d'Alice** : ne restent donc que `MapWidget`, `FeaturePanel`, `SiteNav`, `SiteFooter`, `BookingFlow` et `Toast` (reporté).
+État réel : **31 livrés** — les 28 précédents plus `SiteNav`, `SiteFooter` et `FeaturePanel`. **4 à construire** hors charts : `MapWidget`, `BookingFlow`, `Toast` (reporté) — et les **5 charts, qui restent à l'arbitrage d'Alice**.
 
 *Les 13 premiers livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces. Les suivants couvrent les deux périmètres — `Table`, `Select` et `DateRangePicker` côté dashboard, `Accordion`, `Stepper` et `ChoiceGroup` côté site.*
 
