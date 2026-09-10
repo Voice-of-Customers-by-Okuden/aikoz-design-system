@@ -29,6 +29,8 @@ import { LogoMarquee } from "@registry/aikoz/logo-marquee/logo-marquee";
 import { SiteNav } from "@registry/aikoz/site-nav/site-nav";
 import { SiteFooter } from "@registry/aikoz/site-footer/site-footer";
 import { FeaturePanel } from "@registry/aikoz/feature-panel/feature-panel";
+import { BookingFlow, type BookingStatus } from "@registry/aikoz/booking-flow/booking-flow";
+import { SlotPicker } from "@registry/aikoz/slot-picker/slot-picker";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -73,11 +75,34 @@ function ButtonDemoContent() {
   );
 }
 
+const JOURS = [
+  {
+    label: "Mardi 14 avril",
+    slots: [
+      { value: "2026-04-14T09:00", time: "09:00" },
+      { value: "2026-04-14T09:30", time: "09:30", full: true },
+      { value: "2026-04-14T10:00", time: "10:00" },
+      { value: "2026-04-14T11:00", time: "11:00", full: true },
+      { value: "2026-04-14T14:00", time: "14:00" },
+    ],
+  },
+  {
+    label: "Mercredi 15 avril",
+    slots: [
+      { value: "2026-04-15T09:00", time: "09:00" },
+      { value: "2026-04-15T10:30", time: "10:30" },
+      { value: "2026-04-15T16:00", time: "16:00" },
+    ],
+  },
+];
+
 export default function App() {
   const [dark, setDark] = useState(false);
   const [view, setView] = useState<View>("décisions");
   const [register, setRegister] = useState<"produit" | "marketing">("produit");
   const [tri, setTri] = useState<TableSort>({ key: "taux", direction: "desc" });
+  const [rdv, setRdv] = useState<BookingStatus>("form");
+  const [creneau, setCreneau] = useState("");
 
   // Le registre marketing s'applique par attribut, comme data-brand : additif,
   // il n'écrase ni light ni dark et s'imbrique dans une page produit.
@@ -1045,6 +1070,41 @@ export default function App() {
               ]}
               legal={[{ label: "Mentions légales", href: "#ml" }, { label: "Confidentialité", href: "#cf" }, { label: "Cookies", href: "#ck" }]}
             />
+          </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          SlotPicker et BookingFlow
+        </h2>
+        <div className="flex flex-col gap-6">
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <SlotPicker
+              legend="Choisissez un créneau"
+              value={creneau}
+              onValueChange={setCreneau}
+              days={JOURS}
+            />
+            <p className="text-xs text-muted-foreground mt-4 mb-0">
+              Un seul <code className="font-mono px-1">fieldset</code> pour les deux jours :
+              les flèches traversent toute la grille. Les créneaux complets restent annoncés
+              — « 11:00, complet » — au lieu d'être retirés.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 rounded-[var(--radius)] border border-border bg-card p-5">
+            <BookingFlow
+              days={JOURS}
+              status={rdv}
+              onSubmit={() => setRdv("confirmed")}
+              trigger={<Button>Réserver une démonstration</Button>}
+              onOpenChange={(o) => { if (!o) setRdv("form"); }}
+            />
+            <span className="text-xs text-muted-foreground">état&nbsp;:</span>
+            {(["form", "confirmed", "failed"] as const).map((e) => (
+              <Button key={e} size="sm" variant={rdv === e ? "secondary" : "outline"} onClick={() => setRdv(e)}>
+                {e}
+              </Button>
+            ))}
           </div>
         </div>
 
