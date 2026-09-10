@@ -10,6 +10,8 @@ import { Input } from "@registry/aikoz/input/input";
 import { Card } from "@registry/aikoz/card/card";
 import { Avatar } from "@registry/aikoz/avatar/avatar";
 import { Dialog } from "@registry/aikoz/dialog/dialog";
+import { Select } from "@registry/aikoz/select/select";
+import { Tooltip } from "@registry/aikoz/tooltip/tooltip";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -534,6 +536,87 @@ export default function App() {
             <div className="w-32"><ProgressBar value={70} size="md" /></div>
             <div className="w-32"><ProgressBar value={70} size="lg" /></div>
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Select — filtres de tableau de bord
+        </h2>
+        <div className="grid gap-5 sm:grid-cols-2 rounded-[var(--radius)] border border-border bg-card p-5">
+          <Select
+            label="Période"
+            defaultValue="30j"
+            options={[
+              { value: "7j", label: "7 derniers jours" },
+              { value: "30j", label: "30 derniers jours" },
+              { value: "90j", label: "90 derniers jours" },
+              { value: "12m", label: "12 derniers mois" },
+            ]}
+          />
+          <Select
+            label="Source"
+            description="Plateforme d'origine des avis"
+            placeholder="Toutes les sources"
+            options={[
+              { value: "google", label: "Google", group: "Généralistes" },
+              { value: "trustpilot", label: "Trustpilot", group: "Généralistes" },
+              { value: "avis-verifies", label: "Avis Vérifiés", group: "Certifiés" },
+              { value: "opinion", label: "Opinion System", group: "Certifiés", disabled: true },
+            ]}
+          />
+          <Select
+            label="Agence"
+            required
+            error="Sélectionnez une agence pour filtrer le classement."
+            options={[
+              { value: "lyon", label: "Lyon Part-Dieu" },
+              { value: "paris", label: "Paris Opéra" },
+            ]}
+          />
+          <Select
+            label="Vue"
+            labelHidden
+            size="sm"
+            defaultValue="synthese"
+            options={[
+              { value: "synthese", label: "Synthèse" },
+              { value: "detail", label: "Détail" },
+            ]}
+          />
+          <Select
+            label="Désactivé"
+            disabled
+            defaultValue="x"
+            options={[{ value: "x", label: "Indisponible" }]}
+          />
+          <Select
+            label="Taille lg"
+            size="lg"
+            defaultValue="a"
+            options={[{ value: "a", label: "Option A" }, { value: "b", label: "Option B" }]}
+          />
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Tooltip — confort, jamais nécessité
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex items-center gap-3 flex-wrap">
+            <Tooltip content="Nombre d'avis reçus sur la période, toutes sources confondues.">
+              <Button variant="outline" size="sm">Avis traités</Button>
+            </Tooltip>
+            <Tooltip side="right" content="12 mars 2026 à 14:07">
+              <Button variant="ghost" size="sm">il y a 3 j</Button>
+            </Tooltip>
+            <Tooltip side="bottom" content="Le libellé complet de la colonne, abrégé faute de place dans l'en-tête du tableau.">
+              <Button variant="ghost" size="sm">Tx. rép.</Button>
+            </Tooltip>
+          </div>
+          <p className="text-xs text-muted-foreground m-0 pt-2 border-t border-border">
+            Le déclencheur garde son propre nom accessible : Radix relie l'infobulle par
+            <code className="font-mono px-1">aria-describedby</code>, pas par
+            <code className="font-mono px-1">aria-label</code>. Un bouton en icône seule aurait
+            besoin des deux.
+          </p>
         </div>
 
         {/* Bandeau de statut bridge */}

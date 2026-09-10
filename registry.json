@@ -248,6 +248,49 @@
         "score-stars",
         "badge"
       ]
+    },
+    {
+      "name": "select",
+      "type": "registry:component",
+      "title": "Select",
+      "description": "Liste de selection — transposee du MiniSelect des maquettes. Bati sur Radix : vrai listbox, navigation clavier complete, coche en plus de la graisse. Libelle visible obligatoire, aligne au pixel sur Input. Pour un choix long et sans mise en forme (pays, annee), preferer un select natif.",
+      "files": [
+        {
+          "path": "registry/aikoz/select/select.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-select"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:component",
+      "title": "Tooltip",
+      "description": "Infobulle. Ne porte JAMAIS une information necessaire : elle n'existe ni au tactile, ni a l'impression. Bati sur Radix, qui fournit les trois obligations de WCAG 1.4.13 : fermeture par Echap, survol du contenu possible, persistance. Un declencheur disabled n'ouvre rien — utiliser aria-disabled.",
+      "files": [
+        {
+          "path": "registry/aikoz/tooltip/tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-tooltip"
+      ]
     }
   ]
 }
