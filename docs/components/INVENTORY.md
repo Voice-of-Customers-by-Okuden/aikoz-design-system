@@ -109,7 +109,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 27 | `Stepper` | Parcours · site | aikoz | v1 | **prototype site** — progression des 5 étapes du tunnel | — |
 | 28 | `BrandPicker` | Forms · site | aikoz | v1 | **prototype site** — grille de logos, « Sélectionnez votre marque » | — |
 | 29 | `SourceToggle` | Forms · site | aikoz | v1 | **prototype site** — Google / Trustpilot / Pages Jaunes, sélection multiple | Badge |
-| 30 | `Input` | Forms | shadcn | v1 | **composant Figma** (4 états) — nom d'agence, `SearchBar` ; absent de la v1.2 | — |
+| 30 | `Input` | Forms | shadcn | v1 | **livré** — 4 états, libellé obligatoire, erreur en `role=alert` | — |
 | 31 | `Accordion` | Layout · site | shadcn | v1 | **prototype site** — FAQ groupée, une seule ouverte à la fois | — |
 | 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
 | 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **prototype site** — bandeau de preuve client | — |
@@ -129,9 +129,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **7 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`), **29 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **8 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`), **28 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
-*Les 7 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+*Les 8 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
 *Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 
@@ -377,7 +377,7 @@ Le branchement du système se fait **en priorité sur le site**, le dashboard pu
 
 1. [x] **`KpiCard` refondu** sur `variant` × `density` — 4 variantes × 3 densités, niveau déduit de l'objectif.
 2. [x] **`VerbatimCard`** livrée, et `Badge` avec. Le composant `Tag` que l'inventaire listait en dépendance n'existe pas : un tag de sentiment est un `Badge` avec un autre contenu.
-3. **`Card`, `Badge`, `Input`, `Avatar`, `Dialog`** — les partagés d'origine shadcn, travail d'habillage.
+3. **`Card`, `Avatar`, `Dialog`** — les partagés d'origine shadcn restants (`Badge` et `Input` sont livrés). ← prochaine étape
 4. **`Leaderboard`, `RankedBarChart`** — le `marqueDash` du tunnel les demande, et le dashboard aussi.
 5. **Composants de tunnel** : `Stepper`, `ChoiceCard`, `BrandPicker`, `SourceToggle`, `BookingFlow`.
 6. **Pages de site** : `SiteNav`, `SiteFooter`, `Accordion`, `FeaturePanel`, `LogoMarquee`.
