@@ -989,13 +989,12 @@ export default function App() {
             <BrandLogo brand="inconnue" showName />
           </div>
           <p className="text-xs text-muted-foreground m-0 pt-3 border-t border-border">
-            Une plaque montre <strong>toujours</strong> le logo quand un fichier existe :
-            monochrome sur la teinte de la marque quand le fichier s'y prête, en couleur
-            d'origine sur fond clair sinon — un logo bâti sur une forme pleine n'existe que
-            par ses couleurs internes. Seule Swiss Life reste en initiales : son site bloque
-            tout accès automatisé, il n'y a pas de fichier. Le noir ou le blanc du contenu
-            est <strong>mesuré</strong> depuis la luminance de la teinte, jamais choisi
-            marque par marque.
+            Les 19 marques ont un logo — plus aucune initiale. Une seule surface pour
+            toutes les plaques : 12 logos monochromes <strong>encrés</strong> à la teinte de
+            marque, 7 en couleur d'origine parce qu'un logo bâti sur une forme pleine
+            n'existe que par ses couleurs internes. L'encre retombe sur du sombre quand la
+            teinte ne tient pas 3:1 sur la plaque — le jaune d'Abeille y donne 1,42.
+            Tout est <strong>mesuré</strong>, jamais choisi marque par marque.
           </p>
         </div>
 

@@ -80,7 +80,7 @@ export const BRANDS: Brand[] = [
   { id: "maaf",             name: "MAAF",             color: "#0093D0", initials: "MA", asset: "maaf.png", maskable: false }, // encre 1.00
   { id: "gmf",              name: "GMF",              color: "#004696", initials: "GM", asset: "gmf.svg", maskable: false }, // encre 0.43
   { id: "maif",             name: "MAIF",             color: "#ED2131", initials: "MI", asset: "maif.svg", maskable: false }, // encre 0.47
-  { id: "swisslife",        name: "Swiss Life",       color: "#004750", initials: "SL" },
+  { id: "swisslife",        name: "Swiss Life",       color: "#E50028", initials: "SL", asset: "swisslife.svg" }, // encre 0.18
   { id: "abeille",          name: "Abeille",          color: "#FFD500", initials: "AB", asset: "abeille.svg" }, // encre 0.24
   { id: "harmonie-mutuelle",name: "Harmonie Mutuelle",color: "#E94E24", initials: "HM", asset: "harmonie-mutuelle.png" }, // encre 0.25
   { id: "aesio",            name: "AÉSIO",            color: "#E62C33", initials: "AE", asset: "aesio.svg" }, // encre 0.28
