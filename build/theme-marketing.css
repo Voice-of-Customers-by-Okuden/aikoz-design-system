@@ -1,0 +1,68 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+[data-register="marketing"] {
+  --color-text-primary: oklch(1 0 0); /** Texte principal. Blanc pur, comme le bundle marketing existant. */
+  --color-text-on-action-secondary: oklch(1 0 0); /** Sur l'ultramarine, le texte passe en blanc et non en midnight. */
+  --color-nav-on: oklch(1 0 0);
+  --color-surface-page: var(--color-midnight-blue-900); /** Fond de page. Le midnight de marque lui-même, là où le dashboard dark descend en .950 : le site assume la couleur de marque en fond plein, le produit non. */
+  --color-surface-default: var(--color-midnight-blue-800); /** Surface de contenu posée sur la page. */
+  --color-surface-raised: var(--color-midnight-blue-800); /** Carte sur fond de page. */
+  --color-surface-overlay: var(--color-midnight-blue-700); /** Modale, popover — un cran plus clair que les cartes pour s'en détacher. */
+  --color-surface-track: var(--color-midnight-blue-700); /** Piste de jauge — 1,14:1 sur la carte, sous 3:1, assumé : c'est le REMPLISSAGE qui porte la valeur, et il contraste au-dessus de 3:1 contre la piste (4,68 à 9,18) ET contre la carte (5,33 à 10,45). Pas neutral.700 comme en dark : sur fond bleuté un gris rompt la teinte. */
+  --color-surface-sunken: var(--color-midnight-blue-950); /** Creux — champs de saisie, en-têtes. */
+  --color-surface-hover: var(--color-midnight-blue-700); /** Survol d'une surface. */
+  --color-surface-active: var(--color-midnight-blue-600); /** Surface enfoncée. */
+  --color-surface-brand-subtle: var(--color-midnight-blue-800); /** Teinte de marque discrète. */
+  --color-surface-accent: var(--color-aquamarine-900); /** Fond teinté d'accent, très sombre — pour une zone à souligner sans la peindre en aqua. */
+  --color-text-secondary: var(--color-ultramarine-200); /** Texte secondaire TEINTÉ BLEU, et non gris comme en dashboard dark. C'est la différence de registre la plus visible : le site reste dans la famille de marque jusque dans son texte discret. */
+  --color-text-tertiary: var(--color-midnight-blue-300); /** Légendes, dates, mentions. */
+  --color-text-disabled: var(--color-midnight-blue-500);
+  --color-text-muted: var(--color-ultramarine-200); /** Alias de secondary — même teinte bleutée. */
+  --color-text-inverse: var(--color-midnight-blue-900); /** Texte sur les rares surfaces claires. */
+  --color-text-brand: var(--color-ultramarine-300); /** Lien sur fond sombre — l'ultramarine.500 des fonds clairs n'y passe pas. */
+  --color-text-brand-hover: var(--color-ultramarine-225);
+  --color-text-accent: var(--color-aquamarine-300); /** Texte d'accent — chiffres de section, mots mis en exergue. Réservé, jamais du texte courant. */
+  --color-text-on-action: var(--color-midnight-blue-900);
+  --color-border-default: var(--color-midnight-blue-700); /** Séparateur décoratif — 1,14:1 sur carte, sous 3:1, assumé et cohérent avec light et dark (mesurés 1,44 et 1,14). Une bordure qui doit être PERÇUE utilise strong ou input, pas celle-ci. */
+  --color-border-subtle: var(--color-midnight-blue-800);
+  --color-border-strong: var(--color-midnight-blue-300); /** Séparateur porteur — 6,77:1 sur carte, 7,28:1 sur page. C'est la bordure à utiliser quand le trait porte de l'information (délimiter une zone cliquable, cerner un badge). */
+  --color-border-brand: var(--color-ultramarine-300);
+  --color-border-disabled: var(--color-midnight-blue-700); /** Champ désactivé — volontairement en retrait, l'effacement EST l'information. */
+  --color-border-input: var(--color-midnight-blue-400); /** Bordure de champ — 4,09:1 sur carte, 4,40:1 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier .700 des séparateurs ne donnait que 1,53:1. Bleuté et non gris : sur fond midnight un gris rompt la teinte. */
+  --color-status-success: var(--color-success-400);
+  --color-status-success-subtle: var(--color-success-950);
+  --color-status-success-border: var(--color-success-700);
+  --color-status-success-text: var(--color-success-400);
+  --color-status-success-fill: var(--color-success-400);
+  --color-status-warning: var(--color-warning-400);
+  --color-status-warning-subtle: var(--color-warning-950);
+  --color-status-warning-border: var(--color-warning-700);
+  --color-status-warning-text: var(--color-warning-400);
+  --color-status-warning-fill: var(--color-warning-400);
+  --color-status-error: var(--color-error-400);
+  --color-status-error-subtle: var(--color-error-950);
+  --color-status-error-border: var(--color-error-700);
+  --color-status-error-text: var(--color-error-400); /** Rouge lisible sur fond sombre. Louis avait raison sur ce point : le bundle marketing n'avait pas de rouge pensé pour le sombre, son #FF4D6D mesurait mieux que le #DC2626 du système. error.400 remplit ce rôle sans quitter la palette. */
+  --color-status-error-fill: var(--color-error-400);
+  --color-status-info: var(--color-info-400);
+  --color-status-info-subtle: var(--color-info-950);
+  --color-status-info-border: var(--color-info-700);
+  --color-nav-surface: var(--color-midnight-blue-900); /** Barre de navigation du site — même fond que la page, séparée par un trait. */
+  --color-nav-surface-active: var(--color-midnight-blue-800);
+  --color-nav-border: var(--color-midnight-blue-700);
+  --color-nav-on-muted: var(--color-ultramarine-300); /** Entrée de nav inactive. */
+  --color-chart-1: var(--color-aquamarine-300); /** Tracé de série. Sur le site l'accent porte la donnée, c'est un usage légitime : la courbe EST l'information. */
+  --color-rating-default: var(--color-warning-400); /** Étoiles pleines sur fond sombre. Palier 400 et non 600 : sur du midnight c'est le clair qui contraste. */
+  --color-rating-empty: var(--color-midnight-blue-600); /** Étoile vide — repère d'échelle, décoratif. */
+  --color-surface-brand: var(--color-brand-primary); /** Aplat de marque. */
+  --color-surface-brand-hover: var(--color-brand-primary-hover);
+  --color-surface-brand-active: var(--color-brand-primary-active);
+  --color-surface-action: var(--color-brand-accent); /** LE SEUL aplat en aquamarine du registre : le CTA. C'est la règle qui manquait au lead magnet, où l'accent servait à la fois de texte, de fond, de contour et d'ombre — une couleur qui sert à tout ne signale plus rien. */
+  --color-surface-action-secondary: var(--color-brand-secondary); /** Action secondaire — l'ultramarine, pas l'accent. */
+  --color-text-on-accent: var(--color-brand-on-accent); /** Texte posé sur le CTA aquamarine. */
+  --color-border-focus: var(--color-brand-accent); /** Anneau de focus clavier. */
+  --color-border-accent: var(--color-brand-accent); /** Liseré d'accent — le trait gauche d'un bloc mis en avant. */
+  --color-nav-accent: var(--color-brand-accent); /** Entrée active — le trait, pas le fond. */
+}

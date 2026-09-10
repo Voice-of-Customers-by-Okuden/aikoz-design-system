@@ -76,3 +76,40 @@
   --chart-1: oklch(0.9098 0.1389 170.506); /** extension DS — tracé série de données 1 */
   --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
 }
+
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+[data-register="marketing"] {
+  --background: oklch(0.1857 0.048 268.675); /** shadcn --background */
+  --foreground: oklch(1 0 0); /** shadcn --foreground */
+  --card: oklch(0.2232 0.0804 270.354); /** shadcn --card */
+  --card-foreground: oklch(1 0 0); /** shadcn --card-foreground */
+  --popover: oklch(0.2232 0.0804 270.354); /** shadcn --popover */
+  --popover-foreground: oklch(1 0 0); /** shadcn --popover-foreground */
+  --primary: oklch(0.9098 0.1389 170.506); /** shadcn --primary */
+  --primary-foreground: oklch(0.1857 0.048 268.675); /** shadcn --primary-foreground */
+  --secondary: oklch(0.519 0.1792 267.186); /** shadcn --secondary */
+  --secondary-foreground: oklch(1 0 0); /** shadcn --secondary-foreground */
+  --muted: oklch(0.272 0.0982 270.506); /** shadcn --muted */
+  --muted-foreground: oklch(0.8174 0.0662 281.012); /** shadcn --muted-foreground */
+  --accent: oklch(0.9098 0.1389 170.506); /** shadcn --accent */
+  --accent-foreground: oklch(0.1857 0.048 268.675); /** shadcn --accent-foreground */
+  --destructive: oklch(0.664 0.151 34.373); /** shadcn --destructive */
+  --destructive-foreground: oklch(0.1857 0.048 268.675); /** shadcn --destructive-foreground — à auditer */
+  --border: oklch(0.272 0.0982 270.506); /** shadcn --border */
+  --input: oklch(0.5856 0.0957 271.971); /** shadcn --input */
+  --ring: oklch(0.9098 0.1389 170.506); /** shadcn --ring */
+  --success-fill: oklch(0.727 0.1571 160.075); /** extension DS — remplissage porteur succès (jauges, barres) */
+  --warning-fill: oklch(0.8352 0.1649 91.67); /** extension DS — remplissage porteur avertissement */
+  --error-fill: oklch(0.664 0.151 34.373); /** extension DS — remplissage porteur erreur */
+  --track: oklch(0.272 0.0982 270.506); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
+  --warning: oklch(0.8352 0.1649 91.67); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
+  --success: oklch(0.727 0.1571 160.075); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
+  --destructive-text: oklch(0.664 0.151 34.373); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
+  --rating: oklch(0.8352 0.1649 91.67); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
+  --rating-empty: oklch(0.3552 0.117 270.565); /** extension DS — étoile vide, repère décoratif de l'échelle */
+  --chart-1: oklch(0.9098 0.1389 170.506); /** extension DS — tracé série de données 1 */
+  --radius: 8px; /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+}

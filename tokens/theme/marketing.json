@@ -1,0 +1,302 @@
+{
+  "$description": "Registre MARKETING — site vitrine, lead magnet, carrousels LinkedIn. Sombre par défaut, accent expressif mais tenu. Frère de theme/dark.json : mêmes rôles, même palette de primitives, discipline différente. Émis sur [data-register=\"marketing\"], additif : ne remplace ni light ni dark. Aucune primitive nouvelle — la palette Aikoz couvrait déjà tous les rôles, importer les hexadécimaux du bundle Claude Design aurait créé une seconde palette divergente.",
+  "color": {
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}",
+        "$description": "Fond de page. Le midnight de marque lui-même, là où le dashboard dark descend en .950 : le site assume la couleur de marque en fond plein, le produit non."
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}",
+        "$description": "Surface de contenu posée sur la page."
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}",
+        "$description": "Carte sur fond de page."
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Modale, popover — un cran plus clair que les cartes pour s'en détacher."
+      },
+      "track": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Piste de jauge — 1,14:1 sur la carte, sous 3:1, assumé : c'est le REMPLISSAGE qui porte la valeur, et il contraste au-dessus de 3:1 contre la piste (4,68 à 9,18) ET contre la carte (5,33 à 10,45). Pas neutral.700 comme en dark : sur fond bleuté un gris rompt la teinte."
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.950}",
+        "$description": "Creux — champs de saisie, en-têtes."
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Survol d'une surface."
+      },
+      "active": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.600}",
+        "$description": "Surface enfoncée."
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.brand.primary}",
+        "$description": "Aplat de marque."
+      },
+      "brand-hover": {
+        "$type": "color",
+        "$value": "{color.brand.primary-hover}"
+      },
+      "brand-active": {
+        "$type": "color",
+        "$value": "{color.brand.primary-active}"
+      },
+      "brand-subtle": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}",
+        "$description": "Teinte de marque discrète."
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.aquamarine.900}",
+        "$description": "Fond teinté d'accent, très sombre — pour une zone à souligner sans la peindre en aqua."
+      },
+      "action": {
+        "$type": "color",
+        "$value": "{color.brand.accent}",
+        "$description": "LE SEUL aplat en aquamarine du registre : le CTA. C'est la règle qui manquait au lead magnet, où l'accent servait à la fois de texte, de fond, de contour et d'ombre — une couleur qui sert à tout ne signale plus rien."
+      },
+      "action-secondary": {
+        "$type": "color",
+        "$value": "{color.brand.secondary}",
+        "$description": "Action secondaire — l'ultramarine, pas l'accent."
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "#FFFFFF",
+        "$description": "Texte principal. Blanc pur, comme le bundle marketing existant."
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.ultramarine.200}",
+        "$description": "Texte secondaire TEINTÉ BLEU, et non gris comme en dashboard dark. C'est la différence de registre la plus visible : le site reste dans la famille de marque jusque dans son texte discret."
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.300}",
+        "$description": "Légendes, dates, mentions."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.500}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.ultramarine.200}",
+        "$description": "Alias de secondary — même teinte bleutée."
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}",
+        "$description": "Texte sur les rares surfaces claires."
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.ultramarine.300}",
+        "$description": "Lien sur fond sombre — l'ultramarine.500 des fonds clairs n'y passe pas."
+      },
+      "brand-hover": {
+        "$type": "color",
+        "$value": "{color.ultramarine.225}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.aquamarine.300}",
+        "$description": "Texte d'accent — chiffres de section, mots mis en exergue. Réservé, jamais du texte courant."
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{color.brand.on-accent}",
+        "$description": "Texte posé sur le CTA aquamarine."
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}"
+      },
+      "on-action-secondary": {
+        "$type": "color",
+        "$value": "#FFFFFF",
+        "$description": "Sur l'ultramarine, le texte passe en blanc et non en midnight."
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Séparateur décoratif — 1,14:1 sur carte, sous 3:1, assumé et cohérent avec light et dark (mesurés 1,44 et 1,14). Une bordure qui doit être PERÇUE utilise strong ou input, pas celle-ci."
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.300}",
+        "$description": "Séparateur porteur — 6,77:1 sur carte, 7,28:1 sur page. C'est la bordure à utiliser quand le trait porte de l'information (délimiter une zone cliquable, cerner un badge)."
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.brand.accent}",
+        "$description": "Anneau de focus clavier."
+      },
+      "brand": {
+        "$type": "color",
+        "$value": "{color.ultramarine.300}"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.brand.accent}",
+        "$description": "Liseré d'accent — le trait gauche d'un bloc mis en avant."
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}",
+        "$description": "Champ désactivé — volontairement en retrait, l'effacement EST l'information."
+      },
+      "input": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.400}",
+        "$description": "Bordure de champ — 4,09:1 sur carte, 4,40:1 sur page (seuil 3:1, WCAG 1.4.11 : le trait porte l'information « ici on saisit »). Le palier .700 des séparateurs ne donnait que 1,53:1. Bleuté et non gris : sur fond midnight un gris rompt la teinte."
+      }
+    },
+    "status": {
+      "success": {
+        "$type": "color",
+        "$value": "{color.success.400}"
+      },
+      "success-subtle": {
+        "$type": "color",
+        "$value": "{color.success.950}"
+      },
+      "success-border": {
+        "$type": "color",
+        "$value": "{color.success.700}"
+      },
+      "success-text": {
+        "$type": "color",
+        "$value": "{color.success.400}"
+      },
+      "success-fill": {
+        "$type": "color",
+        "$value": "{color.success.400}"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.warning.400}"
+      },
+      "warning-subtle": {
+        "$type": "color",
+        "$value": "{color.warning.950}"
+      },
+      "warning-border": {
+        "$type": "color",
+        "$value": "{color.warning.700}"
+      },
+      "warning-text": {
+        "$type": "color",
+        "$value": "{color.warning.400}"
+      },
+      "warning-fill": {
+        "$type": "color",
+        "$value": "{color.warning.400}"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{color.error.400}"
+      },
+      "error-subtle": {
+        "$type": "color",
+        "$value": "{color.error.950}"
+      },
+      "error-border": {
+        "$type": "color",
+        "$value": "{color.error.700}"
+      },
+      "error-text": {
+        "$type": "color",
+        "$value": "{color.error.400}",
+        "$description": "Rouge lisible sur fond sombre. Louis avait raison sur ce point : le bundle marketing n'avait pas de rouge pensé pour le sombre, son #FF4D6D mesurait mieux que le #DC2626 du système. error.400 remplit ce rôle sans quitter la palette."
+      },
+      "error-fill": {
+        "$type": "color",
+        "$value": "{color.error.400}"
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{color.info.400}"
+      },
+      "info-subtle": {
+        "$type": "color",
+        "$value": "{color.info.950}"
+      },
+      "info-border": {
+        "$type": "color",
+        "$value": "{color.info.700}"
+      }
+    },
+    "nav": {
+      "surface": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.900}",
+        "$description": "Barre de navigation du site — même fond que la page, séparée par un trait."
+      },
+      "surface-active": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.800}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.700}"
+      },
+      "on": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "on-muted": {
+        "$type": "color",
+        "$value": "{color.ultramarine.300}",
+        "$description": "Entrée de nav inactive."
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.brand.accent}",
+        "$description": "Entrée active — le trait, pas le fond."
+      }
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.aquamarine.300}",
+        "$description": "Tracé de série. Sur le site l'accent porte la donnée, c'est un usage légitime : la courbe EST l'information."
+      }
+    },
+    "rating": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.warning.400}",
+        "$description": "Étoiles pleines sur fond sombre. Palier 400 et non 600 : sur du midnight c'est le clair qui contraste."
+      },
+      "empty": {
+        "$type": "color",
+        "$value": "{color.midnight-blue.600}",
+        "$description": "Étoile vide — repère d'échelle, décoratif."
+      }
+    }
+  }
+}

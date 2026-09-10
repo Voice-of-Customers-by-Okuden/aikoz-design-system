@@ -144,6 +144,11 @@ await make('brand-generali.css', [PRIM, brand('generali')], { selector: '[data-b
 // C'est la réciproque manquante de `.dark`.
 await make('theme-light.css', [PRIM, brand('aikoz'), theme('light')], { selector: ':root, .light',  filter: inPath('theme/light'), transforms: cssOklch }).buildAllPlatforms();
 await make('theme-dark.css',  [PRIM, brand('aikoz'), theme('dark')],  { selector: '.dark',  filter: inPath('theme/dark'), transforms: cssOklch }).buildAllPlatforms();
+// Registre MARKETING — site vitrine, lead magnet, carrousels. Sombre par défaut,
+// accent expressif mais tenu. Frère de dark : mêmes rôles, même palette de
+// primitives, discipline différente. Additif : ne remplace ni light ni dark, et
+// s'imbrique (une section marketing dans une page produit, ou l'inverse).
+await make('theme-marketing.css', [PRIM, brand('aikoz'), theme('marketing')], { selector: '[data-register="marketing"]', filter: inPath('theme/marketing'), transforms: cssOklch }).buildAllPlatforms();
 
 // Couche 3bis — semantics : rôles MODE-INDÉPENDANTS (radius, shadow, border-width, typography).
 // :root unique (pas de variante light/dark). refs:true → alias émis en var(--…).
@@ -168,6 +173,10 @@ await make('.tmp-shadcn-dark.css', [PRIM, brand('aikoz'), theme('dark'), SEM, br
   selector: '.dark', filter: inPath('bridge/shadcn'), refs: false,
   transforms: bridgeTransforms, buildPath: 'bridge/',
 }).buildAllPlatforms();
+await make('.tmp-shadcn-marketing.css', [PRIM, brand('aikoz'), theme('marketing'), SEM, bridgeSrc], {
+  selector: '[data-register="marketing"]', filter: inPath('bridge/shadcn'), refs: false,
+  transforms: bridgeTransforms, buildPath: 'bridge/',
+}).buildAllPlatforms();
 
 const bridgeHeader = `/* ============================================================\n   shadcn-bridge.css — GÉNÉRÉ depuis tokens/ (DTCG) par build-tokens.mjs\n   NE PAS ÉDITER À LA MAIN — régénérer via: npm run build:tokens\n   ============================================================ */\n\n`;
 fs.writeFileSync(
@@ -175,9 +184,12 @@ fs.writeFileSync(
   bridgeHeader +
     fs.readFileSync('bridge/.tmp-shadcn-light.css', 'utf8') +
     '\n' +
-    fs.readFileSync('bridge/.tmp-shadcn-dark.css', 'utf8')
+    fs.readFileSync('bridge/.tmp-shadcn-dark.css', 'utf8') +
+    '\n' +
+    fs.readFileSync('bridge/.tmp-shadcn-marketing.css', 'utf8')
 );
 fs.unlinkSync('bridge/.tmp-shadcn-light.css');
 fs.unlinkSync('bridge/.tmp-shadcn-dark.css');
+fs.unlinkSync('bridge/.tmp-shadcn-marketing.css');
 
 console.log('build OK');

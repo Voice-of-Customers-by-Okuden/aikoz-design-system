@@ -1,15 +1,48 @@
-# Aikoz — Inventaire des composants (dashboard)
+# Aikoz — Inventaire des composants
 
-> Version 1.2 — dérivée de `aikoz-composants-V1_LB.xlsx` (specs fonctionnelles de Louis), nettoyée, complétée, **recroisée avec le code du repo et le fichier Figma** (`ODMOwBvckfjPxTCUP1S1Su`), puis enrichie des arbitrages pris le 26/08/2026.
+> Version 1.3 — dérivée de `aikoz-composants-V1_LB.xlsx` (specs fonctionnelles de Louis), **recroisée avec le code du repo, le fichier Figma** (`ODMOwBvckfjPxTCUP1S1Su`) **et le handoff Satellite App**, enrichie des arbitrages du 26/08 et du basculement de périmètre du 09/09/2026.
 > Ce fichier est la **source de vérité** du périmètre de la bibliothèque. Il est lu par Claude Code avant toute création de composant.
 
 ---
 
 ## Périmètre
 
-**Inclus** : les composants du **dashboard Aikoz** (produit SaaS, vendu en direct et en white-label).
+**Inclus** : le **dashboard Aikoz** (produit SaaS, direct et white-label) **et le site** — vitrine, FAQ, et le lead magnet « Satellite App ».
 
-**Exclus** : les composants du **site vitrine / landing** (Footer flottant, Bloc texte, Sections déroulantes, Infinite loop partenaires, Overlay Calendrier, Overlay Contact, Header de navigation site). Ils figurent dans le fichier source de Louis et peuvent servir d'inspiration, mais ne rentrent pas dans le design system à ce stade.
+> **Le site est entré au périmètre le 09/09/2026.** La v1.2 l'excluait explicitement. L'analyse du handoff `Copy of Aikoz - Satellite App - MVP` a montré que ce n'est pas une landing page mais **un tunnel en 5 étapes qui débouche sur un mini-dashboard personnalisé** — le prospect saisit son agence et on lui montre son propre tableau de bord. Les composants dashboard ne sont donc pas repoussés derrière le site : ils en sont la charge utile.
+
+```
+« Votre univers ? » → « Vous êtes ? » → nom d'agence → marque → sources
+                            │
+                  ┌─────────┴─────────┐
+             agentDash            marqueDash
+      classement de zone       volume d'avis
+      visibilité IA            classement réseau
+      rang dans le réseau      volume par marque
+      3 derniers avis Google   forces / faiblesses
+                  └─────────┬─────────┘
+                  démo → créneau → confirmé
+```
+
+Ce que le tunnel ajoute, ce sont les composants de **parcours et de page** : étapes, sélecteurs, accordéon, prise de rendez-vous, navigation de site. Ils portent la mention *site* dans la colonne Famille.
+
+**Exclus** : rien pour l'instant.
+
+## Les deux registres
+
+Un même composant sert les deux surfaces, dans deux registres visuels distincts. Ce ne sont pas deux palettes : c'est **une palette de primitives, deux couches sémantiques**.
+
+| | Registre produit | Registre marketing |
+|---|---|---|
+| Surface | dashboard, Power BI | site, lead magnet, carrousels |
+| Bascule | `:root` / `.dark` | `[data-register="marketing"]` |
+| Fond | clair par défaut | sombre par défaut, midnight de marque |
+| Texte discret | gris neutre | **teinté bleu** (`ultramarine.200`) |
+| Aquamarine | signal rare | **un seul aplat : le CTA** |
+
+La règle qui vaut pour les deux, et que le lead magnet violait : **une couleur qui sert à tout ne signale plus rien.** Dans le prototype de Louis, l'accent apparaissait 102 fois sur 14 propriétés CSS — texte, fond, contour, ombre. Le registre marketing lui rend un rôle unique.
+
+> Les valeurs du registre marketing ne sont pas importées du bundle Claude Design des carrousels : 12 de ses 15 couleurs étaient absentes des primitives Aikoz, et les ajouter aurait créé une seconde palette divergente. Chaque rôle est servi par le primitive Aikoz le plus proche, mesuré. Cf. `tokens/theme/marketing.json`.
 
 ## Règles de construction
 
@@ -18,6 +51,7 @@
 3. Les composants consomment exclusivement des tokens **sémantiques** (`role.*`), jamais de primitives (`dimension.*`, couleurs brutes).
 4. On ne détaille la spec d'un composant que **juste avant de le construire** — pas d'avance sur les fiches.
 5. Contraste ≥ 4.5:1 en light et dark, focus visible au clavier, sur tous les composants.
+6. Un composant s'audite contre **toutes les surfaces** où un consommateur peut le poser — carte, page, fond discret — et dans **les deux registres**, pas seulement celle de son premier appelant.
 
 ## Comment lire la colonne Statut
 
@@ -28,6 +62,7 @@ Trois sources indépendantes, systématiquement distinguées :
 | **code** | fichier livré dans `registry/aikoz/` sur `main` |
 | **composant Figma** | vrai composant (`symbol`) dans les pages Atomes / Molécules / Organismes — réutilisable |
 | **maquetté** | dessiné dans les maquettes de la page 1, mais **jamais componentisé** — à reconstruire de zéro |
+| **prototype site** | présent dans le handoff Satellite App en HTML/React de maquette — la structure existe, l'habillage est à refaire aux tokens |
 
 Un composant peut être maquetté sans exister comme composant Figma. La distinction change le coût : un composant Figma se transpose, une maquette se re-spécifie.
 
@@ -59,17 +94,38 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 20 | `EmptyState` | Feedback | aikoz | v1 | à créer — absent du code et du Figma | Button |
 | 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 22 | `Toast` (sonner) | Feedback | shadcn | plus tard | à créer — absent du code et du Figma | — |
-| 23 | `VerbatimCard` | Data display | aikoz | v1 | à créer — retenue au périmètre, cf. décision 5 | ScoreStars, Badge, Tag |
+| 23 | `VerbatimCard` | Data display | aikoz | v1 | à créer — **confirmée par le site** : « Vos 3 derniers avis Google » du tunnel | ScoreStars, Badge, Tag |
 | 24 | `ProgressBar` | Data display | aikoz | v1 | **livré** — 3 niveaux, rôles `status.*-fill` | — |
 | 25 | `SidebarNav` | Navigation | aikoz | v1 | **composant Figma** `Sidebar`, à créer — promu par la décision 2 | NavItem |
 | 26 | `NavItem` | Navigation | aikoz | v1 | **composant Figma** (3 états), à créer — brique de `SidebarNav` | — |
+| 27 | `Stepper` | Parcours · site | aikoz | v1 | **prototype site** — progression des 5 étapes du tunnel | — |
+| 28 | `BrandPicker` | Forms · site | aikoz | v1 | **prototype site** — grille de logos, « Sélectionnez votre marque » | — |
+| 29 | `SourceToggle` | Forms · site | aikoz | v1 | **prototype site** — Google / Trustpilot / Pages Jaunes, sélection multiple | Badge |
+| 30 | `Input` | Forms | shadcn | v1 | **composant Figma** (4 états) — nom d'agence, `SearchBar` ; absent de la v1.2 | — |
+| 31 | `Accordion` | Layout · site | shadcn | v1 | **prototype site** — FAQ groupée, une seule ouverte à la fois | — |
+| 32 | `BookingFlow` | Overlays · site | aikoz | v1 | **prototype site** — formulaire, créneaux, 2 états de confirmation | Dialog, Button |
+| 33 | `LogoMarquee` | Data display · site | aikoz | v1 | **prototype site** — bandeau de preuve client | — |
+| 34 | `FeaturePanel` | Layout · site | aikoz | v1 | **prototype site** — « Quatre leviers », page Notre Solution | — |
+| 35 | `SiteNav` | Navigation · site | aikoz | v1 | **prototype site** — en-tête des 3 pages. ⚠ distinct de `SidebarNav` : navigation de site, pas d'application | — |
+| 36 | `SiteFooter` | Navigation · site | aikoz | v1 | **prototype site** — pied des 3 pages | — |
 
-**Compte** : 26 composants = **12 d'origine shadcn** + **14 spécifiques Aikoz**.
-*(La v1.0 annonçait « 11 shadcn / 12 spécifiques » — la répartition était inversée d'une unité, `Button` étant d'origine shadcn.)*
+**Compte** : 36 composants = **14 d'origine shadcn** + **22 spécifiques Aikoz**.
 
-État réel : **2 livrés** (`Button`, `KpiCard`), **2 à extraire** de `KpiCard` (`ScoreStars`, `DeltaBadge`), **22 à construire** — dont 8 transposables depuis un composant Figma existant et 4 seulement maquettés.
+Répartition par **usage constaté** — dans les maquettes du dashboard d'un côté, dans le handoff Satellite App de l'autre. Un composant générique non observé sur le site (`Skeleton`, `EmptyState`) reste classé dashboard tant qu'il n'y est pas vu.
 
-*Les trois derniers (`ProgressBar`, `SidebarNav`, `NavItem`) sont entrés au périmètre par les décisions 1 et 2 ; ils figuraient déjà comme composants Figma non reflétés dans la v1.0.*
+| Dashboard seul | Site seul | **Les deux** |
+|---|---|---|
+| 13 | 10 | **13** |
+
+**Les 13 partagés sont le cœur du sujet** : `Button`, `Card`, `Badge`, `Input`, `Dialog`, `Avatar`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `VerbatimCard`, `Leaderboard`, `RankedBarChart`.
+
+Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
+
+État réel : **5 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`), **31 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+
+*Les 5 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+
+*Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 
 ---
 
@@ -218,8 +274,8 @@ Retenue. L'atome Figma `Tag` (3 variantes de sentiment, sans usage maquetté) n'
 
 ## Points encore à trancher
 
-- **Charts** : adopter le module `chart` de shadcn (basé sur recharts) comme socle des trois graphiques plutôt que du SVG maison. Conditionne la structure de `DonutChart`, `RankedBarChart` et `Leaderboard`. **Ne se tranche pas dans le DS — remonte à Alice**, qui décide de la façon de la valider (le brouillon source suggérait d'en passer par Pietro, autorité technique). *Élément factuel versé au dossier : `kpi-card.tsx` importe déjà `recharts`, et la dépendance est déjà déclarée dans `registry.json`.*
-- **Web Components (Lit / Stencil)** : l'architecture cible pour l'embarquabilité white-label. Si la décision tombe après la construction de ces composants, il faudra les reconstruire. **Ne se tranche pas dans le DS — remonte à Alice**, à arbitrer **avant** d'attaquer le lot. C'est la plus urgente des deux.
+- **Charts** et **Web Components** : tranchés le 09/09 — cf. « Architecture actée » ci-dessus.
+- **Palette du lead magnet** : tranchée — registre marketing distinct, et le prototype de Louis s'y aligne. Ce qu'il doit corriger : remplacer ses 27 couleurs en dur par les tokens, rendre à l'aquamarine son rôle unique de CTA, supprimer les 32 dégradés et 17 ombres décoratifs. Son `#FF4D6D` est en revanche à garder — il comblait un trou réel, repris ici en `error.400`.
 - **Dénominateur de la variante `target`** pour les métriques non bornées — cf. décision 1, à valider avec Louis.
 
 ---
@@ -302,9 +358,21 @@ La couche de tokens est fermée. Plus rien n'empêche de construire.
 - [x] **`DeltaBadge`** extrait, état neutre ajouté, ton forçable.
 - [x] **`ProgressBar`** transposé du Figma, famille de rôles `status.*-fill` créée.
 - [x] **`Button` déclaré dans `registry.json`** — il était non installable.
-- [ ] **Refondre `KpiCard`** sur les deux axes `variant` × `density` (décision 1). ← prochaine étape
-- [ ] Le reste du lot v1.
+- [x] **Registre marketing** — `tokens/theme/marketing.json`, émis sur `[data-register="marketing"]`, 24 paires auditées sans échec ([PR #29](https://github.com/Voice-of-Customers-by-Okuden/aikoz-design-system/pull/29)).
+- [x] **Périmètre réécrit** — le site entre, 26 → 36 composants.
 
 Cinq composants au registry : `button`, `score-stars`, `delta-badge`, `progress-bar`, `kpi-card`.
 
-**Architecture actée** : composants React distribués par le registry shadcn ; le white-label passe par la couche de tokens (`data-brand` + variables CSS), pas par des Web Components. Charts sur le module `chart` de shadcn (recharts), déjà en dépendance.
+### Suite — le site d'abord
+
+Le branchement du système se fait **en priorité sur le site**, le dashboard pur suit. L'ordre découle de ce que le tunnel consomme.
+
+1. **Refondre `KpiCard`** sur `variant` × `density` (décision 1). Le tunnel affiche des métriques de trois natures, la refonte est un prérequis des deux surfaces.
+2. **`VerbatimCard`** — « Vos 3 derniers avis Google ». Les briques (`ScoreStars`, `Badge`) sont prêtes.
+3. **`Card`, `Badge`, `Input`, `Avatar`, `Dialog`** — les partagés d'origine shadcn, travail d'habillage.
+4. **`Leaderboard`, `RankedBarChart`** — le `marqueDash` du tunnel les demande, et le dashboard aussi.
+5. **Composants de tunnel** : `Stepper`, `ChoiceCard`, `BrandPicker`, `SourceToggle`, `BookingFlow`.
+6. **Pages de site** : `SiteNav`, `SiteFooter`, `Accordion`, `FeaturePanel`, `LogoMarquee`.
+7. **Dashboard pur, en dernier** : `MapWidget`, `Table`, `Breadcrumb`, `TimeRangePicker`, `Toast`, `Skeleton`, `EmptyState`, `DonutChart`, `Tooltip`, `Select`, `ViewTabs`, `SidebarNav`, `NavItem`.
+
+**Architecture actée** : composants React distribués par le registry shadcn. Le white-label passe par la couche de tokens (`data-brand`), le registre par `data-register` — **pas** par des Web Components : le levier d'embarquabilité est déjà la couche de tokens, et si des Web Components s'imposent un jour, les tokens passent tels quels et seule la coquille est réécrite. Charts sur le module `chart` de shadcn (recharts), déjà en dépendance.
