@@ -82,11 +82,11 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 |---|---|---|---|---|---|---|
 | 1 | `Button` | Actions | shadcn | v1 | **livré au registry** — ⚠ axes de variantes toujours désalignés avec le Figma | — |
 | 2 | `KpiCard` | Data display | aikoz | v1 | **livré** — `variant` × `density`, décision 1 appliquée | ScoreStars, DeltaBadge, ProgressBar |
-| 3 | `ScoreStars` | Data display | aikoz | v1 | **livré** — rôle `--rating` (700 light / 600 dark) | — |
+| 3 | `ScoreStars` | Data display | aikoz | v1 | **livré** — rôle `--rating` (500 clair, écart assumé ; 400 sombre) | — |
 | 4 | `DeltaBadge` | Data display | aikoz | v1 | **livré** — état neutre ajouté, ton forçable | Badge |
 | 5 | `Badge` | Data display | shadcn | v1 | **livré** — 5 tons, contour porteur du contraste | — |
-| 6 | `Tooltip` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
-| 7 | `Select` | Forms | shadcn | v1 | **maquetté** (`MiniSelect`), à créer | — |
+| 6 | `Tooltip` | Feedback | shadcn | v1 | **livré** | — |
+| 7 | `Select` | Forms | shadcn | v1 | **livré** | — |
 | 8 | `ViewTabs` | Navigation | shadcn | v1 | **maquetté** (`ViewTab`) — bascule de vue dans la page, cf. décision 2 | — |
 | 9 | `Card` | Layout | shadcn | v1 | **livré** — 3 surfaces × 3 densités, prop `as` sémantique | — |
 | 10 | `ChoiceCard` | Navigation | aikoz | v1 | à créer — absent du code et du Figma | Card, Badge |
@@ -129,9 +129,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **11 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`), **25 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **13 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`, `Select`, `Tooltip`), **23 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
-*Les 11 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+*Les 13 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
 *Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 
