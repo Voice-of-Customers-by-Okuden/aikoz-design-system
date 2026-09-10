@@ -55,8 +55,13 @@ export interface DeltaBadgeProps
   tone?: DeltaTone;
   /** En deçà de ce seuil (valeur absolue), la variation est jugée neutre. */
   neutralThreshold?: number;
-  /** Libellé accessible. Par défaut « en hausse de 12 % ». */
-  label?: string;
+  /**
+   * Libellé accessible. Par défaut « en hausse de 12 % ».
+   * `null` si un parent annonce déjà la variation — le badge devient alors
+   * décoratif, comme `ScoreStars` et `ProgressBar`. Sans ça, un badge posé
+   * dans une carte cliquable reste un élément annonçable orphelin.
+   */
+  label?: string | null;
   className?: string;
 }
 
@@ -103,19 +108,22 @@ export function DeltaBadge({
   });
   const signed = `${value > 0 ? "+" : value < 0 ? "−" : ""}${magnitude}${unit}`;
 
-  const accessibleLabel =
-    label ??
-    (resolved === "neutral"
-      ? `stable, ${magnitude}${unit}`
-      : resolved === "positive"
-      ? `en hausse de ${magnitude}${unit}`
-      : `en baisse de ${magnitude}${unit}`);
+  const decorative = label === null;
+  const accessibleLabel = decorative
+    ? undefined
+    : label ??
+      (resolved === "neutral"
+        ? `stable, ${magnitude}${unit}`
+        : resolved === "positive"
+        ? `en hausse de ${magnitude}${unit}`
+        : `en baisse de ${magnitude}${unit}`);
 
   return (
     <span
       className={cn(badgeVariants({ tone: resolved, size }), className)}
       aria-label={accessibleLabel}
-      role="img"
+      role={decorative ? undefined : "img"}
+      aria-hidden={decorative ? true : undefined}
     >
       <Icon className={iconSize[size ?? "md"]} aria-hidden="true" />
       <span aria-hidden="true">{signed}</span>

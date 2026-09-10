@@ -130,54 +130,99 @@ export default function App() {
         {view === "composants" && (
         <>
         <h2 className="text-lg font-semibold text-foreground mb-4">
-          KPI Card — sm / md / lg
+          KpiCard — variant × density, deux axes indépendants
         </h2>
 
-        {/* Grille des 3 tailles */}
-        <div className="flex flex-wrap gap-6 items-start">
+        <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+          L'axe <code className="font-mono text-xs">variant</code> dit ce que la donnée est,
+          l'axe <code className="font-mono text-xs">density</code> la place qu'on lui accorde.
+          Les deux se combinent librement — l'ancienne API imposait la sparkline dès qu'on
+          voulait une grande carte.
+        </p>
 
-          {/* sm : compact, valeur + label */}
+        <div className="flex flex-wrap gap-6 items-start mb-10">
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              size=sm
+              variant=rating
             </span>
-            <KpiCard
-              size="sm"
-              label="Note moyenne"
-              value={4.2}
-              max={5}
-            />
+            <KpiCard variant="rating" label="Note moyenne" value={4.2} trend={0.1} trendUnit="" />
           </div>
-
-          {/* md : + étoiles + tendance */}
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              size=md
+              variant=target
             </span>
             <KpiCard
-              size="md"
-              label="Note moyenne"
-              value={4.2}
-              max={5}
-              trend={12}
+              variant="target"
+              label="Taux de réponse"
+              value={87}
+              unit=" %"
+              target={90}
+              trend={4.2}
+              trendUnit=" pts"
+              caption="Objectif · 90 %"
             />
           </div>
-
-          {/* lg : + sparkline recharts */}
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              size=lg
+              variant=trend
             </span>
             <KpiCard
-              size="lg"
-              label="Note moyenne"
-              value={4.2}
-              max={5}
-              trend={12}
-              sparklineData={DEMO_SPARKLINE}
+              variant="trend"
+              label="Avis traités"
+              value={312}
+              data={DEMO_SPARKLINE}
+              trend={18}
+              trendUnit=""
+              caption="30 derniers jours"
             />
           </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              variant=raw
+            </span>
+            <KpiCard variant="raw" label="Délai de réponse" value={6} unit=" h" />
+          </div>
+        </div>
 
+        <h3 className="text-sm font-semibold text-foreground mb-3">
+          Les deux axes se croisent — rating en trois densités
+        </h3>
+        <div className="flex flex-wrap gap-6 items-start mb-10">
+          {(["compact", "default", "large"] as const).map((d) => (
+            <div key={d} className="flex flex-col gap-2">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                density={d}
+              </span>
+              <KpiCard variant="rating" density={d} label="Note moyenne" value={4.2} trend={0.1} trendUnit="" />
+            </div>
+          ))}
+        </div>
+
+        <h3 className="text-sm font-semibold text-foreground mb-3">
+          Ton forcé — un délai qui baisse est un progrès
+        </h3>
+        <div className="flex flex-wrap gap-6 items-start mb-10">
+          <KpiCard
+            variant="target"
+            label="Délai de réponse"
+            value={6}
+            max={24}
+            unit=" h"
+            level="good"
+            trend={-1}
+            trendUnit=" h"
+            trendTone="positive"
+            caption="Objectif · 8 h — moins est mieux"
+          />
+          <KpiCard
+            variant="rating"
+            label="Note moyenne"
+            value={4.2}
+            onClick={() => alert("KpiCard cliquée — onClick OK")}
+            trend={0.1}
+            trendUnit=""
+            caption="cliquable · hover + Tab"
+          />
         </div>
 
         {/* Le registre marketing, avec de VRAIS composants — la preuve que le
@@ -194,7 +239,7 @@ export default function App() {
               data-register="marketing" · sombre par défaut, accent tenu
             </span>
             <div className="flex flex-wrap gap-4 items-start">
-              <KpiCard size="md" label="Note moyenne" value={4.2} max={5} trend={12} />
+              <KpiCard variant="rating" label="Note moyenne" value={4.2} trend={0.1} trendUnit="" />
               <div className="flex flex-col gap-3 justify-center">
                 <ScoreStars value={4.2} size="lg" />
                 <div className="flex gap-2 flex-wrap">
@@ -295,26 +340,6 @@ export default function App() {
             <div className="w-32"><ProgressBar value={70} size="sm" /></div>
             <div className="w-32"><ProgressBar value={70} size="md" /></div>
             <div className="w-32"><ProgressBar value={70} size="lg" /></div>
-          </div>
-        </div>
-
-        {/* Carte cliquable — test hover + focus clavier */}
-        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
-          Carte cliquable (md)
-        </h2>
-        <div className="flex flex-wrap gap-6 items-start">
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              onClick · hover + Tab focus
-            </span>
-            <KpiCard
-              size="md"
-              label="Note moyenne"
-              value={4.2}
-              max={5}
-              trend={12}
-              onClick={() => alert("KpiCard cliquée — onClick OK")}
-            />
           </div>
         </div>
 
