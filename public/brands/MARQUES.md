@@ -36,26 +36,36 @@ Swiss Life Select, Swiss Life Asset Managers. Le fichier était en réalité sur
 **Wikipédia FR** et non sur Commons, ce qu'une recherche Commons ne pouvait pas
 trouver. Alice a fourni la référence.
 
-## Le champ `maskable`
+## Les masques fabriqués
 
-Sept fichiers — AXA, MAAF, MACIF, MAIF, MMA, GMF, Groupama — ne supportent pas
-le rendu monochrome : le dessin repose sur une forme pleine dont un masque ne
-garderait que la silhouette. Ils sont affichés **en couleur d'origine**, jamais
-remplacés par des initiales.
+Sept logos — AXA, MAAF, MACIF, MAIF, MMA, GMF, Groupama — ne se masquaient pas :
+leur dessin est un aplat plein dont un masque n'aurait gardé qu'une silhouette
+muette. Ils ont d'abord été affichés en couleur d'origine, ce qui faisait deux
+traitements dans la même grille.
 
-**Et ce n'est pas réparable par une retouche du fichier.** Le SVG d'AXA est un
-carré bleu, une diagonale rouge et des lettres blanches : retirer le carré pour
-le rendre masquable laisserait les seules lettres, c'est-à-dire une autre
-marque. Un logo dont le sens est porté par la couleur ne se monochromise pas.
-C'est pour cette raison que la plaque a **une seule surface pour tous** — claire,
-avec un trait — au lieu de porter la teinte de marque : mélanger douze blocs
-colorés et sept plaques blanches faisait sept trous dans la grille.
+Leur masque est désormais **fabriqué** par `scripts/masques-marques.py`, selon
+une règle unique : *est opaque ce qui n'est ni le fond extérieur, ni le blanc*.
+Le blanc compte comme un trou parce que dans ces logos il **est** le dessin —
+les lettres d'AXA, celles de MAIF, le M de MMA sont des réserves creusées dans
+un aplat. Les garder donnait un pavé ; les creuser donne un logo lisible en une
+seule encre, exactement comme un logotype imprimé en une couleur.
 
-Six d'entre eux sont détectés par la mesure (couverture d'encre ≥ 0,40).
-Groupama non : son logotype en traits fins dilue la moyenne à 0,26 alors que
-son symbole est plein. Le chiffre est le bon filtre de premier tri, il ne
-remplace pas un coup d'œil au rendu. Détail dans
-`registry/aikoz/brand-logo/brands.ts`.
+Deux cas, distingués par les **coins** de l'image et non par la marque :
+
+| coins | traitement |
+|---|---|
+| transparents | le fond extérieur existe → on le retire, plus le blanc |
+| opaques | l'aplat **est** le logo (AXA) → on ne retire que le blanc |
+
+Sans cette distinction, AXA perdait son carré et il ne restait qu'une diagonale.
+
+**Ce que ça coûte.** Le masque est une réduction : la diagonale rouge d'AXA
+disparaît dans le carré, le symbole de MACIF se fond dans le sien. Deux couleurs
+qui se touchent fusionnent forcément en une seule encre. Les fichiers d'origine
+restent dans ce dossier — ce sont eux qu'il faudra servir le jour où on
+affichera les logos en couleur.
+
+Les fichiers produits sont suffixés `-mask.png`, 1 à 3 Ko chacun.
 
 ## Remplacer un fichier
 

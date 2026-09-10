@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@registry/aikoz/lib/utils";
-import { BRAND_BY_ID, cheminLogo, contraste, surTeinte, type Brand } from "@registry/aikoz/brand-logo/brands";
+import { BRAND_BY_ID, cheminLogo, surTeinte, type Brand } from "@registry/aikoz/brand-logo/brands";
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -21,15 +21,7 @@ const pastilleVariants = cva(
         /** Rond compact — porte les INITIALES. Cf. la note du composant. */
         circle: "aspect-square",
         /** Plaque large — porte le LOGO, à son rapport d'origine. */
-        // La plaque a une surface CLAIRE et un trait, dans les deux thèmes.
-        // Ce n'est pas une hésitation : sept logos sur dix-neuf ne se
-        // monochromisent pas — celui d'AXA est un carré bleu à diagonale
-        // rouge, le réduire à ses lettres blanches donnerait une autre
-        // marque — et ils ont donc besoin d'un fond clair. Mettre la teinte
-        // de marque sur les douze autres et du blanc sur ces sept faisait
-        // sept trous dans la grille. Une seule surface pour tous, et le
-        // trait la délimite sur une page claire comme sur une page sombre.
-        plate: "rounded-[var(--radius)] bg-white border border-[var(--border-strong)]",
+        plate: "rounded-[var(--radius)]",
       },
     },
     compoundVariants: [
@@ -79,24 +71,27 @@ export interface BrandLogoProps extends VariantProps<typeof pastilleVariants> {
  * masque ne garde que la silhouette, il perd tout ce que la couleur
  * distinguait à l'intérieur.
  *
- *   `circle`  rond compact, à la TEINTE de la marque → **initiales**
- *   `plate`   plaque claire à trait → **le logo**, à son rapport d'origine
+ *   `circle`  rond compact → **initiales**, toujours lisibles à 24 px
+ *   `plate`   plaque large, à la teinte de la marque → **le logo**, monochrome
  *
- * Une plaque montre TOUJOURS le logo quand un fichier existe. Deux rendus,
- * selon ce que le fichier permet — et c'est `maskable` qui tranche, sur
- * mesure et non sur impression :
+ * **Les dix-neuf marques passent aujourd'hui par le même rendu**, et ça n'a
+ * pas été donné. Sept fichiers ne se masquaient pas : leur logo est un aplat
+ * plein dont un masque n'aurait gardé qu'une silhouette muette. Ils ont
+ * d'abord été affichés en couleur d'origine sur plaque claire — deux
+ * traitements dans une même grille, ce qui obligeait à renoncer à la teinte
+ * de marque partout pour rester cohérent.
  *
- *   masquable      logo monochrome, encré à la teinte de la marque
- *   non masquable  logo en couleur d'origine
+ * Leur masque est désormais FABRIQUÉ, par `scripts/masques-marques.py` : est
+ * opaque ce qui n'est ni le fond extérieur, ni le blanc. Le blanc compte
+ * comme un trou parce que dans ces logos il EST le dessin — les lettres
+ * d'AXA, celles de MAIF, le M de MMA sont des réserves creusées dans un
+ * aplat. Les garder donnait un pavé ; les creuser donne un logo lisible en
+ * une seule encre.
  *
- * Le second cas n'est pas un repli honteux : un logo bâti sur une forme
- * pleine — le carré d'AXA, le triangle de MAIF — n'existe QUE par ses
- * couleurs internes, et le montrer tel quel est plus juste que le réduire à
- * une silhouette. La plaque reste claire dans les quatre combinaisons, parce
- * que ces logos sont dessinés pour un fond clair et qu'aucun ne dispose
- * d'une variante inversée.
- *
- * Seules les marques SANS fichier retombent sur les initiales.
+ * Le champ `maskable` reste dans le registre : il n'a plus d'usage
+ * aujourd'hui, mais il décrit une propriété réelle des fichiers, et le
+ * prochain logo ajouté pourra en avoir besoin avant qu'on lui fabrique son
+ * masque. Les marques SANS fichier retombent sur les initiales.
  *
  * **Le logo est rendu en monochrome, par masque CSS.** Le fichier sert de
  * `mask-image` et la couleur vient du dessous : un seul fichier suffit pour
@@ -151,29 +146,12 @@ export function BrandLogo({
 
   const encre = surTeinte(m.color);
 
-  // Encre de la plaque. La teinte de marque d'abord — c'est elle qui
-  // identifie — mais seulement si elle tient 3:1 sur la surface claire
-  // (WCAG 1.4.11, un logo est un élément non textuel porteur de sens).
-  // Le jaune d'Abeille n'y arrive pas : #FFD500 sur blanc, c'est 1,42:1,
-  // soit un logo invisible. Il retombe donc sur l'encre sombre. Décidé par
-  // la mesure, comme `surTeinte()`, et non marque par marque : une teinte
-  // ajoutée demain ne pourra pas arriver illisible.
-  const PLAQUE = "#FFFFFF";
-  const ENCRE_SOMBRE = "#0B0B0B";
-  const encrePlaque =
-    contraste(m.color, PLAQUE) >= 3 ? m.color : ENCRE_SOMBRE;
 
   return (
     <span className={cn("inline-flex items-center gap-2", showName && "min-w-0")}>
       <span
         className={cn(pastilleVariants({ size, shape }), className)}
-        // Le rond porte la teinte de marque ; la plaque porte une surface
-        // claire et se sert de la teinte comme ENCRE.
-        style={
-          shape === "plate"
-            ? { color: encrePlaque }
-            : { backgroundColor: m.color, color: encre }
-        }
+        style={{ backgroundColor: m.color, color: encre }}
         // Quand le nom est écrit à côté, la pastille se tait : sinon un
         // lecteur d'écran annonce « AXA, AXA ».
         role={decorative || showName ? undefined : "img"}
