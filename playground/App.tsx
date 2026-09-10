@@ -5,6 +5,7 @@ import { ScoreStars } from "@registry/aikoz/score-stars/score-stars";
 import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
 import { ProgressBar } from "@registry/aikoz/progress-bar/progress-bar";
 import { Badge } from "@registry/aikoz/badge/badge";
+import { VerbatimCard } from "@registry/aikoz/verbatim-card/verbatim-card";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -285,6 +286,42 @@ export default function App() {
             flotterait sur la carte à 1,05:1. Écart assumé au Figma, qui les dessine sans contour.
           </p>
         </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          VerbatimCard — « Vos 3 derniers avis Google » du tunnel
+        </h2>
+        <div className="flex flex-col gap-3 max-w-xl">
+          <VerbatimCard
+            rating={5}
+            status="replied"
+            source="Google"
+            author="Allianz Lyon Centre"
+            date="12 août 2026"
+            text="Accueil chaleureux et conseillère vraiment à l'écoute, dossier traité en quelques jours. Je recommande sans réserve."
+            tags={["Réactivité", "Accueil"]}
+          />
+          <VerbatimCard
+            rating={2}
+            status="unanswered"
+            source="Google"
+            date="9 août 2026"
+            text="Délais de traitement beaucoup trop longs, plusieurs relances restées sans retour. J'ai fini par passer par le siège pour obtenir une réponse, ce qui n'aurait pas dû être nécessaire."
+            lines={2}
+          />
+          <VerbatimCard
+            density="compact"
+            rating={4}
+            status="replied"
+            source="Trustpilot"
+            date="4 août 2026"
+            text="Bon accompagnement sur mon contrat habitation."
+            onClick={() => alert("VerbatimCard cliquée")}
+          />
+        </div>
+        <p className="text-xs text-muted-foreground max-w-xl mt-3 mb-10">
+          La deuxième est tronquée à 2 lignes — en CSS, le texte complet reste dans le DOM.
+          La troisième est cliquable : elle porte alors l'énoncé complet et ses briques se taisent.
+        </p>
 
         {/* Composants extraits de KpiCard */}
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">

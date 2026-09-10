@@ -137,6 +137,31 @@
         "score-stars",
         "delta-badge"
       ]
+    },
+    {
+      "name": "verbatim-card",
+      "type": "registry:component",
+      "title": "Verbatim Card",
+      "description": "Carte d'avis client : note en etoiles, etat de reponse, texte, source et themes. Rendue en <article> — un avis est un contenu autonome. Troncature CSS : le texte complet reste dans le DOM.",
+      "files": [
+        {
+          "path": "registry/aikoz/verbatim-card/verbatim-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "score-stars",
+        "badge"
+      ]
     }
   ]
 }

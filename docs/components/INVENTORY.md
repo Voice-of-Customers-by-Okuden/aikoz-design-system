@@ -76,7 +76,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 2 | `KpiCard` | Data display | aikoz | v1 | **livré** — `variant` × `density`, décision 1 appliquée | ScoreStars, DeltaBadge, ProgressBar |
 | 3 | `ScoreStars` | Data display | aikoz | v1 | **livré** — rôle `--rating` (700 light / 600 dark) | — |
 | 4 | `DeltaBadge` | Data display | aikoz | v1 | **livré** — état neutre ajouté, ton forçable | Badge |
-| 5 | `Badge` | Data display | shadcn | v1 | **composant Figma** (5 statuts), à créer en code | — |
+| 5 | `Badge` | Data display | shadcn | v1 | **livré** — 5 tons, contour porteur du contraste | — |
 | 6 | `Tooltip` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 7 | `Select` | Forms | shadcn | v1 | **maquetté** (`MiniSelect`), à créer | — |
 | 8 | `ViewTabs` | Navigation | shadcn | v1 | **maquetté** (`ViewTab`) — bascule de vue dans la page, cf. décision 2 | — |
@@ -94,7 +94,7 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 20 | `EmptyState` | Feedback | aikoz | v1 | à créer — absent du code et du Figma | Button |
 | 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 22 | `Toast` (sonner) | Feedback | shadcn | plus tard | à créer — absent du code et du Figma | — |
-| 23 | `VerbatimCard` | Data display | aikoz | v1 | à créer — **confirmée par le site** : « Vos 3 derniers avis Google » du tunnel | ScoreStars, Badge, Tag |
+| 23 | `VerbatimCard` | Data display | aikoz | v1 | **livré** — rendue en `<article>`, troncature CSS | ScoreStars, Badge |
 | 24 | `ProgressBar` | Data display | aikoz | v1 | **livré** — 3 niveaux, rôles `status.*-fill` | — |
 | 25 | `SidebarNav` | Navigation | aikoz | v1 | **composant Figma** `Sidebar`, à créer — promu par la décision 2 | NavItem |
 | 26 | `NavItem` | Navigation | aikoz | v1 | **composant Figma** (3 états), à créer — brique de `SidebarNav` | — |
@@ -121,9 +121,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **5 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`), **31 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **7 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`), **29 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
-*Les 5 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+*Les 7 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
 *Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 
@@ -368,7 +368,7 @@ Cinq composants au registry : `button`, `score-stars`, `delta-badge`, `progress-
 Le branchement du système se fait **en priorité sur le site**, le dashboard pur suit. L'ordre découle de ce que le tunnel consomme.
 
 1. [x] **`KpiCard` refondu** sur `variant` × `density` — 4 variantes × 3 densités, niveau déduit de l'objectif.
-2. **`VerbatimCard`** ← prochaine étape — « Vos 3 derniers avis Google ». Les briques (`ScoreStars`, `Badge`) sont prêtes.
+2. [x] **`VerbatimCard`** livrée, et `Badge` avec. Le composant `Tag` que l'inventaire listait en dépendance n'existe pas : un tag de sentiment est un `Badge` avec un autre contenu.
 3. **`Card`, `Badge`, `Input`, `Avatar`, `Dialog`** — les partagés d'origine shadcn, travail d'habillage.
 4. **`Leaderboard`, `RankedBarChart`** — le `marqueDash` du tunnel les demande, et le dashboard aussi.
 5. **Composants de tunnel** : `Stepper`, `ChoiceCard`, `BrandPicker`, `SourceToggle`, `BookingFlow`.
