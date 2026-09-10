@@ -544,6 +544,31 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "brand-logo",
+      "type": "registry:component",
+      "title": "BrandLogo",
+      "description": "Pastille de marque — registre des 19 assureurs du marche francais, identifiants repris du workflow n8n Aikoz. Deux formes : circle porte les INITIALES (un logo masque dans un rond de 40px devient une tache), plate porte le logo monochrome par masque CSS a son rapport d'origine. Le noir ou le blanc du contenu est MESURE depuis la luminance de la teinte. Le champ maskable est adosse a une mesure de couverture d'encre : au-dela de 0,40 le masque ne rend qu'une silhouette.",
+      "files": [
+        {
+          "path": "registry/aikoz/brand-logo/brand-logo.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/brand-logo/brands.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }
