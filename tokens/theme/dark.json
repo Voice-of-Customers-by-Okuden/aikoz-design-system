@@ -208,15 +208,30 @@
         "$value": "{color.success.400}",
         "$description": "Remplissage porteur succès — 7,70:1 sur la piste."
       },
+      "success-fill-edge": {
+        "$type": "color",
+        "$value": "{color.success.400}",
+        "$description": "Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. en sombre les aplats passent déjà (4,81 à 6,53:1) : le contour vaut l'aplat, donc invisible"
+      },
       "warning-fill": {
         "$type": "color",
         "$value": "{color.warning.400}",
         "$description": "Remplissage porteur avertissement — 10,45:1 sur la piste."
       },
+      "warning-fill-edge": {
+        "$type": "color",
+        "$value": "{color.warning.400}",
+        "$description": "Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. en sombre les aplats passent déjà (4,81 à 6,53:1) : le contour vaut l'aplat, donc invisible"
+      },
       "error-fill": {
         "$type": "color",
         "$value": "{color.error.400}",
         "$description": "Remplissage porteur erreur — 5,33:1 sur la piste."
+      },
+      "error-fill-edge": {
+        "$type": "color",
+        "$value": "{color.error.400}",
+        "$description": "Contour de l'aplat d'une jauge — il porte le 3:1 là où l'aplat ne peut pas. en sombre les aplats passent déjà (4,81 à 6,53:1) : le contour vaut l'aplat, donc invisible"
       },
       "error-text": {
         "$type": "color",
@@ -277,8 +292,8 @@
     "rating": {
       "default": {
         "$type": "color",
-        "$value": "{color.warning.600}",
-        "$description": "Couleur de notation — étoiles pleines. warning.600 : 5,35:1 sur --card, 5,99:1 sur --background, 5,35:1 sur --muted. Conforme sur les trois surfaces — inchangé, seul le light remonte à 700."
+        "$value": "{color.warning.400}",
+        "$description": "Étoiles pleines. Passé de .600 à .400 : l'étoile était plus TERNE que la barre de progression du même thème, soit l'inverse exact du clair. Les deux tokens avaient dérivé l'un de l'autre au fil des correctifs. .400 tient 10,45:1 contre la carte — le changement est gratuit."
       },
       "empty": {
         "$type": "color",

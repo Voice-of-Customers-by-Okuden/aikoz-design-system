@@ -119,6 +119,21 @@
     "$value": "{color.status.error-fill}",
     "$description": "extension DS — remplissage porteur erreur"
   },
+  "success-fill-edge": {
+    "$type": "color",
+    "$value": "{color.status.success-fill-edge}",
+    "$description": "extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas"
+  },
+  "warning-fill-edge": {
+    "$type": "color",
+    "$value": "{color.status.warning-fill-edge}",
+    "$description": "extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas"
+  },
+  "error-fill-edge": {
+    "$type": "color",
+    "$value": "{color.status.error-fill-edge}",
+    "$description": "extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas"
+  },
   "track": {
     "$type": "color",
     "$value": "{color.surface.track}",

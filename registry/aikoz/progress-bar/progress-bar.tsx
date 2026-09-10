@@ -21,12 +21,19 @@ const trackVariants = cva(
 
 // Rôles de REMPLISSAGE, pas rôles de texte : un aplat porteur s'audite contre
 // la piste au seuil 3:1 (WCAG 1.4.11), là où un texte s'audite à 4,5:1 contre
-// la surface. Le jaune l'a montré — warning-text (600) ne donnait que 2,73:1
-// sur la piste, d'où un warning-fill un cran plus foncé.
-const FILL: Record<ProgressLevel, string> = {
-  good: "var(--success-fill)",
-  warning: "var(--warning-fill)",
-  critical: "var(--error-fill)",
+// la surface.
+//
+// Le jaune a imposé une sortie par le haut. En thème clair, l'aplat vif du
+// thème sombre (#F0C420) ne donne que 1,40:1 sur la piste ; le forcer à
+// respecter 3:1 seul le rendait brun (#8C6800), soit une barre d'une couleur
+// que le thème sombre n'a nulle part. On applique donc au remplissage le
+// dispositif déjà retenu pour Badge : le CONTOUR porte la limite, l'aplat
+// reste libre. Résultat, le même jaune dans les deux thèmes — et 3:1 tenu par
+// un liseré 1 px, invisible en sombre où l'aplat passait déjà seul.
+const FILL: Record<ProgressLevel, { bg: string; edge: string }> = {
+  good: { bg: "var(--success-fill)", edge: "var(--success-fill-edge)" },
+  warning: { bg: "var(--warning-fill)", edge: "var(--warning-fill-edge)" },
+  critical: { bg: "var(--error-fill)", edge: "var(--error-fill-edge)" },
 };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -128,7 +135,13 @@ export function ProgressBar({
     >
       <div
         className="h-full rounded-full transition-[width] duration-300 motion-reduce:transition-none"
-        style={{ width: `${fraction * 100}%`, background: FILL[resolved] }}
+        style={{
+          width: `${fraction * 100}%`,
+          background: FILL[resolved].bg,
+          // Liseré INTÉRIEUR : il ne consomme pas de place, donc la longueur du
+          // remplissage reste exactement proportionnelle à la valeur.
+          boxShadow: `inset 0 0 0 1px ${FILL[resolved].edge}`,
+        }}
       />
     </div>
   );
