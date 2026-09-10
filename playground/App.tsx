@@ -14,6 +14,7 @@ import { Select } from "@registry/aikoz/select/select";
 import { Tooltip } from "@registry/aikoz/tooltip/tooltip";
 import { SidebarNav } from "@registry/aikoz/sidebar-nav/sidebar-nav";
 import { ViewTabs } from "@registry/aikoz/view-tabs/view-tabs";
+import { DateRangePicker } from "@registry/aikoz/date-range-picker/date-range-picker";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -702,6 +703,24 @@ export default function App() {
               ]}
             />
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          DateRangePicker — préréglages en radio, saisie libre en natif
+        </h2>
+        <div className="flex flex-wrap items-start gap-6 rounded-[var(--radius)] border border-border bg-card p-5">
+          <DateRangePicker label="Période d'analyse" defaultValue={{ preset: "30j" }} />
+          <DateRangePicker
+            label="Période de comparaison"
+            defaultValue={{ preset: "custom", from: "2026-01-01", to: "2026-03-31" }}
+          />
+          <DateRangePicker label="Filtre masqué" labelHidden defaultValue={{ preset: "7j" }} />
+          <DateRangePicker label="Désactivé" disabled defaultValue={{ preset: "12m" }} />
+          <p className="basis-full text-xs text-muted-foreground m-0 pt-2 border-t border-border">
+            Pas de calendrier en grille : le cas fréquent est le préréglage, et les deux champs
+            de saisie sont natifs — sélecteur du système sur mobile, format local connu,
+            clavier acquis. La borne « Au » ne peut pas précéder la borne « Du ».
+          </p>
         </div>
 
         {/* Bandeau de statut bridge */}
