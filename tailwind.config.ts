@@ -1,4 +1,7 @@
 import type { Config } from "tailwindcss";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore — fichier généré par npm run build:tokens
+import couleurs from "./build/tailwind-colors.mjs";
 
 const config: Config = {
   darkMode: "class",
@@ -8,30 +11,26 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Généré par `npm run build:tokens` depuis le bridge. Ne pas lister
+      // les couleurs à la main ici : c'est exactement ce qui avait fait
+      // diverger la config du CSS — `card`, `popover`, `input` et `ring`
+      // existaient dans le bridge et manquaient ici, donc `bg-card` ne
+      // produisait rien sur 52 éléments.
+      //
+      // Les paires `x` / `x-foreground` sont aussi exposées en objet
+      // imbriqué, pour que `bg-primary text-primary-foreground` fonctionne
+      // comme chez shadcn.
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
-        },
-        secondary: {
-          DEFAULT: "var(--secondary)",
-          foreground: "var(--secondary-foreground)",
-        },
-        accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
-        },
-        muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
-        },
-        destructive: {
-          DEFAULT: "var(--destructive)",
-          foreground: "var(--destructive-foreground)",
-        },
-        border: "var(--border)",
+        ...couleurs,
+        ...Object.fromEntries(
+          Object.keys(couleurs)
+            .filter((n) => !n.endsWith("-foreground"))
+            .filter((n) => `${n}-foreground` in couleurs)
+            .map((n) => [
+              n,
+              { DEFAULT: couleurs[n], foreground: couleurs[`${n}-foreground`] },
+            ]),
+        ),
       },
       borderRadius: {
         lg: "var(--radius)",

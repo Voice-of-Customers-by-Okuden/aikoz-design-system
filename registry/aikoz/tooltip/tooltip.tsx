@@ -45,6 +45,10 @@ export interface TooltipProps {
  * déplacer le pointeur, elle reste ouverte quand le pointeur **passe dessus**,
  * et elle **persiste** tant que le survol ou le focus dure.
  *
+ * Pas d'animation d'apparition : les classes `animate-in` du plugin
+ * `tailwindcss-animate` étaient là sans le plugin, donc sans effet. Retirées
+ * plutôt que laissées à faire illusion.
+ *
  * Deux pièges que le composant ne peut pas rattraper à votre place :
  *
  * 1. **Un déclencheur désactivé n'émet aucun événement de pointeur** — sur un
@@ -104,8 +108,6 @@ export function Tooltip({
               // vide. `--border-strong` : 4,44:1.
               "border border-[var(--border-strong)] shadow-lg",
               "text-xs leading-snug text-balance",
-              "motion-safe:data-[state=delayed-open]:animate-in",
-              "motion-safe:data-[state=closed]:animate-out",
               className
             )}
           >
