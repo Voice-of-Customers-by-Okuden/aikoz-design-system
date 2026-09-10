@@ -13,7 +13,6 @@ const contentVariants = cva(
     // Une modale plus haute que l'écran doit défiler d'elle-même, sinon son
     // bouton de validation devient inatteignable en zoom 200 % (WCAG 1.4.10).
     "max-h-[calc(100dvh-2rem)] overflow-y-auto",
-    "motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out",
   ],
   {
     variants: {
@@ -79,6 +78,14 @@ export interface DialogProps extends VariantProps<typeof contentVariants> {
  *
  * Le titre est un prop obligatoire, pas un enfant libre : c'est la seule façon
  * de garantir que la modale a un nom accessible.
+ *
+ * **Pas d'animation d'ouverture.** Il y en avait une, écrite en classes
+ * `animate-in` / `animate-out` — sauf que ces classes viennent du plugin
+ * `tailwindcss-animate`, qui n'est pas installé. Elles ne produisaient donc
+ * RIEN : `animationName` valait `none`, vérifié à l'exécution. Une classe
+ * morte est pire qu'une absence, elle laisse croire que le comportement
+ * existe. Si une animation devient souhaitable, ce sera une décision
+ * explicite, avec la dépendance qui va avec.
  */
 export function Dialog({
   trigger,
@@ -100,8 +107,7 @@ export function Dialog({
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay
           className={cn(
-            "fixed inset-0 z-40 bg-[color-mix(in_oklch,var(--foreground),transparent_45%)]",
-            "motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out"
+            "fixed inset-0 z-40 bg-[color-mix(in_oklch,var(--foreground),transparent_45%)]"
           )}
         />
         <DialogPrimitive.Content

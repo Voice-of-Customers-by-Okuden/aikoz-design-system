@@ -214,6 +214,43 @@ fs.unlinkSync('bridge/.tmp-shadcn-dark.css');
 fs.unlinkSync('bridge/.tmp-shadcn-marketing-light.css');
 fs.unlinkSync('bridge/.tmp-shadcn-marketing.css');
 
+const bridge0 = fs.readFileSync('bridge/shadcn-bridge.css', 'utf8');
+
+// ─── Couleurs Tailwind, dérivées du bridge ───────────────────────────────────
+//
+// Ce fichier est généré parce que la config Tailwind avait DIVERGÉ du bridge,
+// silencieusement. `card`, `popover`, `input` et `ring` existaient dans le CSS
+// mais pas dans `tailwind.config.ts` : la classe `bg-card` — 52 éléments dans
+// le playground — ne produisait donc RIEN, et les cartes n'avaient aucun fond.
+// Personne ne l'a vu pendant des semaines parce qu'en thème clair une carte
+// blanche manquante laisse voir une page presque blanche.
+//
+// Une liste tenue à la main à côté d'une liste générée finit toujours par
+// diverger. Celle-ci se déduit du bridge : ajouter un rôle au bridge suffit
+// désormais à le rendre utilisable en classe Tailwind.
+const varsBridge = [
+  ...new Set(
+    [...bridge0.matchAll(/^\s*--([a-z0-9-]+):/gm)].map((m) => m[1]),
+  ),
+]
+  // `radius` n'est pas une couleur : il a sa propre entrée dans le thème.
+  .filter((n) => n !== 'radius')
+  .sort();
+
+fs.writeFileSync(
+  'build/tailwind-colors.mjs',
+  '// GÉNÉRÉ par build-tokens.mjs — NE PAS ÉDITER À LA MAIN.\n' +
+    '// Un rôle ajouté au bridge devient automatiquement une couleur Tailwind.\n' +
+    'export default ' +
+    JSON.stringify(
+      Object.fromEntries(varsBridge.map((n) => [n, `var(--${n})`])),
+      null,
+      2,
+    ) +
+    ';\n',
+);
+console.log(`build/tailwind-colors.mjs — ${varsBridge.length} couleurs exposées à Tailwind`);
+
 // ─── Garde-fou de sortie ─────────────────────────────────────────────────────
 //
 // Le bridge a déjà été livré avec la source SOMBRE servie sur le sélecteur
@@ -223,7 +260,7 @@ fs.unlinkSync('bridge/.tmp-shadcn-marketing.css');
 //
 // Vérifier la cohérence interne ne suffit pas : il faut vérifier que chaque
 // combinaison porte les BONNES valeurs. C'est ce que fait ce contrôle.
-const bridge = fs.readFileSync('bridge/shadcn-bridge.css', 'utf8');
+const bridge = bridge0;
 
 const BLOCS = [
   { nom: 'produit clair',    selecteur: ':root, .light',                    clair: true  },
@@ -260,6 +297,18 @@ const vus = new Map();
 for (const [nom, L] of fonds) {
   if (vus.has(L)) echecs.push(`« ${nom} » et « ${vus.get(L)} » ont le même fond (L=${L})`);
   else vus.set(L, nom);
+}
+
+// La config Tailwind doit CONSOMMER le fichier généré. Sans ce contrôle, il
+// suffit que quelqu'un remette une liste de couleurs à la main pour que la
+// divergence revienne — et elle ne se voit pas : en thème clair, une carte
+// blanche manquante laisse voir une page presque blanche.
+const configTw = fs.readFileSync('tailwind.config.ts', 'utf8');
+if (!/from\s+["'].\/build\/tailwind-colors\.mjs["']/.test(configTw)) {
+  echecs.push(
+    "tailwind.config.ts n'importe plus build/tailwind-colors.mjs — " +
+      'les couleurs vont diverger du bridge en silence',
+  );
 }
 
 if (echecs.length) {
