@@ -88,19 +88,19 @@ Un composant peut être maquetté sans exister comme composant Figma. La distinc
 | 6 | `Tooltip` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 7 | `Select` | Forms | shadcn | v1 | **maquetté** (`MiniSelect`), à créer | — |
 | 8 | `ViewTabs` | Navigation | shadcn | v1 | **maquetté** (`ViewTab`) — bascule de vue dans la page, cf. décision 2 | — |
-| 9 | `Card` | Layout | shadcn | v1 | à créer — pas de Card générique en Figma | — |
+| 9 | `Card` | Layout | shadcn | v1 | **livré** — 3 surfaces × 3 densités, prop `as` sémantique | — |
 | 10 | `ChoiceCard` | Navigation | aikoz | v1 | à créer — absent du code et du Figma | Card, Badge |
 | 11 | `DonutChart` | Data display | aikoz | v1 | **maquetté** (`SourcesDonut`), à créer | Select, Tooltip |
 | 12 | `RankedBarChart` | Data display | aikoz | v1 | à créer — absent du code et du Figma | TimeRangePicker, Tooltip |
 | 13 | `Leaderboard` | Data display | aikoz | v1 | **composants Figma** `RankRow` + `RankingCard`, à créer en code | Avatar, DeltaBadge |
 | 14 | `MapWidget` | Data display | aikoz | v1 | ⚠ **à créer — aucune carte dans le Figma** (statut v1.0 erroné) | Breadcrumb, Table |
-| 15 | `Avatar` | Data display | shadcn | v1 | **composant Figma**, à créer en code | — |
+| 15 | `Avatar` | Data display | shadcn | v1 | **livré** — repli sur initiales, 4 tailles | — |
 | 16 | `Table` | Data display | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 17 | `Breadcrumb` | Navigation | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 18 | `TimeRangePicker` | Forms | aikoz | v1 | **maquetté** (pill « 30 derniers jours » du topbar), à créer | Select ou Calendar+Popover |
 | 19 | `Skeleton` | Feedback | shadcn | v1 | à créer — absent du code et du Figma | — |
 | 20 | `EmptyState` | Feedback | aikoz | v1 | à créer — absent du code et du Figma | Button |
-| 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | à créer — absent du code et du Figma | — |
+| 21 | `Dialog` / `Sheet` | Overlays | shadcn | v1 | **livré** — 3 placements, sur Radix | — |
 | 22 | `Toast` (sonner) | Feedback | shadcn | plus tard | à créer — absent du code et du Figma | — |
 | 23 | `VerbatimCard` | Data display | aikoz | v1 | **livré** — rendue en `<article>`, troncature CSS | ScoreStars, Badge |
 | 24 | `ProgressBar` | Data display | aikoz | v1 | **livré** — 3 niveaux, rôles `status.*-fill` | — |
@@ -129,9 +129,9 @@ Répartition par **usage constaté** — dans les maquettes du dashboard d'un c�
 
 Plus d'un tiers du périmètre sert les deux surfaces. C'est là que le design system se rentabilise — et c'est ce qui rendrait coûteux de redessiner le site à côté. Le registre marketing existe précisément pour que ces treize-là traversent sans être réécrits.
 
-État réel : **8 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`), **28 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
+État réel : **11 livrés** (`Button`, `KpiCard`, `ScoreStars`, `DeltaBadge`, `ProgressBar`, `Badge`, `VerbatimCard`, `Input`, `Card`, `Avatar`, `Dialog`), **25 à construire** — dont 9 transposables depuis un composant Figma, 4 maquettés dans le Figma, et 10 présents en prototype site.
 
-*Les 8 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
+*Les 11 livrés sont tous dans les 13 partagés : le travail fait sert déjà les deux surfaces.*
 
 *Entrées récentes : `ProgressBar`, `SidebarNav` et `NavItem` par les décisions 1 et 2 ; les dix suivants par le basculement de périmètre du 09/09.*
 
@@ -377,8 +377,8 @@ Le branchement du système se fait **en priorité sur le site**, le dashboard pu
 
 1. [x] **`KpiCard` refondu** sur `variant` × `density` — 4 variantes × 3 densités, niveau déduit de l'objectif.
 2. [x] **`VerbatimCard`** livrée, et `Badge` avec. Le composant `Tag` que l'inventaire listait en dépendance n'existe pas : un tag de sentiment est un `Badge` avec un autre contenu.
-3. **`Card`, `Avatar`, `Dialog`** — les partagés d'origine shadcn restants (`Badge` et `Input` sont livrés). ← prochaine étape
-4. **`Leaderboard`, `RankedBarChart`** — le `marqueDash` du tunnel les demande, et le dashboard aussi.
+3. [x] **`Card`, `Avatar`, `Dialog`** livrés — les 13 partagés le sont désormais tous sauf `Leaderboard` et `RankedBarChart`.
+4. **`Leaderboard`, `RankedBarChart`** ← prochaine étape — le `marqueDash` du tunnel les demande, et le dashboard aussi.
 5. **Composants de tunnel** : `Stepper`, `ChoiceCard`, `BrandPicker`, `SourceToggle`, `BookingFlow`.
 6. **Pages de site** : `SiteNav`, `SiteFooter`, `Accordion`, `FeaturePanel`, `LogoMarquee`.
 7. **Dashboard pur, en dernier** : `MapWidget`, `Table`, `Breadcrumb`, `TimeRangePicker`, `Toast`, `Skeleton`, `EmptyState`, `DonutChart`, `Tooltip`, `Select`, `ViewTabs`, `SidebarNav`, `NavItem`.
