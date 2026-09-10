@@ -500,6 +500,50 @@
         "clsx",
         "tailwind-merge"
       ]
+    },
+    {
+      "name": "choice-card",
+      "type": "registry:component",
+      "title": "ChoiceCard",
+      "description": "Option presentee en carte. Sous la carte il y a un VRAI input, mis en sr-only et non display:none : il reste focusable, se coche a la barre d'espace, et les fleches parcourent les radios du groupe sans une ligne de clavier ecrite. L'etat retenu tient sur deux canaux — teinte du trait ET coche, qui est une difference de forme. border-2 en permanence, seule la teinte change : pas de decalage d'un pixel a la selection.",
+      "files": [
+        {
+          "path": "registry/aikoz/choice-card/choice-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "choice-group",
+      "type": "registry:component",
+      "title": "ChoiceGroup",
+      "description": "Groupe de choix en cartes — REMPLACE BrandPicker et SourceToggle de l'inventaire : les deux ne different que par l'arite de la selection et le contenu des cartes, soit deux props, pas deux composants. fieldset + legend, la seule construction qui fasse annoncer la question a l'entree du groupe. La sortie de secours (« Je ne trouve pas ma marque ») est rendue HORS du fieldset : ce n'est pas une option de plus.",
+      "files": [
+        {
+          "path": "registry/aikoz/choice-group/choice-group.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/choice-card/choice-card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
     }
   ]
 }

@@ -21,6 +21,7 @@ import { EmptyState } from "@registry/aikoz/empty-state/empty-state";
 import { Breadcrumb } from "@registry/aikoz/breadcrumb/breadcrumb";
 import { Accordion } from "@registry/aikoz/accordion/accordion";
 import { Stepper } from "@registry/aikoz/stepper/stepper";
+import { ChoiceGroup } from "@registry/aikoz/choice-group/choice-group";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 
@@ -876,6 +877,48 @@ export default function App() {
               <code className="font-mono px-1">hidden</code> : il sort de la tabulation, pas
               seulement de la vue.
             </p>
+          </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          ChoiceGroup — un composant à la place de BrandPicker + SourceToggle
+        </h2>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <ChoiceGroup
+              legend="Sélectionnez votre marque"
+              description="Une seule marque à la fois — le périmètre d'analyse en dépend."
+              layout="grid"
+              columns={3}
+              defaultValue={["axa"]}
+              options={[
+                { value: "axa", label: "AXA" },
+                { value: "generali", label: "Generali" },
+                { value: "europ", label: "Europ Assistance" },
+                { value: "renault", label: "Renault" },
+                { value: "vw", label: "Volkswagen" },
+                { value: "cma", label: "CMA CGM" },
+              ]}
+              escape={
+                <Button variant="ghost" size="sm">Je ne trouve pas ma marque</Button>
+              }
+            />
+          </div>
+
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <ChoiceGroup
+              legend="Sources à analyser"
+              description="Plusieurs sources possibles. Au moins une est requise."
+              selection="multiple"
+              layout="list"
+              defaultValue={["google", "trustpilot"]}
+              options={[
+                { value: "google", label: "Google", description: "Fiches d'établissement", meta: <Badge tone="neutral" size="sm">1 240</Badge> },
+                { value: "trustpilot", label: "Trustpilot", description: "Avis vérifiés", meta: <Badge tone="neutral" size="sm">318</Badge> },
+                { value: "pj", label: "Pages Jaunes", description: "Annuaire local", meta: <Badge tone="neutral" size="sm">96</Badge> },
+                { value: "tripadvisor", label: "TripAdvisor", description: "Hors périmètre assurance", disabled: true },
+              ]}
+            />
           </div>
         </div>
 
