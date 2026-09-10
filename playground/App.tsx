@@ -33,6 +33,7 @@ import { BookingFlow, type BookingStatus } from "@registry/aikoz/booking-flow/bo
 import { SlotPicker } from "@registry/aikoz/slot-picker/slot-picker";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
+import { auditerToutesCombinaisons, type EchecContraste } from "./audit";
 
 type View = "décisions" | "tokens" | "composants";
 
@@ -103,6 +104,7 @@ export default function App() {
   const [tri, setTri] = useState<TableSort>({ key: "taux", direction: "desc" });
   const [rdv, setRdv] = useState<BookingStatus>("form");
   const [creneau, setCreneau] = useState("");
+  const [audit, setAudit] = useState<Record<string, EchecContraste[]> | null>(null);
 
   // Le registre marketing s'applique par attribut, comme data-brand : additif,
   // il n'écrase ni light ni dark et s'imbrique dans une page produit.
@@ -1106,6 +1108,47 @@ export default function App() {
               </Button>
             ))}
           </div>
+        </div>
+
+        {/* Audit de contraste sur le rendu */}
+        <div className="mt-12 rounded-[var(--radius)] border border-border bg-card p-5">
+          <h2 className="text-lg font-semibold text-foreground mt-0 mb-2">
+            Audit de contraste — sur le rendu, pas sur les tokens
+          </h2>
+          <p className="text-sm text-muted-foreground mt-0 mb-4">
+            Parcourt chaque texte visible de cette page dans les quatre combinaisons, et le
+            compare à son fond <strong>composé</strong> — voiles de badge inclus. C'est ce
+            composite qu'un audit token-à-token ne voit pas.
+          </p>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => setAudit(auditerToutesCombinaisons())}
+          >
+            Lancer l'audit
+          </Button>
+          {audit && (
+            <div className="mt-4 flex flex-col gap-3">
+              {Object.entries(audit).map(([nom, echecs]) => (
+                <div key={nom} className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <Badge tone={echecs.length ? "error" : "success"} size="sm" icon={echecs.length ? "✕" : "✓"}>
+                      {echecs.length === 0 ? "conforme" : `${echecs.length} échec${echecs.length > 1 ? "s" : ""}`}
+                    </Badge>
+                    <span className="text-sm font-medium text-foreground">{nom}</span>
+                  </div>
+                  {echecs.map((e, i) => (
+                    <p key={i} className="m-0 pl-2 text-xs text-muted-foreground">
+                      <span className="tabular-nums font-semibold text-[var(--destructive-text)]">
+                        {e.ratio.toFixed(2)}
+                      </span>{" "}
+                      &lt; {e.seuil} · {e.taillePx}px · « {e.texte} » · <code className="font-mono">{e.selecteur}</code>
+                    </p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Bandeau de statut bridge */}

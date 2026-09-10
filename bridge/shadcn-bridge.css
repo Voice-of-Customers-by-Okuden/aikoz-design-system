@@ -152,7 +152,7 @@
   --error-subtle: oklch(0.9689 0.0126 35.732); /** extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui */
   --info-subtle: oklch(0.9654 0.0108 256.695); /** extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui */
   --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
-  --warning: oklch(0.5392 0.1106 84.636); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
+  --warning: oklch(0.4206 0.0861 86.043); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
   --success: oklch(0.4383 0.0991 158.647); /** extension DS — texte/emphase succès (utilisé par KpiCard) */
   --destructive-text: oklch(0.4872 0.1625 31.673); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
