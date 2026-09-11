@@ -22,3 +22,7 @@ button-full.txt
 
 *storybook.log
 storybook-static
+
+# Rapport de couverture — régénéré à chaque `vitest --coverage`.
+# Écrit sous `playground/` parce que c'est la racine du projet vitest.
+coverage/
