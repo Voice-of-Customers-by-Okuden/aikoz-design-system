@@ -321,6 +321,26 @@ export default function App() {
         </div>
 
         <h3 className="text-sm font-semibold text-foreground mb-3">
+          variant=benchmark — le repère reste au même niveau, libellés de longueurs différentes
+        </h3>
+        <div className="grid grid-cols-3 gap-4 mb-10 max-w-2xl">
+          <KpiCard variant="benchmark" label="Nombre d'avis" value={59} benchmarkValue={71} />
+          <KpiCard
+            variant="benchmark"
+            label="Taux de réponse -48h"
+            value={6}
+            unit=" %"
+            benchmarkValue={42}
+          />
+          <KpiCard variant="benchmark" label="Temps de réponse" value={49} unit=" j" benchmarkValue={12} />
+        </div>
+        <p className="text-xs text-muted-foreground -mt-6 mb-10 max-w-2xl">
+          Le libellé réserve toujours 2 lignes (<code className="font-mono px-1">min-h-8</code>) : « Nombre
+          d'avis » tient sur une, « Taux de réponse -48h » sur deux, la valeur et « vs Moyenne marché »
+          démarrent quand même à la même hauteur sur les trois cartes.
+        </p>
+
+        <h3 className="text-sm font-semibold text-foreground mb-3">
           Les deux axes se croisent — rating en trois densités
         </h3>
         <div className="flex flex-wrap gap-6 items-start mb-10">
