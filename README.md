@@ -3,7 +3,7 @@
 Dépôt de référence pour tout contenu visuel et éditorial Aikoz by Okuden.  
 Il contient les sources de vérité — design tokens, voix de marque, logos, polices — que l'équipe injecte dans ses outils IA et ses productions.
 
-> **Règle d'or** : toute modification passe par une branche + PR. Les fichiers marqués 🔒 ne se modifient pas sans validation d'Arnaud.
+> **Règle d'or** : toute modification passe par une branche + PR. Les fichiers marqués 🔒 ne se modifient pas sans validation.
 >
 > **Le design system a une propriétaire unique : Alice (`@Alicokuden`).** Tokens, composants, bridge et doctrine d'accessibilité ne se modifient pas sans sa revue. Cf. [Gouvernance](#gouvernance).
 
@@ -197,7 +197,7 @@ chore: suppression fichiers DS_Store
 
 ## Ce qui est protégé
 
-Ces fichiers sont les **sources de vérité** du projet. Toute modification sans validation d'Arnaud peut casser la cohérence de l'ensemble des productions Aikoz.
+Ces fichiers sont les **sources de vérité** du projet. Toute modification sans validation peut casser la cohérence de l'ensemble des productions Aikoz.
 
 | Fichier | Pourquoi c'est protégé |
 |---|---|
