@@ -1,0 +1,56 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design system/Décisions" />
+
+# Décisions en attente
+
+<div style={{
+  padding: "1.25rem 1.5rem", borderRadius: 8, margin: "1.5rem 0",
+  background: "var(--success-subtle)", border: "1px solid var(--success)"
+}}>
+  <strong>Aucune décision en attente.</strong>
+  <div style={{ fontSize: 14, opacity: 0.8, marginTop: 6 }}>
+    Les cinq arbitrages de cadrage sont tranchés, et les arbitrages ultérieurs
+    ont été pris au fil de l'eau.
+  </div>
+</div>
+
+## La règle
+
+**Une décision tranchée sort de cette page.** Elle part soit dans le composant
+qu'elle concerne — c'est là qu'on la relira — soit dans
+[Accessibilité](?path=/docs/design-system-accessibilité--docs) quand elle vaut
+comme règle générale, soit dans l'[Archive](?path=/docs/design-system-archive--docs)
+quand elle a été écartée.
+
+Une page de décisions qui accumule devient un cimetière que personne ne lit, et
+la seule chose qu'on veut y voir est **ce qui bloque maintenant**.
+
+## Ce qui reste ouvert ailleurs
+
+Ce ne sont pas des décisions de design mais des accès, et ils tiennent au même
+endroit — ils demandent les droits **admin** sur l'organisation, que ni Alice ni
+ce dépôt n'ont.
+
+| | qui peut le faire |
+|---|---|
+| Activer GitHub Pages pour publier ce Storybook | un admin de l'organisation |
+| Passer Louis en `write` pour qu'il pousse des branches | un admin de l'organisation |
+
+Louis peut **déjà ouvrir des PR** : le dépôt est public, il forke et propose. Et
+le `CODEOWNERS` garde Alice relectrice obligatoire sur tout le design system,
+même quand il pourra pousser.
+
+## Comment une décision arrive ici
+
+Quand deux options sont **réellement concurrentes**. La vérification préalable
+compte autant que l'arbitrage : plusieurs fois, ce qui ressemblait à un A/B
+était en réalité deux composants distincts, ou deux variantes d'un seul.
+
+- `SidebarNav` et `ViewTabs` ressemblaient à un choix. Ce sont **deux
+  composants** : leurs contrats d'accessibilité sont irréconciliables.
+- `BrandPicker` et `SourceToggle` ressemblaient à deux composants. C'est **un
+  seul**, avec deux props : leurs contrats sont identiques.
+- `RankedBarChart` et `ComparisonLineChart` : idem, deux props.
+
+> Avant de poser la question, vérifier que les deux options s'excluent vraiment.

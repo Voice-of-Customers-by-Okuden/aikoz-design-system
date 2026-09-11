@@ -108,6 +108,11 @@ export interface ChartFrameProps<T> {
 /**
  * Coque commune à tous les graphiques.
  *
+ * **Pas de story pour ce fichier, et c'est délibéré** : il ne rend rien seul.
+ * Ce qu'il garantit se vérifie dans les stories de `LineChart`, `BarChart` et
+ * `DonutChart`, qui l'utilisent. Une story de remplissage donnerait l'illusion
+ * d'une couverture sans rien tester de plus.
+ *
  * Elle existe pour que le contrat d'accessibilité soit tenu **par
  * construction** plutôt que répété — et oublié une fois sur cinq. Tout
  * graphique du système passe par elle, et en hérite :
@@ -168,7 +173,17 @@ export function ChartFrame<T>({
         style={{ height }}
         className="w-full"
       >
-        {children(uid)}
+        {/*
+          Le SVG est masqué, et ce n'est pas une redondance avec le `role="img"`
+          du parent. Recharts pose `role="img"` sur CHAQUE secteur et chaque
+          tracé, sans nom accessible : axe y voit autant d'images sans
+          alternative, et un lecteur d'écran y trouve plusieurs images
+          imbriquées là où il n'y a qu'un graphique. Le parent porte le nom, le
+          tableau porte la donnée, l'intérieur n'a rien à dire.
+        */}
+        <div aria-hidden="true" className="h-full w-full">
+          {children(uid)}
+        </div>
       </div>
 
       {tableCollapsed ? (

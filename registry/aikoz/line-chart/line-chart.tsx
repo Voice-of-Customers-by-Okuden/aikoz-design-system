@@ -185,6 +185,11 @@ export function LineChart({
             data={data}
             margin={{ top: 8, right: 8, bottom: 8, left: 0 }}
             style={{ cursor: "pointer" }}
+            // `tabIndex={-1}` : recharts rend son SVG focusable par défaut.
+            // Dans un sous-arbre `aria-hidden`, un élément focusable est une
+            // contradiction — axe la signale (aria-hidden-focus), et c'en est
+            // une vraie : le focus y entrerait sans que rien ne soit annoncé.
+            tabIndex={-1}
           >
             <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
             <XAxis

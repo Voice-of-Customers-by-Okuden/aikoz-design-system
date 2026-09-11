@@ -128,10 +128,19 @@ export function Leaderboard({
           {avecMarque && e.brand && <BrandLogo brand={e.brand} size="sm" decorative />}
           <span className="flex flex-col min-w-0">
             <span className="truncate font-medium text-foreground">
-              {e.name}
+              {/* Une seule chaîne : un `sr-only` séparé produisait
+                  « Marseille Prado — Votre établissement » avec une espace
+                  surnuméraire avant le tiret. */}
+              {e.highlighted ? (
+                <>
+                  <span className="sr-only">{`${e.name} — ${highlightLabel}`}</span>
+                  <span aria-hidden="true">{e.name}</span>
+                </>
+              ) : (
+                e.name
+              )}
               {e.highlighted && (
                 <>
-                  <span className="sr-only"> — {highlightLabel}</span>
                   {/* Marqueur invisible : il ne sert qu'au sélecteur CSS du
                       trait latéral. L'annonce passe par le sr-only ci-dessus,
                       pas par lui. */}

@@ -1,0 +1,87 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design system/Introduction" />
+
+# Aikoz Design System
+
+Le design system d'Aikoz by Okuden : **37 composants**, des tokens au format DTCG,
+et un pont vers shadcn. Ce Storybook en est la seule vitrine — tout ce qui est
+rendu ici est ce qui est publié.
+
+<div style={{
+  display: "grid", gap: 12, gridTemplateColumns: "repeat(auto-fit,minmax(160px,1fr))",
+  margin: "1.5rem 0"
+}}>
+  {[
+    ["37", "composants au registry"],
+    ["4", "combinaisons registre × thème"],
+    ["19", "marques d'assureurs"],
+    ["0", "échec de contraste"],
+  ].map(([n, l]) => (
+    <div key={l} style={{ padding: "1rem", borderRadius: 8, background: "var(--muted)" }}>
+      <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1 }}>{n}</div>
+      <div style={{ fontSize: 13, opacity: 0.7, marginTop: 4 }}>{l}</div>
+    </div>
+  ))}
+</div>
+
+## Les deux axes
+
+Le système a **deux axes orthogonaux**, et c'est ce qui explique le chiffre de
+quatre : un registre × un thème.
+
+| | clair | sombre |
+|---|---|---|
+| **produit** | l'application, par défaut | `<html class="dark">` |
+| **marketing** | le site public | `<html class="dark" data-register="marketing">` |
+
+Ils se basculent **en haut de cet écran**, dans la barre d'outils. Ce ne sont pas
+des variantes de composant : ils s'appliquent à tout, en même temps. Un composant
+qui ne tient pas dans les quatre n'est pas fini.
+
+## Installer un composant
+
+Le registry est publié au format shadcn.
+
+```bash
+npx shadcn@latest add https://raw.githubusercontent.com/Voice-of-Customers-by-Okuden/aikoz-design-system/main/public/r/button.json
+```
+
+## Importer les tokens
+
+Un seul import tire les quatre combinaisons.
+
+```css
+@import "./build/index.css";
+@import "./bridge/shadcn-bridge.css";
+```
+
+Les couleurs Tailwind sont **générées** depuis le bridge, jamais listées à la
+main : `build/tailwind-colors.mjs` s'en déduit et `tailwind.config.ts` l'importe.
+Une garde de build échoue si la config cesse de l'importer — parce que la
+divergence est déjà arrivée, et qu'elle était invisible.
+
+## Le playground reste, pour l'instant
+
+Storybook a vocation à devenir la seule vitrine — deux vitrines du même contenu
+divergent, c'est exactement ce qui est arrivé à la config Tailwind tenue à la
+main à côté du bridge qui la générait.
+
+Mais la bascule n'est pas encore faite : **Louis teste des composants dans le
+playground**, et le couper maintenant lui retirerait son plan de travail. Les
+deux coexistent donc le temps de la transition, et c'est une dette assumée, pas
+un état cible.
+
+```bash
+npm run dev         # playground, à la racine
+npm run storybook   # Storybook, port 6006
+```
+
+## Comment lire ce Storybook
+
+Chaque composant a une story **par décision**, pas une par combinaison. Les
+stories nommées « Par défaut » montrent l'usage courant ; les autres portent
+chacune un arbitrage et l'expliquent — souvent avec le chiffre qui l'a tranché.
+
+C'est délibéré : un design system n'est pas une galerie, c'est un ensemble de
+décisions. Celles qui ne sont pas écrites se redéfont.

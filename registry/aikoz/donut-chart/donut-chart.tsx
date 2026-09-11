@@ -84,7 +84,13 @@ export function DonutChart({
       {(idTrames) => (
         <div className="relative h-full w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
+            <PieChart
+            // `tabIndex={-1}` : recharts rend son SVG focusable par défaut.
+            // Dans un sous-arbre `aria-hidden`, un élément focusable est une
+            // contradiction — axe la signale (aria-hidden-focus), et c'en est
+            // une vraie : le focus y entrerait sans que rien ne soit annoncé.
+            tabIndex={-1}
+            >
               <TramesSeries id={idTrames} />
               <Pie
                 data={parts}
@@ -97,6 +103,13 @@ export function DonutChart({
                 stroke="var(--card)"
                 strokeWidth={2}
                 isAnimationActive={false}
+                // `rootTabIndex` et non `tabIndex` : recharts pose lui-même
+                // `tabindex="0"` sur le groupe racine du `<Pie>` et ignore un
+                // `tabIndex` passé en prop. Le sous-arbre est masqué, un
+                // élément focusable dedans est une contradiction — axe la
+                // signale, et c'en est une vraie : le focus y entrerait sans
+                // que rien ne soit annoncé.
+                rootTabIndex={-1}
               >
                 {parts.map((p, i) => (
                   <Cell key={p.key} fill={couleurSerie(i)} />
@@ -109,6 +122,7 @@ export function DonutChart({
                 outerRadius="88%"
                 stroke="none"
                 isAnimationActive={false}
+                rootTabIndex={-1}
               >
                 {parts.map((p, i) => (
                   <Cell
