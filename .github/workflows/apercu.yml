@@ -1,11 +1,17 @@
-# Publie l'aperçu statique du design system sur GitHub Pages.
+# Publie le design system sur GitHub Pages.
 #
-# Pourquoi une action plutôt qu'un dossier commité : l'aperçu pèse 2,3 Mo de
-# binaires et se régénère à chaque build. Le committer chargerait l'historique
-# pour un bundle minifié qu'aucun agent ne sait lire et que GitHub n'affiche
-# pas de lui-même. Ici il est construit à la demande et publié, sans jamais
-# entrer dans le dépôt.
-name: Aperçu du design system
+# Deux choses y sont servies, et l'ordre d'importance a changé :
+#
+#   /                → le STORYBOOK. C'est la vitrine : composants, doc,
+#                      tokens, décisions, archive. C'est ce qu'on partage.
+#   /playground/     → l'ancien aperçu. Il reste tant que Louis y teste des
+#                      composants ; il disparaîtra avec la transition.
+#
+# Pourquoi une action plutôt qu'un dossier commité : la sortie pèse une
+# quinzaine de mégaoctets de binaires et se régénère à chaque build. La
+# committer chargerait l'historique d'un bundle minifié qu'aucun agent ne sait
+# lire et que GitHub n'affiche pas de lui-même.
+name: Design system
 
 on:
   push:
@@ -33,16 +39,46 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      # `--base` doit valoir le chemin où Pages sert le site, sinon les
-      # fichiers sont cherchés à la racine du domaine et la page reste vide.
-      # C'est exactement le piège rencontré en local.
-      - run: npx vite build --base=/${{ github.event.repository.name }}/
+
+      # Les tokens sont générés : sans cette étape, le CSS servi serait celui
+      # du dernier commit et non celui des sources DTCG.
+      - name: Tokens
+        run: npm run build:tokens
+
+      # Le Storybook référence ses assets en relatif (`./`) : il n'a donc
+      # besoin d'aucun `--base`, contrairement au playground ci-dessous.
+      - name: Storybook
+        run: npm run build-storybook
+
+      # `--base` doit valoir le chemin exact où Pages sert le playground.
+      # Sans lui, les fichiers sont cherchés à la racine du domaine et la page
+      # reste blanche — le piège déjà rencontré en local, et que `curl` ne
+      # détecte pas puisque le repli SPA de Vite répond 200.
+      - name: Playground
+        run: npx vite build --base=/${{ github.event.repository.name }}/playground/
         env:
           NODE_ENV: production
+
+      - name: Assembler
+        run: |
+          mkdir -p site
+          cp -R storybook-static/. site/
+          mkdir -p site/playground
+          cp -R docs/preview/. site/playground/
+          # Garde-fou : une page vide se publie sans erreur. On vérifie donc
+          # que les deux points d'entrée existent AVANT de publier, plutôt que
+          # de le découvrir sur l'URL publique.
+          test -s site/index.html || { echo "::error::Storybook absent"; exit 1; }
+          test -s site/playground/index.html || { echo "::error::playground absent"; exit 1; }
+          # Les 19 logos de marque sont servis en chemin RELATIF depuis le
+          # Storybook ; s'ils manquaient, les pastilles sortiraient vides.
+          test -d site/brands || { echo "::error::les logos de marque manquent"; exit 1; }
+          echo "Publié : $(du -sh site | cut -f1)"
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/preview
+          path: site
 
   publier:
     needs: construire
