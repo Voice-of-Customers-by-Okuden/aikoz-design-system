@@ -28,6 +28,21 @@ export interface ChoiceCardProps {
   disabled?: boolean;
   /** Disposition interne. `tile` empile le visuel au-dessus du libellé. */
   layout?: "row" | "tile";
+  /**
+   * Habillage visuel — la mécanique d'accessibilité (input réel, `sr-only`,
+   * anneau reporté par `has-[:focus-visible]`) ne change jamais, seules les
+   * classes Tailwind changent selon la valeur :
+   *
+   * - `"card"` (défaut) — la carte isolée avec pastille de coche, inchangée.
+   * - `"segmented"` — pensé pour un rang connecté (`ChoiceGroup`
+   *   `layout="segmented"`) : sélectionnée = fond foncé + texte clair
+   *   (mêmes jetons que `Button` `variant="default"`), non sélectionnée =
+   *   fond clair + `muted-foreground`. Pas de pastille : dans un rang
+   *   connecté, le remplissage suffit à porter l'état.
+   * - `"chip"` — pastille compacte, sélectionnée = coche + fond foncé, non
+   *   sélectionnée = fond clair + contour.
+   */
+  appearance?: "card" | "segmented" | "chip";
   className?: string;
 }
 
@@ -70,6 +85,7 @@ export function ChoiceCard({
   meta,
   disabled,
   layout = "row",
+  appearance = "card",
   className,
 }: ChoiceCardProps) {
   const uid = useId();
@@ -78,24 +94,58 @@ export function ChoiceCard({
   return (
     <label
       className={cn(
-        "relative flex cursor-pointer rounded-[var(--radius)] border bg-[var(--card)]",
-        "transition-colors",
+        "relative flex cursor-pointer transition-colors",
         // 44px au minimum même pour une option d'une ligne (WCAG 2.5.8).
-        "min-h-11 p-4",
-        layout === "tile"
-          ? "flex-col items-center justify-center gap-2 text-center"
-          : "flex-row items-start gap-3",
+        "min-h-11",
+        appearance === "chip" ? "px-4 py-2 rounded-full items-center gap-2" : "p-4",
+        appearance !== "chip" &&
+          (layout === "tile"
+            ? "flex-col items-center justify-center gap-2 text-center"
+            : "flex-row items-start gap-3"),
+        appearance === "segmented" && "flex-1 justify-center text-center",
         // L'anneau de focus est reporté ici : l'input est en sr-only, le
         // focus doit rester visible quelque part.
         "has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2",
         "has-[:focus-visible]:ring-[var(--ring)] has-[:focus-visible]:ring-offset-2",
         "has-[:focus-visible]:ring-offset-[var(--background)]",
-        // `border-2` en permanence, seule la TEINTE change : faire passer le
-        // trait de 1 à 2px à la sélection décalerait la carte d'un pixel, et
-        // toute la grille avec elle.
-        "border-2 border-[var(--border-strong)]",
-        "has-[:checked]:border-[var(--ring)] has-[:checked]:bg-[var(--surface-hover)]",
-        "hover:bg-[var(--surface-hover)]",
+        // "segmented" vit dans un conteneur `overflow-hidden` (`ChoiceGroup`,
+        // pour que les coins arrondis du rang partagé restent nets) : un
+        // anneau à décalage positif y serait rogné sur les segments de bord.
+        // `ring-inset` + décalage nul gardent l'anneau DANS la boîte — les
+        // deux utilitaires `ring-*` de Tailwind sont faits pour se composer.
+        appearance === "segmented" &&
+          "has-[:focus-visible]:ring-inset has-[:focus-visible]:ring-offset-0",
+        // ── "card" (défaut) — inchangé, byte pour byte. ────────────────────
+        appearance === "card" && [
+          "rounded-[var(--radius)] border bg-[var(--card)]",
+          // `border-2` en permanence, seule la TEINTE change : faire passer
+          // le trait de 1 à 2px à la sélection décalerait la carte d'un
+          // pixel, et toute la grille avec elle.
+          "border-2 border-[var(--border-strong)]",
+          "has-[:checked]:border-[var(--ring)] has-[:checked]:bg-[var(--surface-hover)]",
+          "hover:bg-[var(--surface-hover)]",
+        ],
+        // ── "segmented" — le remplissage porte l'état, pas de pastille.
+        // Pas de bordure ni de radius propres : dans `ChoiceGroup`
+        // `layout="segmented"`, c'est le conteneur qui porte le contour
+        // partagé et les séparateurs, pour que le rang se lise comme UN
+        // contrôle. Mêmes jetons que `Button` `variant="default"`.
+        appearance === "segmented" && [
+          "bg-[var(--card)] text-[var(--muted-foreground)]",
+          "has-[:checked]:bg-[var(--primary)] has-[:checked]:text-[var(--primary-foreground)]",
+          "has-[:checked]:font-medium",
+          "hover:bg-[var(--surface-hover)]",
+          "has-[:checked]:hover:bg-[color-mix(in_oklch,var(--primary),transparent_10%)]",
+        ],
+        // ── "chip" — pastille compacte, coche + fond foncé au lieu du
+        // contour au repos.
+        appearance === "chip" && [
+          "border-2 border-[var(--border-strong)] bg-[var(--card)] text-[var(--foreground)]",
+          "has-[:checked]:border-[var(--primary)] has-[:checked]:bg-[var(--primary)]",
+          "has-[:checked]:text-[var(--primary-foreground)]",
+          "hover:bg-[var(--surface-hover)]",
+          "has-[:checked]:hover:bg-[color-mix(in_oklch,var(--primary),transparent_10%)]",
+        ],
         disabled && "cursor-not-allowed opacity-60 hover:bg-transparent",
         className
       )}
@@ -117,17 +167,53 @@ export function ChoiceCard({
           aria-hidden="true"
           className={cn(
             "shrink-0 inline-flex items-center justify-center",
-            layout === "tile" ? "h-10" : "size-6"
+            appearance === "chip" ? "size-4" : layout === "tile" ? "h-10" : "size-6"
           )}
         >
           {visual}
         </span>
       )}
 
-      <span className={cn("flex flex-col gap-0.5 min-w-0", layout === "row" && "flex-1")}>
-        <span className="text-sm font-medium text-foreground">{label}</span>
+      {/* "chip" — la coche est INLINE, pas une pastille absolue : sur une
+          pastille compacte le badge en coin déborderait. Révélée par
+          `peer-checked`, comme celle de "card". */}
+      {appearance === "chip" && (
+        <span
+          aria-hidden="true"
+          className="hidden shrink-0 size-3.5 items-center justify-center peer-checked:inline-flex"
+        >
+          <svg viewBox="0 0 12 12" className="size-full" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 6.5 4.8 9.2 10 3.5" />
+          </svg>
+        </span>
+      )}
+
+      <span
+        className={cn(
+          "flex flex-col gap-0.5 min-w-0",
+          layout === "row" && appearance !== "chip" && "flex-1"
+        )}
+      >
+        <span
+          className={cn(
+            "text-sm font-medium",
+            // "card" fixe sa couleur : le texte ne change jamais de teinte,
+            // seule la carte se colore. "segmented"/"chip" héritent de la
+            // couleur du `<label>` (`text-current`) puisque c'est justement
+            // elle qui bascule clair/foncé à la sélection.
+            appearance === "card" && "text-foreground"
+          )}
+        >
+          {label}
+        </span>
         {description && (
-          <span id={descId} className="text-xs text-muted-foreground">
+          <span
+            id={descId}
+            className={cn(
+              "text-xs",
+              appearance === "card" ? "text-muted-foreground" : "text-current opacity-80"
+            )}
+          >
             {description}
           </span>
         )}
@@ -138,22 +224,26 @@ export function ChoiceCard({
       {/* La coche — LE canal qui porte l'état, cf. la note du composant :
           les deux teintes de trait ne se séparent que de 1,30:1 en clair.
           Décorative pour les technologies d'assistance, qui lisent déjà
-          « coché » sur l'input. */}
-      <span
-        aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute right-2 top-2",
-          "inline-flex size-4 items-center justify-center rounded-full",
-          "bg-[var(--ring)] text-[var(--primary-foreground)]",
-          // `peer-checked` : l'input porte `peer` et précède cette pastille
-          // dans le même parent, c'est la seule condition du sélecteur.
-          "opacity-0 peer-checked:opacity-100"
-        )}
-      >
-        <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M2 6.5 4.8 9.2 10 3.5" />
-        </svg>
-      </span>
+          « coché » sur l'input. Seulement pour "card" : dans un rang
+          "segmented", le remplissage porte déjà l'état sans ambiguïté ; sur
+          un "chip", la coche est rendue plus haut, inline. */}
+      {appearance === "card" && (
+        <span
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute right-2 top-2",
+            "inline-flex size-4 items-center justify-center rounded-full",
+            "bg-[var(--ring)] text-[var(--primary-foreground)]",
+            // `peer-checked` : l'input porte `peer` et précède cette pastille
+            // dans le même parent, c'est la seule condition du sélecteur.
+            "opacity-0 peer-checked:opacity-100"
+          )}
+        >
+          <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 6.5 4.8 9.2 10 3.5" />
+          </svg>
+        </span>
+      )}
     </label>
   );
 }

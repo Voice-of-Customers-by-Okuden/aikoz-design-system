@@ -35,8 +35,16 @@ export interface ChoiceGroupProps {
   value?: string[];
   defaultValue?: string[];
   onValueChange?: (values: string[]) => void;
-  /** `grid` pour des tuiles de logos, `list` pour des lignes. */
-  layout?: "grid" | "list";
+  /**
+   * `grid` pour des tuiles de logos, `list` pour des lignes.
+   * `segmented` — un seul rang connecté, options à largeur égale, sans
+   * espace entre elles : elles doivent se lire comme UN contrôle (ex. délai
+   * avant publication). Chaque `ChoiceCard` reçoit `appearance="segmented"`.
+   * `chip` — rang de pastilles indépendantes, avec espace normal entre
+   * elles : contrairement au segmenté, ce ne sont pas des fragments d'un
+   * même contrôle. Chaque `ChoiceCard` reçoit `appearance="chip"`.
+   */
+  layout?: "grid" | "list" | "segmented" | "chip";
   /** Colonnes de la grille aux grandes largeurs. */
   columns?: 2 | 3 | 4;
   /** Message d'erreur, annoncé en `role="alert"`. */
@@ -128,14 +136,28 @@ export function ChoiceGroup({
 
         <div
           className={cn(
-            "grid gap-3",
-            layout === "list"
-              ? "grid-cols-1"
-              : columns === 2
-              ? "grid-cols-1 sm:grid-cols-2"
-              : columns === 4
-              ? "grid-cols-2 sm:grid-cols-4"
-              : "grid-cols-2 sm:grid-cols-3"
+            layout === "segmented"
+              ? // Un seul rang connecté : le contour partagé et les
+                // séparateurs internes vivent ICI, sur le conteneur — pas sur
+                // chaque `ChoiceCard`, qui n'a plus ni bordure ni radius
+                // propres en `appearance="segmented"`. `overflow-hidden` +
+                // `divide-x` sont ce qui fait lire trois `<label>` comme UN
+                // seul contrôle plutôt que trois cartes bordées côte à côte.
+                "flex rounded-[var(--radius)] border-2 border-[var(--border-strong)] divide-x divide-[var(--border-strong)] overflow-hidden"
+              : layout === "chip"
+              ? // Pastilles indépendantes : espace normal, pas de contour
+                // partagé — l'inverse de "segmented".
+                "flex flex-wrap gap-2"
+              : cn(
+                  "grid gap-3",
+                  layout === "list"
+                    ? "grid-cols-1"
+                    : columns === 2
+                    ? "grid-cols-1 sm:grid-cols-2"
+                    : columns === 4
+                    ? "grid-cols-2 sm:grid-cols-4"
+                    : "grid-cols-2 sm:grid-cols-3"
+                )
           )}
         >
           {options.map((o) => (
@@ -147,6 +169,9 @@ export function ChoiceGroup({
               checked={retenus.includes(o.value)}
               onChange={(coche) => basculer(o.value, coche)}
               layout={layout === "grid" ? "tile" : "row"}
+              appearance={
+                layout === "segmented" ? "segmented" : layout === "chip" ? "chip" : "card"
+              }
             />
           ))}
         </div>

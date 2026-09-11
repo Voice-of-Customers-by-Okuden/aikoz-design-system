@@ -43,12 +43,14 @@ const valueVariants = cva("font-sans font-bold leading-none tracking-tight text-
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 /**
- * `rating`  — échelle bornée 0..max, l'appui est une notation en étoiles.
- * `target`  — bornée avec un objectif, l'appui est une barre de progression.
- * `trend`   — non bornée, l'appui est une courbe de tendance.
- * `raw`     — la valeur seule, sans appui.
+ * `rating`     — échelle bornée 0..max, l'appui est une notation en étoiles.
+ * `target`     — bornée avec un objectif, l'appui est une barre de progression.
+ * `trend`      — non bornée, l'appui est une courbe de tendance.
+ * `raw`        — la valeur seule, sans appui.
+ * `benchmark`  — repère de comparaison permanent, l'appui est une valeur de
+ *                référence affichée en clair, pas une variation.
  */
-export type KpiVariant = "rating" | "target" | "trend" | "raw";
+export type KpiVariant = "rating" | "target" | "trend" | "raw" | "benchmark";
 export type KpiDensity = "compact" | "default" | "large";
 
 export interface KpiCardProps {
@@ -83,6 +85,11 @@ export interface KpiCardProps {
   /** Ligne de contexte sous l'appui : « Objectif · 90 % », « 30 derniers jours ». */
   caption?: string;
 
+  /** `benchmark` — valeur de référence affichée en repère permanent (pas une variation). */
+  benchmarkValue?: number;
+  /** Libellé de la référence. « vs Moyenne marché » par défaut. */
+  benchmarkLabel?: string;
+
   icon?: ReactNode;
   className?: string;
   onClick?: () => void;
@@ -113,6 +120,8 @@ export function KpiCard({
   trendUnit = "%",
   trendTone,
   caption,
+  benchmarkValue,
+  benchmarkLabel = "vs Moyenne marché",
   icon,
   className,
   onClick,
@@ -128,6 +137,16 @@ export function KpiCard({
   });
 
   const suffix = unit ?? (variant === "rating" ? `/${scale}` : "");
+
+  // Même unité, même règle d'arrondi que la valeur principale : un repère de
+  // comparaison qui ne « matche » pas visuellement casserait la lecture.
+  const formattedBenchmark =
+    benchmarkValue !== undefined
+      ? benchmarkValue.toLocaleString("fr-FR", {
+          minimumFractionDigits: variant === "rating" ? 1 : 0,
+          maximumFractionDigits: 1,
+        })
+      : null;
 
   // Le niveau se juge contre l'OBJECTIF quand il y en a un, pas contre la borne
   // haute. « 87 % pour un objectif de 90 % », c'est 97 % du chemin : c'est bon.
@@ -173,6 +192,7 @@ export function KpiCard({
     `${label} : ${formatted}${suffix}`,
     spokenTrend,
     target !== undefined ? `objectif ${target}${unit ?? ""}` : null,
+    formattedBenchmark !== null ? `${benchmarkLabel} ${formattedBenchmark}${suffix}` : null,
     caption,
   ]
     .filter(Boolean)
@@ -250,6 +270,16 @@ export function KpiCard({
             />
           </LineChart>
         </ResponsiveContainer>
+      )}
+
+      {variant === "benchmark" && formattedBenchmark !== null && (
+        <div className="flex items-baseline gap-1 text-sm text-muted-foreground">
+          <span>{benchmarkLabel}</span>
+          <span className="font-medium text-foreground">
+            {formattedBenchmark}
+            {suffix}
+          </span>
+        </div>
       )}
 
       {caption && <span className="text-xs text-muted-foreground">{caption}</span>}
