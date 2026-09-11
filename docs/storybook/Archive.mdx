@@ -1,0 +1,82 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design system/Archive" />
+
+# Archive
+
+Ce qui a été **écarté**, et pourquoi. Rien ici n'est actif : cette page n'a
+aucun effet sur le design system, elle existe pour qu'une piste abandonnée ne
+soit pas re-proposée dans six mois sans qu'on se souvienne de la raison.
+
+Elle n'est pas listée dans la navigation principale. On y arrive par ce lien ou
+par la recherche.
+
+---
+
+## `RankRow` comme composant exporté
+
+**Écarté.** Le fichier Figma expose une ligne de classement comme composant. Une
+ligne qui n'a de sens qu'à l'intérieur de son tableau n'en est pas un : c'est un
+rendu de cellule. L'exporter inviterait à la poser ailleurs, où elle perdrait
+ses en-têtes — donc son sens.
+
+Vit maintenant dans `Leaderboard`, qui est bâti sur `Table`.
+
+## `BrandPicker` et `SourceToggle`
+
+**Fondus dans `ChoiceGroup`.** Mis côte à côte, ils ne diffèrent que par l'arité
+de la sélection et le contenu des cartes. Vérification faite avant de fondre :
+leurs contrats d'accessibilité sont-ils différents ? Non — les deux sont un
+`fieldset` + `legend`, l'un peuplé de `radio`, l'autre de `checkbox`.
+
+**Réversible** : si l'un acquiert un comportement propre — une recherche dans la
+grille de marques —, il se détachera.
+
+## `RankedBarChart` et `ComparisonLineChart`
+
+**Fondus** dans `BarChart` et `LineChart`. Le premier est le second horizontal,
+trié, à une série. Le troisième est une courbe avec une série de référence.
+
+## Le trait de liaison du `Stepper`
+
+**Retiré.** Dès que la liste passe à la ligne — ce qu'elle doit faire, WCAG
+1.4.10 demande le reflow plutôt qu'un défilement horizontal — le trait de la
+dernière étape d'une ligne pend dans le vide. Aucun correctif CSS ne le
+rattrape : on ne peut pas savoir, en CSS, quel élément termine une ligne.
+
+C'était de toute façon un troisième canal en trop.
+
+## Les animations d'ouverture de `Dialog` et `Tooltip`
+
+**Retirées.** Les classes `animate-in` venaient du plugin `tailwindcss-animate`,
+qui n'est pas installé : `animationName` valait `none`. Une classe morte est
+pire qu'une absence, elle laisse croire que le comportement existe.
+
+Si une animation devient souhaitable, ce sera une décision explicite, avec la
+dépendance qui va avec.
+
+## La plaque de marque en surface claire unique
+
+**Écarté après essai.** Sept logos ne se monochromisaient pas, et ils
+tombaient sur une plaque blanche — donc invisible sur page claire, sept trous
+dans une grille de dix-neuf. La réponse a d'abord été d'uniformiser sur une
+surface claire pour tous.
+
+Remplacé par mieux : **fabriquer le masque** plutôt que de s'en passer. Les dix-
+neuf plaques portent désormais la teinte de leur marque.
+
+## Committer l'aperçu statique
+
+**Écarté.** 2,3 Mo de binaires dupliqués dans l'historique à chaque build, pour
+un bundle minifié qu'aucun agent ne sait lire et que GitHub n'affiche pas.
+Remplacé par une action qui construit à la demande et publie sans que le fichier
+entre dans le dépôt.
+
+## Storybook « à côté » du playground
+
+**Écarté comme état cible.** Deux vitrines du même contenu divergent — c'est
+exactement ce qui est arrivé à la config Tailwind tenue à la main à côté du
+bridge qui la générait.
+
+Elles coexistent aujourd'hui parce que Louis teste des composants dans le
+playground. C'est une dette assumée, pas une architecture.

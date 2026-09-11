@@ -106,11 +106,15 @@ export function Stepper({
                   : "text-muted-foreground"
               )}
             >
-              {step.label}
-              {/* L'état est dit, pas seulement dessiné. La coche et la
-                  pastille creuse sont muettes pour un lecteur d'écran. */}
-              {faite && <span className="sr-only">, terminée</span>}
-              {!faite && !encours && <span className="sr-only">, à venir</span>}
+              {/* L'état est dit, pas seulement dessiné : la coche et la
+                  pastille creuse sont muettes pour un lecteur d'écran. En UNE
+                  chaîne et non dans un `sr-only` séparé — l'algorithme de nom
+                  accessible joint les éléments par une espace, ce qui donnait
+                  « Sources , terminée ». */}
+              <span className="sr-only">
+                {faite ? `${step.label}, terminée` : !encours ? `${step.label}, à venir` : step.label}
+              </span>
+              <span aria-hidden="true">{step.label}</span>
             </span>
           );
 

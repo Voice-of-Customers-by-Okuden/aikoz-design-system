@@ -13,6 +13,7 @@ const config: StorybookConfig = {
   stories: [
     // Les pages de doc d'abord : elles ouvrent le catalogue.
     "../docs/storybook/**/*.mdx",
+    "../docs/storybook/**/*.stories.@(ts|tsx)",
     "../registry/**/*.stories.@(ts|tsx)",
   ],
   addons: [
