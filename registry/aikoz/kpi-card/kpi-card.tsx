@@ -205,7 +205,13 @@ export function KpiCard({
       {...compProps}
     >
       <div className="flex items-start justify-between gap-2">
-        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+        {/* `min-h-8` : deux lignes de `text-xs`, réservées que le libellé
+            tienne sur une ligne ou deux. Sans ça, la valeur et le repère de
+            comparaison qui suivent démarrent à des hauteurs différentes
+            d'une carte à l'autre dans une même grille — un « Taux de
+            réponse -48h » sur deux lignes décale tout ce qu'il porte, pas
+            un « Nombre d'avis » resté sur une seule. */}
+        <span className="min-h-8 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           {label}
         </span>
         {trend !== undefined ? (
