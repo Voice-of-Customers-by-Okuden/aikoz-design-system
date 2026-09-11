@@ -187,6 +187,24 @@ Sur « Voir plus », la cible est la **carte** et non son premier bouton : c'est
 le point d'où l'utilisateur veut reprendre la lecture, pas une action qu'on
 choisirait à sa place.
 
+## Nommer les axes, unité comprise
+
+Carbon est explicite : un axe quantitatif **sans unité** laisse le lecteur
+deviner ce qu'il compte. « 1800 » ne dit pas s'il s'agit d'avis, d'euros ou de
+pourcents.
+
+`xLabel` et `yLabel` existaient déjà — mais ne servaient qu'aux **en-têtes du
+tableau**. Les axes eux-mêmes n'affichaient rien, et `yLabel` de `LineChart`
+était une prop morte, acceptée sans effet. Ils sont désormais rendus sur le
+graphique dans les deux dispositions, l'axe des valeurs étant l'horizontal
+quand les barres sont couchées.
+
+Deux autres règles de Carbon suivies ici :
+
+- **le titre énonce l'enseignement**, pas seulement le contenu ;
+- **des libellés directs plutôt qu'une longue légende** — c'est déjà le cas des
+  pourcentages écrits dans les barres empilées et des parts du donut.
+
 ## Ce que le catalogue ne teste pas encore
 
 Les 148 tests ne s'exécutent que dans **une** des quatre combinaisons — produit

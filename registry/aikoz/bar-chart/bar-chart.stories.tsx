@@ -12,6 +12,7 @@ const meta = {
     caption: "Avis reçus par source et par trimestre",
     xKey: "trim",
     xLabel: "Trimestre",
+    yLabel: "Avis reçus",
     series: [
       { key: "google", label: "Google" },
       { key: "trustpilot", label: "Trustpilot" },
@@ -54,6 +55,7 @@ export const Horizontal: Story = {
     caption: "Classement des agences par taux de réponse",
     xKey: "agence",
     xLabel: "Agence",
+    yLabel: "Taux de réponse (%)",
     orientation: "horizontal",
     layout: "grouped",
     formatValue: (v: string | number) => `${v} %`,

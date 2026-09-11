@@ -1,6 +1,7 @@
 import {
   Bar,
   CartesianGrid,
+  Label,
   BarChart as RechartsBarChart,
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
@@ -41,7 +42,17 @@ export interface BarChartProps {
   layout?: "stacked" | "grouped" | "stacked-percent";
   /** Barres horizontales — indispensable quand les libellés sont longs. */
   orientation?: "vertical" | "horizontal";
+  /**
+   * Nom de l'axe des catégories, **unité comprise**. Rendu sur le graphique
+   * ET repris en en-tête du tableau.
+   */
   xLabel?: string;
+  /**
+   * Nom de l'axe des valeurs, **unité comprise** — « Avis reçus »,
+   * « Part (%) ». Carbon est explicite : un axe quantitatif sans unité laisse
+   * le lecteur deviner ce qu'il compte.
+   */
+  yLabel?: string;
   formatValue?: (v: string | number) => string;
   height?: number;
   className?: string;
@@ -73,6 +84,7 @@ export function BarChart({
   layout = "stacked",
   orientation = "vertical",
   xLabel,
+  yLabel,
   formatValue = (v) => String(v),
   height = 300,
   className,
@@ -183,7 +195,20 @@ export function BarChart({
                   tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
                   stroke="var(--border-strong)"
                   tickLine={false}
-                />
+                  height={yLabel ? 44 : 30}
+                >
+                  {/* En disposition couchée, c'est l'axe HORIZONTAL qui porte
+                      les valeurs : `yLabel` le nomme, pas `xLabel`. */}
+                  {yLabel && (
+                    <Label
+                      value={yLabel}
+                      position="insideBottom"
+                      offset={-2}
+                      fill="var(--muted-foreground)"
+                      fontSize={12}
+                    />
+                  )}
+                </XAxis>
                 <YAxis type="category" dataKey={xKey} width={120} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} stroke="var(--border-strong)" tickLine={false} />
               </>
             ) : (
@@ -205,16 +230,41 @@ export function BarChart({
                   }
                   stroke="var(--border-strong)"
                   tickLine={false}
-                />
+                  height={xLabel && !percent ? 44 : 30}
+                >
+                  {/* En pourcentage la catégorie passe EN HAUT, comme un
+                      en-tête de cohorte : y ajouter un nom d'axe sous les
+                      barres pointerait vers des ticks qui n'y sont plus. */}
+                  {xLabel && !percent && (
+                    <Label
+                      value={xLabel}
+                      position="insideBottom"
+                      offset={-2}
+                      fill="var(--muted-foreground)"
+                      fontSize={12}
+                    />
+                  )}
+                </XAxis>
                 <YAxis
-                  width={44}
+                  width={yLabel ? 60 : 44}
                   domain={percent ? [0, 100] : undefined}
                   ticks={percent ? [0, 50, 100] : undefined}
                   tickFormatter={percent ? (v) => `${v} %` : undefined}
                   tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
                   stroke="var(--border-strong)"
                   tickLine={false}
-                />
+                >
+                  {yLabel && (
+                    <Label
+                      value={yLabel}
+                      angle={-90}
+                      position="insideLeft"
+                      style={{ textAnchor: "middle" }}
+                      fill="var(--muted-foreground)"
+                      fontSize={12}
+                    />
+                  )}
+                </YAxis>
               </>
             )}
             {series.map((s, i) => (
