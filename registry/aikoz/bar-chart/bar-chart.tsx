@@ -3,11 +3,14 @@ import {
   CartesianGrid,
   BarChart as RechartsBarChart,
   ResponsiveContainer,
+  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import {
   ChartFrame,
+  ChartTooltipContent,
+  CONTOUR_ACTIF,
   couleurSerie,
   remplissageSerie,
   type ChartSerie,
@@ -137,7 +140,7 @@ export function BarChart({
       legendStyle="aplat"
       className={className}
     >
-      {(idTrames) => (
+      {({ idTrames, infobulleActive, indexActif, surSurvol }) => (
         <ResponsiveContainer width="100%" height="100%">
           <RechartsBarChart
             data={chartData}
@@ -148,7 +151,23 @@ export function BarChart({
             // une vraie : le focus y entrerait sans que rien ne soit annoncé.
             tabIndex={-1}
             margin={{ top: percent && !horizontal ? 28 : 8, right: 8, bottom: 8, left: 0 }}
+            // `cursor: pointer` en style inline : recharts pose son propre
+            // `cursor: default` sur son `.recharts-wrapper`, qu'une classe
+            // héritée ne peut pas battre.
+            style={{ cursor: "pointer" }}
+            onMouseMove={surSurvol}
+            onMouseLeave={() => surSurvol(null)}
           >
+            {infobulleActive && (
+              <RechartsTooltip
+                content={<ChartTooltipContent formatValue={(v) => formatValue(v)} />}
+                // Le voile de survol de recharts assombrit toute la colonne.
+                // `--surface-hover` est le token prévu pour ça ; un noir à 10 %
+                // ne suivrait pas le thème.
+                cursor={{ fill: "var(--surface-hover)" }}
+                isAnimationActive={false}
+              />
+            )}
             <CartesianGrid
               stroke="var(--border)"
               strokeDasharray="3 3"
@@ -203,6 +222,9 @@ export function BarChart({
               <Bar
                 key={s.key}
                 dataKey={s.key}
+                // `name` : sans lui l'infobulle affiche la CLÉ de la série
+                // (« pj ») au lieu de son libellé (« Pages Jaunes »).
+                name={s.label}
                 stackId={empile ? "pile" : undefined}
                 fill={couleurSerie(i)}
                 // Trame par-dessus l'aplat : c'est le second canal.
@@ -224,6 +246,7 @@ export function BarChart({
                   // n'atteint que 4,05:1 en sombre — blanc fixe y passe dans
                   // les deux thèmes (4,62 / 6,64) et est donc conservé tel quel.
                   const texte = i % 6 === 4 ? "oklch(1 0 0)" : "var(--primary-foreground)";
+                  const actif = indexActif !== null && indexActif === props.index;
                   return (
                     <g>
                       <rect
@@ -253,6 +276,20 @@ export function BarChart({
                           fill="none"
                           stroke="var(--card)"
                           strokeWidth={2}
+                        />
+                      )}
+                      {actif && (
+                        // L'emphase de la valeur survolée : un contour, pas
+                        // une atténuation des autres séries — estomper les
+                        // voisines les ferait passer sous 3:1 le temps du
+                        // survol. Le contour n'enlève rien à personne.
+                        <rect
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          fill="none"
+                          {...CONTOUR_ACTIF}
                         />
                       )}
                       {etiquette && (

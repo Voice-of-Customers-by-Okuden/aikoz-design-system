@@ -1,7 +1,9 @@
-import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip as RechartsTooltip } from "recharts";
 import { cn } from "@registry/aikoz/lib/utils";
 import {
   ChartFrame,
+  ChartTooltipContent,
+  CONTOUR_ACTIF,
   couleurSerie,
   remplissageSerie,
 } from "@registry/aikoz/chart-frame/chart-frame";
@@ -80,7 +82,7 @@ export function DonutChart({
       legendStyle="aplat"
       className={className}
     >
-      {(idTrames) => (
+      {({ idTrames, infobulleActive, indexActif, surSurvol }) => (
         <div className="relative h-full w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart
@@ -89,7 +91,20 @@ export function DonutChart({
             // contradiction — axe la signale (aria-hidden-focus), et c'en est
             // une vraie : le focus y entrerait sans que rien ne soit annoncé.
             tabIndex={-1}
+            style={{ cursor: "pointer" }}
             >
+              {infobulleActive && (
+                <RechartsTooltip
+                  content={
+                    <ChartTooltipContent
+                      formatValue={(v) =>
+                        `${formatValue(Number(v))} · ${pct(Number(v))} %`
+                      }
+                    />
+                  }
+                  isAnimationActive={false}
+                />
+              )}
               <Pie
                 data={parts}
                 dataKey="value"
@@ -101,6 +116,10 @@ export function DonutChart({
                 stroke="var(--card)"
                 strokeWidth={2}
                 isAnimationActive={false}
+                // Ce calque est RECOUVERT par celui des trames : il ne reçoit
+                // jamais le pointeur. Le survol et l'infobulle sont donc
+                // portés par le calque du dessus, pas ici.
+                tooltipType="none"
                 // `rootTabIndex` et non `tabIndex` : recharts pose lui-même
                 // `tabindex="0"` sur le groupe racine du `<Pie>` et ignore un
                 // `tabIndex` passé en prop. Le sous-arbre est masqué, un
@@ -121,11 +140,22 @@ export function DonutChart({
                 stroke="none"
                 isAnimationActive={false}
                 rootTabIndex={-1}
+                // `nameKey` : c'est CE calque qui alimente l'infobulle, donc
+                // c'est lui qui doit savoir nommer les parts. Sans lui,
+                // l'infobulle affichait « 1 : 318 » — l'index de la part à la
+                // place de son libellé.
+                nameKey="label"
+                onMouseEnter={(_, index) => surSurvol({ activeTooltipIndex: index })}
+                onMouseLeave={() => surSurvol(null)}
               >
                 {parts.map((p, i) => (
                   <Cell
                     key={p.key}
                     fill={i % 6 === 0 ? "transparent" : remplissageSerie(i, idTrames)}
+                    // Le contour d'emphase se pose sur CE `Pie`, celui du
+                    // dessus : posé sur celui du dessous, il serait recouvert
+                    // par la trame et ne se verrait jamais.
+                    {...(indexActif === i ? CONTOUR_ACTIF : {})}
                   />
                 ))}
               </Pie>

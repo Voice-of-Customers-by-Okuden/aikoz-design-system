@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from "react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import { cn } from "@registry/aikoz/lib/utils";
 import { Table, type TableColumn } from "@registry/aikoz/table/table";
 
@@ -85,6 +85,94 @@ export function remplissageSerie(i: number, idTrames: string): string {
   return n === 0 ? couleurSerie(0) : `url(#${idTrames}-trame-${n})`;
 }
 
+// ─── Survol ───────────────────────────────────────────────────────────────────
+
+export interface ContexteGraphique {
+  /** Identifiant des trames SVG, à passer à `remplissageSerie`. */
+  idTrames: string;
+  /**
+   * Faut-il rendre l'infobulle ? Faux quand le pointeur est ailleurs, et faux
+   * aussi après un appui sur Échap — cf. `ChartFrame`.
+   */
+  infobulleActive: boolean;
+  /** Index de la catégorie survolée, ou `null`. Sert à l'emphase. */
+  indexActif: number | null;
+  /** À brancher sur le graphique recharts pour suivre la catégorie survolée. */
+  surSurvol: (etat: { activeTooltipIndex?: number | null } | null) => void;
+}
+
+/**
+ * Emphase de la valeur survolée.
+ *
+ * **Un CONTOUR, jamais une atténuation des autres.** Estomper les séries
+ * voisines pour faire ressortir celle qu'on pointe ferait tomber leur
+ * contraste sous les 3:1 exigés (WCAG 1.4.11) le temps du survol. Le contour
+ * n'enlève rien à personne : il ajoute un canal non chromatique là où le
+ * pointeur se trouve, ce qui est aussi la logique du reste du système.
+ */
+export const CONTOUR_ACTIF = {
+  stroke: "var(--foreground)",
+  strokeWidth: 2,
+} as const;
+
+export interface LigneInfobulle {
+  dataKey?: string | number;
+  name?: string;
+  value?: string | number;
+  color?: string;
+}
+
+/**
+ * Contenu d'infobulle commun aux trois graphiques.
+ *
+ * Reprend les tokens de `Tooltip` (`--popover`, `--popover-foreground`,
+ * `--border-strong`) : une infobulle est une surface flottante comme une
+ * autre, et une inversion figée sur `--foreground` casserait le thème.
+ *
+ * **Elle n'est jamais la seule source d'une valeur** — le tableau qui suit le
+ * graphique les porte toutes. C'est ce qui la rend acceptable alors qu'elle
+ * ne s'ouvre qu'à la souris.
+ */
+export function ChartTooltipContent({
+  active,
+  label,
+  payload,
+  formatValue = (v) => String(v),
+}: {
+  active?: boolean;
+  label?: string | number;
+  payload?: LigneInfobulle[];
+  formatValue?: (v: string | number) => string;
+}) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div
+      className={cn(
+        "rounded-[var(--radius)] border border-[var(--border-strong)] px-3 py-2 shadow-lg",
+        "bg-[var(--popover)] text-[var(--popover-foreground)] text-xs leading-snug"
+      )}
+    >
+      {label !== undefined && label !== "" && (
+        <p className="m-0 mb-1.5 font-semibold">{label}</p>
+      )}
+      <ul className="m-0 flex list-none flex-col gap-1 p-0">
+        {payload.map((p, i) => (
+          <li key={String(p.dataKey ?? i)} className="flex items-center gap-1.5">
+            <span
+              aria-hidden="true"
+              className="inline-block size-2.5 shrink-0 rounded-sm"
+              style={{ background: p.color }}
+            />
+            <span>
+              {p.name} : <strong className="tabular-nums">{formatValue(p.value ?? "")}</strong>
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface ChartSerie {
@@ -108,8 +196,8 @@ export interface ChartFrameProps<T> {
   getRowKey: (row: T, index: number) => string;
   /** Colonne qui NOMME la ligne — cf. `Table`. */
   rowHeaderKey?: string;
-  /** Le graphique lui-même. Reçoit l'identifiant des trames. */
-  children: (idTrames: string) => ReactNode;
+  /** Le graphique lui-même. Voir `ContexteGraphique`. */
+  children: (ctx: ContexteGraphique) => ReactNode;
   height?: number;
   /** Masque la légende, quand le graphique étiquette déjà ses parts. */
   hideLegend?: boolean;
@@ -163,6 +251,26 @@ export function ChartFrame<T>({
 }: ChartFrameProps<T>) {
   const uid = useId().replace(/:/g, "");
 
+  // ── Survol : l'infobulle et l'emphase ────────────────────────────────────
+  //
+  // WCAG 1.4.13 — un contenu qui apparaît au survol doit pouvoir être ÉCARTÉ
+  // sans déplacer le pointeur. Recharts ne le prévoit pas : son infobulle
+  // suit la souris et rien ne la referme. Échap la retire donc ici, et elle
+  // ne revient qu'après être sorti puis rentré dans le graphique — c'est le
+  // comportement attendu par le critère, pas une bascule permanente.
+  const [survol, setSurvol] = useState(false);
+  const [ecartee, setEcartee] = useState(false);
+  const [indexActif, setIndexActif] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!survol || ecartee) return;
+    const auClavier = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setEcartee(true);
+    };
+    document.addEventListener("keydown", auClavier);
+    return () => document.removeEventListener("keydown", auClavier);
+  }, [survol, ecartee]);
+
   const tableau = (
     <Table
       caption={caption}
@@ -197,7 +305,16 @@ export function ChartFrame<T>({
           imbriquées là où il n'y a qu'un graphique. Le parent porte le nom, le
           tableau porte la donnée, l'intérieur n'a rien à dire.
         */}
-        <div aria-hidden="true" className="h-full w-full">
+        <div
+          aria-hidden="true"
+          className="h-full w-full"
+          onMouseEnter={() => setSurvol(true)}
+          onMouseLeave={() => {
+            setSurvol(false);
+            setEcartee(false);
+            setIndexActif(null);
+          }}
+        >
           {/*
             Les trames vivent ici, hors de l'arbre recharts, et pas dans le
             graphique : cf. la note de `TramesSeries`. Elles sont posées pour
@@ -208,7 +325,12 @@ export function ChartFrame<T>({
           <svg aria-hidden="true" className="absolute size-0" focusable="false">
             <TramesSeries id={uid} />
           </svg>
-          {children(uid)}
+          {children({
+            idTrames: uid,
+            infobulleActive: survol && !ecartee,
+            indexActif,
+            surSurvol: (etat) => setIndexActif(etat?.activeTooltipIndex ?? null),
+          })}
         </div>
       </div>
 

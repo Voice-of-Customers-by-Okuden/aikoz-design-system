@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect } from "storybook/test";
+import { expect, userEvent, waitFor } from "storybook/test";
 import { BarChart } from "./bar-chart";
 
 const meta = {
@@ -90,5 +90,45 @@ export const LaTrameEstLeSecondCanal: Story = {
           "fusionneraient sinon en un seul bloc.",
       },
     },
+  },
+};
+
+export const SurvolEtEmphase: Story = {
+  name: "Le survol met la valeur en avant",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "**L'emphase est un CONTOUR, pas une atténuation des autres.** Estomper les " +
+          "séries voisines pour faire ressortir celle qu'on pointe ferait tomber leur " +
+          "contraste sous les 3:1 exigés (WCAG 1.4.11) le temps du survol. Le contour " +
+          "n'enlève rien à personne, et c'est un canal non chromatique — la même " +
+          "logique que la trame.\n\n" +
+          "**Échap referme l'infobulle** (WCAG 1.4.13, « Dismissible »). Recharts ne le " +
+          "prévoit pas : son infobulle suit la souris et rien ne la referme. " +
+          "`ChartFrame` écoute donc Échap tant que le pointeur est sur le graphique, et " +
+          "la rétablit dès qu'on ressort puis revient — ce n'est pas une bascule " +
+          "permanente.\n\n" +
+          "L'infobulle n'est jamais la seule source d'une valeur : le tableau qui suit " +
+          "les porte toutes. C'est ce qui la rend acceptable alors qu'elle ne s'ouvre " +
+          "qu'à la souris.",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const secteurs = canvasElement.querySelectorAll(".recharts-rectangle, .recharts-bar-rectangle");
+    if (!secteurs.length) return;
+
+    await u.hover(secteurs[secteurs.length - 1] as Element);
+    await waitFor(async () => {
+      await expect(canvasElement.querySelector(".recharts-tooltip-wrapper")).toBeInTheDocument();
+    });
+
+    // Échap doit la retirer du document, pas seulement la masquer.
+    await u.keyboard("{Escape}");
+    await waitFor(async () => {
+      await expect(canvasElement.querySelector(".recharts-tooltip-wrapper")).not.toBeInTheDocument();
+    });
   },
 };

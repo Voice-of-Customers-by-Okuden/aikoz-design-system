@@ -9,66 +9,12 @@ import {
 } from "recharts";
 import {
   ChartFrame,
+  ChartTooltipContent,
   couleurSerie,
   styleSerie,
   type ChartSerie,
 } from "@registry/aikoz/chart-frame/chart-frame";
 import { type TableColumn } from "@registry/aikoz/table/table";
-
-// ─── Infobulle au survol ──────────────────────────────────────────────────────
-//
-// Reprend les tokens de `Tooltip` (`--popover`/`--popover-foreground`/
-// `--border-strong`) — une infobulle est une surface flottante comme une
-// autre, elle suit le même rôle plutôt qu'une inversion `--foreground` figée
-// qui casserait le thème. PUREMENT visuel : la valeur exacte de chaque point
-// est déjà dans le tableau qui suit le graphique, donc rien ici n'est
-// nécessaire à qui ne survole pas à la souris (WCAG 1.4.13 ne s'applique
-// qu'à du contenu qui EST la seule source d'une information).
-interface ChartTooltipPayloadItem {
-  dataKey?: string | number;
-  name?: string;
-  value?: string | number;
-  color?: string;
-}
-
-function ChartTooltipContent({
-  active,
-  label,
-  payload,
-  formatValue,
-}: {
-  active?: boolean;
-  label?: string | number;
-  payload?: ChartTooltipPayloadItem[];
-  formatValue: (v: string | number) => string;
-}) {
-  if (!active || !payload || payload.length === 0) return null;
-  return (
-    <div
-      className={[
-        "rounded-[var(--radius)] border border-[var(--border-strong)] px-3 py-2 shadow-lg",
-        "bg-[var(--popover)] text-[var(--popover-foreground)]",
-        "text-xs leading-snug",
-      ].join(" ")}
-    >
-      <p className="m-0 mb-1.5 font-semibold">{label}</p>
-      <ul className="m-0 flex list-none flex-col gap-1 p-0">
-        {payload.map((p) => (
-          <li key={String(p.dataKey)} className="flex items-center gap-1.5">
-            <span
-              aria-hidden="true"
-              className="inline-block size-2.5 shrink-0 rounded-sm"
-              style={{ background: p.color }}
-            />
-            <span>
-              {p.name} : {formatValue(p.value ?? "")}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -171,7 +117,7 @@ export function LineChart({
       tableCollapsed={tableCollapsed}
       className={className}
     >
-      {() => (
+      {({ infobulleActive, surSurvol }) => (
         <ResponsiveContainer width="100%" height="100%">
           {/* `style={{ cursor: "pointer" }}` — PAS une classe Tailwind sur
               `ResponsiveContainer` : Recharts pose son propre style inline
@@ -185,6 +131,8 @@ export function LineChart({
             data={data}
             margin={{ top: 8, right: 8, bottom: 8, left: 0 }}
             style={{ cursor: "pointer" }}
+            onMouseMove={surSurvol}
+            onMouseLeave={() => surSurvol(null)}
             // `tabIndex={-1}` : recharts rend son SVG focusable par défaut.
             // Dans un sous-arbre `aria-hidden`, un élément focusable est une
             // contradiction — axe la signale (aria-hidden-focus), et c'en est
@@ -204,11 +152,13 @@ export function LineChart({
               stroke="var(--border-strong)"
               tickLine={false}
             />
-            <RechartsTooltip
-              content={<ChartTooltipContent formatValue={formatValue} />}
-              cursor={{ stroke: "var(--border-strong)", strokeDasharray: "3 3" }}
-              isAnimationActive={false}
-            />
+            {infobulleActive && (
+              <RechartsTooltip
+                content={<ChartTooltipContent formatValue={formatValue} />}
+                cursor={{ stroke: "var(--border-strong)", strokeDasharray: "3 3" }}
+                isAnimationActive={false}
+              />
+            )}
             {reference && (
               // Tracée en PREMIER, donc sous les autres : une référence
               // passe derrière ce qu'elle sert à comparer.
@@ -220,7 +170,7 @@ export function LineChart({
                 strokeWidth={1.5}
                 strokeDasharray="3 4"
                 dot={false}
-                activeDot={{ r: 4 }}
+                activeDot={{ r: 5, stroke: "var(--foreground)", strokeWidth: 2 }}
                 isAnimationActive={false}
               />
             )}
@@ -234,7 +184,10 @@ export function LineChart({
                 strokeWidth={2}
                 strokeDasharray={styleSerie(i).trait}
                 dot={{ r: 3.5, fill: couleurSerie(i), strokeWidth: 0 }}
-                activeDot={{ r: 5 }}
+                // Le point survolé s'entoure d'un anneau `--foreground` :
+                // l'emphase est portée par une FORME, comme partout ailleurs
+                // dans le système, et non par une variation de teinte.
+                activeDot={{ r: 6, stroke: "var(--foreground)", strokeWidth: 2 }}
                 isAnimationActive={false}
               />
             ))}
