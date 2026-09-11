@@ -10,7 +10,12 @@ import "../bridge/shadcn-bridge.css";
 import "../playground/playground.css";
 import "./storybook.css";
 
-definirBaseDesLogos("/brands/");
+// Chemin RELATIF, pas `/brands/`. Servi sous un sous-chemin — ce que fait
+// GitHub Pages, qui publie sous `/<dépôt>/` — un chemin absolu part de la
+// racine du domaine et les 19 logos sortent en 404. C'est le même piège que
+// le `--base` de l'aperçu statique, et il ne se voit pas en local où le
+// Storybook est servi à la racine.
+definirBaseDesLogos("./brands/");
 
 /**
  * Les deux axes du système sont des réglages GLOBAUX, pas des props de
