@@ -125,10 +125,15 @@ export function SlotPicker({
                     checked={value === s.value}
                     disabled={s.full}
                     onChange={() => onValueChange?.(s.value)}
+                    // Nom composé en UNE chaîne. Un `sr-only` séparé portant
+                    // « , complet » donnait « 11:00 , complet » : l'algorithme
+                    // de nom accessible joint les éléments par une espace, et
+                    // la virgule se détachait. Le nom contient toujours
+                    // l'heure visible, ce qu'exige WCAG 2.5.3.
+                    aria-label={s.full ? `${s.time}, complet` : undefined}
                     className="sr-only"
                   />
                   {s.time}
-                  {s.full && <span className="sr-only">, complet</span>}
                 </label>
               ))}
             </div>

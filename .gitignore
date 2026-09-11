@@ -19,3 +19,6 @@ docs/preview/
 skills-lock.json
 *.bak
 button-full.txt
+
+*storybook.log
+storybook-static

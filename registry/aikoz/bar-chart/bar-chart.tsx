@@ -118,6 +118,11 @@ export function BarChart({
           <RechartsBarChart
             data={data}
             layout={horizontal ? "vertical" : "horizontal"}
+            // `tabIndex={-1}` : recharts rend son SVG focusable par défaut.
+            // Dans un sous-arbre `aria-hidden`, un élément focusable est une
+            // contradiction — axe la signale (aria-hidden-focus), et c'en est
+            // une vraie : le focus y entrerait sans que rien ne soit annoncé.
+            tabIndex={-1}
             margin={{ top: 8, right: 8, bottom: 8, left: 0 }}
           >
             <TramesSeries id={idTrames} />

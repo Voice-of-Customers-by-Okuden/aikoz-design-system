@@ -1,0 +1,97 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Design system/Accessibilité" />
+
+# Accessibilité
+
+Pas une checklist : les règles qui ont été **apprises en se trompant** sur ce
+projet. Chacune a un chiffre derrière elle.
+
+## Auditer le rendu, pas les tokens
+
+Un audit token-à-token compare un rôle à la surface qu'on lui désigne. Le
+navigateur, lui, **compose** : un `Badge` pose un voile à 8 % sur une carte, et
+le texte se lit contre le RÉSULTAT — ni contre la carte, ni contre le voile.
+
+C'est ce composite qui a révélé que `warning-text` tombait à **4,25:1 en registre
+marketing** alors qu'il passait en produit : la carte marketing vaut
+`oklch(0.97)` et non le blanc pur, et le rôle avait été calé contre celle du
+produit.
+
+> **Le registre change la surface d'accueil autant que le thème.**
+
+## Un audit compare chaque token à son fond, jamais les tokens entre eux
+
+Trois fois le même angle mort :
+
+| | mesuré contre son fond | mesuré contre son concurrent |
+|---|---|---|
+| `nav.surface-active` | passe | **1,19:1** — voile invisible |
+| trait retenu / au repos de `ChoiceCard` | 5,77 et 4,44 | **1,30:1** |
+| six séries de graphique | toutes ≥ 3:1 | **1,17:1** |
+
+Dans les trois cas la question utile n'était pas « voit-on l'élément » mais
+**« lequel des deux »**. D'où la règle : tout état qui en concurrence un autre a
+besoin d'un **second canal** — une forme, un trait, une trame.
+
+## Jamais la couleur seule
+
+Ce n'est pas une précaution qu'on s'impose : sur notre palette, six séries de
+graphique **se confondent en niveaux de gris**. Le pointillé et la trame ne sont
+pas décoratifs, ils portent l'information.
+
+| composant | canal principal | second canal |
+|---|---|---|
+| `Badge` | teinte | glyphe |
+| `ScoreStars` | teinte | forme pleine / contour |
+| `ProgressBar` | aplat | liseré intérieur |
+| `Stepper` | pastille pleine | coche, `aria-current` |
+| `LineChart` | teinte | pointillé + marqueur |
+| `BarChart` | teinte | trame |
+
+## Le graphique est masqué, le tableau est le contenu
+
+Un SVG de données ne se lit pas : on ne peut ni comparer deux valeurs, ni en
+retrouver une, ni copier quoi que ce soit. Tous les graphiques passent par
+`ChartFrame`, qui pose le `aria-label` de résumé et rend le **tableau** sous le
+graphe. Le contrat est tenu par construction, pas répété cinq fois.
+
+## Trois pièges de mesure, tous rencontrés
+
+Chacun a produit un **faux diagnostic** avant d'être compris.
+
+1. `getComputedStyle` rend l'**OKLCH verbatim**. Lu comme du RGB : 1,04:1 sur une
+   paire qui en vaut 11,87.
+2. La matrice OKLab → sRGB produit du **linéaire**. Lui appliquer la
+   linéarisation WCAG par-dessus, c'est linéariser deux fois : 3,09 au lieu de
+   6,73, et 41 faux échecs.
+3. Auditer **pendant une transition** mesure des couleurs en cours
+   d'interpolation : 95 échecs fantômes.
+
+À chaque fois **l'outil avait tort, pas l'interface**. Un chiffre aberrant se
+vérifie sur une paire dont on connaît déjà la réponse avant d'être cru.
+
+L'outil corrigé vit dans `playground/audit.ts` — à réutiliser, pas à réécrire.
+
+## Une classe morte est pire qu'une absence
+
+`bg-card` n'existait pas dans la config Tailwind alors qu'elle était écrite sur
+**51 éléments** : cartes, modales et tableaux n'avaient aucun fond. Invisible en
+clair, où une carte blanche manquante laisse voir une page à `oklch(0.97)`.
+
+Même cause pour les classes `animate-in` de `Dialog` et `Tooltip`, écrites sans
+le plugin qui les définit.
+
+> Une liste tenue à la main à côté d'une liste générée finit toujours par
+> diverger.
+
+## Les écarts assumés
+
+Ils sont ici plutôt que dissimulés, parce qu'un écart documenté se réexamine et
+qu'un écart tu se propage.
+
+**Le doré des étoiles.** `--rating` vaut `warning.500` en clair : **2,18:1 sur
+carte**, sous le seuil. Décision d'Alice du 10/09/2026, en connaissance du
+chiffre, l'équipe jugeant le palier conforme trop terne. Tenable parce que
+l'étoile pleine et l'étoile vide diffèrent par la forme, et que la note est en
+`aria-label`. Ce qui reste dégradé : percevoir les étoiles elles-mêmes.
