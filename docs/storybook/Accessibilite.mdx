@@ -47,10 +47,41 @@ pas décoratifs, ils portent l'information.
 | `ProgressBar` | aplat | liseré intérieur |
 | `Stepper` | pastille pleine | coche, `aria-current` |
 | `LineChart` | teinte | pointillé + marqueur |
-| `BarChart` | teinte (rampes de marque) | trame |
+| `BarChart` | teinte (aplat plein) | libellés + tableau |
 | `Switch` | couleur de piste | position du curseur |
 | `InfoBanner` | bordure + icône | le ton est dit dans le texte |
 | `ReplyBubble` | pictogramme | « IA » / « Opérateur » en toutes lettres |
+
+### La bonne mesure n'est pas le ratio WCAG
+
+Cette page a longtemps justifié les trames par un **ratio de contraste WCAG**
+entre séries — 1,06:1, puis 1,26:1. C'était la mauvaise métrique. Le ratio WCAG
+mesure une **luminance relative** : il sert à savoir si un texte se lit sur un
+fond, pas si deux aplats voisins se distinguent. Deux couleurs de luminance
+identique mais de teintes opposées ont un ratio de 1:1 et se distinguent
+parfaitement.
+
+La mesure adaptée est l'**écart perceptuel** — ΔE en OKLab — évalué en
+simulant les trois daltonismes (protanopie, deutéranopie, tritanopie, matrices
+de Viénot 1999). Au-delà de ΔE ≈ 0,10, deux grands aplats se distinguent.
+
+| nombre de séries | ΔE minimal, clair | ΔE minimal, sombre |
+|---|---|---|
+| 2 à 5 | **0,161** | **0,186** |
+| 6 (après correction) | **0,197** | 0,117 |
+
+**Les trames ont donc été retirées des aplats.** Elles hachuraient les barres et
+les parts pour compenser un problème qui n'existait pas : jusqu'à cinq séries,
+la couleur seule sépare largement, daltonismes compris.
+
+Le **pointillé des courbes reste**. Deux courbes se superposent là où deux
+barres ne se touchent que par un bord, et les styles de trait sont la
+recommandation constante de la littérature.
+
+La sixième série a dû être corrigée : c'était le seul créneau qui cassait
+(ΔE 0,113 en clair, **0,065** en sombre). La palette de marque ne tenant que
+deux teintes, un violet dédié a été ajouté — vérifié à plus de 0,15 de toute
+couleur de statut, pour ne pas refaire l'erreur du jaune d'avertissement.
 
 ### Un canal déclaré n'est pas un canal rendu
 

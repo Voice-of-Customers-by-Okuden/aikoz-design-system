@@ -110,6 +110,8 @@
   --color-generali-red-700: oklch(0.3957 0.1505 28.463); /** Rouge Generali foncé — primaire actif et couleur secondaire (marque Generali). */
   --color-generali-red-800: oklch(0.3152 0.115 28.695); /** Rouge Generali foncé — secondaire survolé (marque Generali). */
   --color-generali-red-900: oklch(0.245 0.0844 28.706); /** Rouge Generali très foncé — secondaire actif et texte on-accent (marque Generali). */
+  --color-violet-400: oklch(0.68 0.19 315); /** Violet — réservé à la SIXIÈME série de données. Ajouté parce que la palette de marque ne contient que deux teintes (bleu, aigue-marine) : à six séries, l'écart perceptuel tombait à ΔE 0,113 en clair et 0,065 en sombre, sous le seuil où deux aplats voisins se distinguent. Aucun rôle sémantique, et vérifié à plus de 0,15 de toute couleur de statut. */
+  --color-violet-500: oklch(0.65 0.09 305); /** Violet — réservé à la SIXIÈME série de données. Ajouté parce que la palette de marque ne contient que deux teintes (bleu, aigue-marine) : à six séries, l'écart perceptuel tombait à ΔE 0,113 en clair et 0,065 en sombre, sous le seuil où deux aplats voisins se distinguent. Aucun rôle sémantique, et vérifié à plus de 0,15 de toute couleur de statut. */
   --font-family-heading: 'PP Radio Grotesk', sans-serif; /** Titres / slides / print */
   --font-family-body: Inter, sans-serif; /** UI / web / dashboard (DA recente) */
   --font-family-mono: 'JetBrains Mono', monospace; /** KPI / chiffres */

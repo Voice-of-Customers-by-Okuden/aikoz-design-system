@@ -12,7 +12,6 @@ import {
   ChartTooltipContent,
   CONTOUR_ACTIF,
   couleurSerie,
-  remplissageSerie,
   type ChartSerie,
 } from "@registry/aikoz/chart-frame/chart-frame";
 import { type TableColumn } from "@registry/aikoz/table/table";
@@ -140,7 +139,7 @@ export function BarChart({
       legendStyle="aplat"
       className={className}
     >
-      {({ idTrames, infobulleActive, indexActif, surSurvol }) => (
+      {({ infobulleActive, indexActif, surSurvol }) => (
         <ResponsiveContainer width="100%" height="100%">
           <RechartsBarChart
             data={chartData}
@@ -227,8 +226,6 @@ export function BarChart({
                 name={s.label}
                 stackId={empile ? "pile" : undefined}
                 fill={couleurSerie(i)}
-                // Trame par-dessus l'aplat : c'est le second canal.
-                // Rendue en superposant un rectangle rempli du motif.
                 stroke="var(--card)"
                 strokeWidth={empile ? 2 : 0}
                 isAnimationActive={false}
@@ -256,15 +253,6 @@ export function BarChart({
                         height={props.height}
                         fill={couleurSerie(i)}
                       />
-                      {i % 6 !== 0 && (
-                        <rect
-                          x={props.x}
-                          y={props.y}
-                          width={props.width}
-                          height={props.height}
-                          fill={remplissageSerie(i, idTrames)}
-                        />
-                      )}
                       {empile && (
                         // Le séparateur : sans lui, deux segments de teintes
                         // voisines fusionnent en un seul bloc.

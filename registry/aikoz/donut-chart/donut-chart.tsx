@@ -5,7 +5,6 @@ import {
   ChartTooltipContent,
   CONTOUR_ACTIF,
   couleurSerie,
-  remplissageSerie,
 } from "@registry/aikoz/chart-frame/chart-frame";
 import { type TableColumn } from "@registry/aikoz/table/table";
 
@@ -82,7 +81,7 @@ export function DonutChart({
       legendStyle="aplat"
       className={className}
     >
-      {({ idTrames, infobulleActive, indexActif, surSurvol }) => (
+      {({ infobulleActive, indexActif, surSurvol }) => (
         <div className="relative h-full w-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart
@@ -132,6 +131,10 @@ export function DonutChart({
                   <Cell key={p.key} fill={couleurSerie(i)} />
                 ))}
               </Pie>
+              {/* Calque transparent posé par-dessus : il ne peint rien, il
+                  capte le pointeur et porte le contour d'emphase. Il portait
+                  autrefois la trame ; celle-ci a été retirée, la couleur
+                  suffisant jusqu'à cinq parts (cf. `ChartFrame`). */}
               <Pie
                 data={parts}
                 dataKey="value"
@@ -151,7 +154,7 @@ export function DonutChart({
                 {parts.map((p, i) => (
                   <Cell
                     key={p.key}
-                    fill={i % 6 === 0 ? "transparent" : remplissageSerie(i, idTrames)}
+                    fill="transparent"
                     // Le contour d'emphase se pose sur CE `Pie`, celui du
                     // dessus : posé sur celui du dessous, il serait recouvert
                     // par la trame et ne se verrait jamais.
