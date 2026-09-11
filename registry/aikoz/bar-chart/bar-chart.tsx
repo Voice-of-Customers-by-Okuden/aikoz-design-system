@@ -8,7 +8,6 @@ import {
 } from "recharts";
 import {
   ChartFrame,
-  TramesSeries,
   couleurSerie,
   remplissageSerie,
   type ChartSerie,
@@ -150,7 +149,6 @@ export function BarChart({
             tabIndex={-1}
             margin={{ top: percent && !horizontal ? 28 : 8, right: 8, bottom: 8, left: 0 }}
           >
-            <TramesSeries id={idTrames} />
             <CartesianGrid
               stroke="var(--border)"
               strokeDasharray="3 3"

@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cn } from "@registry/aikoz/lib/utils";
 import { Card } from "@registry/aikoz/card/card";
 import { Badge } from "@registry/aikoz/badge/badge";
@@ -117,6 +117,39 @@ function AutomatedColumn({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
 
+  // ── Reprise du focus ──────────────────────────────────────────────────────
+  //
+  // Trois commandes de cette colonne se retirent elles-mêmes du document :
+  // « Modifier » (remplacé par le champ), « Voir plus » (plus rien à
+  // révéler), « Annuler »/« Enregistrer » (l'édition se referme). Un élément
+  // focalisé qui disparaît renvoie le focus sur `body` : au clavier, on
+  // repart du haut du document, et un lecteur d'écran perd sa place. À chaque
+  // fois, le focus est donc porté explicitement sur ce qui prend la suite.
+  const boutonsModifier = useRef<Record<string, HTMLButtonElement | null>>({});
+  const ancreRevelee = useRef<HTMLDivElement | null>(null);
+  const [aRefocaliser, setARefocaliser] = useState<string | null>(null);
+  const [indexRevele, setIndexRevele] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!aRefocaliser) return;
+    boutonsModifier.current[aRefocaliser]?.focus();
+    setARefocaliser(null);
+  }, [aRefocaliser]);
+
+  useEffect(() => {
+    if (indexRevele === null) return;
+    // La première carte révélée, et non son premier bouton : c'est le point
+    // d'où l'utilisateur veut reprendre la LECTURE, pas une action qu'on
+    // choisirait à sa place.
+    ancreRevelee.current?.focus();
+    setIndexRevele(null);
+  }, [indexRevele]);
+
+  const quitterEdition = (id: string) => {
+    setEditingId(null);
+    setARefocaliser(id);
+  };
+
   if (items.length === 0) {
     return (
       <EmptyState
@@ -129,30 +162,44 @@ function AutomatedColumn({
 
   return (
     <div className="flex flex-col gap-3">
-      {items.slice(0, visibleCount).map((item) => {
+      {items.slice(0, visibleCount).map((item, i) => {
         const isEditing = editingId === item.id;
+        const estAncre = indexRevele !== null && i === indexRevele;
         return (
+          <div
+            key={item.id}
+            // `tabIndex={-1}` : atteignable par script, jamais par Tab. Le
+            // conteneur n'est une cible de focus qu'à l'instant où « Voir
+            // plus » vient de le révéler.
+            tabIndex={-1}
+            ref={estAncre ? ancreRevelee : undefined}
+            className="outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] rounded-[var(--radius)]"
+          >
           // `text=""` : ces avis sont, par construction (cf. spec), 4-5 étoiles
           // SANS commentaire — VerbatimCard exige `text`, on lui passe la
           // chaîne vide plutôt que d'inventer un texte qui n'existe pas.
-          <VerbatimCard key={item.id} rating={item.rating} author={item.author} date={item.date} text="" density="compact">
+          <VerbatimCard rating={item.rating} author={item.author} date={item.date} text="" density="compact">
             {isEditing ? (
               <div className="flex flex-col gap-2">
                 <Textarea
                   label="Modifier la réponse"
                   labelHidden
                   rows={3}
+                  // Le champ vient d'être demandé explicitement par
+                  // « Modifier » : lui donner le focus, c'est suivre
+                  // l'intention, pas la devancer.
+                  autoFocus
                   defaultValue={draft[item.id] ?? item.reply}
                   onChange={(e) => setDraft((d) => ({ ...d, [item.id]: e.target.value }))}
                   // Échap = Annuler, cf. règle a11y de la spec « Champ de texte
                   // libre » : l'édition inline reste pilotable au clavier sans
                   // quitter le champ.
                   onKeyDown={(e) => {
-                    if (e.key === "Escape") setEditingId(null);
+                    if (e.key === "Escape") quitterEdition(item.id);
                   }}
                 />
                 <div className="flex justify-end gap-2">
-                  <Button variant="ghost" size="sm" onClick={() => setEditingId(null)}>
+                  <Button variant="ghost" size="sm" onClick={() => quitterEdition(item.id)}>
                     Annuler
                   </Button>
                   <Button
@@ -160,7 +207,7 @@ function AutomatedColumn({
                     size="sm"
                     onClick={() => {
                       onSave?.(item.id, draft[item.id] ?? item.reply);
-                      setEditingId(null);
+                      quitterEdition(item.id);
                     }}
                   >
                     Enregistrer
@@ -174,18 +221,34 @@ function AutomatedColumn({
                   <Badge tone="info" size="sm">
                     {item.scheduleLabel ?? "Programmée J+1"}
                   </Badge>
-                  <Button variant="secondary" size="sm" onClick={() => setEditingId(item.id)}>
+                  <Button
+                    ref={(n) => {
+                      boutonsModifier.current[item.id] = n;
+                    }}
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => setEditingId(item.id)}
+                  >
                     Modifier
                   </Button>
                 </div>
               </div>
             )}
           </VerbatimCard>
+          </div>
         );
       })}
 
       {items.length > visibleCount && (
-        <Button variant="ghost" size="sm" className="self-start" onClick={onShowMore}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="self-start"
+          onClick={() => {
+            setIndexRevele(visibleCount);
+            onShowMore();
+          }}
+        >
           Voir plus ({items.length - visibleCount})
         </Button>
       )}

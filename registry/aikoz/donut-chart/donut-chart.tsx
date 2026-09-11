@@ -2,7 +2,6 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import { cn } from "@registry/aikoz/lib/utils";
 import {
   ChartFrame,
-  TramesSeries,
   couleurSerie,
   remplissageSerie,
 } from "@registry/aikoz/chart-frame/chart-frame";
@@ -91,7 +90,6 @@ export function DonutChart({
             // une vraie : le focus y entrerait sans que rien ne soit annoncé.
             tabIndex={-1}
             >
-              <TramesSeries id={idTrames} />
               <Pie
                 data={parts}
                 dataKey="value"

@@ -48,6 +48,29 @@ pas décoratifs, ils portent l'information.
 | `Stepper` | pastille pleine | coche, `aria-current` |
 | `LineChart` | teinte | pointillé + marqueur |
 | `BarChart` | teinte | trame |
+| `Switch` | couleur de piste | position du curseur |
+| `InfoBanner` | bordure + icône | le ton est dit dans le texte |
+| `ReplyBubble` | pictogramme | « IA » / « Opérateur » en toutes lettres |
+
+### Un canal déclaré n'est pas un canal rendu
+
+La ligne `BarChart` de ce tableau a été **fausse pendant trois semaines**. Les
+trames étaient écrites, documentées, référencées par chaque secteur — et
+n'entraient jamais dans le document : recharts ne rend que les enfants qu'il
+reconnaît et jette les autres sans rien dire. Les `<pattern>` disparaissaient,
+les `fill="url(#…-trame-1)"` ne résolvaient rien, les aplats sortaient unis.
+
+Rien ne pouvait le signaler. Un graphique sans trame a l'air normal ; axe ne
+mesure pas « l'information passe-t-elle par autre chose que la couleur » ; et
+les six teintes n'étant séparées que de **1,17:1**, c'est précisément le cas où
+l'absence du second canal ne se voit pas mais coûte tout.
+
+`ChartFrame` pose donc les trames lui-même, dans un `<svg>` **frère** de taille
+nulle — les serveurs de peinture SVG se résolvent par identifiant au niveau du
+document, pas de l'arbre. Aucun graphique n'a plus à y penser.
+
+**La règle générale :** un canal non chromatique se vérifie **au rendu**, comme
+un contraste. L'écrire ne suffit pas.
 
 ## Le graphique est masqué, le tableau est le contenu
 
@@ -84,6 +107,40 @@ le plugin qui les définit.
 
 > Une liste tenue à la main à côté d'une liste générée finit toujours par
 > diverger.
+
+## Une commande qui disparaît emporte le focus
+
+Trois boutons du `ResponseKanban` se retirent eux-mêmes du document en agissant :
+« Modifier » cède la place au champ, « Voir plus » n'a plus rien à révéler,
+« Annuler » referme l'édition. Quand l'élément focalisé quitte le document, le
+focus **retombe sur `body`** : au clavier on repart du haut de la page, et un
+lecteur d'écran perd sa place au milieu d'une colonne.
+
+Aucune règle axe ne le détecte — le document reste parfaitement valide. C'est le
+test d'interaction qui l'a montré, en vérifiant où le focus avait atterri.
+
+| geste | le focus va |
+|---|---|
+| « Modifier » | dans le champ qui vient de s'ouvrir |
+| Échap / « Annuler » / « Enregistrer » | sur « Modifier », revenu à sa place |
+| « Voir plus » | sur la première carte révélée (`tabIndex={-1}`) |
+
+Sur « Voir plus », la cible est la **carte** et non son premier bouton : c'est
+le point d'où l'utilisateur veut reprendre la lecture, pas une action qu'on
+choisirait à sa place.
+
+## Ce que le catalogue ne teste pas encore
+
+Les 148 tests ne s'exécutent que dans **une** des quatre combinaisons — produit
+clair, la valeur par défaut de la barre d'outils. Les trois autres sont
+vérifiées à la main et par l'audit de contraste de la page Tokens, pas par la
+marche automatique.
+
+Ce n'est pas théorique : le canevas des stories sortait avec un fond
+`rgba(0,0,0,0)`. En clair, le blanc du navigateur ressemblait par coïncidence à
+`--background` ; en sombre, un texte clair se retrouvait sur un fond clair,
+illisible. Le même défaut que `bg-card` — un fond transparent ne se voit pas
+tant qu'on ne change pas ce qu'il y a derrière. Corrigé, mais trouvé à l'œil.
 
 ## Les écarts assumés
 

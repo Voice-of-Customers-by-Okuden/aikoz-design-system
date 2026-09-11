@@ -1,0 +1,49 @@
+name: Vérification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      # Les tokens sont générés : si la sortie committée diverge des sources
+      # DTCG, tout le reste est mesuré sur des valeurs périmées.
+      - name: Tokens
+        run: npm run build:tokens
+
+      - name: Types
+        run: npx tsc --noEmit
+
+      # ── Le garde-fou qui manquait ────────────────────────────────────────
+      #
+      # `public/r/*.json` EMBARQUE le source de chaque composant : c'est une
+      # copie, et une copie diverge. Corriger un composant sans relancer
+      # `registry:build` laisse le registry PUBLIÉ servir l'ancienne version.
+      # C'est arrivé : trois correctifs de nom accessible étaient dans le
+      # source et absents du registry, donc `npx shadcn add stepper` installait
+      # encore la version défectueuse. Rien ne l'aurait signalé.
+      - name: Registry à jour
+        run: |
+          npm run registry:build
+          if ! git diff --quiet -- public/r; then
+            echo "::error::Le registry publié ne correspond plus aux sources."
+            echo "Fichiers en écart :"
+            git diff --name-only -- public/r
+            echo "Correctif : npm run registry:build puis commit."
+            exit 1
+          fi
+
+      # Les stories SONT les tests : axe y tourne en mode `error`, une
+      # violation d'accessibilité fait échouer la marche.
+      - name: Stories
+        run: npx playwright install --with-deps chromium && npx vitest run --project=storybook

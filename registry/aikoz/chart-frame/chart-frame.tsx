@@ -35,8 +35,18 @@ export const styleSerie = (i: number) => SERIES[i % SERIES.length];
  * Son second canal est donc une TRAME — hachures, points, quadrillage —
  * posée par-dessus l'aplat. Même rôle, même ordre fixe.
  *
- * Rendu à 35 % d'opacité sur la couleur du fond de page : assez pour se voir,
+ * Rendu à 55 % d'opacité sur la couleur de la carte : assez pour se voir,
  * pas assez pour fausser la lecture de la teinte.
+ *
+ * **Ne JAMAIS poser ce composant à l'intérieur d'un graphique recharts.**
+ * Recharts ne rend que les enfants qu'il reconnaît et jette les autres, sans
+ * avertissement : les `<pattern>` n'entraient pas dans le document, les
+ * secteurs pointaient vers `url(#…-trame-1)` qui ne résolvait rien, et les
+ * aplats sortaient unis. Le défaut a vécu trois semaines sans se voir, parce
+ * qu'un graphique sans trame a l'air normal. `ChartFrame` pose donc les
+ * trames lui-même, dans un `<svg>` FRÈRE de taille nulle — les serveurs de
+ * peinture SVG se résolvent par identifiant au niveau du document, pas de
+ * l'arbre.
  */
 export function TramesSeries({ id }: { id: string }) {
   const T = (i: number, contenu: ReactNode) => (
@@ -182,6 +192,16 @@ export function ChartFrame<T>({
           tableau porte la donnée, l'intérieur n'a rien à dire.
         */}
         <div aria-hidden="true" className="h-full w-full">
+          {/*
+            Les trames vivent ici, hors de l'arbre recharts, et pas dans le
+            graphique : cf. la note de `TramesSeries`. Elles sont posées pour
+            tous les graphiques, y compris ceux qui ne s'en servent pas —
+            cinq `<pattern>` inutilisés ne coûtent rien, un canal manquant
+            coûte l'accessibilité du graphique.
+          */}
+          <svg aria-hidden="true" className="absolute size-0" focusable="false">
+            <TramesSeries id={uid} />
+          </svg>
           {children(uid)}
         </div>
       </div>
@@ -239,27 +259,54 @@ export interface ChartLegendProps {
  * voix haute donne une liste de noms sans clé de lecture.
  */
 export function ChartLegend({ series, style = "trait", className }: ChartLegendProps) {
+  const uid = useId().replace(/:/g, "");
   return (
     <ul className={cn("flex flex-wrap gap-x-5 gap-y-2 list-none m-0 p-0", className)}>
+      {style === "aplat" && (
+        // La légende porte ses PROPRES trames : elle peut être rendue seule,
+        // sans `ChartFrame` autour pour les lui fournir.
+        <svg aria-hidden="true" className="absolute size-0" focusable="false">
+          <TramesSeries id={uid} />
+        </svg>
+      )}
       {series.map((s, i) => {
         const v = styleSerie(i);
         const c = couleurSerie(i);
         return (
           <li key={s.key} className="inline-flex items-center gap-2 text-sm">
-            <svg aria-hidden="true" viewBox="0 0 28 12" className="h-3 w-7 shrink-0" fill="none">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              viewBox={style === "trait" ? "0 0 28 12" : "0 0 36 14"}
+              className={cn("shrink-0", style === "trait" ? "h-3 w-7" : "h-3.5 w-9")}
+              fill="none"
+            >
               {style === "trait" ? (
                 <>
                   <line x1="0" y1="6" x2="28" y2="6" stroke={c} strokeWidth="2" strokeDasharray={v.trait} />
                   <circle cx="14" cy="6" r="3.5" fill={c} />
                 </>
               ) : (
-                // Aplat uni — la trame du graphique (trop fine sur une part de
-                // 260px, trop grossière rapportée à une pastille de 28px) ne
-                // se rapporte pas à cette échelle. Le nom de série écrit à
-                // côté reste le premier canal de la légende ; la trame réelle
-                // n'est nommée qu'en `sr-only`, comme clé de lecture pour qui
-                // consulte le graphique aux formes.
-                <rect x="0" y="0" width="28" height="12" rx="2" fill={c} />
+                // La pastille montre la teinte ET la trame, parce que c'est
+                // par la trame qu'on appariera la légende au graphique : la
+                // meilleure séparation atteignable entre nos six couleurs est
+                // de 1,17:1, six pastilles unies seraient indiscernables.
+                // Élargie à 36px pour que le motif ait la place de se répéter
+                // — à 28px, une hachure au pas de 8px ne montrait que trois
+                // traits et se lisait comme du bruit.
+                <>
+                  <rect x="0" y="0" width="36" height="14" rx="2" fill={c} />
+                  {i % 6 !== 0 && (
+                    <rect
+                      x="0"
+                      y="0"
+                      width="36"
+                      height="14"
+                      rx="2"
+                      fill={`url(#${uid}-trame-${i % 6})`}
+                    />
+                  )}
+                </>
               )}
             </svg>
             <span className="text-foreground">{s.label}</span>
