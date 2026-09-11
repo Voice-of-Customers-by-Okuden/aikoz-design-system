@@ -50,7 +50,7 @@
   --chart-3: oklch(0.272 0.0982 270.506); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-5: oklch(0.3603 0.0144 269.287); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.5863 0.1594 274.68); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.68 0.19 315); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.5392 0.1106 84.636); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
@@ -108,7 +108,7 @@
   --chart-3: oklch(0.519 0.1792 267.186); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-5: oklch(0.7127 0.0624 274.279); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.5711 0.0137 259.824); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.65 0.09 305); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.3603 0.0144 269.287); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.8352 0.1649 91.67); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.6517 0.1414 245.972); /** extension DS — texte/emphase information, ton `info` de Badge */
@@ -166,7 +166,7 @@
   --chart-3: oklch(0.272 0.0982 270.506); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-5: oklch(0.3603 0.0144 269.287); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.5863 0.1594 274.68); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.68 0.19 315); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.4206 0.0861 86.043); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
@@ -224,7 +224,7 @@
   --chart-3: oklch(0.519 0.1792 267.186); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --chart-5: oklch(0.7127 0.0624 274.279); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.5711 0.0137 259.824); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.65 0.09 305); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.272 0.0982 270.506); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.8352 0.1649 91.67); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.6517 0.1414 245.972); /** extension DS — texte/emphase information, ton `info` de Badge */
