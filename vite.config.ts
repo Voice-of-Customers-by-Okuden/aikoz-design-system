@@ -32,6 +32,25 @@ export default defineConfig({
     emptyOutDir: true
   },
   test: {
+    coverage: {
+      provider: 'v8',
+      // La couverture se règle à la RACINE de `test`, jamais dans un projet :
+      // posée dans le projet, la clé est acceptée sans effet et le chiffre
+      // reste inchangé — c'est ce qui est arrivé au premier essai.
+      //
+      // Ne mesurer QUE le design system. Par défaut `playground/` et
+      // `.storybook/` étaient comptés : ce ne sont pas des livrables, et la
+      // faible couverture du playground tirait le global vers le bas sans
+      // rien dire de la qualité du registre.
+      include: ['registry/aikoz/**/*.{ts,tsx}'],
+      // Les stories sont le TEST, pas le code testé : les compter
+      // reviendrait à s'auto-attester.
+      exclude: ['**/*.stories.tsx'],
+      // `text` donne le tableau PAR FICHIER — c'est lui qui sert, le résumé
+      // seul ne dit pas où sont les trous. `html` pour le rapport navigable
+      // servi par l'addon Storybook sur /coverage/.
+      reporter: ['text', 'text-summary', 'html'],
+    },
     projects: [{
       extends: true,
       plugins: [
