@@ -47,10 +47,10 @@
   --info-subtle: oklch(0.9654 0.0108 256.695); /** extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui */
   --chart-1: oklch(0.4506 0.17 267.567); /** extension DS — tracé série de données 1 */
   --chart-2: oklch(0.5099 0.0999 169.852); /** extension DS — trace de la serie 2 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-3: oklch(0.5392 0.1106 84.636); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-4: oklch(0.403 0.1383 31.204); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-5: oklch(0.4771 0.1343 251.552); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.4597 0.0139 264.429); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-3: oklch(0.272 0.0982 270.506); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-5: oklch(0.3603 0.0144 269.287); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.5863 0.1594 274.68); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.5392 0.1106 84.636); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
@@ -105,10 +105,10 @@
   --info-subtle: oklch(0.1874 0.0468 249.751); /** extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui */
   --chart-1: oklch(0.8174 0.0662 281.012); /** extension DS — tracé série de données 1 */
   --chart-2: oklch(0.9382 0.0858 173.851); /** extension DS — trace de la serie 2 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-3: oklch(0.7576 0.1549 88.059); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-4: oklch(0.664 0.151 34.373); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-5: oklch(0.5618 0.1495 249.537); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.8791 0.0072 268.541); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-3: oklch(0.519 0.1792 267.186); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-5: oklch(0.7127 0.0624 274.279); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.5711 0.0137 259.824); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.3603 0.0144 269.287); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.8352 0.1649 91.67); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.6517 0.1414 245.972); /** extension DS — texte/emphase information, ton `info` de Badge */
@@ -163,10 +163,10 @@
   --info-subtle: oklch(0.9654 0.0108 256.695); /** extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui */
   --chart-1: oklch(0.4506 0.17 267.567); /** extension DS — tracé série de données 1 */
   --chart-2: oklch(0.5099 0.0999 169.852); /** extension DS — trace de la serie 2 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-3: oklch(0.5392 0.1106 84.636); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-4: oklch(0.403 0.1383 31.204); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-5: oklch(0.4771 0.1343 251.552); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.4597 0.0139 264.429); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-3: oklch(0.272 0.0982 270.506); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-5: oklch(0.3603 0.0144 269.287); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.5863 0.1594 274.68); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.9402 0.0042 271.368); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.4206 0.0861 86.043); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.4771 0.1343 251.552); /** extension DS — texte/emphase information, ton `info` de Badge */
@@ -221,10 +221,10 @@
   --info-subtle: oklch(0.1874 0.0468 249.751); /** extension DS — fond tres pale d'un statut ; PORTE le texte du meme statut, donc audite a 4,5:1 contre lui */
   --chart-1: oklch(0.8174 0.0662 281.012); /** extension DS — tracé série de données 1 */
   --chart-2: oklch(0.9382 0.0858 173.851); /** extension DS — trace de la serie 2 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-3: oklch(0.7576 0.1549 88.059); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-4: oklch(0.664 0.151 34.373); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-5: oklch(0.5618 0.1495 249.537); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
-  --chart-6: oklch(0.8791 0.0072 268.541); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-3: oklch(0.519 0.1792 267.186); /** extension DS — trace de la serie 3 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-4: oklch(0.622 0.1233 169.137); /** extension DS — trace de la serie 4 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-5: oklch(0.7127 0.0624 274.279); /** extension DS — trace de la serie 5 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
+  --chart-6: oklch(0.5711 0.0137 259.824); /** extension DS — trace de la serie 6 ; la couleur ne distingue PAS les series a elle seule, cf. le token */
   --track: oklch(0.272 0.0982 270.506); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --warning: oklch(0.8352 0.1649 91.67); /** extension DS — texte/emphase avertissement, et remplissage du niveau intermédiaire de ProgressBar */
   --info: oklch(0.6517 0.1414 245.972); /** extension DS — texte/emphase information, ton `info` de Badge */

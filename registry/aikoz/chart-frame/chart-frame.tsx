@@ -12,9 +12,15 @@ import { Table, type TableColumn } from "@registry/aikoz/table/table";
  *
  * **Le pointillé et la trame ne sont pas décoratifs.** Mesuré sur notre
  * palette : la meilleure séparation atteignable entre six séries est de
- * **1,17:1 en clair, 1,23 en sombre**. Elles se confondent donc en niveaux
+ * **1,26:1 en clair, 1,30 en sombre**. Elles se confondent donc en niveaux
  * de gris et pour une part des daltonismes. La couleur ne porte pas la
  * distinction — elle la renforce, pour qui la perçoit.
+ *
+ * C'est précisément ce qui a permis de tirer la palette des seules rampes de
+ * marque Aikoz : la couleur n'ayant aucun pouvoir distinctif à perdre, le
+ * choix des teintes revient à la charte. Les couleurs de statut en sont
+ * exclues — une série qui porte le jaune d'avertissement se lit comme une
+ * alerte.
  */
 export const SERIES = [
   { trait: undefined, trame: undefined, nom: "trait plein" },
@@ -290,7 +296,7 @@ export function ChartLegend({ series, style = "trait", className }: ChartLegendP
                 // La pastille montre la teinte ET la trame, parce que c'est
                 // par la trame qu'on appariera la légende au graphique : la
                 // meilleure séparation atteignable entre nos six couleurs est
-                // de 1,17:1, six pastilles unies seraient indiscernables.
+                // de 1,26:1, six pastilles unies seraient indiscernables.
                 // Élargie à 36px pour que le motif ait la place de se répéter
                 // — à 28px, une hachure au pas de 8px ne montrait que trois
                 // traits et se lisait comme du bruit.

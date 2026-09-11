@@ -1362,7 +1362,7 @@ export default function App() {
           </div>
           <p className="text-xs text-muted-foreground mt-4 mb-0">
             La couleur ne distingue pas les séries : mesuré, la meilleure séparation
-            atteignable entre six séries de cette palette est de <strong>1,17:1</strong> — elles
+            atteignable entre six séries de cette palette est de <strong>1,26:1</strong> — elles
             se confondent en niveaux de gris. Ce sont le <strong>pointillé</strong> et la
             <strong> forme du marqueur</strong> qui portent la distinction. Et pour qui ne voit
             rien de tout ça, le graphique est masqué et c'est le <strong>tableau</strong> qui est
