@@ -11,6 +11,8 @@ const meta = {
   args: {
     caption: "Taux de réponse aux avis, par réseau",
     xKey: "mois",
+    xLabel: "Mois",
+    yLabel: "Taux de réponse (%)",
     formatValue: (v: string | number) => `${v} %`,
     series: [
       { key: "sudest", label: "Sud-Est" },

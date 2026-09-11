@@ -2,6 +2,7 @@ import {
   CartesianGrid,
   Line,
   LineChart as RechartsLineChart,
+  Label,
   ResponsiveContainer,
   Tooltip as RechartsTooltip,
   XAxis,
@@ -36,7 +37,16 @@ export interface LineChartProps {
    * sans ça, la comparaison n'existe que pour qui voit les deux courbes.
    */
   reference?: LineSerie;
+  /**
+   * Nom de l'axe horizontal, **unité comprise** — « Trimestre », « Mois ».
+   * Rendu sous l'axe ET repris en en-tête du tableau.
+   */
   xLabel?: string;
+  /**
+   * Nom de l'axe vertical, **unité comprise** — « Taux de réponse (%) »,
+   * « Avis reçus ». Carbon est explicite là-dessus : un axe quantitatif sans
+   * unité laisse le lecteur deviner ce qu'il compte.
+   */
   yLabel?: string;
   formatValue?: (v: string | number) => string;
   height?: number;
@@ -145,13 +155,35 @@ export function LineChart({
               tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
               stroke="var(--border-strong)"
               tickLine={false}
-            />
+              height={xLabel ? 44 : 30}
+            >
+              {xLabel && (
+                <Label
+                  value={xLabel}
+                  position="insideBottom"
+                  offset={-2}
+                  fill="var(--muted-foreground)"
+                  fontSize={12}
+                />
+              )}
+            </XAxis>
             <YAxis
-              width={44}
+              width={yLabel ? 60 : 44}
               tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
               stroke="var(--border-strong)"
               tickLine={false}
-            />
+            >
+              {yLabel && (
+                <Label
+                  value={yLabel}
+                  angle={-90}
+                  position="insideLeft"
+                  style={{ textAnchor: "middle" }}
+                  fill="var(--muted-foreground)"
+                  fontSize={12}
+                />
+              )}
+            </YAxis>
             {infobulleActive && (
               <RechartsTooltip
                 content={<ChartTooltipContent formatValue={formatValue} />}
