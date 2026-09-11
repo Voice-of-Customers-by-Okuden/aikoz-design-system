@@ -1,20 +1,26 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from "vite";
+// `defineConfig` vient de `vitest/config`, pas de `vite` : celui de vite ne
+// connaît pas la clé `test`, et TypeScript refusait la configuration entière
+// avec « Object literal may only specify known properties ».
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import svgr from "vite-plugin-svgr";
 import path from "path";
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+// Une seule source pour le dossier courant, dérivée de `import.meta.url` :
+// le garde `typeof` précédent laissait TypeScript buter sur un identifiant
+// qui n'existe pas en module ES.
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "."),
-      "@registry": path.resolve(__dirname, "./registry")
+      "@": path.resolve(dirname, "."),
+      "@registry": path.resolve(dirname, "./registry")
     }
   },
   server: {
@@ -25,10 +31,10 @@ export default defineConfig({
   base: "./",
   // `root` sur le playground pour que l'aperçu sorte à plat dans
   // docs/preview/index.html, et non dans un sous-dossier playground/.
-  root: path.resolve(__dirname, "playground"),
-  publicDir: path.resolve(__dirname, "public"),
+  root: path.resolve(dirname, "playground"),
+  publicDir: path.resolve(dirname, "public"),
   build: {
-    outDir: path.resolve(__dirname, "docs/preview"),
+    outDir: path.resolve(dirname, "docs/preview"),
     emptyOutDir: true
   },
   test: {
