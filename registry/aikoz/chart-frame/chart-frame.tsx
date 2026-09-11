@@ -224,14 +224,8 @@ export interface ChartLegendProps {
  * voix haute donne une liste de noms sans clé de lecture.
  */
 export function ChartLegend({ series, style = "trait", className }: ChartLegendProps) {
-  const uid = useId().replace(/:/g, "");
   return (
     <ul className={cn("flex flex-wrap gap-x-5 gap-y-2 list-none m-0 p-0", className)}>
-      {style === "aplat" && (
-        <svg aria-hidden="true" className="absolute size-0">
-          <TramesSeries id={uid} />
-        </svg>
-      )}
       {series.map((s, i) => {
         const v = styleSerie(i);
         const c = couleurSerie(i);
@@ -244,12 +238,13 @@ export function ChartLegend({ series, style = "trait", className }: ChartLegendP
                   <circle cx="14" cy="6" r="3.5" fill={c} />
                 </>
               ) : (
-                <>
-                  <rect x="0" y="0" width="28" height="12" rx="2" fill={c} />
-                  {i % 6 !== 0 && (
-                    <rect x="0" y="0" width="28" height="12" rx="2" fill={`url(#${uid}-trame-${i % 6})`} />
-                  )}
-                </>
+                // Aplat uni — la trame du graphique (trop fine sur une part de
+                // 260px, trop grossière rapportée à une pastille de 28px) ne
+                // se rapporte pas à cette échelle. Le nom de série écrit à
+                // côté reste le premier canal de la légende ; la trame réelle
+                // n'est nommée qu'en `sr-only`, comme clé de lecture pour qui
+                // consulte le graphique aux formes.
+                <rect x="0" y="0" width="28" height="12" rx="2" fill={c} />
               )}
             </svg>
             <span className="text-foreground">{s.label}</span>

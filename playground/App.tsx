@@ -34,6 +34,17 @@ import { SlotPicker } from "@registry/aikoz/slot-picker/slot-picker";
 import { LineChart } from "@registry/aikoz/line-chart/line-chart";
 import { BarChart } from "@registry/aikoz/bar-chart/bar-chart";
 import { DonutChart } from "@registry/aikoz/donut-chart/donut-chart";
+import { Switch } from "@registry/aikoz/switch/switch";
+import { InfoBanner } from "@registry/aikoz/info-banner/info-banner";
+import { Textarea } from "@registry/aikoz/textarea/textarea";
+import { CountBadge } from "@registry/aikoz/count-badge/count-badge";
+import { ReplyBubble } from "@registry/aikoz/reply-bubble/reply-bubble";
+import {
+  ResponseKanban,
+  type AutomatedReplyItem,
+  type OffCharterReplyItem,
+  type SensitiveReviewItem,
+} from "@registry/aikoz/response-kanban/response-kanban";
 import Tokens from "./Tokens";
 import Decisions from "./Decisions";
 import { auditerToutesCombinaisons, type EchecContraste } from "./audit";
@@ -97,6 +108,46 @@ const JOURS = [
       { value: "2026-04-15T10:30", time: "10:30" },
       { value: "2026-04-15T16:00", time: "16:00" },
     ],
+  },
+];
+
+const KANBAN_AUTOMATED: AutomatedReplyItem[] = [
+  {
+    id: "a1",
+    rating: 5,
+    author: "Client vérifié",
+    date: "12 août 2026",
+    reply: "Merci beaucoup pour votre retour, ravis d'avoir répondu à vos attentes !",
+  },
+  {
+    id: "a2",
+    rating: 4,
+    author: "Client vérifié",
+    date: "11 août 2026",
+    reply: "Merci pour votre confiance, à bientôt !",
+  },
+];
+
+const KANBAN_OFF_CHARTER: OffCharterReplyItem[] = [
+  {
+    id: "o1",
+    rating: 2,
+    author: "Client vérifié",
+    date: "9 août 2026",
+    text: "Délais de traitement beaucoup trop longs.",
+    reply: "Nous vous invitons à contacter directement notre assureur partenaire pour ce type de dossier.",
+    reasonLabel: "Réponse déresponsabilisante · renvoi vers un tiers",
+  },
+];
+
+const KANBAN_SENSITIVE: SensitiveReviewItem[] = [
+  {
+    id: "s1",
+    rating: 1,
+    author: "Client vérifié",
+    date: "8 août 2026",
+    text: "Aucune rampe d'accès, impossible d'entrer avec un fauteuil.",
+    categoryLabel: "Accessibilité PMR · sûreté",
   },
 ];
 
@@ -255,6 +306,18 @@ export default function App() {
             </span>
             <KpiCard variant="raw" label="Délai de réponse" value={6} unit=" h" />
           </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              variant=benchmark
+            </span>
+            <KpiCard
+              variant="benchmark"
+              label="Taux de réponse"
+              value={87}
+              unit=" %"
+              benchmarkValue={79}
+            />
+          </div>
         </div>
 
         <h3 className="text-sm font-semibold text-foreground mb-3">
@@ -395,6 +458,41 @@ export default function App() {
         </p>
 
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          ReplyBubble — sous l'avis, dans VerbatimCard.children
+        </h2>
+        <div className="flex flex-col gap-3 max-w-xl mb-10">
+          <VerbatimCard
+            rating={5}
+            status="replied"
+            source="Google"
+            author="Client vérifié"
+            date="12 août 2026"
+            text="Accueil chaleureux et conseillère vraiment à l'écoute, dossier traité en quelques jours."
+          >
+            <ReplyBubble origin="ai">
+              Merci beaucoup pour votre retour, ravis d'avoir répondu à vos attentes !
+            </ReplyBubble>
+          </VerbatimCard>
+          <VerbatimCard
+            rating={2}
+            status="unanswered"
+            source="Google"
+            date="9 août 2026"
+            text="Délais de traitement beaucoup trop longs, plusieurs relances restées sans retour."
+          >
+            <ReplyBubble origin="operator" operatorName="Claire D.">
+              Bonjour, nous revenons vers vous rapidement pour régler ce point.
+            </ReplyBubble>
+          </VerbatimCard>
+          <ReplyBubble origin="ai" loading />
+          <p className="text-xs text-muted-foreground m-0 pt-2 border-t border-border">
+            Pas de carte propre : liseré gauche + fond <code className="font-mono px-1">--muted</code>,
+            traitement « citation en creux » subordonné à la carte qui l'accueille.
+            L'origine tient au libellé écrit, jamais à la seule couleur du pictogramme.
+          </p>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
           Registre × thème — quatre combinaisons, deux axes indépendants
         </h2>
         <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
@@ -471,6 +569,20 @@ export default function App() {
             description="Déterminée par votre fiche — readOnly, donc focusable et soumise."
           />
           <Input label="Champ désactivé" defaultValue="Indisponible" disabled />
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Textarea — sibling d'Input, rows + resize natif
+        </h2>
+        <div className="flex flex-col gap-5 rounded-[var(--radius)] border border-border bg-card p-5 max-w-md">
+          <Textarea
+            label="Modifier la réponse"
+            description="Visible par le client dès validation."
+            defaultValue="Merci pour votre retour, nous sommes ravis d'avoir répondu à vos attentes."
+            rows={3}
+          />
+          <Textarea label="Motif du signalement" error="Ce champ ne peut pas être vide." rows={2} />
+          <Textarea label="Champ désactivé" defaultValue="Indisponible" disabled rows={2} />
         </div>
 
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
@@ -601,6 +713,19 @@ export default function App() {
             <div className="w-32"><ProgressBar value={70} size="md" /></div>
             <div className="w-32"><ProgressBar value={70} size="lg" /></div>
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          Switch — bascule immédiate, sans confirmation
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5 max-w-md">
+          <Switch label="Automatisation activée" defaultChecked />
+          <Switch label="Notifications par e-mail" description="Envoyées chaque lundi matin." />
+          <Switch label="Mode démo" disabled />
+          <p className="text-xs text-muted-foreground m-0 pt-2 border-t border-border">
+            Sous l'habillage, un vrai <code className="font-mono px-1">input type="checkbox" role="switch"</code> —
+            la piste porte l'état par la position ET la couleur, jamais la seule couleur.
+          </p>
         </div>
 
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
@@ -848,6 +973,37 @@ export default function App() {
         </div>
 
         <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          InfoBanner — role="status", jamais role="alert"
+        </h2>
+        <div className="flex flex-col gap-3 max-w-xl">
+          <InfoBanner>
+            Les réponses affichées ci-dessous tournent aléatoirement parmi les formulations enregistrées.
+          </InfoBanner>
+          <InfoBanner tone="warning">
+            Cette automatisation ne couvre pas les avis 1-2 étoiles.
+          </InfoBanner>
+          <InfoBanner tone="error">
+            La source Google est indisponible depuis 14:02 — les nouveaux avis ne remontent plus.
+          </InfoBanner>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          CountBadge — compteur ou rang, jamais les deux
+        </h2>
+        <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex items-center gap-3 flex-wrap">
+            <CountBadge value={7} label="avis en attente" />
+            <CountBadge value={12} label="alertes" />
+          </div>
+          <div className="flex items-center gap-3 flex-wrap pt-2 border-t border-border">
+            <span className="text-xs text-muted-foreground">variant=rank, purement décoratif :</span>
+            <CountBadge value={1} variant="rank" label={null} />
+            <CountBadge value={2} variant="rank" label={null} />
+            <CountBadge value={3} variant="rank" label={null} />
+          </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
           Skeleton — muet pour les lecteurs d'écran, par choix
         </h2>
         <div className="flex flex-col gap-4 rounded-[var(--radius)] border border-border bg-card p-5">
@@ -954,6 +1110,52 @@ export default function App() {
                 { value: "trustpilot", label: "Trustpilot", description: "Avis vérifiés", meta: <Badge tone="neutral" size="sm">318</Badge> },
                 { value: "pj", label: "Pages Jaunes", description: "Annuaire local", meta: <Badge tone="neutral" size="sm">96</Badge> },
                 { value: "tripadvisor", label: "TripAdvisor", description: "Hors périmètre assurance", disabled: true },
+              ]}
+            />
+          </div>
+        </div>
+
+        <h3 className="text-sm font-semibold text-foreground mt-8 mb-3">
+          appearance=segmented / chip — même mécanique, habillage différent
+        </h3>
+        <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+          Toujours un vrai input caché, la même coche reportée par le focus — seule la classe
+          Tailwind change. <code className="font-mono text-xs">segmented</code> vit dans un rang
+          connecté (le remplissage porte l'état, pas de pastille) ; <code className="font-mono text-xs">chip</code>{" "}
+          reste une pastille indépendante avec une coche inline.
+        </p>
+        <div className="flex flex-col gap-6 rounded-[var(--radius)] border border-border bg-card p-5">
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              layout=segmented
+            </span>
+            <div className="max-w-sm">
+              <ChoiceGroup
+                legend="Délai avant publication"
+                layout="segmented"
+                defaultValue={["j1"]}
+                options={[
+                  { value: "immediat", label: "Immédiat" },
+                  { value: "j1", label: "J+1" },
+                  { value: "j7", label: "J+7" },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 pt-4 border-t border-border">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              layout=chip, selection=multiple
+            </span>
+            <ChoiceGroup
+              legend="Thèmes à filtrer"
+              selection="multiple"
+              layout="chip"
+              defaultValue={["reactivite"]}
+              options={[
+                { value: "reactivite", label: "Réactivité" },
+                { value: "accueil", label: "Accueil" },
+                { value: "tarifs", label: "Tarifs" },
+                { value: "indisponible", label: "Hors périmètre", disabled: true },
               ]}
             />
           </div>
@@ -1215,6 +1417,35 @@ export default function App() {
             </p>
           </div>
 
+          <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+            <BarChart
+              caption="Polarité par segment"
+              xKey="segment"
+              xLabel="Segment"
+              layout="stacked-percent"
+              series={[
+                { key: "negatif", label: "Négatif (1-3 étoiles)" },
+                { key: "positif", label: "Positif (4-5 étoiles)" },
+              ]}
+              data={[
+                { segment: "Accessibilité", negatif: 11, positif: 89 },
+                { segment: "Restauration", negatif: 0, positif: 100 },
+                { segment: "Opérations", negatif: 0, positif: 100 },
+                { segment: "Personnel", negatif: 24, positif: 76 },
+                { segment: "Équipements", negatif: 10, positif: 90 },
+              ]}
+            />
+            <p className="text-xs text-muted-foreground mt-3 mb-0">
+              <code className="font-mono px-1">layout="stacked-percent"</code> : chaque barre
+              revient à 100 % de son propre total — pour comparer une RÉPARTITION d'un segment
+              à l'autre, pas un volume. Catégories en en-tête au-dessus des barres, pourcentage
+              écrit dans chaque part. Couleurs de la palette catégorielle du DS, pas de rouge/vert
+              sémantique câblé en dur — à discuter si la lecture « positif/négatif » doit
+              réutiliser <code className="font-mono px-1">--success-fill</code>/
+              <code className="font-mono px-1">--error-fill</code>.
+            </p>
+          </div>
+
           <div className="rounded-[var(--radius)] border border-border bg-card p-5 max-w-md">
             <DonutChart
               caption="Répartition des avis par source"
@@ -1231,6 +1462,24 @@ export default function App() {
               de quatre parts, ou dès que deux sont proches, l'œil ne compare pas des angles.
             </p>
           </div>
+        </div>
+
+        <h2 className="text-lg font-semibold text-foreground mt-12 mb-4">
+          ResponseKanban — 3 colonnes par urgence croissante
+        </h2>
+        <div className="rounded-[var(--radius)] border border-border bg-card p-5">
+          <ResponseKanban
+            automated={KANBAN_AUTOMATED}
+            offCharter={KANBAN_OFF_CHARTER}
+            sensitive={KANBAN_SENSITIVE}
+            initialVisible={2}
+          />
+          <p className="text-xs text-muted-foreground mt-4 mb-0">
+            Composite, pas un atome : assemble Card/Badge/Button/VerbatimCard/EmptyState/Dialog
+            déjà du registry, et ReplyBubble/Textarea/CountBadge, nouveaux. En dessous de
+            1024px, les 3 colonnes s'empilent verticalement — comportement par défaut, à
+            valider.
+          </p>
         </div>
 
         {/* Audit de contraste sur le rendu */}

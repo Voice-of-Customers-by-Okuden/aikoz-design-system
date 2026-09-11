@@ -3,6 +3,7 @@ import {
   Line,
   LineChart as RechartsLineChart,
   ResponsiveContainer,
+  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -13,6 +14,61 @@ import {
   type ChartSerie,
 } from "@registry/aikoz/chart-frame/chart-frame";
 import { type TableColumn } from "@registry/aikoz/table/table";
+
+// ─── Infobulle au survol ──────────────────────────────────────────────────────
+//
+// Reprend les tokens de `Tooltip` (`--popover`/`--popover-foreground`/
+// `--border-strong`) — une infobulle est une surface flottante comme une
+// autre, elle suit le même rôle plutôt qu'une inversion `--foreground` figée
+// qui casserait le thème. PUREMENT visuel : la valeur exacte de chaque point
+// est déjà dans le tableau qui suit le graphique, donc rien ici n'est
+// nécessaire à qui ne survole pas à la souris (WCAG 1.4.13 ne s'applique
+// qu'à du contenu qui EST la seule source d'une information).
+interface ChartTooltipPayloadItem {
+  dataKey?: string | number;
+  name?: string;
+  value?: string | number;
+  color?: string;
+}
+
+function ChartTooltipContent({
+  active,
+  label,
+  payload,
+  formatValue,
+}: {
+  active?: boolean;
+  label?: string | number;
+  payload?: ChartTooltipPayloadItem[];
+  formatValue: (v: string | number) => string;
+}) {
+  if (!active || !payload || payload.length === 0) return null;
+  return (
+    <div
+      className={[
+        "rounded-[var(--radius)] border border-[var(--border-strong)] px-3 py-2 shadow-lg",
+        "bg-[var(--popover)] text-[var(--popover-foreground)]",
+        "text-xs leading-snug",
+      ].join(" ")}
+    >
+      <p className="m-0 mb-1.5 font-semibold">{label}</p>
+      <ul className="m-0 flex list-none flex-col gap-1 p-0">
+        {payload.map((p) => (
+          <li key={String(p.dataKey)} className="flex items-center gap-1.5">
+            <span
+              aria-hidden="true"
+              className="inline-block size-2.5 shrink-0 rounded-sm"
+              style={{ background: p.color }}
+            />
+            <span>
+              {p.name} : {formatValue(p.value ?? "")}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -117,7 +173,19 @@ export function LineChart({
     >
       {() => (
         <ResponsiveContainer width="100%" height="100%">
-          <RechartsLineChart data={data} margin={{ top: 8, right: 8, bottom: 8, left: 0 }}>
+          {/* `style={{ cursor: "pointer" }}` — PAS une classe Tailwind sur
+              `ResponsiveContainer` : Recharts pose son propre style inline
+              `cursor: "default"` sur son `.recharts-wrapper` interne, qui
+              l'emporterait toujours sur une classe héritée d'un ancêtre. Ce
+              `style` est fusionné PAR-DESSUS ce défaut par Recharts lui-même
+              (cf. `generateCategoricalChart`), donc c'est le seul point qui
+              tient. Affordance seule : la valeur exacte reste dans le
+              tableau qui suit, le curseur ne porte aucune information. */}
+          <RechartsLineChart
+            data={data}
+            margin={{ top: 8, right: 8, bottom: 8, left: 0 }}
+            style={{ cursor: "pointer" }}
+          >
             <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
             <XAxis
               dataKey={xKey}
@@ -131,16 +199,23 @@ export function LineChart({
               stroke="var(--border-strong)"
               tickLine={false}
             />
+            <RechartsTooltip
+              content={<ChartTooltipContent formatValue={formatValue} />}
+              cursor={{ stroke: "var(--border-strong)", strokeDasharray: "3 3" }}
+              isAnimationActive={false}
+            />
             {reference && (
               // Tracée en PREMIER, donc sous les autres : une référence
               // passe derrière ce qu'elle sert à comparer.
               <Line
                 type="monotone"
                 dataKey={reference.key}
+                name={reference.label}
                 stroke="var(--muted-foreground)"
                 strokeWidth={1.5}
                 strokeDasharray="3 4"
                 dot={false}
+                activeDot={{ r: 4 }}
                 isAnimationActive={false}
               />
             )}
@@ -149,6 +224,7 @@ export function LineChart({
                 key={s.key}
                 type="monotone"
                 dataKey={s.key}
+                name={s.label}
                 stroke={couleurSerie(i)}
                 strokeWidth={2}
                 strokeDasharray={styleSerie(i).trait}

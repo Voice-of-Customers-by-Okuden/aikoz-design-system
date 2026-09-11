@@ -6,7 +6,7 @@ import { Button } from "@registry/aikoz/button/button";
 import { VerbatimCard } from "@registry/aikoz/verbatim-card/verbatim-card";
 import { ReplyBubble } from "@registry/aikoz/reply-bubble/reply-bubble";
 import { Textarea } from "@registry/aikoz/textarea/textarea";
-import { CountBadge } from "@registry/aikoz/count-badge/count-badge";
+import { CountBadge, type CountBadgeTone } from "@registry/aikoz/count-badge/count-badge";
 import { EmptyState } from "@registry/aikoz/empty-state/empty-state";
 import { Dialog } from "@registry/aikoz/dialog/dialog";
 
@@ -75,12 +75,15 @@ export interface ResponseKanbanProps {
 function ColumnHeader({
   id,
   accentVar,
+  tone,
   title,
   subtitle,
   count,
 }: {
   id: string;
   accentVar: string;
+  /** Ton du compteur — reprend la même couleur que le liseré, cf. `accentVar`. */
+  tone: CountBadgeTone;
   title: string;
   subtitle: string;
   count: number;
@@ -93,7 +96,7 @@ function ColumnHeader({
         </h3>
         <p className="m-0 text-xs text-muted-foreground">{subtitle}</p>
       </div>
-      <CountBadge value={count} variant="count" label={`avis dans « ${title} »`} />
+      <CountBadge value={count} variant="count" tone={tone} label={`avis dans « ${title} »`} />
     </div>
   );
 }
@@ -243,7 +246,9 @@ function OffCharterColumn({
                   text={item.text}
                   density="compact"
                 />
-                <ReplyBubble origin="ai">{item.reply}</ReplyBubble>
+                {/* showOrigin=false : dans cette relecture, ce qui compte est
+                    le texte non conforme à la charte, pas qui l'a écrit. */}
+                <ReplyBubble origin="ai" showOrigin={false}>{item.reply}</ReplyBubble>
               </div>
             </Dialog>
           </div>
@@ -332,6 +337,7 @@ export function ResponseKanban({
         <ColumnHeader
           id={titleAutomated}
           accentVar="--info"
+          tone="info"
           title="Réponses automatisées"
           subtitle="À valider avant publication J+1"
           count={automated.length}
@@ -348,6 +354,7 @@ export function ResponseKanban({
         <ColumnHeader
           id={titleOffCharter}
           accentVar="--warning"
+          tone="warning"
           title="Réponses hors charte"
           subtitle="Publiées, à corriger"
           count={offCharter.length}
@@ -359,6 +366,7 @@ export function ResponseKanban({
         <ColumnHeader
           id={titleSensitive}
           accentVar="--destructive-text"
+          tone="error"
           title="Avis sensibles"
           subtitle="À traiter immédiatement"
           count={sensitive.length}

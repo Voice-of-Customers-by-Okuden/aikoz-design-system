@@ -6,8 +6,15 @@ import { cn } from "@registry/aikoz/lib/utils";
 
 const badgeVariants = cva(
   [
-    "inline-flex items-center gap-1 shrink-0",
-    "rounded-full border font-semibold whitespace-nowrap",
+    // Ni `shrink-0` ni `whitespace-nowrap` : un libellé court ne les
+    // déclenche jamais (il tient toujours sur une ligne), mais un libellé
+    // long (ex. un motif de non-conformité en toutes lettres) doit pouvoir
+    // se replier plutôt que déborder de son conteneur, coupé net par les
+    // bords arrondis. `rounded-full` reste correct sur plusieurs lignes : le
+    // rayon se borne automatiquement à la moitié de la hauteur de chaque
+    // ligne, sans distorsion.
+    "inline-flex items-center gap-1",
+    "rounded-full border font-semibold",
   ],
   {
     variants: {

@@ -15,24 +15,40 @@ const countBadgeVariants = cva(
     variants: {
       variant: {
         // Cercle plein — attire l'œil, pour un compte à traiter (colonne
-        // Kanban). Paire `--primary` / `--primary-foreground` : même contrat
-        // de contraste déjà validé sur `Button` et le pas courant de `Stepper`.
-        count: [
-          "rounded-full",
-          "bg-[var(--primary)] text-[var(--primary-foreground)]",
-        ],
+        // Kanban). La couleur du remplissage est fixée par `tone`.
+        count: ["rounded-full"],
         // Marqueur discret — un rang dans une liste, pas une alerte. Contour
         // fin plutôt qu'aplat, poids visuel volontairement plus bas ; carré
         // (coins arrondis) et non cercle, pour qu'on ne confonde jamais les
         // deux variantes au premier coup d'œil. Reprend l'état "à venir" du
-        // `Stepper" : `--border-strong` / `--muted-foreground`.
+        // `Stepper` : `--border-strong` / `--muted-foreground`. `tone` est
+        // ignoré ici — un marqueur de rang reste sobre dans tous les cas.
         rank: [
           "rounded-[var(--radius)] border border-[var(--border-strong)]",
           "bg-transparent text-muted-foreground",
         ],
       },
+      // N'affecte que `variant="count"` (cf. `compoundVariants`) — mesuré au
+      // contraste WCAG (colorjs.io) avant d'être fixé, pas choisi à l'œil :
+      // `--info`/`--warning` contre `--primary-foreground` >= 4,5:1 light ET
+      // dark (le token bascule déjà blanc/encre selon le thème, comme sur
+      // `--primary`). `error` réutilise la paire native shadcn
+      // `--destructive`/`--destructive-foreground`, déjà auditée ailleurs
+      // dans le DS plutôt que `--destructive-text` (rôle "texte", pas aplat).
+      tone: {
+        primary: "",
+        info: "",
+        warning: "",
+        error: "",
+      },
     },
-    defaultVariants: { variant: "count" },
+    compoundVariants: [
+      { variant: "count", tone: "primary", class: "bg-[var(--primary)] text-[var(--primary-foreground)]" },
+      { variant: "count", tone: "info", class: "bg-[var(--info)] text-[var(--primary-foreground)]" },
+      { variant: "count", tone: "warning", class: "bg-[var(--warning)] text-[var(--primary-foreground)]" },
+      { variant: "count", tone: "error", class: "bg-[var(--destructive)] text-[var(--destructive-foreground)]" },
+    ],
+    defaultVariants: { variant: "count", tone: "primary" },
   }
 );
 
@@ -57,6 +73,8 @@ export interface CountBadgeProps extends VariantProps<typeof countBadgeVariants>
   label?: string | null;
 }
 
+export type CountBadgeTone = "primary" | "info" | "warning" | "error";
+
 // ─── Composant ────────────────────────────────────────────────────────────────
 
 /**
@@ -77,13 +95,14 @@ export interface CountBadgeProps extends VariantProps<typeof countBadgeVariants>
 export function CountBadge({
   value,
   variant = "count",
+  tone = "primary",
   label,
   className,
 }: CountBadgeProps) {
   const decorative = label === null;
   return (
     <span
-      className={cn(countBadgeVariants({ variant }), className)}
+      className={cn(countBadgeVariants({ variant, tone }), className)}
       aria-hidden={decorative ? true : undefined}
     >
       {value}

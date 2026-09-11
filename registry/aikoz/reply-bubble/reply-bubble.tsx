@@ -22,6 +22,15 @@ export interface ReplyBubbleProps {
   loading?: boolean;
   /** Nom de l'opérateur, affiché à côté de l'étiquette « Opérateur » si fourni. */
   operatorName?: string;
+  /**
+   * Masque le badge d'origine (IA/Opérateur). Réservé aux contextes où cette
+   * bulle rejoue un texte déjà publié sans que l'origine soit l'information
+   * pertinente à ce niveau (ex. relecture d'une réponse hors charte dans
+   * `ResponseKanban` : ce qui compte est le texte non conforme, pas qui l'a
+   * écrit). Par défaut affiché — cf. la note du composant sur le canal non
+   * chromatique que porte ce libellé.
+   */
+  showOrigin?: boolean;
   className?: string;
 }
 
@@ -64,6 +73,7 @@ export function ReplyBubble({
   children,
   loading = false,
   operatorName,
+  showOrigin = true,
   className,
 }: ReplyBubbleProps) {
   const Icon = ORIGIN_ICON[origin];
@@ -79,14 +89,16 @@ export function ReplyBubble({
       )}
       aria-busy={loading || undefined}
     >
-      <div className="flex items-center gap-2 flex-wrap">
-        <Badge tone={origin === "ai" ? "info" : "neutral"} size="sm" icon={<Icon className="w-3 h-3" />}>
-          {ORIGIN_LABEL[origin]}
-        </Badge>
-        {origin === "operator" && operatorName && (
-          <span className="text-xs text-muted-foreground">{operatorName}</span>
-        )}
-      </div>
+      {showOrigin && (
+        <div className="flex items-center gap-2 flex-wrap">
+          <Badge tone={origin === "ai" ? "info" : "neutral"} size="sm" icon={<Icon className="w-3 h-3" />}>
+            {ORIGIN_LABEL[origin]}
+          </Badge>
+          {origin === "operator" && operatorName && (
+            <span className="text-xs text-muted-foreground">{operatorName}</span>
+          )}
+        </div>
+      )}
 
       {loading ? (
         <SkeletonText lines={2} />
