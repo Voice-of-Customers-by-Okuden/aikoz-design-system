@@ -3,11 +3,13 @@ import {
   Line,
   LineChart as RechartsLineChart,
   ResponsiveContainer,
+  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import {
   ChartFrame,
+  ChartTooltipContent,
   couleurSerie,
   styleSerie,
   type ChartSerie,
@@ -115,11 +117,22 @@ export function LineChart({
       tableCollapsed={tableCollapsed}
       className={className}
     >
-      {() => (
+      {({ infobulleActive, surSurvol }) => (
         <ResponsiveContainer width="100%" height="100%">
+          {/* `style={{ cursor: "pointer" }}` — PAS une classe Tailwind sur
+              `ResponsiveContainer` : Recharts pose son propre style inline
+              `cursor: "default"` sur son `.recharts-wrapper` interne, qui
+              l'emporterait toujours sur une classe héritée d'un ancêtre. Ce
+              `style` est fusionné PAR-DESSUS ce défaut par Recharts lui-même
+              (cf. `generateCategoricalChart`), donc c'est le seul point qui
+              tient. Affordance seule : la valeur exacte reste dans le
+              tableau qui suit, le curseur ne porte aucune information. */}
           <RechartsLineChart
             data={data}
             margin={{ top: 8, right: 8, bottom: 8, left: 0 }}
+            style={{ cursor: "pointer" }}
+            onMouseMove={surSurvol}
+            onMouseLeave={() => surSurvol(null)}
             // `tabIndex={-1}` : recharts rend son SVG focusable par défaut.
             // Dans un sous-arbre `aria-hidden`, un élément focusable est une
             // contradiction — axe la signale (aria-hidden-focus), et c'en est
@@ -139,16 +152,25 @@ export function LineChart({
               stroke="var(--border-strong)"
               tickLine={false}
             />
+            {infobulleActive && (
+              <RechartsTooltip
+                content={<ChartTooltipContent formatValue={formatValue} />}
+                cursor={{ stroke: "var(--border-strong)", strokeDasharray: "3 3" }}
+                isAnimationActive={false}
+              />
+            )}
             {reference && (
               // Tracée en PREMIER, donc sous les autres : une référence
               // passe derrière ce qu'elle sert à comparer.
               <Line
                 type="monotone"
                 dataKey={reference.key}
+                name={reference.label}
                 stroke="var(--muted-foreground)"
                 strokeWidth={1.5}
                 strokeDasharray="3 4"
                 dot={false}
+                activeDot={{ r: 5, stroke: "var(--foreground)", strokeWidth: 2 }}
                 isAnimationActive={false}
               />
             )}
@@ -157,11 +179,15 @@ export function LineChart({
                 key={s.key}
                 type="monotone"
                 dataKey={s.key}
+                name={s.label}
                 stroke={couleurSerie(i)}
                 strokeWidth={2}
                 strokeDasharray={styleSerie(i).trait}
                 dot={{ r: 3.5, fill: couleurSerie(i), strokeWidth: 0 }}
-                activeDot={{ r: 5 }}
+                // Le point survolé s'entoure d'un anneau `--foreground` :
+                // l'emphase est portée par une FORME, comme partout ailleurs
+                // dans le système, et non par une variation de teinte.
+                activeDot={{ r: 6, stroke: "var(--foreground)", strokeWidth: 2 }}
                 isAnimationActive={false}
               />
             ))}

@@ -94,7 +94,7 @@ export const LaCouleurNeDistinguePas: Story = {
       description: {
         story:
           "Mesuré sur notre palette : la meilleure séparation atteignable entre six séries " +
-          "est de **1,17:1 en clair, 1,23 en sombre**. Elles se confondent en niveaux de " +
+          "est de **1,26:1 en clair, 1,30 en sombre**. Elles se confondent en niveaux de " +
           "gris et pour une part des daltonismes. Le pointillé et la forme du marqueur ne " +
           "sont donc pas décoratifs — ils portent la distinction, dans un ordre FIXE pour " +
           "qu'une série garde son identité d'un écran à l'autre.",

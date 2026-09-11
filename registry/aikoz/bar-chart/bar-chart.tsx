@@ -3,12 +3,14 @@ import {
   CartesianGrid,
   BarChart as RechartsBarChart,
   ResponsiveContainer,
+  Tooltip as RechartsTooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import {
   ChartFrame,
-  TramesSeries,
+  ChartTooltipContent,
+  CONTOUR_ACTIF,
   couleurSerie,
   remplissageSerie,
   type ChartSerie,
@@ -25,13 +27,19 @@ export interface BarChartProps {
   /**
    * `stacked` empile les séries — pour une composition dont le TOTAL compte.
    * `grouped` les juxtapose — pour comparer les séries entre elles.
+   * `stacked-percent` empile, mais chaque barre est ramenée à 100 % de son
+   * propre total — pour comparer une RÉPARTITION d'une catégorie à l'autre
+   * (ex. polarité positif/négatif par segment), où le total de chaque barre
+   * n'a justement pas à être comparable. Chaque part porte son pourcentage
+   * écrit, et les catégories passent en en-têtes au-dessus des barres — cf.
+   * la note du composant.
    *
    * Ce n'est pas un réglage d'apparence : empilé, on lit bien le total mais
    * mal chaque part, sauf la première qui seule part de zéro. Groupé, on
    * compare les parts mais on perd le total. Le choix dépend de la question
    * posée, pas de la place disponible.
    */
-  layout?: "stacked" | "grouped";
+  layout?: "stacked" | "grouped" | "stacked-percent";
   /** Barres horizontales — indispensable quand les libellés sont longs. */
   orientation?: "vertical" | "horizontal";
   xLabel?: string;
@@ -71,6 +79,8 @@ export function BarChart({
   className,
 }: BarChartProps) {
   const horizontal = orientation === "horizontal";
+  const percent = layout === "stacked-percent";
+  const empile = layout === "stacked" || percent;
 
   const columns: TableColumn<Record<string, string | number>>[] = [
     { key: xKey, header: xLabel ?? "Catégorie" },
@@ -82,8 +92,11 @@ export function BarChart({
     })),
   ];
 
-  // En empilé, le total est l'information principale : il a sa colonne.
-  if (layout === "stacked" && series.length > 1) {
+  // En empilé, le total est l'information principale : il a sa colonne. En
+  // pourcentage aussi — c'est justement ce que le graphique NE montre pas
+  // (chaque barre est ramenée à 100 %), donc le tableau reste le seul endroit
+  // où le volume réel de chaque catégorie est lisible.
+  if (empile && series.length > 1) {
     columns.push({
       key: "__total",
       header: "Total",
@@ -93,11 +106,25 @@ export function BarChart({
     });
   }
 
+  // Données du GRAPHIQUE en pourcentage — le tableau, lui, garde les valeurs
+  // réelles ci-dessus : c'est le seul endroit où le volume par catégorie
+  // reste lisible une fois la barre ramenée à 100 %.
+  const chartData = percent
+    ? data.map((row) => {
+        const total = series.reduce((t, s) => t + Number(row[s.key] ?? 0), 0);
+        const next: Record<string, string | number> = { ...row };
+        for (const s of series) {
+          next[s.key] = total ? (Number(row[s.key] ?? 0) / total) * 100 : 0;
+        }
+        return next;
+      })
+    : data;
+
   // L'accord suit le nombre de séries : « 1 série groupée », pas « groupées ».
   const pluriel = series.length > 1 ? "s" : "";
   const resume =
     `${caption}. ${series.length} série${pluriel} ` +
-    `${layout === "stacked" ? "empilée" : "groupée"}${pluriel} ` +
+    `${percent ? "ramenée" + pluriel + " à 100 % par catégorie" : empile ? "empilée" + pluriel : "groupée" + pluriel} ` +
     `sur ${data.length} catégorie${data.length > 1 ? "s" : ""}.`;
 
   return (
@@ -113,19 +140,34 @@ export function BarChart({
       legendStyle="aplat"
       className={className}
     >
-      {(idTrames) => (
+      {({ idTrames, infobulleActive, indexActif, surSurvol }) => (
         <ResponsiveContainer width="100%" height="100%">
           <RechartsBarChart
-            data={data}
+            data={chartData}
             layout={horizontal ? "vertical" : "horizontal"}
             // `tabIndex={-1}` : recharts rend son SVG focusable par défaut.
             // Dans un sous-arbre `aria-hidden`, un élément focusable est une
             // contradiction — axe la signale (aria-hidden-focus), et c'en est
             // une vraie : le focus y entrerait sans que rien ne soit annoncé.
             tabIndex={-1}
-            margin={{ top: 8, right: 8, bottom: 8, left: 0 }}
+            margin={{ top: percent && !horizontal ? 28 : 8, right: 8, bottom: 8, left: 0 }}
+            // `cursor: pointer` en style inline : recharts pose son propre
+            // `cursor: default` sur son `.recharts-wrapper`, qu'une classe
+            // héritée ne peut pas battre.
+            style={{ cursor: "pointer" }}
+            onMouseMove={surSurvol}
+            onMouseLeave={() => surSurvol(null)}
           >
-            <TramesSeries id={idTrames} />
+            {infobulleActive && (
+              <RechartsTooltip
+                content={<ChartTooltipContent formatValue={(v) => formatValue(v)} />}
+                // Le voile de survol de recharts assombrit toute la colonne.
+                // `--surface-hover` est le token prévu pour ça ; un noir à 10 %
+                // ne suivrait pas le thème.
+                cursor={{ fill: "var(--surface-hover)" }}
+                isAnimationActive={false}
+              />
+            )}
             <CartesianGrid
               stroke="var(--border)"
               strokeDasharray="3 3"
@@ -134,60 +176,138 @@ export function BarChart({
             />
             {horizontal ? (
               <>
-                <XAxis type="number" tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} stroke="var(--border-strong)" tickLine={false} />
+                <XAxis
+                  type="number"
+                  domain={percent ? [0, 100] : undefined}
+                  ticks={percent ? [0, 50, 100] : undefined}
+                  tickFormatter={percent ? (v) => `${v} %` : undefined}
+                  tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
+                  stroke="var(--border-strong)"
+                  tickLine={false}
+                />
                 <YAxis type="category" dataKey={xKey} width={120} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} stroke="var(--border-strong)" tickLine={false} />
               </>
             ) : (
               <>
-                <XAxis dataKey={xKey} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} stroke="var(--border-strong)" tickLine={false} />
-                <YAxis width={44} tick={{ fill: "var(--muted-foreground)", fontSize: 12 }} stroke="var(--border-strong)" tickLine={false} />
+                <XAxis
+                  dataKey={xKey}
+                  // En pourcentage, la catégorie devient un en-tête DE
+                  // COHORTE au-dessus de sa barre — pas un repère d'axe : on
+                  // veut la voir avant même de lire la barre, comme un titre
+                  // de colonne. `orientation="top"`, trait masqué, graisse
+                  // relevée sur `--foreground` plutôt que le gris habituel
+                  // des ticks d'axe.
+                  orientation={percent ? "top" : "bottom"}
+                  axisLine={!percent}
+                  tick={
+                    percent
+                      ? { fill: "var(--foreground)", fontSize: 13, fontWeight: 600 }
+                      : { fill: "var(--muted-foreground)", fontSize: 12 }
+                  }
+                  stroke="var(--border-strong)"
+                  tickLine={false}
+                />
+                <YAxis
+                  width={44}
+                  domain={percent ? [0, 100] : undefined}
+                  ticks={percent ? [0, 50, 100] : undefined}
+                  tickFormatter={percent ? (v) => `${v} %` : undefined}
+                  tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
+                  stroke="var(--border-strong)"
+                  tickLine={false}
+                />
               </>
             )}
             {series.map((s, i) => (
               <Bar
                 key={s.key}
                 dataKey={s.key}
-                stackId={layout === "stacked" ? "pile" : undefined}
+                // `name` : sans lui l'infobulle affiche la CLÉ de la série
+                // (« pj ») au lieu de son libellé (« Pages Jaunes »).
+                name={s.label}
+                stackId={empile ? "pile" : undefined}
                 fill={couleurSerie(i)}
                 // Trame par-dessus l'aplat : c'est le second canal.
                 // Rendue en superposant un rectangle rempli du motif.
                 stroke="var(--card)"
-                strokeWidth={layout === "stacked" ? 2 : 0}
+                strokeWidth={empile ? 2 : 0}
                 isAnimationActive={false}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                shape={((props: any) => (
-                  <g>
-                    <rect
-                      x={props.x}
-                      y={props.y}
-                      width={props.width}
-                      height={props.height}
-                      fill={couleurSerie(i)}
-                    />
-                    {i % 6 !== 0 && (
+                shape={((props: any) => {
+                  // Pourcentage écrit au centre de la part — seul moyen de
+                  // comparer deux parts voisines sans les mesurer à l'œil
+                  // (même raisonnement que `DonutChart`). Masqué sous ~18px :
+                  // en dessous, le texte ne tiendrait pas dans le segment.
+                  const valeur = Math.round(Number(props.value ?? 0));
+                  const etiquette = percent && props.height > 18;
+                  // Contraste mesuré (colorjs.io) blanc/encre contre les 6
+                  // couleurs de `--chart-*`, light ET dark : `--primary-foreground`
+                  // convient partout SAUF chart-5 (indice 4) où lui seul
+                  // n'atteint que 4,05:1 en sombre — blanc fixe y passe dans
+                  // les deux thèmes (4,62 / 6,64) et est donc conservé tel quel.
+                  const texte = i % 6 === 4 ? "oklch(1 0 0)" : "var(--primary-foreground)";
+                  const actif = indexActif !== null && indexActif === props.index;
+                  return (
+                    <g>
                       <rect
                         x={props.x}
                         y={props.y}
                         width={props.width}
                         height={props.height}
-                        fill={remplissageSerie(i, idTrames)}
+                        fill={couleurSerie(i)}
                       />
-                    )}
-                    {layout === "stacked" && (
-                      // Le séparateur : sans lui, deux segments de teintes
-                      // voisines fusionnent en un seul bloc.
-                      <rect
-                        x={props.x}
-                        y={props.y}
-                        width={props.width}
-                        height={props.height}
-                        fill="none"
-                        stroke="var(--card)"
-                        strokeWidth={2}
-                      />
-                    )}
-                  </g>
-                )) as never}
+                      {i % 6 !== 0 && (
+                        <rect
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          fill={remplissageSerie(i, idTrames)}
+                        />
+                      )}
+                      {empile && (
+                        // Le séparateur : sans lui, deux segments de teintes
+                        // voisines fusionnent en un seul bloc.
+                        <rect
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          fill="none"
+                          stroke="var(--card)"
+                          strokeWidth={2}
+                        />
+                      )}
+                      {actif && (
+                        // L'emphase de la valeur survolée : un contour, pas
+                        // une atténuation des autres séries — estomper les
+                        // voisines les ferait passer sous 3:1 le temps du
+                        // survol. Le contour n'enlève rien à personne.
+                        <rect
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          fill="none"
+                          {...CONTOUR_ACTIF}
+                        />
+                      )}
+                      {etiquette && (
+                        <text
+                          x={props.x + props.width / 2}
+                          y={props.y + props.height / 2}
+                          textAnchor="middle"
+                          dominantBaseline="central"
+                          fill={texte}
+                          fontSize={13}
+                          fontWeight={700}
+                        >
+                          {valeur} %
+                        </text>
+                      )}
+                    </g>
+                  );
+                }) as never}
               />
             ))}
           </RechartsBarChart>

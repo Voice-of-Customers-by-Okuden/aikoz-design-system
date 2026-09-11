@@ -201,7 +201,7 @@
       "name": "kpi-card",
       "type": "registry:component",
       "title": "KPI Card",
-      "description": "Carte d'indicateur Aikoz, 3 tailles (sm/md/lg) de richesse croissante : valeur + label, puis notation étoiles et étiquette de variation, puis sparkline. Optionnellement cliquable.",
+      "description": "Carte d'indicateur Aikoz — deux axes independants : `variant` (rating/target/trend/raw/benchmark) dit ce que la donnee EST, `density` (compact/default/large) la place qu'on lui accorde. `benchmark` affiche un repere de comparaison permanent (ex. vs moyenne marche), pas une variation. Optionnellement cliquable.",
       "files": [
         {
           "path": "registry/aikoz/kpi-card/kpi-card.tsx",
@@ -505,7 +505,7 @@
       "name": "choice-card",
       "type": "registry:component",
       "title": "ChoiceCard",
-      "description": "Option presentee en carte. Sous la carte il y a un VRAI input, mis en sr-only et non display:none : il reste focusable, se coche a la barre d'espace, et les fleches parcourent les radios du groupe sans une ligne de clavier ecrite. L'etat retenu tient sur deux canaux — teinte du trait ET coche, qui est une difference de forme. border-2 en permanence, seule la teinte change : pas de decalage d'un pixel a la selection.",
+      "description": "Option presentee en carte. Sous la carte il y a un VRAI input, mis en sr-only et non display:none : il reste focusable, se coche a la barre d'espace, et les fleches parcourent les radios du groupe sans une ligne de clavier ecrite. Trois habillages (`appearance`) sur la meme mecanique d'accessibilite : `card` (defaut, coche + trait), `segmented` (rang connecte, le remplissage porte l'etat), `chip` (pastille compacte, coche inline).",
       "files": [
         {
           "path": "registry/aikoz/choice-card/choice-card.tsx",
@@ -525,7 +525,7 @@
       "name": "choice-group",
       "type": "registry:component",
       "title": "ChoiceGroup",
-      "description": "Groupe de choix en cartes — REMPLACE BrandPicker et SourceToggle de l'inventaire : les deux ne different que par l'arite de la selection et le contenu des cartes, soit deux props, pas deux composants. fieldset + legend, la seule construction qui fasse annoncer la question a l'entree du groupe. La sortie de secours (« Je ne trouve pas ma marque ») est rendue HORS du fieldset : ce n'est pas une option de plus.",
+      "description": "Groupe de choix en cartes — REMPLACE BrandPicker et SourceToggle de l'inventaire : les deux ne different que par l'arite de la selection et le contenu des cartes, soit deux props, pas deux composants. fieldset + legend, la seule construction qui fasse annoncer la question a l'entree du groupe. `layout` ajoute `segmented` (rang connecte, ex. delai de publication) et `chip` (pastilles independantes, ex. criteres de declenchement) aux `grid`/`list` existants. La sortie de secours (« Je ne trouve pas ma marque ») est rendue HORS du fieldset : ce n'est pas une option de plus.",
       "files": [
         {
           "path": "registry/aikoz/choice-group/choice-group.tsx",
@@ -889,6 +889,148 @@
         "clsx",
         "tailwind-merge",
         "recharts"
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:component",
+      "title": "Switch",
+      "description": "Interrupteur — bascule un reglage binaire immediatement, sans confirmation ni bouton Enregistrer separe. Input checkbox natif role=switch, sr-only, anneau de focus reporte sur la piste : pas de dependance Radix, le clavier natif suffit.",
+      "files": [
+        {
+          "path": "registry/aikoz/switch/switch.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "info-banner",
+      "type": "registry:component",
+      "title": "InfoBanner",
+      "description": "Bandeau d'information — explique une regle ou un comportement automatique du produit avant que l'utilisateur agisse. Trois tons (info/warning/error) sur le meme mapping que Badge ; le texte reste en --foreground, seuls la bordure/le fond/l'icone portent le ton. role=status, jamais role=alert.",
+      "files": [
+        {
+          "path": "registry/aikoz/info-banner/info-banner.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:component",
+      "title": "Textarea",
+      "description": "Champ de texte libre — saisie multiligne dans son contexte (ex. corriger une reponse automatique avant publication). Sibling d'Input : memes tokens de bordure/focus/erreur, dimensionne par rows + redimensionnement natif plutot qu'un auto-grow. Actions Annuler/Enregistrer composees par l'appelant.",
+      "files": [
+        {
+          "path": "registry/aikoz/textarea/textarea.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "count-badge",
+      "type": "registry:component",
+      "title": "CountBadge",
+      "description": "Badge / pastille numerique — un compte a traiter (cercle plein --primary) ou un rang dans une liste (marqueur discret --border-strong), jamais les deux au meme endroit. Purement informatif, jamais le seul porteur du sens : voir la convention `label` pour l'usage isole.",
+      "files": [
+        {
+          "path": "registry/aikoz/count-badge/count-badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
+      "name": "reply-bubble",
+      "type": "registry:component",
+      "title": "ReplyBubble",
+      "description": "Bulle de reponse (IA ou operateur) affichee sous un avis. Traitement en creux (liseré + fond muted), sans bordure ni ombre propres : concue pour vivre a l'interieur d'une carte d'avis, jamais comme une carte de plus. L'origine est ecrite en toutes lettres, jamais portee par le seul pictogramme.",
+      "files": [
+        {
+          "path": "registry/aikoz/reply-bubble/reply-bubble.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@material-symbols-svg/react"
+      ],
+      "registryDependencies": [
+        "badge",
+        "skeleton"
+      ]
+    },
+    {
+      "name": "response-kanban",
+      "type": "registry:component",
+      "title": "ResponseKanban",
+      "description": "Kanban de reponses — 3 colonnes fixes par urgence croissante (reponses automatisees a valider, reponses hors charte a corriger, avis sensibles a traiter). Composite : assemble Card/Badge/Button/VerbatimCard/EmptyState/Dialog existants et ReplyBubble/Textarea/CountBadge nouveaux. L'Overlay - Detail de la colonne 2 est une composition de Dialog, pas un composant a part.",
+      "files": [
+        {
+          "path": "registry/aikoz/response-kanban/response-kanban.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "class-variance-authority",
+        "clsx",
+        "tailwind-merge",
+        "@radix-ui/react-dialog"
+      ],
+      "registryDependencies": [
+        "card",
+        "badge",
+        "button",
+        "verbatim-card",
+        "empty-state",
+        "dialog",
+        "reply-bubble",
+        "textarea",
+        "count-badge"
       ]
     }
   ]

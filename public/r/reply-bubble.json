@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "reply-bubble",
+  "title": "ReplyBubble",
+  "description": "Bulle de reponse (IA ou operateur) affichee sous un avis. Traitement en creux (liseré + fond muted), sans bordure ni ombre propres : concue pour vivre a l'interieur d'une carte d'avis, jamais comme une carte de plus. L'origine est ecrite en toutes lettres, jamais portee par le seul pictogramme.",
+  "dependencies": [
+    "class-variance-authority",
+    "clsx",
+    "tailwind-merge",
+    "@material-symbols-svg/react"
+  ],
+  "registryDependencies": [
+    "badge",
+    "skeleton"
+  ],
+  "files": [
+    {
+      "path": "registry/aikoz/reply-bubble/reply-bubble.tsx",
+      "content": "import { type ReactNode } from \"react\";\nimport { SmartToy, Person } from \"@material-symbols-svg/react/rounded\";\nimport { cn } from \"@registry/aikoz/lib/utils\";\nimport { Badge } from \"@registry/aikoz/badge/badge\";\nimport { SkeletonText } from \"@registry/aikoz/skeleton/skeleton\";\n\n// ─── Types ────────────────────────────────────────────────────────────────────\n\n/** Origine de la réponse : générée par l'IA, ou rédigée par un opérateur humain. */\nexport type ReplyOrigin = \"ai\" | \"operator\";\n\nexport interface ReplyBubbleProps {\n  /** Origine de la réponse — détermine le pictogramme et l'étiquette. */\n  origin: ReplyOrigin;\n  /** Texte de la réponse. Ignoré si `loading`. */\n  children?: ReactNode;\n  /**\n   * Réponse en cours de génération : le texte est remplacé par un squelette.\n   * « À confirmer » dans la spec de Louis — traitement volontairement simple,\n   * réutilisant `SkeletonText` plutôt qu'un habillage dédié.\n   */\n  loading?: boolean;\n  /** Nom de l'opérateur, affiché à côté de l'étiquette « Opérateur » si fourni. */\n  operatorName?: string;\n  /**\n   * Masque le badge d'origine (IA/Opérateur). Réservé aux contextes où cette\n   * bulle rejoue un texte déjà publié sans que l'origine soit l'information\n   * pertinente à ce niveau (ex. relecture d'une réponse hors charte dans\n   * `ResponseKanban` : ce qui compte est le texte non conforme, pas qui l'a\n   * écrit). Par défaut affiché — cf. la note du composant sur le canal non\n   * chromatique que porte ce libellé.\n   */\n  showOrigin?: boolean;\n  className?: string;\n}\n\nconst ORIGIN_LABEL: Record<ReplyOrigin, string> = {\n  ai: \"IA\",\n  operator: \"Opérateur\",\n};\n\n// Un seul canal distingue vraiment l'origine : le pictogramme + le libellé.\n// Même ton de Badge, même fond — la variante « opérateur » existe (la spec de\n// Louis demande confirmation, pas une esquisse), mais reste sobre : ce\n// composant identifie une origine, il ne rejoue pas de hiérarchie visuelle.\nconst ORIGIN_ICON = {\n  ai: SmartToy,\n  operator: Person,\n} as const;\n\n// ─── Composant ────────────────────────────────────────────────────────────────\n\n/**\n * Bulle de réponse — affichée sous l'avis correspondant, à l'intérieur d'une\n * future carte d'avis (`VerbatimCard` + réponse). Se compose comme un ENFANT\n * de carte : pas de bordure ni d'ombre propres, un simple liseré gauche sur\n * fond `--muted` (traitement « citation en creux »), pour rester subordonnée\n * à la carte qui l'accueille plutôt que rivaliser avec elle.\n *\n * L'origine ne tient jamais à la seule couleur : le pictogramme, porté par\n * `Badge`, y est décoratif (`aria-hidden`) — c'est le libellé « IA » /\n * « Opérateur », écrit en toutes lettres, qui porte l'information.\n *\n * Non cliquable en elle-même : dans le Kanban, c'est l'appelant qui bascule\n * vers un `Textarea` en édition. Ce composant n'a pas d'affordance d'édition.\n *\n * `loading` réutilise `SkeletonText` (cf. `skeleton.tsx`) plutôt qu'un\n * habillage dédié : le squelette reste muet aux technologies d'assistance,\n * c'est donc CE conteneur qui porte `aria-busy`.\n */\nexport function ReplyBubble({\n  origin,\n  children,\n  loading = false,\n  operatorName,\n  showOrigin = true,\n  className,\n}: ReplyBubbleProps) {\n  const Icon = ORIGIN_ICON[origin];\n\n  return (\n    <div\n      className={cn(\n        \"w-full rounded-md\",\n        \"border-l-2 border-l-border-strong\",\n        \"bg-muted px-4 py-3\",\n        \"flex flex-col gap-2\",\n        className\n      )}\n      aria-busy={loading || undefined}\n    >\n      {showOrigin && (\n        <div className=\"flex items-center gap-2 flex-wrap\">\n          <Badge tone={origin === \"ai\" ? \"info\" : \"neutral\"} size=\"sm\" icon={<Icon className=\"w-3 h-3\" />}>\n            {ORIGIN_LABEL[origin]}\n          </Badge>\n          {origin === \"operator\" && operatorName && (\n            <span className=\"text-xs text-muted-foreground\">{operatorName}</span>\n          )}\n        </div>\n      )}\n\n      {loading ? (\n        <SkeletonText lines={2} />\n      ) : (\n        <p className=\"text-sm text-foreground leading-relaxed m-0\">{children}</p>\n      )}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "registry/aikoz/lib/utils.ts",
+      "content": "import { clsx, type ClassValue } from \"clsx\";\nimport { twMerge } from \"tailwind-merge\";\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs));\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:component"
+}

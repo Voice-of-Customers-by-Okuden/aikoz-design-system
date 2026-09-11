@@ -294,6 +294,74 @@ Retenue. L'atome Figma `Tag` (3 variantes de sentiment, sans usage maquetté) n'
 
 ---
 
+## Décisions prises — 10/09/2026
+
+Deux écarts relevés au recroisement des maquettes Cockpit Mono-POI / Multi-POI (ADP), tranchés par Louis.
+
+### 6 · `KpiCard` — 5e variante `benchmark`
+
+Les cartes de métrique du cockpit (« Note de la source », « Taux de réponse »…) affichent systématiquement une ligne secondaire « vs Moyenne marché ». Ça ne correspond à aucune des quatre variantes actées en décision 1 (`rating` / `target` / `trend` / `raw`) : ni étoile, ni objectif, ni tendance, la donnée d'appui est une comparaison à une référence externe, pas une lecture de la valeur elle-même.
+
+```tsx
+<KpiCard variant="rating" | "target" | "trend" | "raw" | "benchmark"
+         density="compact" | "default" | "large" />
+```
+
+**Confirmé** : c'est une 5e variante, pas un détournement de `raw`. Contenu : valeur principale (code couleur selon performance, cf. specs `KpiCard`), puis une ligne « vs Moyenne marché » + sa valeur — sans appui graphique (pas d'étoile, pas de barre, pas de sparkline).
+
+> **Livré le 11/09** — purement textuel, pas de signe/delta implicite : `benchmarkValue` + `benchmarkLabel` (défaut « vs Moyenne marché »), même formatage `fr-FR` que la valeur principale.
+
+### 7 · `En-tête de section` — gabarit, pas composant
+
+**Confirmé** : c'est un gabarit de mise en page (bandeau titre + pictogramme + action optionnelle à droite, ex. sélecteur de période), au même titre que `Topbar` et `KpiGrid` déjà signalés comme tels dans le tableau ci-dessus. Il ne rejoint pas la bibliothèque de composants et sort du décompte des 36 — documenté ici pour mémoire, à réutiliser en HTML/Tailwind directement dans les pages qui en ont besoin, pas en tant que composant du registry.
+
+---
+
+## Décisions prises — 11/09/2026
+
+Batch de composants demandé par Louis (`aikoz-composants-V2_LB.xlsx`, branche `nouveaux_composants_Louis`) pour le panneau de paramétrage de la réponse automatique et le Kanban de supervision des réponses. Trois éléments de la liste recoupaient un composant déjà livré — non reconstruits, cf. règle « si overlap, ne rien recréer ».
+
+### 8 · Trois recoupements confirmés — rien reconstruit
+
+| Demandé | Recoupe | Pourquoi c'est le même composant |
+|---|---|---|
+| `Graphique barres empilées (polarité)` | `BarChart` (`layout="stacked"`, `orientation="vertical"`) | Le composant livré au 09/09 fait déjà exactement ça : séries empilées à 100 %, séparateur 2px, trame comme second canal. Usage : `<BarChart layout="stacked" orientation="vertical" series={[positif, négatif]} xKey="segment" />`. |
+| `Overlay - Détail` | `Dialog` (placement `center`, défaut) | Focus piégé, retour de focus, Échap, titre obligatoire, footer pour le CTA — tout ce que demandait la fiche est déjà le contrat documenté de `Dialog`. Voir la composition dans `ResponseKanban` (colonne « Réponses hors charte »). |
+| `Carte avis` | `VerbatimCard` (+ `children` pour `ReplyBubble`) | `VerbatimCard` couvre déjà note/auteur/date/texte/étiquette de statut, et expose un slot `children` — exactement ce qu'il fallait pour y loger la `ReplyBubble`. Pas un sous-composant séparé. |
+
+`Carte avis` n'était d'ailleurs pas dans la liste explicite de Louis : elle apparaissait uniquement comme sous-composant du Kanban dans la fiche Excel. Signalée ici plutôt que construite en silence.
+
+### 9 · `Carte de choix (segmenté)` et `Chip de sélection` — variantes de `ChoiceCard`/`ChoiceGroup`, pas deux nouveaux composants
+
+Les deux demandaient la même mécanique d'accessibilité que `ChoiceCard` a déjà (input réel en `sr-only`, anneau reporté, groupe en `fieldset`/`legend`) — seul l'habillage visuel change. Construire deux composants séparés aurait dupliqué cette mécanique avec le risque de la refaire moins bien une seconde fois, exactement le raisonnement qui a produit `ChoiceGroup` en 08/2026 (« deux props, pas deux composants »).
+
+```tsx
+<ChoiceCard appearance="card" | "segmented" | "chip" />
+<ChoiceGroup layout="grid" | "list" | "segmented" | "chip" />
+```
+
+`segmented` : rang connecté (le conteneur `ChoiceGroup` porte le contour partagé et les séparateurs), le remplissage `--primary` porte l'état, pas de pastille de coche. `chip` : pastilles indépendantes avec espace normal, coche inline sur sélection. `appearance="card"` (défaut) reste inchangé au pixel près — vérifié par re-lecture des 4 usages existants avant/après.
+
+### 10 · Cinq composants livrés
+
+| Composant | Rôle | Notes |
+|---|---|---|
+| `Switch` | Interrupteur binaire immédiat | `<input type="checkbox" role="switch">` natif — pas de dépendance Radix ajoutée. |
+| `InfoBanner` | Bandeau d'information (info/warning/error) | `role="status"`, jamais `role="alert"` ; mêmes tons que `Badge` mais texte en `--foreground` (paragraphe, pas un mot court). |
+| `Textarea` | Champ de texte libre multiligne | Sibling d'`Input` (mêmes tokens bordure/focus/erreur) ; `rows` + redimensionnement natif plutôt qu'auto-grow — plus robuste dans une liste à plusieurs champs ouverts (le Kanban). |
+| `CountBadge` | Badge / pastille numérique | Deux variantes non confondables au premier regard : `count` (cercle plein `--primary`) et `rank` (marqueur discret, carré). |
+| `ReplyBubble` | Bulle de réponse (IA/opérateur) sous un avis | Traitement en creux, pensée pour vivre dans `VerbatimCard.children`, pas comme une carte de plus. |
+
+### 11 · `ResponseKanban` — composite, Kanban de supervision des réponses
+
+3 colonnes fixes par urgence croissante (réponses automatisées à valider → hors charte à corriger → avis sensibles à traiter). Assemble `Card`, `Badge`, `Button`, `VerbatimCard`, `EmptyState`, `Dialog` (existants) et `ReplyBubble`, `Textarea`, `CountBadge` (nouveaux, décision 10). L'en-tête de chaque colonne reproduit le gabarit « En-tête de section » (décision 7) directement en JSX plutôt que d'importer un composant qui n'existe pas.
+
+Reste ouvert (« à définir »/« à confirmer » dans la fiche de Louis, non tranché ici) : comportement des 3 colonnes en dessous de 1024px (empilement vertical appliqué par défaut, à valider), pagination vs accordéon pour « Voir plus » (implémenté en pagination simple), variante `operator` de `ReplyBubble` (construite mais jamais vue en usage réel).
+
+> **⚠️ Compte du tableau ci-dessus non recalculé.** Cette session ajoute 6 nouveaux composants au registry (`Switch`, `InfoBanner`, `Textarea`, `CountBadge`, `ReplyBubble`, `ResponseKanban`) et étend 2 existants (`ChoiceCard`/`ChoiceGroup`, `KpiCard`) sans toucher aux décomptes « 36 composants » / répartition dashboard-site du haut de ce fichier, qui datent d'avant le fast-forward du 10/09 (36 commits, dont Leaderboard, Select, SidebarNav, Card, Avatar, Dialog, les 3 charts…). Ce fichier a besoin d'une passe de réconciliation complète contre `registry.json` (43 entrées à ce jour) avant que ces chiffres redeviennent fiables — pas fait ici pour ne pas introduire un mauvais compte au passage.
+
+---
+
 ## Points encore à trancher
 
 - **Charts** et **Web Components** : tranchés le 09/09 — cf. « Architecture actée » ci-dessus.

@@ -1,0 +1,15 @@
+/*
+  Le canevas des stories doit être peint par les TOKENS, pas laissé au blanc
+  par défaut du navigateur.
+
+  Sans cette règle, `body` sortait avec un fond `rgba(0,0,0,0)`. En thème
+  clair, le blanc du navigateur ressemblait par coïncidence à `--background`
+  et personne ne voyait rien ; en thème sombre, un texte clair se retrouvait
+  sur un fond clair, illisible. C'est exactement le défaut trouvé sur
+  `bg-card` : un fond transparent ne se voit pas tant qu'on ne change pas ce
+  qu'il y a derrière.
+*/
+body.sb-show-main {
+  background: var(--background);
+  color: var(--foreground);
+}

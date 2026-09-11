@@ -8,6 +8,7 @@ import { definirBaseDesLogos } from "@registry/aikoz/brand-logo/brands";
 import "../build/index.css";
 import "../bridge/shadcn-bridge.css";
 import "../playground/playground.css";
+import "./storybook.css";
 
 definirBaseDesLogos("/brands/");
 
