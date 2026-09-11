@@ -71,10 +71,15 @@ export interface KpiCardProps {
    */
   level?: ProgressLevel;
 
-  /** `trend` — points de la courbe. */
+  /** `trend` — les points de la courbe de tendance. */
   data?: number[];
 
-  /** Variation affichée en étiquette. */
+  /**
+   * Variation affichée en étiquette, en POINTS et non en série : c'est un
+   * seul nombre. Le commentaire précédent disait « points de la courbe » à
+   * côté de ce champ, ce qui laissait croire qu'il prenait la série — la
+   * série, c'est `data`.
+   */
   trend?: number;
   trendUnit?: string;
   /** Force le ton de l'étiquette — un délai qui baisse est une bonne nouvelle. */

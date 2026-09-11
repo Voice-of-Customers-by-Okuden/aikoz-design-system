@@ -63,6 +63,12 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
         // courant. `aria-current="page"` s'annonce « page courante » ;
         // `true` s'annonce « courant », ce qui ne renseigne sur rien.
         aria-current={current ? "page" : undefined}
+        // Nom composé en UNE chaîne, et non par un `sr-only` séparé :
+        // l'algorithme de nom accessible joint les éléments par une espace,
+        // ce qui donnait « Campagnes , 3 en attente » — une virgule
+        // détachée, et une pause à la lecture. Le nom contient toujours le
+        // libellé visible, ce qu'exige WCAG 2.5.3.
+        aria-label={compte ? `${label}, ${compte}` : undefined}
         className={cn(
           "group relative flex items-center gap-3 no-underline",
           // 44px de haut : la cible confortable, bien au-delà des 24px
@@ -98,8 +104,9 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
         <span className="flex-1 min-w-0 truncate">{label}</span>
 
         {count !== undefined && (
-          <>
-            <span
+          // La pastille est muette : le compte est porté par `aria-label`,
+          // sinon le nombre n'est qu'une tache colorée que rien n'annonce.
+          <span
               aria-hidden="true"
               className={cn(
                 "shrink-0 inline-flex items-center justify-center",
@@ -107,14 +114,8 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
                 "bg-[var(--nav-accent)] text-[var(--nav-surface)]"
               )}
             >
-              {count}
-            </span>
-            {/* La pastille est muette pour les lecteurs d'écran ; le compte
-                est dit ici, à l'intérieur du lien, donc dans son nom —
-                « Campagnes, 3 en attente ». Sans ça, le nombre n'est qu'une
-                tache colorée que rien n'annonce. */}
-            <span className="sr-only">, {compte}</span>
-          </>
+            {count}
+          </span>
         )}
       </a>
     );

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent } from "storybook/test";
 import { Button } from "./button";
 
 /**
@@ -30,13 +31,20 @@ const meta = {
     size: { control: "inline-radio", options: ["sm", "md", "lg"] },
     disabled: { control: "boolean" },
   },
-  args: { children: "Demander une démonstration" },
+  args: { children: "Demander une démonstration", onClick: fn() },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Defaut: Story = { name: "Par défaut" };
+export const Defaut: Story = {
+  name: "Par défaut",
+  play: async ({ canvas, args, userEvent: ue }) => {
+    const bouton = canvas.getByRole("button", { name: /démonstration/i });
+    await (ue ?? userEvent).click(bouton);
+    await expect(args.onClick).toHaveBeenCalledOnce();
+  },
+};
 
 export const Matrice: Story = {
   name: "Matrice — 4 variantes × 3 tailles",
@@ -107,6 +115,15 @@ export const LibelleLong: Story = {
 export const Desactive: Story = {
   name: "Désactivé",
   args: { disabled: true },
+  play: async ({ canvas, args }) => {
+    const bouton = canvas.getByRole("button");
+    await expect(bouton).toBeDisabled();
+    // `disabled` retire aussi du parcours clavier : on le vérifie plutôt que
+    // de le supposer, c'est précisément la différence avec `aria-disabled`.
+    bouton.focus();
+    await expect(bouton).not.toHaveFocus();
+    await expect(args.onClick).not.toHaveBeenCalled();
+  },
   parameters: {
     docs: {
       description: {

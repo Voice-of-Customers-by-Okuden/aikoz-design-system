@@ -11,6 +11,8 @@ const config: StorybookConfig = {
   // jour avec lui — c'est la même raison qui fait dériver une liste tenue à
   // la main d'une liste générée.
   stories: [
+    // Les pages de doc d'abord : elles ouvrent le catalogue.
+    "../docs/storybook/**/*.mdx",
     "../registry/**/*.stories.@(ts|tsx)",
   ],
   addons: [
