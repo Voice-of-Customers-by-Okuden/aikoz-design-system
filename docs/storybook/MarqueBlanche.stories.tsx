@@ -85,42 +85,38 @@ export const TroisMarques: Story = {
           "`data-brand` est un **attribut**, pas un thème : il n'écrase ni le clair/sombre " +
           "ni le registre produit/marketing. Les trois axes se composent, ce qui permet de " +
           "livrer un « ADP by Aikoz » sombre en registre produit sans dupliquer une règle.\n\n" +
-          "Les couleurs ADP viennent du brand book (Groupe ADP & Paris Aéroport Style " +
-          "Guide) : **PANTONE 2748 C** `#031F73`, **2144 C** `#376DB3`, **Bright Red C** " +
-          "`#C84118`. Seuls ces trois pas sont officiels ; les autres crans des rampes sont " +
-          "dérivés en suivant le profil de clarté de la rampe ultramarine Aikoz.",
-      },
-    },
-  },
-};
-
-export const LaMarqueChangeVraimentLesTokens: Story = {
-  name: "La marque change vraiment les tokens",
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Ce test lit `--color-brand-primary` sur le document après avoir posé " +
-          "`data-brand`. Un CSS de marque généré mais **jamais importé** produirait un " +
-          "composant inchangé sans la moindre erreur — c'est ce qui est arrivé en " +
-          "ajoutant ADP, et un garde-fou de build le vérifie désormais.",
+          "Les couleurs ADP viennent de la charte officielle : **PANTONE 2748 C** `#031F73` " +
+          "(confirmé par la *Charte du logotype Groupe ADP*, mars 2016), **2144 C** " +
+          "`#376DB3` et **Bright Red C** `#C84118` (*Style Guide*, p. 13). Seuls ces trois " +
+          "pas sont officiels ; les autres crans des rampes sont dérivés en suivant le " +
+          "profil de clarté de la rampe ultramarine Aikoz.\n\n" +
+          "**Le test qui accompagne cette story n'est pas décoratif.** Un CSS de marque " +
+          "généré mais jamais chargé — ou un bridge qui fige ses valeurs au lieu de les " +
+          "référencer — produirait exactement cette page, à l'identique, sans que rien ne " +
+          "change. C'est ce qui est arrivé : la marque blanche n'a pas fonctionné pendant " +
+          "des semaines, et Generali était censé le prouver. Le test lit donc `--primary` " +
+          "sur le document et vérifie qu'il bouge vraiment.",
       },
     },
   },
   play: async () => {
     const H = document.documentElement;
-    const lire = () =>
-      getComputedStyle(H).getPropertyValue("--color-brand-primary").trim();
+    // `--primary`, pas `--color-brand-primary` : c'est le token que consomment
+    // les COMPOSANTS. C'est précisément là que la chaîne se rompait.
+    const lire = () => getComputedStyle(H).getPropertyValue("--primary").trim();
 
     const avant = H.getAttribute("data-brand");
     H.removeAttribute("data-brand");
     const aikoz = lire();
     H.setAttribute("data-brand", "adp");
     const adp = lire();
+    H.setAttribute("data-brand", "generali");
+    const generali = lire();
     avant ? H.setAttribute("data-brand", avant) : H.removeAttribute("data-brand");
 
     await expect(aikoz).toBeTruthy();
-    await expect(adp).toBeTruthy();
     await expect(adp).not.toBe(aikoz);
+    await expect(generali).not.toBe(aikoz);
+    await expect(generali).not.toBe(adp);
   },
 };
