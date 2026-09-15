@@ -143,6 +143,25 @@ export function SiteNav({
             "rounded-[var(--radius)]"
           )}
         >
+          {/*
+            Le filet d'accent — la SEULE place de la troisième couleur de
+            marque dans l'interface.
+
+            Pourquoi ici et nulle part ailleurs : l'accent d'une marque n'a de
+            sens qu'à côté de son nom. Ailleurs il entrerait en concurrence
+            avec les couleurs de statut — un rouge ADP sur un avatar, à côté
+            d'un badge d'erreur rouge, c'est la faute qu'on a corrigée sur les
+            graphiques.
+
+            Et il fallait bien lui donner une place : `brand.accent` était
+            déclaré par les trois marques et n'apparaissait NULLE PART en
+            thème clair. Une couleur déclarée sans consommateur finit par
+            diverger de ce qu'on croit afficher.
+          */}
+          <span
+            aria-hidden="true"
+            className="h-5 w-1 shrink-0 rounded-full bg-[var(--color-brand-accent)]"
+          />
           {brand}
         </a>
 
