@@ -26,6 +26,14 @@ const TRIMESTRES = [
   { trim: "T4", google: 1210, trustpilot: 340, pj: 84 },
 ];
 
+function Contenu() {
+  return (
+    <div className="flex flex-col gap-6">
+      <span className="sr-only">Vue de synthèse</span>
+    </div>
+  );
+}
+
 function Page() {
   return (
     <div className="min-h-[70vh] bg-background text-foreground">
@@ -48,9 +56,9 @@ function Page() {
           label="Vues du tableau de bord"
           defaultValue="synthese"
           tabs={[
-            { value: "synthese", label: "Synthèse" },
-            { value: "reseaux", label: "Réseaux" },
-            { value: "verbatims", label: "Verbatims" },
+            { value: "synthese", label: "Synthèse", content: <Contenu /> },
+            { value: "reseaux", label: "Réseaux", content: <Contenu /> },
+            { value: "verbatims", label: "Verbatims", content: <Contenu /> },
           ]}
         />
 
