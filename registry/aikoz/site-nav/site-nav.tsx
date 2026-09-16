@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { cn } from "@registry/aikoz/lib/utils";
+import { BrandMark } from "@registry/aikoz/brand-mark/brand-mark";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -58,7 +59,7 @@ export interface SiteNavProps {
  */
 export function SiteNav({
   links,
-  brand = "Aikoz",
+  brand,
   brandHref = "/",
   brandLabel = "Aikoz, accueil",
   actions,
@@ -144,25 +145,12 @@ export function SiteNav({
           )}
         >
           {/*
-            Le filet d'accent — la SEULE place de la troisième couleur de
-            marque dans l'interface.
-
-            Pourquoi ici et nulle part ailleurs : l'accent d'une marque n'a de
-            sens qu'à côté de son nom. Ailleurs il entrerait en concurrence
-            avec les couleurs de statut — un rouge ADP sur un avatar, à côté
-            d'un badge d'erreur rouge, c'est la faute qu'on a corrigée sur les
-            graphiques.
-
-            Et il fallait bien lui donner une place : `brand.accent` était
-            déclaré par les trois marques et n'apparaissait NULLE PART en
-            thème clair. Une couleur déclarée sans consommateur finit par
-            diverger de ce qu'on croit afficher.
+            Le LOGO, pas le nom écrit — et celui de la MARQUE COURANTE.
+            `BrandMark` suit `data-brand` tout seul : passer la marque en prop
+            à chaque appelant reviendrait à réimplémenter la marque blanche
+            dans chaque page, et un oubli ne se verrait nulle part.
           */}
-          <span
-            aria-hidden="true"
-            className="h-5 w-1 shrink-0 rounded-full bg-[var(--color-brand-accent)]"
-          />
-          {brand}
+          {brand ?? <BrandMark />}
         </a>
 
         <nav aria-label={label} className="hidden md:block">
