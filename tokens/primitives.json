@@ -2797,8 +2797,8 @@
     },
     "gotham": {
       "$type": "fontFamily",
-      "$value": "Gotham, 'Century Gothic', sans-serif",
-      "$description": "Police du Groupe ADP. Charte ADP, section 2 « Typefaces » : Gotham est la police print ET « also used for all digital supports: internet and intranet sites, apps ». Elle est commerciale (Hœfler & Co) : le repli n'est pas choisi au hasard, c'est Century Gothic, le substitut que la charte elle-même désigne « to avoid technical problems relating to compatibility »."
+      "$value": "Gotham, 'Century Gothic', Montserrat, sans-serif",
+      "$description": "Police du Groupe ADP. La charte (section 2, « Typefaces ») désigne Gotham pour le print ET « all digital supports: internet and intranet sites, apps », avec Century Gothic comme substitut officiel « to avoid technical problems relating to compatibility ».\n\n**Mais aucun des deux sites d'ADP ne charge Gotham.** Mesuré en ligne : groupeadp.fr rend en `CenturyGothicW01` (et `-Bold` pour les titres), parisaeroport.fr en `montserrat` 400/700 avec Century Gothic déclaré en repli. La charte date d'avril 2019 ; l'usage a suivi la contrainte de licence, pas l'inverse.\n\nLa pile respecte donc les deux : Gotham en tête pour un poste qui a la licence, Century Gothic ensuite — ce que rend le site corporate et ce que la charte elle-même désigne —, Montserrat en dernier, qui est ce que rend le site passagers et la seule des trois librement chargeable sur le web. Les trois sont des géométriques de la même famille : la substitution ne change pas le caractère de la marque."
     },
     "extime": {
       "$type": "fontFamily",
