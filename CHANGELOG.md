@@ -18,6 +18,27 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.0.1] — 2026-09-22
+
+### Corrigé
+
+- **Le tableau de bord défilait horizontalement sur mobile.** Mesuré à
+  390 px : 36 px de débordement. Le tableau du classement avait pourtant son
+  conteneur `overflow-x-auto` — mais un élément de flex ou de grille vaut
+  `min-width: auto` et ne rétrécit jamais sous la largeur de son contenu. La
+  grille faisait 350 px, la `Card` 406. Un défilement interne ne peut pas
+  contenir ce que son parent laisse s'élargir.
+
+  `min-w-0` entre sur `Card`, `Table`, `ChartFrame` et la barre de `ViewTabs`.
+  À 768 px, rien ne débordait déjà — le défaut n'existait qu'en dessous.
+
+### Gouvernance
+
+- `audit:conventions` refuse désormais un `overflow` horizontal posé sans
+  `min-w-0` sur le même élément. Onzième convention.
+
+---
+
 ## [2.0.0] — 2026-09-22
 
 Majeure, à cause d'un seul changement — mais il casse à la compilation.
