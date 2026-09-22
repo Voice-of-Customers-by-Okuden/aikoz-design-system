@@ -18,6 +18,29 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.2.0] — 2026-09-22
+
+### Ajouté
+
+- **`Checkbox`** — un vrai `<input type="checkbox">` masqué en `sr-only` sous
+  une boîte dessinée, jamais un `<div role="checkbox">` : il reste focusable,
+  se coche à la barre d'espace, participe à l'envoi du formulaire et à
+  l'autoremplissage.
+
+  Elle existe pour ce qu'aucun autre contrôle du système ne sait dire :
+  **l'état indéterminé**, celui du « tout sélectionner » quand une partie
+  seulement des lignes est retenue. `Switch` est binaire par nature,
+  `ChoiceGroup` ne connaît que des options complètes.
+
+  Règle d'emploi : `Checkbox` quand l'effet a lieu à l'envoi du formulaire,
+  `Switch` quand il a lieu tout de suite. Un interrupteur qui attend un bouton
+  « Enregistrer » ment sur sa promesse.
+
+  C'est le `<label>` qui porte la cible, pas la boîte de 20 px — elle serait
+  sous le plancher de 24 px du critère WCAG 2.2 AA 2.5.8.
+
+---
+
 ## [2.1.0] — 2026-09-22
 
 ### Ajouté
