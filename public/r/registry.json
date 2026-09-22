@@ -479,6 +479,27 @@
       ]
     },
     {
+      "name": "dropdown-menu",
+      "type": "registry:component",
+      "title": "DropdownMenu",
+      "description": "Menu de commandes — pas de liens : s'il s'agit d'aller ailleurs, c'est de la navigation. Le contrat clavier du motif ARIA menu (fleches, Echap, frappe, retour du focus sur le declencheur) est delegue a Radix. Le nom est obligatoire : un tableau de bord porte un menu par ligne. La commande destructive est deplacee en DERNIER, apres un filet, ou qu'elle soit declaree. Non modal : un menu n'est pas une boite de dialogue, et masquer l'arriere-plan sans le rendre inert le laisse tabulable.",
+      "files": [
+        {
+          "path": "registry/aikoz/dropdown-menu/dropdown-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/aikoz/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-dropdown-menu",
+        "clsx",
+        "tailwind-merge"
+      ]
+    },
+    {
       "name": "empty-state",
       "type": "registry:component",
       "title": "EmptyState",

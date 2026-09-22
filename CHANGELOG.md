@@ -18,6 +18,30 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.3.0] — 2026-09-22
+
+### Ajouté
+
+- **`DropdownMenu`** — les actions par ligne d'un tableau de bord.
+
+  Un menu contient des **commandes, pas des liens** : s'il s'agit d'aller
+  ailleurs, c'est de la navigation. Le contrat clavier du motif ARIA `menu`
+  — flèches, `Échap`, frappe pour atteindre une entrée, **retour du focus sur
+  le déclencheur** — est délégué à Radix ; le réécrire à la main rate presque
+  toujours ce dernier point.
+
+  Le nom est obligatoire : un tableau de bord porte un menu par ligne, et
+  « Actions sur Orly 4 » se distingue là où « Actions » non.
+
+  La commande **destructive est déplacée en dernier**, après un filet, où
+  qu'elle soit déclarée. Une commande irréversible voisine d'une commande
+  anodine se clique par erreur : l'ordre est une protection, pas une
+  convention d'affichage.
+
+  Nouvelle dépendance : `@radix-ui/react-dropdown-menu`.
+
+---
+
 ## [2.2.0] — 2026-09-22
 
 ### Ajouté
