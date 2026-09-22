@@ -21,6 +21,7 @@ export default {
   "error-fill-edge": "var(--error-fill-edge)",
   "error-subtle": "var(--error-subtle)",
   "foreground": "var(--foreground)",
+  "hero-glow": "var(--hero-glow)",
   "info": "var(--info)",
   "info-subtle": "var(--info-subtle)",
   "input": "var(--input)",

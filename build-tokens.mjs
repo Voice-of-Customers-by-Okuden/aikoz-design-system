@@ -819,14 +819,26 @@ for (const [cle, [bas, haut]] of Object.entries(BANDE_HEROS)) {
   }
   const r = (luminanceOklch(heros) + 0.05) / (luminanceOklch(carte) + 0.05);
   if (r < bas || r > haut) {
+    // Hors bande ne veut pas dire la même chose des deux côtés, ni dans les
+    // deux thèmes : en clair la carte s'enfonce, en sombre elle s'allume.
+    // Un seul message pour les quatre cas en dirait trois de travers.
+    const sombre = cle.endsWith('sombre');
+    const trop = r > haut;
+    const pourquoi = sombre
+      ? trop
+        ? `Trop claire : sur une page sombre elle devient le seul aplat qui ` +
+          `éblouisse un œil adapté au noir. C'est le défaut corrigé le ` +
+          `22/09 — elle valait alors 15,3.`
+        : `Trop sombre : elle se confond avec les cartes ordinaires, et une ` +
+          `carte héroïne qui ne prime pas n'est qu'une carte.`
+      : trop
+        ? `Pas assez sombre : en thème clair elle prime en S'ENFONÇANT sous ` +
+          `les cartes blanches. À ce niveau elle ne s'enfonce plus.`
+        : `Trop sombre, au point de virer au noir : le dégradé ne se lit ` +
+          `plus et la lueur de marque n'a plus de fond où se poser.`;
     echecs.push(
       `carte héroïne en ${cle} : elle vaut ${r.toFixed(2)} fois la clarté ` +
-        `d'une carte ordinaire, hors de la bande [${bas} ; ${haut}]. ` +
-        (r > haut
-          ? `Trop claire : sur une page sombre elle devient le seul aplat qui ` +
-            `éblouisse. C'est le défaut corrigé le 22/09 — elle valait 15,3.`
-          : `Trop proche des autres : elle ne prime plus sur rien, et une ` +
-            `carte héroïne qui ne prime pas n'est qu'une carte.`),
+        `d'une carte ordinaire, hors de la bande [${bas} ; ${haut}]. ${pourquoi}`,
     );
   }
 }

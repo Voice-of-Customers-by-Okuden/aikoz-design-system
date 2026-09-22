@@ -63,6 +63,7 @@
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */
   --surface-hero: var(--color-surface-hero); /** extension DS — fond de LA carte qui prime, une seule par écran */
   --surface-hero-to: var(--color-surface-hero-to); /** extension DS — second arrêt du dégradé de --surface-hero */
+  --hero-glow: var(--color-surface-hero-glow); /** extension DS — lueur d'angle de la carte héroïne, elle porte la marque */
   --on-hero: var(--color-surface-on-hero); /** extension DS — texte porté par --surface-hero */
   --accent-foreground: var(--color-text-on-accent); /** shadcn --accent-foreground */
   --surface-inverse: var(--color-surface-inverse); /** ANCIEN NOM — voir --surface-hero. Conservé pour les consommateurs du registry publié. */
@@ -129,6 +130,7 @@
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */
   --surface-hero: var(--color-surface-hero); /** extension DS — fond de LA carte qui prime, une seule par écran */
   --surface-hero-to: var(--color-surface-hero-to); /** extension DS — second arrêt du dégradé de --surface-hero */
+  --hero-glow: var(--color-surface-hero-glow); /** extension DS — lueur d'angle de la carte héroïne, elle porte la marque */
   --on-inverse: var(--color-surface-on-inverse); /** ANCIEN NOM — voir --surface-hero. Conservé pour les consommateurs du registry publié. */
   --neutral-text: var(--color-status-neutral-text); /** extension DS — variation neutre d'un indicateur (DeltaBadge ton neutre) */
   --neutral-fill: var(--color-status-neutral-fill); /** extension DS — aplat neutre d'un indicateur */
@@ -197,6 +199,7 @@
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */
   --surface-hero: var(--color-surface-hero); /** extension DS — fond de LA carte qui prime, une seule par écran */
   --surface-hero-to: var(--color-surface-hero-to); /** extension DS — second arrêt du dégradé de --surface-hero */
+  --hero-glow: var(--color-surface-hero-glow); /** extension DS — lueur d'angle de la carte héroïne, elle porte la marque */
   --on-hero: var(--color-surface-on-hero); /** extension DS — texte porté par --surface-hero */
   --accent-foreground: var(--color-text-on-accent); /** shadcn --accent-foreground */
   --surface-inverse: var(--color-surface-inverse); /** ANCIEN NOM — voir --surface-hero. Conservé pour les consommateurs du registry publié. */
@@ -262,6 +265,7 @@
   --track: var(--color-surface-track); /** extension DS — piste d'une jauge ; PAS --muted, identique à --card en dark */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --surface-hero: var(--color-surface-hero); /** extension DS — fond de LA carte qui prime, une seule par écran */
+  --hero-glow: var(--color-surface-hero-glow); /** extension DS — lueur d'angle de la carte héroïne, elle porte la marque */
   --on-hero: var(--color-surface-on-hero); /** extension DS — texte porté par --surface-hero */
   --surface-inverse-to: var(--color-surface-inverse-to); /** ANCIEN NOM — voir --surface-hero. Conservé pour les consommateurs du registry publié. */
   --neutral-text: var(--color-status-neutral-text); /** extension DS — variation neutre d'un indicateur (DeltaBadge ton neutre) */

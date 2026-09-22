@@ -81,7 +81,7 @@ const cardVariants = cva("flex flex-col", {
       heros: [
         "rounded-[var(--radius)] border border-transparent",
         "text-[var(--on-hero)]",
-        "[background:radial-gradient(130%_150%_at_88%_0%,color-mix(in_oklch,var(--secondary),transparent_58%)_0%,transparent_62%),linear-gradient(135deg,var(--surface-hero)_0%,var(--surface-hero-to)_100%)]",
+        "[background:radial-gradient(130%_150%_at_88%_0%,color-mix(in_oklch,var(--hero-glow),transparent_58%)_0%,transparent_62%),linear-gradient(135deg,var(--surface-hero)_0%,var(--surface-hero-to)_100%)]",
         "[box-shadow:var(--role-elevation-card)]",
         "transition-[box-shadow] duration-150 ease-out",
         "hover:[box-shadow:var(--role-elevation-card-hover)]",
@@ -97,7 +97,7 @@ const cardVariants = cva("flex flex-col", {
       inverse: [
         "rounded-[var(--radius)] border border-transparent",
         "text-[var(--on-hero)]",
-        "[background:radial-gradient(130%_150%_at_88%_0%,color-mix(in_oklch,var(--secondary),transparent_58%)_0%,transparent_62%),linear-gradient(135deg,var(--surface-hero)_0%,var(--surface-hero-to)_100%)]",
+        "[background:radial-gradient(130%_150%_at_88%_0%,color-mix(in_oklch,var(--hero-glow),transparent_58%)_0%,transparent_62%),linear-gradient(135deg,var(--surface-hero)_0%,var(--surface-hero-to)_100%)]",
         "[box-shadow:var(--role-elevation-card)]",
         "transition-[box-shadow] duration-150 ease-out",
         "hover:[box-shadow:var(--role-elevation-card-hover)]",

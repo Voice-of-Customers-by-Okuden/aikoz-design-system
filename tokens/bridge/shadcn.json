@@ -269,6 +269,11 @@
     "$value": "{color.surface.hero-to}",
     "$description": "extension DS — second arrêt du dégradé de --surface-hero"
   },
+  "hero-glow": {
+    "$type": "color",
+    "$value": "{color.surface.hero-glow}",
+    "$description": "extension DS — lueur d'angle de la carte héroïne, elle porte la marque"
+  },
   "on-hero": {
     "$type": "color",
     "$value": "{color.surface.on-hero}",
