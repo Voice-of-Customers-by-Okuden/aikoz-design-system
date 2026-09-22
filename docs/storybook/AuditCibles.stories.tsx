@@ -199,10 +199,15 @@ export const ToutesLesCibles: Story = {
     await expect(vues.length).toBeGreaterThan(20);
 
     const echecs: string[] = [];
-    const pireEnDette = new Map<string, number>();
+    // La plus petite mesure de CHAQUE libellé, dette ou non. Sans elle, une
+    // dette qui atteint le confort est indistinguable d'une dette dont le
+    // libellé a disparu : les deux sortent de la boucle sans entrer dans
+    // cette carte, et le diagnostic rendu est alors le mauvais.
+    const pireVue = new Map<string, number>();
 
     for (const { nom, largeur, hauteur, balise } of vues) {
       const petit = Math.min(largeur, hauteur);
+      pireVue.set(nom, Math.min(pireVue.get(nom) ?? Infinity, petit));
       if (petit < PLANCHER) {
         echecs.push(
           `« ${nom} » (${balise}) : ${largeur.toFixed(0)} × ${hauteur.toFixed(0)} px, ` +
@@ -226,22 +231,20 @@ export const ToutesLesCibles: Story = {
             `${dette} px. Une cible en dette a le droit de ne pas tenir le ` +
             `confort, pas de rétrécir.`,
         );
-      } else {
-        pireEnDette.set(nom, Math.min(pireEnDette.get(nom) ?? Infinity, petit));
       }
     }
 
     for (const [nom, seuil] of Object.entries(DETTES)) {
-      const pire = pireEnDette.get(nom);
-      if (pire === undefined) {
+      const vue = pireVue.get(nom);
+      if (vue === undefined) {
         echecs.push(
           `« ${nom} » est inscrite dans DETTES mais n'a pas été mesurée sur la ` +
             `page — le libellé a changé, ou le contrôle a disparu. Une dette ` +
             `qu'on ne mesure plus ne protège plus rien : retirer sa ligne.`,
         );
-      } else if (pire >= CONFORT) {
+      } else if (vue >= CONFORT) {
         echecs.push(
-          `« ${nom} » atteint maintenant ${pire.toFixed(0)} px (dette : ${seuil}) : ` +
+          `« ${nom} » atteint maintenant ${vue.toFixed(0)} px (dette : ${seuil} px) : ` +
             `retirer sa ligne de DETTES. La dette ne doit que rétrécir.`,
         );
       }
