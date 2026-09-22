@@ -38,6 +38,8 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 - **Les chiffres de la vitrine sont comptés, pas écrits** : `docs/storybook/chiffres.ts` est généré par `registry:build`. L'introduction annonçait 37 composants quand il y en avait 51.
 - `public/r/` **est** committé — le registry publié embarque une copie du source, et la CI échoue s'ils divergent. (Contredit le §3, corrigé.)
 - Node **24** en local comme en CI (`engines: node >= 22`) : un verrou écrit par npm 11 n'est pas consommable par npm 10.
+- **Les démos ADP se font en mode clair.** Constat rapporté par Alice le 22/09, pas une règle établie : on ne sait pas si c'est le cas des autres clients. Conséquence pratique sur les priorités — un défaut du mode sombre ne bloque pas une démo ADP, mais reste un défaut à corriger, le système devant tenir dans les quatre combinaisons.
+- **Tommy (`AstralPhoebus`) pousse aussi des composants.** Il a créé le concept Aikoz ; ses correctifs viennent souvent d'un usage réel en projet client, donc ils valent d'être pris. Il n'est pas dans les règles internes du dépôt : lui donner les commandes, pas les principes. PR #127 (22/09) : arrondi des infobulles, z-index du donut, slot `badge` sur `ViewTabs`.
 - Storybook : le serveur de dev **ne rescanne pas un fichier créé après son démarrage** — une classe Tailwind neuve n'a alors aucune règle. Redémarrer avant de conclure à une classe morte. Piège rencontré trois fois le 22/09.
 
 ### Les huit contrôles qui tournent en CI
