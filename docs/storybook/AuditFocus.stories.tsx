@@ -42,22 +42,54 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** Les propriétés par lesquelles un indicateur de focus peut se manifester. */
-const PROPRIETES = [
-  "outlineStyle",
-  "outlineWidth",
-  "outlineColor",
-  "outlineOffset",
-  "boxShadow",
-  "borderColor",
-  "backgroundColor",
-  "color",
-  "textDecorationLine",
-] as const;
+/**
+ * Une couleur totalement transparente ne se voit pas.
+ *
+ * Ça a l'air d'une évidence et c'est le piège qui a rendu le premier
+ * contrôle inutile. `outline-none` de Tailwind ne supprime pas le contour :
+ * il pose `outline: 2px solid transparent`. Un composant privé de son anneau
+ * mais gardant son `focus-visible:outline-none` voyait donc son `outlineColor`
+ * ET son `outlineWidth` changer au focus — l'audit comptait ça comme un
+ * indicateur et laissait passer un bouton parfaitement muet à l'écran.
+ */
+function invisible(couleur: string): boolean {
+  if (!couleur || couleur === "transparent" || couleur === "none") return true;
+  // `rgba(r, g, b, 0)` et `oklch(L C H / 0)` — l'alpha en dernière position.
+  return /[,/]\s*0(?:\.0+)?\s*\)/.test(couleur);
+}
 
+/**
+ * Ce qui se VOIT de l'état d'un élément.
+ *
+ * Les contributions transparentes sont neutralisées : elles n'entrent pas
+ * dans l'empreinte, donc leur apparition ne peut pas se faire passer pour un
+ * indicateur.
+ */
 function empreinte(el: Element): string {
   const s = getComputedStyle(el);
-  return PROPRIETES.map((p) => s[p as keyof CSSStyleDeclaration] as string).join("|");
+  const contour =
+    s.outlineStyle === "none" ||
+    parseFloat(s.outlineWidth) === 0 ||
+    invisible(s.outlineColor)
+      ? "—"
+      : `${s.outlineStyle} ${s.outlineWidth} ${s.outlineColor} ${s.outlineOffset}`;
+  // Une ombre portée dont la couleur est transparente ne dessine rien non
+  // plus : on ne garde que les couches qui peignent.
+  const ombre =
+    s.boxShadow === "none"
+      ? "—"
+      : s.boxShadow
+          .split(/,(?![^(]*\))/)
+          .filter((c) => !invisible(c.trim()))
+          .join(",") || "—";
+  return [
+    contour,
+    ombre,
+    invisible(s.borderColor) ? "—" : s.borderColor,
+    invisible(s.backgroundColor) ? "—" : s.backgroundColor,
+    s.color,
+    s.textDecorationLine,
+  ].join("|");
 }
 
 function nommer(el: Element): string {
