@@ -93,7 +93,12 @@ for (const nom of composants) {
         `composant qui enveloppe le nôtre.`,
     );
   }
-  if (!/className/.test(code)) {
+  // Le mot `className` apparaît de toute façon dans le rendu : ce qu'on
+  // vérifie, c'est qu'il est DÉCLARÉ dans le contrat — soit en propre, soit
+  // hérité des attributs HTML natifs par `extends ...HTMLAttributes`.
+  const declareClassName =
+    /className\??:\s*string/.test(code) || /extends\s+[^{]*HTMLAttributes/.test(code);
+  if (!declareClassName) {
     echecs.push(
       `${ou} — n'accepte pas \`className\`. Un composant qu'on ne peut pas ` +
         `placer dans une grille sans l'envelopper d'un \`<div>\` force le ` +

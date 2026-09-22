@@ -15,6 +15,28 @@ vous sera dit par un test rouge.
 
 ---
 
+## 0. Les neuf conventions, tenues par la CI
+
+Avant tout le reste, `npm run audit:conventions` fige ce que les 48 composants
+existants respectaient déjà — sans que ce soit écrit nulle part :
+
+1. dossier, fichier et entrée de registry portent le **même nom**, en kebab-case
+2. un `.stories.tsx` par composant
+3. au moins une histoire joue un `play`
+4. aucun export par défaut
+5. l'interface `Props` est **exportée**
+6. `className` est accepté
+7. aucune **primitive** de couleur écrite dans un composant
+8. aucune couleur en dur
+9. `meta` en `satisfies Meta`
+
+Une exception se déclare **dans le contrôle**, avec sa raison. Une exception
+anonyme est un trou ; une exception qui porte sa raison est une décision, et
+elle se relit. Il y en a une : l'or, l'argent et le bronze de `Leaderboard`,
+références culturelles à des métaux et non couleurs d'interface.
+
+---
+
 ## 1. Les fichiers
 
 ```
