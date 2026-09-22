@@ -18,6 +18,28 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.3.1] — 2026-09-22
+
+### Corrigé
+
+- **L'introduction annonçait « 37 composants » quand il y en avait 51.** Le
+  chiffre avait été juste une fois, puis quatorze composants sont arrivés et
+  personne n'est retourné éditer la phrase. C'est la première ligne que lit
+  qui découvre le système, et elle mentait d'un tiers.
+
+  Les chiffres de la vitrine sont désormais **comptés** — `chiffres.ts` est
+  généré par `registry:build`, et la CI échoue si le fichier commité ne
+  correspond plus. Même doctrine que le pont Tailwind et `version.json` : on
+  ne déclare pas ce qu'on peut compter.
+
+- **Les tableaux Markdown ne s'affichaient pas dans les pages de
+  documentation.** MDX ne rend pas les tableaux GitHub sans `remark-gfm` :
+  neuf tableaux de la seule page Accessibilité étaient une soupe de barres
+  verticales, et autant ailleurs. Ils l'étaient depuis le début — on relit sa
+  documentation dans l'éditeur, où elle a l'air juste.
+
+---
+
 ## [2.3.0] — 2026-09-22
 
 ### Ajouté

@@ -1,13 +1,13 @@
 {
   "name": "aikoz-design-system",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Dépôt de référence pour tout contenu visuel et éditorial Aikoz by Okuden.   Il contient les sources de vérité — design tokens, voix de marque, logos, polices — que l'équipe injecte dans ses outils IA et ses productions.",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build:tokens": "node build-tokens.mjs",
-    "registry:build": "shadcn build && node scripts/version-publiee.mjs",
+    "registry:build": "shadcn build && node scripts/version-publiee.mjs && node scripts/chiffres.mjs",
     "test": "vitest --run",
     "build:preview": "npm run build:tokens && vite build",
     "build": "npm run build:tokens && npm run registry:build && vite build",
@@ -19,7 +19,8 @@
     "audit:mouvement": "node scripts/audit-mouvement.mjs",
     "audit:conventions": "node scripts/audit-conventions.mjs",
     "audit:version": "node scripts/audit-version.mjs",
-    "version:publier": "node scripts/version-publiee.mjs"
+    "version:publier": "node scripts/version-publiee.mjs",
+    "build:chiffres": "node scripts/chiffres.mjs"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.3.1",
@@ -37,6 +38,7 @@
     "autoprefixer": "^10.5.2",
     "playwright": "^1.63.0",
     "postcss": "^8.5.16",
+    "remark-gfm": "^4.0.1",
     "shadcn": "^4.12.0",
     "storybook": "^10.6.0",
     "style-dictionary": "^5.5.0",

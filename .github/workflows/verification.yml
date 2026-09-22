@@ -46,9 +46,25 @@ jobs:
       # C'est arrivé : trois correctifs de nom accessible étaient dans le
       # source et absents du registry, donc `npx shadcn add stepper` installait
       # encore la version défectueuse. Rien ne l'aurait signalé.
+      # ── Les chiffres de la vitrine sont COMPTÉS ──────────────────────────
+      #
+      # L'introduction annonçait « 37 composants » quand il y en avait 51. Le
+      # chiffre avait été juste une fois, puis quatorze composants sont
+      # arrivés et personne n'est retourné éditer la phrase. C'est la première
+      # ligne que lit quelqu'un qui découvre le système, et elle mentait d'un
+      # tiers.
+      #
+      # `chiffres.ts` est généré ; ce contrôle vérifie que le fichier commité
+      # correspond encore à ce qu'on compte aujourd'hui.
       - name: Registry à jour
         run: |
           npm run registry:build
+          if ! git diff --quiet -- docs/storybook/chiffres.ts; then
+            echo "::error::Les chiffres de l'introduction ne correspondent plus."
+            git diff -- docs/storybook/chiffres.ts
+            echo "Correctif : npm run build:chiffres puis commit."
+            exit 1
+          fi
           if ! git diff --quiet -- public/r; then
             echo "::error::Le registry publié ne correspond plus aux sources."
             echo "Fichiers en écart :"
