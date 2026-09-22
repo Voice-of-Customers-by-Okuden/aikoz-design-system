@@ -18,6 +18,29 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.1.0] — 2026-09-22
+
+### Ajouté
+
+- **`Pagination`** — `Table` savait trier, pas paginer, et le tableau de bord
+  ADP portera des centaines d'agences.
+
+  Un `<nav>` nommé, une liste, des `<button>` — **pas des liens** : changer de
+  page ne change pas d'URL dans un tableau de bord, et annoncer un lien
+  promettrait une navigation qui n'aura pas lieu. La page courante est un
+  `<span>` avec `aria-current`, jamais un bouton — même raisonnement que le
+  dernier niveau d'un fil d'Ariane.
+
+  Le résumé « 41–60 sur 312 » porte l'information que les numéros ne donnent
+  pas, en `aria-live="polite"`. La fenêtre garde une **largeur constante** :
+  ce qu'une extrémité ne peut pas prendre est reporté à l'opposé, sinon la
+  barre change de taille en naviguant et les boutons se déplacent sous le
+  doigt. Sous 2 pages, elle ne rend rien.
+
+  `fenetre(page, pages, voisines)` est exportée : elle se teste sans rendu.
+
+---
+
 ## [2.0.1] — 2026-09-22
 
 ### Corrigé
