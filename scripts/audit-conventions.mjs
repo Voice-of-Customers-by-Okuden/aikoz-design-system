@@ -49,6 +49,16 @@ const composants = fs
   .filter((e) => e.isDirectory() && e.name !== 'lib')
   .map((e) => e.name);
 
+/**
+ * Toute balise `<svg>` du source, même écrite sur plusieurs lignes.
+ *
+ * On s'arrête au `>` qui ferme la balise, en laissant passer les accolades
+ * JSX (`viewBox={...}`) qui en contiennent parfois un.
+ */
+const BALISES_SVG = /<svg\b(?:[^<>]|\{[^{}]*\})*?>/g;
+/** Les quatre façons de dire à une technologie d'assistance ce qu'elle voit. */
+const ETIQUETTE = /aria-hidden|role="img"|aria-label|aria-labelledby/;
+
 /** Le source sans ses commentaires — on ne juge pas la prose. */
 function sansCommentaires(s) {
   return s
@@ -124,6 +134,19 @@ for (const nom of composants) {
     );
   }
 
+  for (const m of code.matchAll(BALISES_SVG)) {
+    if (ETIQUETTE.test(m[0])) continue;
+    const ligne = code.slice(0, m.index).split('\n').length;
+    echecs.push(
+      `${ou}:${ligne} — un \`<svg>\` sans \`aria-hidden\`, \`role="img"\` ni ` +
+        `libellé. Un pictogramme décoratif se MASQUE : sans ça, un lecteur ` +
+        `d'écran annonce « graphique » au milieu d'une phrase, ou pire lit le ` +
+        `contenu du tracé. S'il porte du sens, il prend \`role="img"\` et un ` +
+        `\`aria-label\` — mais dans ce système le sens est toujours dans le ` +
+        `texte à côté.`,
+    );
+  }
+
   if (!fs.existsSync(histoires)) {
     echecs.push(
       `${ou} — pas de ${nom}.stories.tsx. Les histoires SONT les tests : un ` +
@@ -168,6 +191,6 @@ if (echecs.length) {
 }
 
 console.log(
-  `audit conventions OK — ${composants.length} composants, neuf conventions ` +
+  `audit conventions OK — ${composants.length} composants, dix conventions ` +
     `tenues, une exception nommée.`,
 );
