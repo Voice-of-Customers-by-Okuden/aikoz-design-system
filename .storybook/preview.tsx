@@ -25,6 +25,11 @@ definirBaseDesLogos("./brands/");
  * s'appliquent partout et se basculent devant n'importe quel composant —
  * c'est en basculant sous les yeux d'un composant qu'on voit ce qui bouge.
  */
+declare const __THEME_INITIAL__: string;
+/** « clair » par défaut ; « sombre » quand `STORYBOOK_THEME=sombre`. */
+const THEME_INITIAL =
+  typeof __THEME_INITIAL__ === "string" ? __THEME_INITIAL__ : "clair";
+
 const axes: Decorator = (Story, context) => {
   const { theme, registre } = context.globals as {
     theme: string;
@@ -66,7 +71,9 @@ const preview: Preview = {
       },
     },
   },
-  initialGlobals: { theme: "clair", registre: "produit" },
+  // `__THEME_INITIAL__` est injecté par `viteFinal` depuis `STORYBOOK_THEME`
+  // (voir main.ts) : c'est ce qui permet de rejouer toute la suite en sombre.
+  initialGlobals: { theme: THEME_INITIAL, registre: "produit" },
   decorators: [axes],
   parameters: {
     layout: "centered",

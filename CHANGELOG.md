@@ -18,6 +18,34 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.8.0] — 2026-09-23
+
+### Corrigé
+
+- **Le canevas des stories n'était pas peint dans le lanceur de tests.** La
+  règle visait `body.sb-show-main` — une classe que pose le CANEVAS de
+  Storybook, et que le lanceur n'a pas : chaque story y est rendue sans ce
+  chrome. Tant que la suite tournait en clair, le blanc du navigateur
+  ressemblait par coïncidence à `--background` et personne ne voyait rien.
+
+### Gouvernance
+
+- **Toute la suite tourne désormais dans les DEUX thèmes.** Elle ne tournait
+  qu'en clair : 2 histoires sur 250 déclaraient le sombre, `axe` compris.
+  `AuditContraste` balayait bien les huit combinaisons, mais il ne regarde
+  que des paires de couleurs, jamais le rendu d'un composant.
+
+  `STORYBOOK_THEME=sombre` rejoue la même suite dans l'autre thème —
+  `npm run test:sombre`, et une étape de plus en CI. Une variable plutôt
+  qu'un second jeu d'histoires : deux jeux divergent, et c'est toujours celui
+  qu'on ne regarde pas qui pourrit.
+
+  Au premier passage, **135 tests sur 250 sont tombés**. Un seul défaut
+  derrière : axe mesurait du texte clair sur un fond `#fcfcfc`. Le système
+  tenait, c'est la mesure qui n'avait jamais eu lieu.
+
+---
+
 ## [2.7.1] — 2026-09-22
 
 ### Corrigé
