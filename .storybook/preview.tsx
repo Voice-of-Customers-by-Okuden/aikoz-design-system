@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { Decorator, Preview } from "@storybook/react-vite";
+import { mesurerLeRendu } from "./mesures";
 import { definirBaseDesLogos } from "@registry/aikoz/brand-logo/brands";
 
 // Les trois feuilles du design system, dans l'ordre : primitives et rôles,
@@ -44,7 +45,25 @@ const axes: Decorator = (Story, context) => {
   return <Story />;
 };
 
+/**
+ * Les trois mesures de rendu, sur CHAQUE histoire.
+ *
+ * Elles ne tournaient que sur le tableau de bord : 33 composants sur 53.
+ * Les histoires existent pour tous, et le lanceur les rend toutes, dans les
+ * deux thèmes — c'est le seul endroit qui ne décroche pas.
+ */
+const mesurer: Preview["afterEach"] = async ({ canvasElement, parameters }) => {
+  if (parameters?.mesures === false) return;
+  const echecs = mesurerLeRendu(canvasElement as HTMLElement);
+  if (echecs.length) {
+    throw new Error(
+      `${echecs.length} défaut(s) de rendu :\n  - ` + echecs.join("\n  - "),
+    );
+  }
+};
+
 const preview: Preview = {
+  afterEach: mesurer,
   globalTypes: {
     theme: {
       description: "Thème",
