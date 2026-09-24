@@ -18,6 +18,20 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.15.1] — 2026-09-24
+
+### Corrigé
+
+- **Les en-têtes riches d'un `Table` s'alignaient en bas, donc en escalier.**
+  Collé au bas de sa cellule, un libellé qui passe sur deux lignes pousse son
+  pictogramme vers le haut : mesuré **18 px d'écart** entre « Gestionnaire
+  POI » et « Directeur », et une rangée d'icônes en marches. Une colonne avec
+  `headerCell` s'aligne désormais en HAUT — les pictogrammes forment une
+  ligne et les libellés démarrent tous au même endroit. Écart mesuré après :
+  **0 px**, sur les icônes comme sur les textes.
+
+---
+
 ## [2.15.0] — 2026-09-24
 
 ### Ajouté

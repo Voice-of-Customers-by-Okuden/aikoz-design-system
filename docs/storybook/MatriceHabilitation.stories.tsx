@@ -365,6 +365,22 @@ export const Modifiable: Story = {
         `portent le même contenu et doivent donc avoir la même largeur.`,
     ).toBeLessThanOrEqual(1);
 
+    // ── Les en-têtes s'alignent ───────────────────────────────────────────
+    //
+    // Collé au bas de sa cellule, un libellé qui passe sur deux lignes pousse
+    // son pictogramme vers le haut : mesuré 18 px d'écart entre
+    // « Gestionnaire POI » et « Directeur », et une rangée d'icônes en
+    // escalier. Aligné en haut, les six pictogrammes forment une ligne.
+    const tops = entetes.map((t) => {
+      const sp = [...t.querySelectorAll("span")];
+      return Math.round(sp[0].getBoundingClientRect().top);
+    });
+    await expect(
+      Math.max(...tops) - Math.min(...tops),
+      `les pictogrammes d'en-tête sont à ${tops.join(" · ")} px : ils doivent ` +
+        `former une ligne, pas un escalier.`,
+    ).toBeLessThanOrEqual(1);
+
     const distincts = new Set(noms).size;
     await expect(
       distincts,

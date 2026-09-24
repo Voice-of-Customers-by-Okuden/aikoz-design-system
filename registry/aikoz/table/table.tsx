@@ -262,7 +262,15 @@ export function Table<T>({
                   style={c.width ? { width: c.width } : undefined}
                   className={cn(
                     cellule,
-                    "font-semibold text-foreground align-bottom",
+                    "font-semibold text-foreground",
+                    // Un en-tête riche s'aligne en HAUT, jamais en bas. Collé
+                    // au bas, un libellé qui passe sur deux lignes pousse son
+                    // pictogramme vers le haut : mesuré 18 px d'écart entre
+                    // « Gestionnaire POI » et « Directeur », et une rangée
+                    // d'icônes en escalier. Aligné en haut, les pictogrammes
+                    // forment une ligne et les libellés démarrent tous au même
+                    // endroit.
+                    c.headerCell ? "align-top" : "align-bottom",
                     columnRules && "border-l border-border first:border-l-0",
                     c.numeric ? "text-right" : c.headerCell ? "text-center" : "text-left"
                   )}
