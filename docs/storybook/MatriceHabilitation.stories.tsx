@@ -13,7 +13,7 @@ type Role = { key: string; label: string };
 
 const FONCTIONNALITES: Fonctionnalite[] = [
   { key: "avis", label: "Réponse aux avis" },
-  { key: "kpi", label: "Tableau de bord" },
+  { key: "kpi", label: "Dashboard KPI" },
   { key: "nap", label: "Gestion des NAP" },
   { key: "gbp", label: "Publications GBP" },
 ];
@@ -29,16 +29,20 @@ const ROLES: Role[] = [
   { key: "poi", label: "Gestionnaire POI" },
   { key: "dir", label: "Directeur" },
   { key: "mkt", label: "Pôle marketing" },
-  { key: "r4", label: "Rôle 4" },
   { key: "r5", label: "Rôle 5" },
-  { key: "r6", label: "Rôle 6" },
+  // Leurs deux dernières colonnes portent le MÊME intitulé, « RÔLE 6 ».
+  // On le rend tel quel : c'est ce qu'ils nous ont envoyé, et l'histoire
+  // `DeuxColonnesHomonymes` mesure ce que ça coûte.
+  { key: "r6a", label: "Rôle 6" },
+  { key: "r6b", label: "Rôle 6" },
 ];
 
+// Relevé case par case sur leur capture du 24/09/2026.
 const DROITS: Record<string, Record<string, boolean>> = {
-  avis: { poi: true, dir: true, mkt: true, r4: true, r5: true, r6: true },
-  kpi: { poi: false, dir: true, mkt: false, r4: true, r5: true, r6: true },
-  nap: { poi: true, dir: true, mkt: true, r4: false, r5: true, r6: true },
-  gbp: { poi: false, dir: true, mkt: true, r4: false, r5: true, r6: true },
+  avis: { poi: true, dir: true, mkt: true, r5: true, r6a: true, r6b: true },
+  kpi: { poi: false, dir: true, mkt: false, r5: true, r6a: true, r6b: true },
+  nap: { poi: true, dir: true, mkt: true, r5: false, r6a: true, r6b: true },
+  gbp: { poi: false, dir: true, mkt: true, r5: false, r6a: true, r6b: true },
 };
 
 // ─── L'assemblage ────────────────────────────────────────────────────────────
@@ -54,13 +58,19 @@ const DROITS: Record<string, Record<string, boolean>> = {
 const nommerLaCase = (f: Fonctionnalite, r: Role) =>
   `${f.label} pour ${r.label}`;
 
-function MatriceHabilitation({ modifiable }: { modifiable: boolean }) {
+function MatriceHabilitation({
+  modifiable,
+  roles = ROLES,
+}: {
+  modifiable: boolean;
+  roles?: Role[];
+}) {
   const [droits, setDroits] = useState(DROITS);
   const titreId = useId();
 
   const colonnes: TableColumn<Fonctionnalite>[] = [
     { key: "label", header: "Fonctionnalité", width: "16rem" },
-    ...ROLES.map((r) => ({
+    ...roles.map((r) => ({
       key: r.key,
       header: r.label,
       cell: (f: Fonctionnalite) => {
@@ -183,18 +193,63 @@ export const Modifiable: Story = {
     await expect(
       c.getByRole("switch", { name: "Réponse aux avis pour Directeur" }),
     ).toBeInTheDocument();
-    // Et il y en a bien vingt-quatre, tous distincts.
-    //
+
     // On lit le nom par l'étiquette ASSOCIÉE, pas par `aria-label` : `Switch`
     // rend un vrai `<label for>`, et `getAttribute("aria-label")` rendait
     // `null` vingt-quatre fois — soit un seul nom distinct, et une assertion
     // qui mesurait mon erreur au lieu du composant.
     const noms = c
       .getAllByRole("switch")
-      .map(
-        (s) => (s as HTMLInputElement).labels?.[0]?.textContent?.trim() ?? "",
-      );
+      .map((s) => (s as HTMLInputElement).labels?.[0]?.textContent?.trim() ?? "");
     await expect(noms).toHaveLength(24);
+
+    // ── Ce que coûtent deux colonnes homonymes ────────────────────────────
+    //
+    // Leur maquette nomme DEUX colonnes « RÔLE 6 ». Le nom d'une case est
+    // déduit de sa ligne et de sa colonne : quatre paires de cases portent
+    // donc le même nom et désignent des droits différents. Au lecteur
+    // d'écran comme au relecteur, elles sont indiscernables.
+    //
+    // Ce test ne tombe pas : il MESURE le coût, pour qu'il soit chiffré dans
+    // la conversation avec ADP plutôt qu'observé le jour de la recette.
+    const distincts = new Set(noms).size;
+    await expect(
+      distincts,
+      `${noms.length - distincts} cases indiscernables : deux colonnes ` +
+        `portent le même intitulé dans la maquette.`,
+    ).toBe(20);
+  },
+};
+
+export const LesNomsCorriges: Story = {
+  name: "Une fois les colonnes nommées",
+  args: {
+    roles: [
+      { key: "poi", label: "Gestionnaire POI" },
+      { key: "dir", label: "Directeur" },
+      { key: "mkt", label: "Pôle marketing" },
+      { key: "r5", label: "Rôle 5" },
+      { key: "r6a", label: "Rôle 6" },
+      { key: "r6b", label: "Rôle 7" },
+    ],
+  },
+  globals: { theme: "clair" },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "La même matrice une fois les six colonnes nommées. Les vingt-quatre " +
+          "cases redeviennent distinctes.\n\n" +
+          "« Rôle 5 », « Rôle 6 » et « Rôle 7 » sont des réservations : les " +
+          "vrais noms appartiennent à ADP, et c'est la seule chose qui manque " +
+          "pour que cet écran soit livrable.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const noms = within(canvasElement)
+      .getAllByRole("switch")
+      .map((s) => (s as HTMLInputElement).labels?.[0]?.textContent?.trim() ?? "");
     await expect(new Set(noms).size).toBe(24);
   },
 };

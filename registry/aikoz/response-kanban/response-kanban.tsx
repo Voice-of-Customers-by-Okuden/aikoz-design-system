@@ -59,6 +59,20 @@ export interface ResponseKanbanProps {
    * relais est hors de son périmètre.
    */
   onDraftReply?: (id: string) => void;
+  /**
+   * Remplace le titre et le sous-titre d'une colonne.
+   *
+   * Les intitulés sont du CONTENU, pas de la structure : « Avis 4-5 étoiles
+   * sans commentaire · publication J+1 » dit la règle de ce client-là, et le
+   * suivant en aura une autre. Ce qui appartient au composant, c'est
+   * l'ordre des colonnes, leur ton, et le fait que chacune soit une section
+   * nommée par son titre.
+   *
+   * Les valeurs par défaut restent celles du produit.
+   */
+  labels?: Partial<
+    Record<"automated" | "offCharter" | "sensitive", { title?: string; subtitle?: string }>
+  >;
   className?: string;
 }
 
@@ -352,6 +366,7 @@ export function ResponseKanban({
   initialVisible = 3,
   onSaveReply,
   onDraftReply,
+  labels,
   className,
 }: ResponseKanbanProps) {
   const [visibleAutomated, setVisibleAutomated] = useState(initialVisible);
@@ -362,8 +377,8 @@ export function ResponseKanban({
       columns={[
         {
           key: "automated",
-          title: "Réponses automatisées",
-          subtitle: "À valider avant publication J+1",
+          title: labels?.automated?.title ?? "Réponses automatisées",
+          subtitle: labels?.automated?.subtitle ?? "À valider avant publication J+1",
           tone: "info",
           count: automated.length,
           children: (
@@ -377,16 +392,16 @@ export function ResponseKanban({
         },
         {
           key: "off-charter",
-          title: "Réponses hors charte",
-          subtitle: "Publiées, à corriger",
+          title: labels?.offCharter?.title ?? "Réponses hors charte",
+          subtitle: labels?.offCharter?.subtitle ?? "Publiées, à corriger",
           tone: "warning",
           count: offCharter.length,
           children: <OffCharterColumn items={offCharter} onDraftReply={onDraftReply} />,
         },
         {
           key: "sensitive",
-          title: "Avis sensibles",
-          subtitle: "À traiter immédiatement",
+          title: labels?.sensitive?.title ?? "Avis sensibles",
+          subtitle: labels?.sensitive?.subtitle ?? "À traiter immédiatement",
           tone: "error",
           count: sensitive.length,
           children: <SensitiveColumn items={sensitive} onDraftReply={onDraftReply} />,

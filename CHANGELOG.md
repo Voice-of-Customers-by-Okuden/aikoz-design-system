@@ -18,6 +18,33 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.13.0] — 2026-09-24
+
+### Ajouté
+
+- **Assemblage « Démo ADP — État des réponses »** : le contenu **exact** de la
+  maquette ADP du 24/09/2026, rendu par le design system. Mêmes avis, mêmes
+  dates, mêmes motifs de non-conformité, mêmes intitulés de colonne, mêmes
+  comptes (7 · 2 · 2). Seule la mise en forme change. En clair ET en sombre.
+- **`ResponseKanban.labels`** — remplace le titre et le sous-titre d'une
+  colonne. Les intitulés sont du CONTENU : « Avis 4-5 étoiles sans
+  commentaire · publication J+1 » dit la règle de ce client-là, et le suivant
+  en aura une autre. Ce qui appartient au composant, c'est l'ordre des
+  colonnes, leur ton, et le fait que chacune soit une section nommée.
+- **La matrice d'habilitation porte les données réelles d'ADP**, relevées case
+  par case, doublon de colonne compris — et une seconde histoire montre la
+  même matrice une fois les colonnes nommées.
+
+### Mesuré
+
+- **Deux colonnes de la maquette ADP portent le même intitulé (« RÔLE 6 »).**
+  Le nom d'une case se déduit de sa ligne et de sa colonne : l'histoire
+  compte **20 noms distincts pour 24 cases**, soit **quatre paires de droits
+  indiscernables**. Le test ne tombe pas, il chiffre — pour que ce soit un
+  chiffre dans la conversation avec ADP plutôt qu'une surprise en recette.
+
+---
+
 ## [2.12.0] — 2026-09-24
 
 ### Ajouté
