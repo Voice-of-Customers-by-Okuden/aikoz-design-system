@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { expect, within } from "storybook/test";
 import { Table, type TableColumn } from "@registry/aikoz/table/table";
 import { Switch } from "@registry/aikoz/switch/switch";
 import { Badge } from "@registry/aikoz/badge/badge";
+import { Card } from "@registry/aikoz/card/card";
 
 // ─── Les données de l'écran ──────────────────────────────────────────────────
 
@@ -55,6 +56,7 @@ const nommerLaCase = (f: Fonctionnalite, r: Role) =>
 
 function MatriceHabilitation({ modifiable }: { modifiable: boolean }) {
   const [droits, setDroits] = useState(DROITS);
+  const titreId = useId();
 
   const colonnes: TableColumn<Fonctionnalite>[] = [
     { key: "label", header: "Fonctionnalité", width: "16rem" },
@@ -105,14 +107,42 @@ function MatriceHabilitation({ modifiable }: { modifiable: boolean }) {
   ];
 
   return (
-    <Table
-      caption="Accès aux fonctionnalités par profil utilisateur"
-      columns={colonnes}
-      rows={FONCTIONNALITES}
-      getRowKey={(f) => f.key}
-      rowHeaderKey="label"
-      density="compact"
-    />
+    // La coque du tableau de bord, pas celle de la maquette : `Card
+    // as="section"` + un `h2` en `font-heading`. C'est le motif de ses
+    // quinze blocs, et une matrice qui s'en écarterait se lirait comme une
+    // pièce rapportée.
+    <Card as="section" aria-labelledby={titreId} className="gap-4">
+      <div className="flex flex-col gap-1">
+        <h2 id={titreId} className="m-0 font-heading text-base font-semibold">
+          Matrice d'habilitation
+        </h2>
+        <p className="m-0 text-sm text-muted-foreground">
+          Accès aux fonctionnalités par profil utilisateur
+        </p>
+      </div>
+
+      <Table
+        // Masqué : le `h2` au-dessus dit déjà la même chose, et l'entendre
+        // deux fois de suite n'apprend rien.
+        caption="Accès aux fonctionnalités par profil utilisateur"
+        captionHidden
+        columns={colonnes}
+        rows={FONCTIONNALITES}
+        getRowKey={(f) => f.key}
+        rowHeaderKey="label"
+        density="compact"
+      />
+
+      {/* La légende n'existe QUE pour la version modifiable. Un interrupteur
+          ne dit pas de lui-même ce que son état signifie ici ; une pastille
+          qui porte le mot « Autorisé » n'a besoin d'aucune légende. */}
+      {modifiable && (
+        <p className="m-0 text-xs text-muted-foreground">
+          Un interrupteur activé ouvre l'accès à la fonctionnalité pour ce
+          profil. Les changements s'appliquent à la prochaine connexion.
+        </p>
+      )}
+    </Card>
   );
 }
 

@@ -147,7 +147,15 @@ export function Table<T>({
         // grille vaut `min-width: auto` et ne rétrécit pas sous son contenu. Sans
         // lui, le conteneur s'élargit au lieu de défiler, et c'est la PAGE qui
         // finit par défiler à sa place.
-        "w-full min-w-0 overflow-x-auto rounded-[var(--radius)] border border-border bg-card",
+        // `relative` n'est PAS décoratif : sans lui, ce conteneur est en
+        // `position: static` et ne sert de bloc conteneur à personne. Tout
+        // descendant `sr-only` — le `<caption>` masqué, l'étiquette d'un
+        // `Switch` dans une cellule — est en `position: absolute` et prend
+        // alors la PAGE pour référence. Il sort du conteneur de défilement,
+        // et un tableau large pousse le document à l'horizontale au lieu de
+        // défiler chez lui. Mesuré : 238 px de débordement à 375 px de large
+        // sur une matrice de six colonnes à interrupteurs.
+        "relative w-full min-w-0 overflow-x-auto rounded-[var(--radius)] border border-border bg-card",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
         className
       )}

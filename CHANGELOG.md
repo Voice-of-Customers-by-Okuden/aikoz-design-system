@@ -18,6 +18,22 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.11.1] — 2026-09-24
+
+### Corrigé
+
+- **`Table` : un tableau large poussait la PAGE au lieu de défiler chez lui.**
+  Son conteneur de débordement était en `position: static`, donc bloc
+  conteneur de personne. Tout descendant `sr-only` — le `<caption>` masqué,
+  l'étiquette d'un `Switch` posé dans une cellule — est en
+  `position: absolute` et prenait alors **la page** pour référence : il
+  sortait du conteneur et étirait le document. Mesuré sur une matrice de six
+  colonnes à interrupteurs : **238 px de débordement à 375 px de large**. Un
+  `relative` le corrige, et une histoire le mesure en forçant le tableau à
+  2 400 px — vérifiée en retirant le mot.
+
+---
+
 ## [2.11.0] — 2026-09-23
 
 ### Ajouté
