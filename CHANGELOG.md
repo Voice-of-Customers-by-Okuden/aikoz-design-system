@@ -18,6 +18,26 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.15.0] — 2026-09-24
+
+### Ajouté
+
+- **`Table.layout="fixed"`** — les colonnes sans `width` déclarée se
+  partagent le reste à parts égales.
+
+  La règle qui tranche : **des colonnes qui portent le même contenu doivent
+  avoir la même largeur.** Sur la matrice d'habilitation, la largeur suivait
+  la longueur de l'intitulé — mesuré **165 · 107 · 152 · 84 · 85 · 84 px**
+  pour six colonnes contenant le même interrupteur, presque du simple au
+  double. Une différence de largeur se lit comme une différence de sens.
+  Après : **113 px partout, écart 0.** Une histoire le mesure, vérifiée en
+  retirant le prop.
+
+  `auto` reste le défaut : sur un tableau de texte, un nom long doit avoir la
+  place et un code court ne doit pas la gaspiller.
+
+---
+
 ## [2.14.0] — 2026-09-24
 
 ### Ajouté

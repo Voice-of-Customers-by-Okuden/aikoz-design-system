@@ -265,6 +265,11 @@ function MatriceHabilitation({
         // Une matrice se lit dans les DEUX sens : sans filet vertical, sept
         // colonnes de marqueurs identiques se confondent.
         columnRules
+        // Les six colonnes de rôles portent le MÊME contenu : elles doivent
+        // avoir la même largeur. En `auto`, la largeur suivait la longueur
+        // de l'intitulé — 165 px pour « Gestionnaire POI » contre 84 px pour
+        // « Rôle 5 » — et l'écart se lisait comme une différence de sens.
+        layout="fixed"
       />
 
       {/* La légende n'existe QUE pour la version modifiable. Un interrupteur
@@ -345,6 +350,21 @@ export const Modifiable: Story = {
     //
     // Ce test ne tombe pas : il MESURE le coût, pour qu'il soit chiffré dans
     // la conversation avec ADP plutôt qu'observé le jour de la recette.
+    // ── Les colonnes de rôles font la même largeur ────────────────────────
+    //
+    // Elles portent le MÊME contenu — un interrupteur — donc une différence
+    // de largeur se lit comme une différence de sens. En `layout="auto"`,
+    // la largeur suivait la longueur de l'intitulé : mesuré 165 px pour
+    // « Gestionnaire POI » contre 84 px pour « Rôle 5 ».
+    const entetes = [...canvasElement.querySelectorAll("thead th")].slice(1);
+    const largeurs = entetes.map((t) => Math.round(t.getBoundingClientRect().width));
+    const ecart = Math.max(...largeurs) - Math.min(...largeurs);
+    await expect(
+      ecart,
+      `les colonnes de rôles mesurent ${largeurs.join(" · ")} px : elles ` +
+        `portent le même contenu et doivent donc avoir la même largeur.`,
+    ).toBeLessThanOrEqual(1);
+
     const distincts = new Set(noms).size;
     await expect(
       distincts,

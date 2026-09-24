@@ -101,6 +101,22 @@ export interface TableProps<T> {
    * sens.
    */
   columnRules?: boolean;
+  /**
+   * `auto` (défaut) — chaque colonne prend la largeur de son contenu. C'est
+   * ce qu'on veut d'un tableau de texte : un nom long a la place, un code
+   * court ne la gaspille pas.
+   *
+   * `fixed` — les colonnes SANS `width` déclarée se partagent le reste à
+   * parts égales.
+   *
+   * La règle qui tranche : **des colonnes qui portent le même contenu
+   * doivent avoir la même largeur.** Sur une matrice de droits, la largeur
+   * suivait la longueur de l'intitulé — mesuré 165 px pour « Gestionnaire
+   * POI » contre 84 px pour « Rôle 5 », presque du simple au double pour
+   * deux colonnes qui contiennent le même interrupteur. Une différence de
+   * largeur se lit comme une différence de sens.
+   */
+  layout?: "auto" | "fixed";
   className?: string;
 }
 
@@ -164,6 +180,7 @@ export function Table<T>({
   density = "default",
   rowHeaderSurface = false,
   columnRules = false,
+  layout = "auto",
   className,
 }: TableProps<T>) {
   const cellule =
@@ -206,7 +223,12 @@ export function Table<T>({
         className
       )}
     >
-      <table className="w-full border-collapse text-sm">
+      <table
+        className={cn(
+          "w-full border-collapse text-sm",
+          layout === "fixed" && "table-fixed",
+        )}
+      >
         <caption
           className={cn(
             "text-left text-sm text-muted-foreground",
