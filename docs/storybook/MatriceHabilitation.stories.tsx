@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { expect, within } from "storybook/test";
 import { Table, type TableColumn } from "@registry/aikoz/table/table";
 import { Switch } from "@registry/aikoz/switch/switch";
+import { Badge } from "@registry/aikoz/badge/badge";
 
 // ─── Les données de l'écran ──────────────────────────────────────────────────
 
@@ -49,7 +50,8 @@ const DROITS: Record<string, Record<string, boolean>> = {
  * fois « interrupteur, activé » au lecteur d'écran. Personne n'écrit ces
  * libellés à la main, et personne ne les maintient quand une colonne bouge.
  */
-const nommerLaCase = (f: Fonctionnalite, r: Role) => `${f.label} pour ${r.label}`;
+const nommerLaCase = (f: Fonctionnalite, r: Role) =>
+  `${f.label} pour ${r.label}`;
 
 function MatriceHabilitation({ modifiable }: { modifiable: boolean }) {
   const [droits, setDroits] = useState(DROITS);
@@ -61,33 +63,41 @@ function MatriceHabilitation({ modifiable }: { modifiable: boolean }) {
       header: r.label,
       cell: (f: Fonctionnalite) => {
         const accorde = droits[f.key][r.key];
-        return modifiable ? (
-          <Switch
-            label={nommerLaCase(f, r)}
-            labelHidden
-            checked={accorde}
-            onCheckedChange={(v) =>
-              setDroits((d) => ({ ...d, [f.key]: { ...d[f.key], [r.key]: v } }))
-            }
-          />
-        ) : (
-          // En lecture seule, PAS d'interrupteur : il donne envie de cliquer
-          // sur ce qui ne se clique pas. Un signe et son mot.
-          <span className="inline-flex items-center gap-1.5">
-            <span
-              aria-hidden="true"
-              className={
-                accorde
-                  ? "text-[var(--success)]"
-                  : "text-[var(--muted-foreground)]"
-              }
-            >
-              {accorde ? "✓" : "—"}
-            </span>
-            <span className="text-xs text-muted-foreground">
-              {accorde ? "Autorisé" : "Non"}
-            </span>
-            <span className="sr-only">{nommerLaCase(f, r)}</span>
+        // Centré dans sa colonne. `Table` aligne à gauche par défaut, ce qui
+        // convient à du texte de longueur variable — pas à une grille de
+        // marqueurs identiques, où l'œil compare des COLONNES et où le
+        // moindre décalage se lit comme une différence.
+        return (
+          <span className="flex justify-center">
+            {modifiable ? (
+              <Switch
+                label={nommerLaCase(f, r)}
+                labelHidden
+                checked={accorde}
+                onCheckedChange={(v) =>
+                  setDroits((d) => ({
+                    ...d,
+                    [f.key]: { ...d[f.key], [r.key]: v },
+                  }))
+                }
+              />
+            ) : (
+              // En lecture seule, PAS d'interrupteur : il donne envie de cliquer
+              // sur ce qui ne se clique pas.
+              //
+              // Mais pas un `<span>` bricolé non plus, ce que j'avais fait
+              // d'abord : `Badge` EXISTE, c'est une pastille, elle porte un ton
+              // et son contour tient le 3:1 contre la carte. Réécrire à la main
+              // ce que le système fournit, c'est exactement la dérive qu'un
+              // design system est censé empêcher.
+              <Badge
+                tone={accorde ? "success" : "neutral"}
+                size="sm"
+                label={nommerLaCase(f, r)}
+              >
+                {accorde ? "Autorisé" : "Non"}
+              </Badge>
+            )}
           </span>
         );
       },
@@ -151,7 +161,9 @@ export const Modifiable: Story = {
     // qui mesurait mon erreur au lieu du composant.
     const noms = c
       .getAllByRole("switch")
-      .map((s) => (s as HTMLInputElement).labels?.[0]?.textContent?.trim() ?? "");
+      .map(
+        (s) => (s as HTMLInputElement).labels?.[0]?.textContent?.trim() ?? "",
+      );
     await expect(noms).toHaveLength(24);
     await expect(new Set(noms).size).toBe(24);
   },
@@ -166,6 +178,8 @@ export const LectureSeule: Story = {
     // Aucun interrupteur : ce qui ne se change pas ne se présente pas comme
     // un contrôle.
     await expect(c.queryAllByRole("switch")).toHaveLength(0);
-    await expect(c.getByText("Réponse aux avis pour Directeur")).toBeInTheDocument();
+    await expect(
+      c.getByText("Réponse aux avis pour Directeur"),
+    ).toBeInTheDocument();
   },
 };
