@@ -18,6 +18,36 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.12.0] — 2026-09-24
+
+### Ajouté
+
+- **`KanbanBoard`** — le tableau à colonnes, extrait de `ResponseKanban`. Il
+  tient le contrat de STRUCTURE quel que soit ce qu'on y met : chaque colonne
+  est une `section` nommée par son titre, le compte est un `CountBadge`
+  étiqueté, et `tone` pilote le liseré ET le compteur — deux props, c'était
+  deux occasions de les laisser dire des choses différentes. Les cartes sont
+  fournies par l'appelant : une file de réponses et un circuit de validation
+  n'affichent pas les mêmes choses.
+- **Assemblage « Circuit de validation »** (Storybook). Bâti sur
+  `KanbanBoard`, comme `ResponseKanban` — le même tableau, d'autres colonnes.
+  Il porte la distinction que la demande manquait : **l'état de la réponse
+  vit sur la CARTE, le toast ne confirme que le geste.** « En attente de
+  validation » n'est pas un message passager ; un toast disparaît en six
+  secondes, et quelqu'un qui revient dix minutes plus tard doit toujours
+  savoir où en est son travail.
+- **Assemblage « Matrice d'habilitation »** (Storybook), en marque ADP.
+  Modifiable ou consultable. Chaque case porte un nom déduit de sa ligne et
+  de sa colonne — « Réponse aux avis pour Directeur » — sans quoi vingt-quatre
+  interrupteurs annoncent vingt-quatre fois « interrupteur, activé ».
+
+### Changé
+
+- **`ResponseKanban` est bâti sur `KanbanBoard`.** Son API ne bouge pas, son
+  rendu non plus ; ses trois colonnes restent ses trois colonnes.
+
+---
+
 ## [2.11.1] — 2026-09-24
 
 ### Corrigé
