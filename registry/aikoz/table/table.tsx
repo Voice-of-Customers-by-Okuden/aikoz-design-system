@@ -15,7 +15,20 @@ export interface TableColumn<T> {
   key: string;
   /** En-tête de colonne. Court : il est relu à chaque cellule par un
    *  lecteur d'écran en mode tableau. */
+  /**
+   * Nom de la colonne. **Obligatoire, et toujours du texte** : c'est lui qui
+   * nomme la cellule pour un lecteur d'écran, et il ne peut donc pas être un
+   * pictogramme.
+   */
   header: string;
+  /**
+   * Rendu VISUEL de l'en-tête — une icône au-dessus du nom, par exemple.
+   *
+   * Il complète `header`, il ne le remplace pas : la relation `scope="col"`
+   * continue de porter le texte. Ce qu'on met ici est décoratif par
+   * construction, et doit l'être par déclaration (`aria-hidden`).
+   */
+  headerCell?: ReactNode;
   /** Rendu de la cellule. Par défaut, la valeur brute de `row[key]`. */
   cell?: (row: T) => ReactNode;
   /**
@@ -57,7 +70,37 @@ export interface TableProps<T> {
   loadingRows?: number;
   /** Rendu quand `rows` est vide — un `EmptyState`, en général. */
   empty?: ReactNode;
-  density?: "compact" | "default";
+  /**
+   * `compact` pour un tableau de CHIFFRES qu'on parcourt du regard,
+   * `default` pour la lecture courante, `large` quand chaque cellule porte
+   * un CONTRÔLE — une matrice de droits, une grille de réglages.
+   *
+   * Ce n'est pas un réglage d'esthétique : une case à 56 px de haut laisse
+   * la place d'une cible de 44 px et de son anneau de focus, ce que 38 px ne
+   * permet pas. La densité suit ce que la cellule contient.
+   */
+  density?: "compact" | "default" | "large";
+  /**
+   * Pose la colonne d'en-têtes de ligne sur une surface distincte.
+   *
+   * Sur une grille large — six colonnes de marqueurs identiques — l'œil perd
+   * sa ligne en parcourant vers la droite. Un fond sourd sur la colonne qui
+   * NOMME la ligne l'ancre. Sans `rowHeaderKey`, ce prop ne fait rien : il
+   * n'y a pas de colonne à ancrer.
+   */
+  rowHeaderSurface?: boolean;
+  /**
+   * Trace un filet entre les COLONNES.
+   *
+   * Inutile sur un tableau qu'on lit ligne par ligne — il ajoute du bruit et
+   * Tufte aurait raison de le dire. Nécessaire dès qu'on lit aussi en
+   * COLONNE : une matrice de droits se parcourt dans les deux sens, et sept
+   * colonnes de marqueurs identiques sans séparation se confondent.
+   *
+   * La règle : filets verticaux si et seulement si les deux axes portent du
+   * sens.
+   */
+  columnRules?: boolean;
   className?: string;
 }
 
@@ -119,9 +162,12 @@ export function Table<T>({
   loadingRows = 5,
   empty,
   density = "default",
+  rowHeaderSurface = false,
+  columnRules = false,
   className,
 }: TableProps<T>) {
-  const cellule = density === "compact" ? "px-3 py-2" : "px-4 py-3";
+  const cellule =
+    density === "compact" ? "px-3 py-2" : density === "large" ? "px-4 py-4" : "px-4 py-3";
 
   function trier(key: string) {
     const direction: SortDirection =
@@ -171,7 +217,10 @@ export function Table<T>({
         </caption>
 
         <thead>
-          <tr className="border-b border-border">
+          {/* Le trait sous l'en-tête est PORTEUR, pas décoratif : il sépare
+              les noms de colonnes de rangées de cellules qui se ressemblent.
+              `--border-strong` tient 3:1 contre la carte, `--border` non. */}
+          <tr className="border-b-2 border-[var(--border-strong)]">
             {columns.map((c) => {
               const actif = sort?.key === c.key;
               return (
@@ -191,8 +240,9 @@ export function Table<T>({
                   style={c.width ? { width: c.width } : undefined}
                   className={cn(
                     cellule,
-                    "font-semibold text-foreground",
-                    c.numeric ? "text-right" : "text-left"
+                    "font-semibold text-foreground align-bottom",
+                    columnRules && "border-l border-border first:border-l-0",
+                    c.numeric ? "text-right" : c.headerCell ? "text-center" : "text-left"
                   )}
                 >
                   {c.sortable && onSortChange ? (
@@ -210,7 +260,7 @@ export function Table<T>({
                       <Fleche direction={actif ? sort.direction : undefined} />
                     </button>
                   ) : (
-                    c.header
+                    (c.headerCell ?? c.header)
                   )}
                 </th>
               );
@@ -252,6 +302,7 @@ export function Table<T>({
                     : ((row as Record<string, unknown>)[c.key] as ReactNode);
                   const classes = cn(
                     cellule,
+                    columnRules && "border-l border-border first:border-l-0",
                     // Chiffres tabulaires : sans eux, les colonnes de nombres
                     // ne s'alignent pas verticalement et la comparaison d'une
                     // ligne à l'autre demande de relire chiffre par chiffre.
@@ -261,7 +312,11 @@ export function Table<T>({
                     <th
                       key={c.key}
                       scope="row"
-                      className={cn(classes, "font-medium text-foreground")}
+                      className={cn(
+                        classes,
+                        "font-medium text-foreground",
+                        rowHeaderSurface && "bg-[var(--muted)]",
+                      )}
                     >
                       {contenu}
                     </th>

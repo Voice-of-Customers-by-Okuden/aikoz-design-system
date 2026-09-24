@@ -18,6 +18,47 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.14.0] — 2026-09-24
+
+### Ajouté
+
+- **`Table.density="large"`** — 56 px de haut. Ce n'est pas un réglage
+  d'esthétique : une cellule qui porte un CONTRÔLE a besoin de la place d'une
+  cible de 44 px et de son anneau de focus, ce que 38 px ne donnent pas.
+- **`Table.rowHeaderSurface`** — pose la colonne d'en-têtes de ligne sur un
+  fond sourd. Sur six colonnes de marqueurs identiques, l'œil perd sa ligne
+  en parcourant vers la droite.
+- **`Table.columnRules`** — filets verticaux. Inutiles sur un tableau qu'on
+  lit ligne par ligne, nécessaires dès qu'on lit aussi en COLONNE. La règle :
+  filets verticaux si et seulement si les deux axes portent du sens.
+- **`TableColumn.headerCell`** — rendu visuel de l'en-tête, une icône
+  au-dessus du nom par exemple. Il COMPLÈTE `header`, il ne le remplace pas :
+  `scope="col"` continue de porter le texte.
+
+### Corrigé
+
+- **`BrandMark` : `className` REMPLAÇAIT la boîte au lieu de s'y ajouter.** Un
+  `shrink-0` posé pour une raison de mise en page effaçait
+  `h-8 max-w-[160px]`, et le logo d'ADP se rendait à **950 × 326 px** au
+  milieu d'un en-tête. Un même nom pour deux comportements — ajouter partout
+  ailleurs, remplacer ici — est le défaut le plus cher d'une bibliothèque :
+  il ne se voit qu'à l'usage, et il se voit tard. Redimensionner reste
+  possible, `tailwind-merge` tranche en faveur de la classe passée.
+- **Le trait sous l'en-tête d'un `Table` passe en `--border-strong`.** Il
+  sépare les noms de colonnes de rangées de cellules qui se ressemblent :
+  `--border` ne tient pas 3:1 contre la carte, `--border-strong` oui.
+
+### Changé
+
+- **La matrice d'habilitation est retravaillée.** Filet d'accent de marque en
+  haut de la carte — le vocabulaire de `SiteNav`, seule place de la troisième
+  couleur de marque —, logo et titre de bloc, un pictogramme par ligne et par
+  colonne, colonne d'ancrage, lignes à 56 px, filets verticaux, légende
+  dessinée. Les marqueurs de la légende ne sont PAS des `Switch` : un
+  contrôle focalisable qui ne commande rien est le piège qu'on évite.
+
+---
+
 ## [2.13.0] — 2026-09-24
 
 ### Ajouté
