@@ -18,6 +18,46 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.16.0] — 2026-09-24
+
+### Ajouté
+
+- **Le pont publie `--success-border`, `--warning-border`, `--error-border` et
+  `--info-border`** — la rampe `*.300` de la charte : **#FAD94E** pour
+  l'avertissement, **#EC9A84** pour l'erreur.
+
+  Ces rôles existaient dans les quatre thèmes **depuis l'origine** et
+  n'étaient republiés nulle part. Quatre couleurs de la charte qu'aucun
+  composant ne pouvait demander.
+- **Neuvième garde de build : un rôle de statut défini dans un thème doit
+  être publié par le pont.** Le contrôle des rôles morts attrapait l'inverse
+  — les rôles émis que personne ne lit — et ne voyait pas celui-ci, qui coûte
+  plus cher : un rôle mort se voit, un rôle injoignable non. Vérifié en
+  retirant `--warning-border` du pont.
+
+  Il cherche si le pont **pointe** vers le rôle, pas s'il porte le même nom :
+  le pont renomme volontiers — `status.warning-text` y devient `--warning`.
+  Le premier jet accusait cinq rôles parfaitement publiés.
+
+  Trois rôles sont nommés comme attendant un usage : les aplats pleins
+  `status.success`, `status.warning` et `status.info`. Seule l'erreur en a un
+  aujourd'hui, republiée en `--destructive`.
+
+### Changé
+
+- **`Badge` emploie TROIS rôles au lieu d'un.** Il dessinait tout avec la
+  couleur de texte — contour compris, et un fond fait d'un voile à 8 % de
+  cette même couleur. Un texte est foncé parce qu'il doit tenir 4,5:1 ; un
+  contour n'a aucune raison de l'être. L'avertissement sortait donc en kaki
+  (#6E5100) alors que la charte porte un jaune franc.
+
+  Le contour vient de `-border`, le fond de `-subtle`, et seul le texte garde
+  la couleur de texte. `neutral` reste sur `--muted-foreground` : il n'a pas
+  de rampe de statut, et un gris n'a pas de contour à distinguer de son
+  texte.
+
+---
+
 ## [2.15.1] — 2026-09-24
 
 ### Corrigé
