@@ -18,6 +18,109 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.20.0] — 2026-09-25
+
+Les deux écrans de la v2 de l'outil « ADP+ · Avis digitaux » entrent dans
+« Assemblages », et une journée de relecture avec Alice les accompagne. Rien
+ne casse : aucune prop ne disparaît, aucune variable publiée ne cesse
+d'exister. Le rendu d'ADP change en revanche, et c'est voulu.
+
+### Ajouté
+
+- **`role.radius.pill`, publié en `--radius-pill`.** Le rayon des formes dont
+  la pilule est un choix d'IDENTITÉ — bouton, badge, delta-badge, puce de
+  filtre, choice-card en mode puce, sélecteur de période, étiquette de
+  verbatim. Les cercles imposés par la GÉOMÉTRIE — avatar, curseur
+  d'interrupteur, piste de jauge, pastilles de rang et de compteur — gardent
+  `rounded-full` sous toutes les marques : changer leur rayon ne produirait
+  pas une autre identité mais une erreur de dessin.
+
+  Une treizième convention tient le tri : tout `rounded-full` restant doit
+  être nommé dans `CERCLES_PAR_GEOMETRIE` avec sa raison.
+
+- **`color.nav.surface-sunken`, publié en `--nav-surface-sunken`.** Le fond
+  d'une région de la barre latérale — le pied qui porte le compte, le POI et
+  la langue. Rôle dédié parce qu'il n'existait rien : en clair, `--muted`,
+  `--surface-hover` et `--nav-surface-active` valent exactement la même
+  couleur, et donner l'un des trois au pied lui aurait donné la teinte qui
+  signifie « vous êtes ici ».
+
+- **`NavItem.density`** — `compact` pour une liste d'HISTORIQUE (36 px,
+  `text-xs`) par opposition à la navigation principale (44 px, `text-sm`).
+  La cible tactile ne bouge pas : `tactile:min-h-11`, la règle que `Button`
+  applique déjà à sa taille `sm`.
+- **`NavItem.ancestor`** — l'entrée n'est pas la page affichée mais la
+  SECTION qui la contient. Rend `aria-current="location"`. Visuellement
+  identique à `current` : ce qui distingue les deux est leur groupe, pas leur
+  force.
+- **`SidebarNav.ancestor`**, **`SidebarNavGroup.density`** et
+  **`SidebarNavGroup.empty`** — ce dernier pour qu'un groupe filtré à zéro
+  dise POURQUOI il est vide, au lieu de rendre une liste vide sous son
+  intitulé.
+- **`SelectOption.icon`** — un repère visuel décoratif avant le libellé,
+  rendu dans `ItemText` donc repris par le déclencheur. `aria-hidden` :
+  c'est le libellé qui porte le sens.
+- **`BrandMark.orientation`** et **`LogoMarque.vertical`** — le bloc vertical
+  d'une charte, pour les endroits où la largeur manque. Mesuré à 40 px de
+  haut : bloc horizontal du Groupe ADP 116 px de large, vertical 47. Une
+  marque sans bloc vertical retombe silencieusement sur l'horizontal, qui
+  reste son logo validé.
+- **Le bloc vertical du Groupe ADP**, clair et sombre dérivé.
+
+### Modifié
+
+- **ADP n'est plus une marque en pilule.** `--radius-pill` vaut 6 px sous
+  `data-brand="adp"`, contre 9999 ailleurs. Valeur relevée sur leur
+  plateforme multi-POI, dont les boutons portent
+  `border-radius: calc(var(--radius) - 2px)` pour un `--radius` de 0,5rem.
+  Littérale et non un alias : notre échelle de rayons va de 4 à 8 sans passer
+  par 6.
+
+  **Aucune autre marque ne change.** Retirer cette seule ligne de
+  `tokens/brand/adp.json` rend les pilules, sans toucher à un composant.
+
+- **La barre latérale ne déborde plus sous le pli.** Seuls les groupes
+  défilent ; l'en-tête et le pied restent en place. Mesuré avant :
+  880 px de barre dans une fenêtre de 760, pied à 868 — sélecteur de POI et
+  déconnexion inatteignables, avec cinq conversations seulement.
+- **La liste dit qu'elle continue.** Un dégradé au bord, qui n'apparaît que
+  si quelque chose est réellement masqué et change de bord une fois qu'on est
+  arrivé en bas.
+- **Le pied de la barre est une région**, avec son propre fond et sans trait.
+- **`ReplyBubble` rend les paragraphes.** Une réponse à un avis en fait
+  toujours trois — salutation, corps, signature —, et le composant les
+  fondait en un seul bloc. Le découpage est exporté
+  (`decouperEnParagraphes`) pour les appelants qui rendent une réponse sans
+  la citation en creux.
+- **`NavItem` se tait sous 1.** Une pastille « 0 » occupe la place et fait
+  annoncer « Gestion des avis, 0 en attente » là où le libellé suffisait.
+
+### Corrigé
+
+- **`text-balance` annulait silencieusement `whitespace-nowrap` sur tout
+  `Button`.** `white-space` et `text-wrap` écrivent dans la même propriété
+  longue, `text-wrap-mode` : la classe de l'appelant était dans le DOM, la
+  règle dans la feuille, et `white-space` calculait `normal`. C'est
+  `text-nowrap` qu'il faut, parce que `tailwind-merge` retire alors
+  `text-balance`. La cause est écrite dans `button.tsx`.
+- **`ViewTabs`, `Badge` : sélecteurs de test tenant à l'orthographe d'une
+  classe.** Cinq assertions de `Badge` sont tombées d'un coup le jour où la
+  pilule est passée sur un token, sans que le composant ait changé de
+  comportement. Elles mesurent désormais le rendu.
+
+### Assemblages
+
+- **`Assemblages/Accueil ADP`** — le rond-point : on confirme le POI, puis on
+  choisit sa route parmi trois espaces, chacun portant le chiffre qui dit
+  s'il faut y aller. Les paramètres sont un raccourci, pas une quatrième
+  porte.
+- **`Assemblages/Conversation ADP`** — l'assistant rédige, on relit, on
+  choisit sa sortie. Les deux sorties coexistent, hiérarchisées.
+- **`adp-commun.tsx`** — barre latérale, sélecteur de POI et coquille de
+  page, partagés par les deux écrans.
+
+---
+
 ## [2.19.2] — 2026-09-25
 
 ### Corrigé

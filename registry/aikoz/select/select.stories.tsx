@@ -103,3 +103,67 @@ export const LeChoixSeFaitAuClavier: Story = {
     },
   },
 };
+
+export const AvecRepereVisuel: Story = {
+  name: "Un repère visuel devant le libellé",
+  args: {
+    label: "Langue de l'interface",
+    defaultValue: "fr",
+    options: [
+      { value: "fr", label: "Français", icon: <span>🇫🇷</span> },
+      { value: "en", label: "English", icon: <span>🇬🇧</span> },
+      { value: "es", label: "Español", icon: <span>🇪🇸</span> },
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "L'icône d'une option est **décorative**, toujours : elle est rendue " +
+          "`aria-hidden`, et c'est le libellé écrit en toutes lettres qui porte " +
+          "le sens. Un drapeau nomme un PAYS, pas une langue — le français ne " +
+          "s'arrête pas à la France, et le choix d'un drapeau pour l'anglais " +
+          "est arbitraire. Employé seul il serait faux ; employé comme repère, " +
+          "il accélère la reconnaissance sans rien affirmer.\n\n" +
+          "Le repère est rendu dans `ItemText`, donc repris par le déclencheur " +
+          "une fois l'option choisie. Sans cela il n'existerait que dans la " +
+          "liste ouverte, c'est-à-dire là où on n'en a pas besoin.",
+      },
+    },
+  },
+  play: async ({ canvas, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    // Le repère est dans le DÉCLENCHEUR, pas seulement dans la liste : c'est
+    // toute la différence entre un repère et une décoration de menu.
+    const declencheur = canvas.getByRole("combobox");
+    await expect(declencheur.textContent).toContain("🇫🇷");
+
+    // Et il ne dit rien au lecteur d'écran.
+    //
+    // C'est sur l'OPTION que ça se joue, pas sur le déclencheur : le nom de
+    // celui-ci vient de son libellé seul, et le drapeau n'y entre jamais,
+    // `aria-hidden` ou pas. Une assertion posée là ne mesurait donc rien —
+    // vérifié en retirant `aria-hidden`, le test passait toujours.
+    //
+    // Deux erreurs de mesure avant celle-ci : `textContent` d'abord, qui
+    // ignore `aria-hidden` et accusait le composant à tort ; le nom du
+    // déclencheur ensuite, invariant.
+    await u.click(declencheur);
+    const option = await screen.findByRole("option", { name: /Espa/ });
+    await expect(
+      option,
+      "le drapeau entre dans le nom de l'option : un lecteur d'écran " +
+        "annoncera « drapeau Espagne Español ».",
+    ).toHaveAccessibleName("Español");
+
+    // On referme. Laisser la liste ouverte à la fin de l'histoire fait
+    // tourner l'audit d'accessibilité sur un état transitoire : Radix pose
+    // `aria-hidden` sur le reste du document pendant l'ouverture, et axe
+    // signale alors un déclencheur focalisable dans une zone masquée —
+    // vrai pendant une fraction de seconde, faux comme défaut du composant.
+    await u.keyboard("{Escape}");
+    await waitFor(async () => {
+      await expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+    });
+  },
+};

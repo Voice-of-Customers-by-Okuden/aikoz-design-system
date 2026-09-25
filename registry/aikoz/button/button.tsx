@@ -8,7 +8,18 @@ import { cn } from "@registry/aikoz/lib/utils";
 const buttonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2",
-    "rounded-full font-medium",
+    // `--radius-pill` et non `rounded-full` : la pilule est un choix
+    // d'IDENTITÉ, pas une contrainte de dessin. Aikoz est en pilule, ADP ne
+    // l'est pas — sa charte et la v2 de son outil posent des angles courts
+    // sur des formes rectangulaires, et la pilule y lisait comme une greffe.
+    //
+    // La distinction à tenir : un bouton reste lisible à tous les rayons,
+    // donc son rayon appartient à la marque. Un avatar, le curseur d'un
+    // interrupteur ou la piste d'une jauge sont aussi larges que hauts ou
+    // doivent finir en demi-cercle — changer leur rayon ne produit pas une
+    // autre identité, mais une erreur de dessin. Ceux-là gardent
+    // `rounded-full` sous toutes les marques.
+    "rounded-[var(--radius-pill)] font-medium",
     // Pas de `whitespace-nowrap` : avec lui, un libellé long sortait du
     // conteneur et se faisait rogner — un bouton qui découpe son propre
     // libellé est cassé, et sur mobile le texte disparaissait purement.
@@ -20,6 +31,21 @@ const buttonVariants = cva(
     "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
     "disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
   ],
+  // ── `text-balance` empêche `whitespace-nowrap` de fonctionner ──────────
+  //
+  // `text-wrap` est un raccourci de `text-wrap-mode` + `text-wrap-style`, et
+  // `white-space` un raccourci de `white-space-collapse` + `text-wrap-mode`.
+  // Les deux écrivent donc dans la MÊME propriété longue. Posé sur la base,
+  // `text-balance` remet `text-wrap-mode` à `wrap` — et le
+  // `whitespace-nowrap` d'un appelant est silencieusement annulé : la classe
+  // est dans le DOM, la règle est dans la feuille, et `white-space` calcule
+  // `normal`. Mesuré sur « Donner votre voix à ADP+ » dans une barre de
+  // 240 px : 60 px de haut, soit deux lignes, avec la classe posée.
+  //
+  // Pour forcer une ligne unique, passer **`text-nowrap`** et non
+  // `whitespace-nowrap` : les deux appartiennent au même groupe pour
+  // `tailwind-merge`, qui retire alors `text-balance` au lieu de le laisser
+  // gagner.
   {
     variants: {
       variant: {

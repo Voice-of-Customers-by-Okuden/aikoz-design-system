@@ -101,3 +101,44 @@ export const OrigineMasquee: Story = {
     await expect(canvas.queryByText("IA")).not.toBeInTheDocument();
   },
 };
+
+export const PlusieursParagraphes: Story = {
+  name: "Une réponse fait plusieurs paragraphes",
+  args: {
+    origin: "ai",
+    children: `Bonjour Madame Charmon,
+
+Nous vous remercions sincèrement d'avoir pris le temps de partager votre expérience positive suite à votre premier passage à l'aéroport Paris-Charles de Gaulle.
+
+Cordialement,
+L'équipe de l'Aéroport de Paris-Charles de Gaulle`,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Salutation, corps, signature : une réponse à un avis n'est jamais un " +
+          "bloc. Une **ligne vide** ouvre un paragraphe, un **simple retour à la " +
+          "ligne** reste dans le paragraphe courant — c'est la signature sur deux " +
+          "lignes, pas un nouveau paragraphe.\n\n" +
+          "Le découpage est fait par le composant et non par l'appelant : poser " +
+          "`whitespace-pre-line` sur le conteneur en comptant sur l'héritage CSS " +
+          "marche en théorie et pas en pratique, parce que la classe doit d'abord " +
+          "exister dans la feuille générée.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const paragraphes = canvasElement.querySelectorAll("p");
+    await expect(
+      paragraphes.length,
+      `la réponse sort en ${paragraphes.length} paragraphe(s) au lieu de 3.`,
+    ).toBe(3);
+
+    // Le retour simple de la signature devient un `<br>`, pas un paragraphe.
+    await expect(
+      paragraphes[2].querySelectorAll("br").length,
+      "la signature sur deux lignes a perdu son retour à la ligne.",
+    ).toBe(1);
+  },
+};

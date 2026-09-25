@@ -19,6 +19,18 @@ export interface LogoMarque {
    * signalerait avant la démonstration client.
    */
   sombre?: string;
+  /**
+   * Le bloc VERTICAL — symbole au-dessus du nom —, quand la charte en prévoit
+   * un. Beaucoup de marques en ont deux ; ce n'est pas une variante
+   * décorative mais un cadrage prévu par la charte, pour les endroits où la
+   * largeur manque.
+   *
+   * Son absence n'est pas un défaut : `BrandMark` retombe alors sur le bloc
+   * horizontal, qui reste le logo validé. C'est différent de l'absence de
+   * version sombre, où reprendre le fichier clair donnerait une tache
+   * illisible — ici le repli est juste, seulement moins compact.
+   */
+  vertical?: { clair: string; sombre?: string };
 }
 
 /**
@@ -50,6 +62,25 @@ export const LOGOS: Record<string, LogoMarque> = {
     nom: "Groupe ADP",
     clair: "./logos/adp-clair.svg",
     sombre: "./logos/adp-sombre.svg",
+    // Bloc vertical fourni par Alice le 25/09/2026, publié TEL QUEL.
+    //
+    // Ses marges transparentes sont la respiration du bloc, pas un défaut
+    // d'export : leur plateforme le rend à 74 × 66,31 px, soit un rapport de
+    // 1,1160:1 — celui du fichier complet (1,1158), pas celui de l'encre
+    // seule (1,1749). Je l'avais d'abord recadré sur l'encre ; le logo
+    // serrait alors ses voisins de 6 %, et « respecte les espacements de la
+    // capture » veut dire exactement l'inverse.
+    //
+    // 1,12:1 contre 2,91 pour le bloc horizontal : c'est cet écart qui le
+    // rend utilisable dans une barre latérale de 240 px.
+    //
+    // La version sombre est DÉRIVÉE, comme les autres : chaque pixel encré
+    // passe en blanc, l'alpha conservé au pixel près, aucune forme touchée.
+    // À remplacer par le fichier officiel dès qu'il est transmis.
+    vertical: {
+      clair: "./logos/adp-vertical-clair.png",
+      sombre: "./logos/adp-vertical-sombre.png",
+    },
   },
   extime: {
     nom: "Extime",
@@ -85,6 +116,15 @@ export interface BrandMarkProps {
    * Passer `h-12` ou `max-w-[200px]` continue de redimensionner : c'est
    * `tailwind-merge` qui tranche, et la classe la plus tardive gagne.
    */
+  /**
+   * Cadrage du bloc. `horizontal` par défaut — symbole et nom sur une ligne.
+   *
+   * `vertical` pour les endroits où la largeur manque : une barre latérale,
+   * une carte étroite. Le bloc horizontal d'ADP demande 93 px de large pour
+   * 32 px de haut ; le vertical en demande 37. Une marque sans bloc vertical
+   * retombe sur l'horizontal, qui reste son logo validé.
+   */
+  orientation?: "horizontal" | "vertical";
   className?: string;
 }
 
@@ -102,7 +142,11 @@ export interface BrandMarkProps {
  * Le `alt` est vide : c'est le lien qui entoure ce composant qui porte le nom
  * accessible. Sans ça, un lecteur d'écran annoncerait la marque deux fois.
  */
-export function BrandMark({ brand, className }: BrandMarkProps) {
+export function BrandMark({
+  brand,
+  orientation = "horizontal",
+  className,
+}: BrandMarkProps) {
   const [courante, setCourante] = useState<string>(() =>
     brand ?? (typeof document !== "undefined"
       ? document.documentElement.dataset.brand ?? "aikoz"
@@ -154,11 +198,17 @@ export function BrandMark({ brand, className }: BrandMarkProps) {
   const boite = cn("h-8 max-w-[160px]", className);
   const commun = "w-auto shrink-0 object-contain object-left";
 
+  // Le bloc vertical s'il existe, l'horizontal sinon. Le repli est SILENCIEUX
+  // et c'est voulu : contrairement à une version sombre manquante, l'autre
+  // cadrage reste le logo validé par la marque. Rien n'est à signaler.
+  const bloc =
+    orientation === "vertical" && logo.vertical ? logo.vertical : logo;
+
   return (
     <>
-      <img src={logo.clair} alt="" className={cn(commun, "dark:hidden", boite)} />
-      {logo.sombre ? (
-        <img src={logo.sombre} alt="" className={cn(commun, "hidden dark:block", boite)} />
+      <img src={bloc.clair} alt="" className={cn(commun, "dark:hidden", boite)} />
+      {bloc.sombre ? (
+        <img src={bloc.sombre} alt="" className={cn(commun, "hidden dark:block", boite)} />
       ) : (
         <span className="hidden dark:inline-flex">{nomEcrit}</span>
       )}

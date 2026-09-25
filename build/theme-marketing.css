@@ -71,6 +71,14 @@
   --color-status-neutral-text: var(--color-ink-100); /** Relevé au seuil **APCA 82** sur la carte sombre des quatre marques (il valait 66,8). WCAG 2 ne voyait rien : la paire tenait 8,86:1, c'est-à-dire « très bien » — mais WCAG 2 est mauvais sur fond sombre, c'est documenté. Seuil retenu : 75 pour un rôle de texte, 45 pour un objet graphique. */
   --color-status-neutral-fill: var(--color-ink-300); /** Aplat neutre d'un indicateur — registre marketing. */
   --color-nav-surface: var(--color-ink-900); /** Barre de navigation du site — même fond que la page, séparée par un trait. */
+  /**
+   * Le fond d'une RÉGION de la barre, par opposition à la barre elle-même : le pied qui porte le compte, le POI et la langue.
+   * 
+   * Rôle dédié, et pas un détournement de `surface.sunken` : celui-ci vaut exactement `nav.surface-active` en clair — le fond de l'entrée COURANTE. Le pied aurait alors porté la couleur qui signifie « vous êtes ici », et quatre éléments de la barre se seraient annoncés actifs en même temps.
+   * 
+   * Il se place de l'autre côté de `nav.surface` que l'état actif : en clair, blanc pour la barre, gris de page pour le pied, gris plus soutenu pour l'entrée active. En sombre l'actif s'éclaircit et le pied s'assombrit. Trois niveaux distincts dans les deux thèmes, et l'actif reste le plus marqué.
+   */
+  --color-nav-surface-sunken: var(--color-ink-950);
   --color-nav-surface-active: var(--color-ink-800);
   --color-nav-border: var(--color-ink-700); /** Séparateur INTERNE de la barre de navigation — entre deux groupes d'entrées. 1,44:1 en clair, 1,22:1 en sombre : volontairement discret, et hors du champ de WCAG 1.4.11, qui vise les limites nécessaires pour identifier un composant ou son état. Ici les composants sont les liens, et ils sont perceptibles. La limite EXTERNE de la barre, elle, est portée par --border-strong : la surface de la barre ne se détache de la page que de 1,09:1, il faut donc un trait qui la délimite. */
   --color-nav-accent: var(--color-brand-accent); /** Entrée active — le trait, pas le fond. */

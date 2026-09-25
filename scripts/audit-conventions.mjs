@@ -236,6 +236,62 @@ for (const nom of composants) {
   }
 }
 
+// ── 13. `rounded-full` est réservé aux cercles imposés par la géométrie ────
+//
+// La pilule d'un bouton ou d'un badge est un choix d'IDENTITÉ : Aikoz est en
+// pilule, ADP ne l'est pas. Ces formes-là lisent `--radius-pill`, que chaque
+// marque peut surcharger d'une ligne.
+//
+// `rounded-full` reste juste pour ce qui est aussi large que haut, ou doit
+// finir en demi-cercle : un avatar, le curseur d'un interrupteur, la piste
+// d'une jauge. Changer leur rayon ne produit pas une autre identité, mais une
+// erreur de dessin.
+//
+// Sans cette règle, le tri se défait au premier composant ajouté : quelqu'un
+// écrit `rounded-full` sur un nouveau bouton, il reste en pilule sous ADP, et
+// personne ne le voit avant la démonstration. Chaque emploi doit donc être
+// NOMMÉ ici, avec la raison qui le range du côté de la géométrie.
+const CERCLES_PAR_GEOMETRIE = {
+  avatar: 'portrait circulaire',
+  'booking-flow': 'pastille d’étape, aussi large que haute',
+  'brand-logo': 'monogramme circulaire',
+  'choice-card': 'point du bouton radio',
+  'count-badge': 'compteur numérique — un chiffre dans un rond',
+  leaderboard: 'pastille de rang, aussi large que haute',
+  'nav-item': 'embout du trait d’accent, et pastille de compteur',
+  'progress-bar': 'piste et remplissage d’une jauge — embouts en demi-cercle',
+  skeleton: 'forme `circle`, explicitement un cercle',
+  stepper: 'pastille de numéro d’étape',
+  switch: 'piste et curseur d’un interrupteur',
+  toast: 'pastille du pictogramme de statut',
+};
+
+for (const nom of composants) {
+  const chemin = `registry/aikoz/${nom}/${nom}.tsx`;
+  if (!fs.existsSync(chemin)) continue;
+  // Sur le code seul : un commentaire qui EXPLIQUE la règle cite
+  // forcément `rounded-full`, et se faisait compter comme un emploi.
+  const src = sansCommentaires(fs.readFileSync(chemin, 'utf8'));
+  const emplois = (src.match(/rounded-(?:\w+-)?full/g) ?? []).length;
+  if (emplois && !(nom in CERCLES_PAR_GEOMETRIE)) {
+    echecs.push(
+      `${nom} — écrit \`rounded-full\` ${emplois} fois sans figurer dans ` +
+        `CERCLES_PAR_GEOMETRIE. Si c'est un cercle imposé par la géométrie ` +
+        `(aussi large que haut, ou embout en demi-cercle), l'y ajouter avec ` +
+        `sa raison. Sinon c'est une pilule d'identité : elle lit ` +
+        `\`rounded-[var(--radius-pill)]\`, sans quoi elle reste ronde sous ` +
+        `une marque qui ne l'est pas.`,
+    );
+  }
+  if (!emplois && nom in CERCLES_PAR_GEOMETRIE) {
+    echecs.push(
+      `CERCLES_PAR_GEOMETRIE cite « ${nom} », qui n'écrit plus ` +
+        `\`rounded-full\`. Une exception qu'on ne mesure plus ne protège ` +
+        `rien : retirer sa ligne.`,
+    );
+  }
+}
+
 // Une exception qui ne s'applique plus doit disparaître, comme une dette.
 for (const [regle, cas] of Object.entries(EXCEPTIONS)) {
   for (const nom of Object.keys(cas)) {
@@ -255,6 +311,6 @@ if (echecs.length) {
 }
 
 console.log(
-  `audit conventions OK — ${composants.length} composants, douze conventions ` +
-    `tenues, une exception nommée.`,
+  `audit conventions OK — ${composants.length} composants, treize conventions ` +
+    `tenues, une exception nommée, ${Object.keys(CERCLES_PAR_GEOMETRIE).length} cercles imposés par la géométrie.`,
 );

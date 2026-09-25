@@ -144,6 +144,11 @@
     "$value": "{color.nav.surface}",
     "$description": "extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte"
   },
+  "nav-surface-sunken": {
+    "$type": "color",
+    "$value": "{color.nav.surface-sunken}",
+    "$description": "extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici »."
+  },
   "nav-surface-active": {
     "$type": "color",
     "$value": "{color.nav.surface-active}",
@@ -278,6 +283,11 @@
     "$type": "dimension",
     "$value": "{role.radius.default}",
     "$description": "extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind)"
+  },
+  "radius-pill": {
+    "$type": "dimension",
+    "$value": "{role.radius.pill}",
+    "$description": "extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`."
   },
   "surface-hero": {
     "$type": "color",

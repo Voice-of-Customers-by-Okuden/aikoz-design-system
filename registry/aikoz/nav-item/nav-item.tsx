@@ -15,12 +15,60 @@ export interface NavItemProps
    */
   current?: boolean;
   /**
+   * L'entrée n'est pas la page affichée, mais la SECTION qui la contient.
+   *
+   * Sans elle, une barre qui liste des sections ET leur contenu ne peut
+   * marquer qu'une seule chose : ouvrez une conversation, et « Gestion des
+   * avis » redevient une entrée comme les autres. On ne sait plus dans quel
+   * espace on se trouve — c'est ce qu'Alice a relevé le 25/09/2026.
+   *
+   * Rend `aria-current="location"`, et non `"page"` : la valeur dit DE QUOI
+   * l'élément est le courant. `page` est réservé à la page affichée, et deux
+   * `aria-current="page"` dans une même barre laissent l'utilisateur choisir
+   * laquelle est vraie. `location` existe exactement pour ça — « la position
+   * courante dans un environnement ».
+   *
+   * **Visuellement, c'est le MÊME état que `current`**, et c'est délibéré.
+   * Ma première version le rendait plus faible — trait court, pas de fond —
+   * pour « ne pas prétendre être la page ». Résultat : le repère de l'espace
+   * changeait d'apparence selon qu'une conversation était ouverte ou non.
+   * Sur l'accueil, « Accueil » était plein ; sur une conversation,
+   * « Gestion des avis » était pâle. La question « dans quel espace suis-je »
+   * recevait deux réponses différentes selon la page, ce qui est exactement
+   * ce qu'un design system existe pour éviter.
+   *
+   * Ce qui distingue les deux pour qui voit l'écran n'est pas leur force,
+   * c'est leur GROUPE : « Gestion des avis » est dans les espaces,
+   * « Réponse à Mme Charmon » dans les conversations. Chaque liste marque
+   * son élément actif de la même façon, et la lecture est immédiate — on est
+   * dans cet espace, sur cette conversation.
+   *
+   * Sans effet si `current` est posé : une entrée ne peut pas être à la fois
+   * la page et son contenant.
+   */
+  ancestor?: boolean;
+  /**
    * Compteur en fin de ligne : avis en attente, alertes. Le nombre est intégré
    * au nom accessible du lien, sinon il n'est qu'une pastille muette.
    */
   count?: number;
   /** Nom donné au compteur dans l'énoncé. « 3 en attente » par défaut. */
   countLabel?: string;
+  /**
+   * `compact` pour une liste d'HISTORIQUE — conversations passées, fichiers
+   * récents — par opposition à la navigation principale.
+   *
+   * Ce n'est pas un réglage de compression : c'est une hiérarchie. Une liste
+   * qui s'allonge sans fin et une barre de sections n'ont pas le même poids,
+   * et les rendre à la même taille fait payer à la seconde l'encombrement de
+   * la première. Mesuré sur l'écran ADP : cinq conversations à 44 px, c'est
+   * 220 px de barre pour de l'historique.
+   *
+   * La cible tactile ne bouge pas : `min-h-9` à la souris, `tactile:min-h-11`
+   * au doigt — exactement la règle que `Button` applique déjà à sa taille
+   * `sm`, et pas une exception inventée ici.
+   */
+  density?: "default" | "compact";
 }
 
 // ─── Composant ────────────────────────────────────────────────────────────────
@@ -48,13 +96,34 @@ export interface NavItemProps
  */
 export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
   function NavItem(
-    { label, icon, current = false, count, countLabel, className, ...props },
+    {
+      label,
+      icon,
+      current = false,
+      count,
+      countLabel,
+      ancestor = false,
+      density = "default",
+      className,
+      ...props
+    },
     ref
   ) {
-    const compte =
-      count !== undefined
-        ? `${count} ${countLabel ?? "en attente"}`
-        : undefined;
+    // Zéro ne s'affiche pas.
+    //
+    // Pour un COMPTEUR, l'absence de pastille est déjà l'information : une
+    // pastille « 0 » occupe la place, attire l'œil et ne dit rien de plus que
+    // le vide. Elle fait pire — un lecteur d'écran annonce « Gestion des
+    // avis, 0 en attente » là où « Gestion des avis » suffisait.
+    //
+    // La règle ne vaut pas partout : sur une carte dont le rôle est de dire
+    // s'il faut s'y rendre, le silence est ambigu — a-t-elle chargé ? — et il
+    // faut écrire « aucun avis en attente ». Ici la barre est permanente, et
+    // ce qui est permanent doit se taire quand il n'a rien à dire.
+    const compteVisible = count !== undefined && count > 0;
+    const compte = compteVisible
+      ? `${count} ${countLabel ?? "en attente"}`
+      : undefined;
 
     return (
       <a
@@ -62,7 +131,7 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
         // `page` et non `true` : la valeur dit DE QUOI l'élément est le
         // courant. `aria-current="page"` s'annonce « page courante » ;
         // `true` s'annonce « courant », ce qui ne renseigne sur rien.
-        aria-current={current ? "page" : undefined}
+        aria-current={current ? "page" : ancestor ? "location" : undefined}
         // Nom composé en UNE chaîne, et non par un `sr-only` séparé :
         // l'algorithme de nom accessible joint les éléments par une espace,
         // ce qui donnait « Campagnes , 3 en attente » — une virgule
@@ -73,11 +142,16 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
           "group relative flex items-center gap-3 no-underline",
           // 44px de haut : la cible confortable, bien au-delà des 24px
           // exigés par WCAG 2.5.8. Une entrée de menu se vise vite.
-          "min-h-11 pl-4 pr-3 py-2 rounded-[var(--radius)]",
-          "text-sm transition-colors",
+          "rounded-[var(--radius)] transition-colors",
+          density === "compact"
+            ? "min-h-9 tactile:min-h-11 pl-4 pr-3 py-1.5 text-xs"
+            : "min-h-11 pl-4 pr-3 py-2 text-sm",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
           "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--nav-surface)]",
-          current
+          // Un seul état ACTIF, qu'on soit la page ou la section qui la
+          // contient : même graisse, même encre, même fond. Trois canaux, et
+          // aucun n'est la couleur seule.
+          current || ancestor
             ? "font-semibold text-[var(--nav-on)] bg-[var(--nav-surface-active)]"
             : "font-medium text-[var(--nav-on-muted)] hover:text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
           className
@@ -88,22 +162,31 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
             une bordure conditionnelle décalerait le libellé de 3px à chaque
             changement de page. `--nav-accent` vaut ultramarine en clair et
             aquamarine en sombre — 5,77:1 et 15,08:1 sur la barre. */}
-        {current && (
+        {(current || ancestor) && (
           <span
             aria-hidden="true"
-            className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-[var(--nav-accent)]"
+            className={cn(
+              "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r-full bg-[var(--nav-accent)]",
+              density === "compact" ? "h-4" : "h-5"
+            )}
           />
         )}
 
         {icon && (
-          <span aria-hidden="true" className="shrink-0 inline-flex size-5 items-center justify-center">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "shrink-0 inline-flex items-center justify-center",
+              density === "compact" ? "size-4" : "size-5"
+            )}
+          >
             {icon}
           </span>
         )}
 
         <span className="flex-1 min-w-0 truncate">{label}</span>
 
-        {count !== undefined && (
+        {compteVisible && (
           // La pastille est muette : le compte est porté par `aria-label`,
           // sinon le nombre n'est qu'une tache colorée que rien n'annonce.
           <span

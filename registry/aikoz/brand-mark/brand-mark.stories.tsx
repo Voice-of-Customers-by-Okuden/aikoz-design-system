@@ -154,3 +154,77 @@ export const LaBoiteResteAppliquee: Story = {
     await expect(Math.round(r.width)).toBeLessThanOrEqual(160);
   },
 };
+
+export const BlocVertical: Story = {
+  name: "Le bloc vertical, quand la largeur manque",
+  globals: { marque: "adp" },
+  render: () => (
+    <div className="flex items-start gap-8">
+      <figure className="m-0 flex flex-col gap-2">
+        <figcaption className="text-xs text-muted-foreground">horizontal</figcaption>
+        <BrandMark brand="adp" className="h-10 max-w-[10rem]" />
+      </figure>
+      <figure className="m-0 flex flex-col gap-2">
+        <figcaption className="text-xs text-muted-foreground">vertical</figcaption>
+        <BrandMark brand="adp" orientation="vertical" className="h-10 max-w-[10rem]" />
+      </figure>
+      <figure className="m-0 flex flex-col gap-2">
+        <figcaption className="text-xs text-muted-foreground">
+          aikoz, sans bloc vertical
+        </figcaption>
+        <BrandMark brand="aikoz" orientation="vertical" className="h-10 max-w-[10rem]" />
+      </figure>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Beaucoup de chartes prévoient deux cadrages du même logo. Ce n'est " +
+          "pas une variante décorative : c'est ce qui permet de poser la marque " +
+          "là où la largeur manque.\n\n" +
+          "Mesuré à 40 px de haut, le bloc horizontal du Groupe ADP demande " +
+          "**116 px** de large, le vertical **47**. Dans une barre latérale de " +
+          "240 px, l'écart décide si le nom du produit tient à côté.\n\n" +
+          "Une marque sans bloc vertical retombe **silencieusement** sur son " +
+          "bloc horizontal, et c'est voulu : contrairement à une version sombre " +
+          "manquante — où reprendre le fichier clair donnerait une tache " +
+          "illisible —, l'autre cadrage reste le logo validé par la marque. " +
+          "Rien n'est à signaler.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const [h, v, repli] = [...canvasElement.querySelectorAll("figure")];
+    const largeur = (f: Element) => {
+      const img = [...f.querySelectorAll<HTMLImageElement>("img")].find(
+        (i) => i.getBoundingClientRect().width > 0,
+      )!;
+      return Math.round(img.getBoundingClientRect().width);
+    };
+
+    // Le vertical est NETTEMENT plus étroit : c'est sa raison d'être.
+    const lh = largeur(h);
+    const lv = largeur(v);
+    await expect(
+      lv,
+      `le bloc vertical fait ${lv} px contre ${lh} px pour l'horizontal : ` +
+        `il ne gagne rien, donc il ne sert à rien.`,
+    ).toBeLessThan(lh * 0.75);
+
+    // Le repli rend bien QUELQUE CHOSE, et c'est le bloc horizontal d'Aikoz.
+    const src = [...repli.querySelectorAll<HTMLImageElement>("img")].find(
+      (i) => i.getBoundingClientRect().width > 0,
+    )!.src;
+    // `aikoz-clair` OU `aikoz-sombre` selon le thème : l'assertion nommait
+    // le fichier clair, et tombait en sombre sur un composant parfaitement
+    // correct. Ce qu'on veut prouver est que le repli rend le bloc d'AIKOZ,
+    // et qu'il n'est pas allé chercher un bloc vertical qui n'existe pas.
+    await expect(
+      src,
+      "Aikoz n'a pas de bloc vertical : le repli doit rendre son bloc " +
+        "horizontal, pas rien.",
+    ).toMatch(/aikoz-(clair|sombre)/);
+    await expect(src).not.toMatch(/vertical/);
+  },
+};

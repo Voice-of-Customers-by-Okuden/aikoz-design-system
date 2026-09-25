@@ -4,7 +4,12 @@
       "default": {
         "$type": "dimension",
         "$value": "{dimension.radius.md}",
-        "$description": "Le SEUL rayon du système. Les cinq autres paliers — none, subtle, prominent, expressive, pill — étaient déclarés et lus par zéro composant : les composants écrivent `rounded-full` ou `rounded-[var(--radius)]`. Retirés le 22/09/2026."
+        "$description": "Le rayon des SURFACES — cartes, champs, panneaux, boîtes de dialogue. Quarante-huit endroits le consomment.\n\nLes cinq paliers none/subtle/prominent/expressive/pill avaient été retirés le 22/09/2026 parce que zéro composant les lisait. `pill` est revenu le 25/09, cette fois avec neuf consommateurs : cf. `role.radius.pill`."
+      },
+      "pill": {
+        "$type": "dimension",
+        "$value": "{dimension.radius.full}",
+        "$description": "Le rayon des formes dont la PILULE est un choix d'identité — bouton, étiquette de statut, puce de filtre, déclencheur de période.\n\nÀ ne pas confondre avec les cercles imposés par la GÉOMÉTRIE : l'avatar, le curseur d'un interrupteur, la piste d'une jauge, la pastille d'un compteur. Ceux-là sont aussi larges que hauts, ou doivent finir en demi-cercle ; ils restent en `rounded-full` sous toutes les marques, et changer leur rayon ne produirait pas une autre identité mais une erreur de dessin.\n\nC'est ce tri, et non la valeur, qui fait le travail : 25 `rounded-full` écrits en dur dans 18 composants, dont 9 relèvent de l'identité et 16 de la géométrie.\n\nAikoz est en pilule. Une marque qui ne l'est pas surcharge ce seul token dans son fichier — cf. `tokens/brand/adp.json`."
       }
     },
     "elevation": {

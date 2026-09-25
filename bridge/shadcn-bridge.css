@@ -28,6 +28,7 @@
   --success-fill-edge: var(--color-status-success-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --warning-fill-edge: var(--color-status-warning-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --error-fill-edge: var(--color-status-error-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-on-muted: var(--color-nav-on-muted); /** extension DS — texte de navigation en retrait — entree non courante */
@@ -53,6 +54,7 @@
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --neutral-text: var(--color-status-neutral-text); /** extension DS — variation neutre d'un indicateur (DeltaBadge ton neutre) */
   --neutral-fill: var(--color-status-neutral-fill); /** extension DS — aplat neutre d'un indicateur */
   --foreground: var(--color-text-primary); /** shadcn --foreground */
@@ -116,6 +118,7 @@
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --on-hero: var(--color-surface-on-hero); /** extension DS — texte porté par --surface-hero */
   --background: var(--color-surface-page); /** shadcn --background */
   --card: var(--color-surface-raised); /** shadcn --card */
@@ -134,6 +137,7 @@
   --input: var(--color-border-input); /** shadcn --input */
   --ring: var(--color-border-focus); /** shadcn --ring */
   --nav-surface: var(--color-nav-surface); /** extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */
@@ -171,6 +175,7 @@
   --success-fill-edge: var(--color-status-success-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --warning-fill-edge: var(--color-status-warning-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --error-fill-edge: var(--color-status-error-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-on-muted: var(--color-nav-on-muted); /** extension DS — texte de navigation en retrait — entree non courante */
@@ -196,6 +201,7 @@
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --neutral-text: var(--color-status-neutral-text); /** extension DS — variation neutre d'un indicateur (DeltaBadge ton neutre) */
   --neutral-fill: var(--color-status-neutral-fill); /** extension DS — aplat neutre d'un indicateur */
   --foreground: var(--color-text-primary); /** shadcn --foreground */
@@ -258,6 +264,7 @@
   --destructive-text: var(--color-status-error-text); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --surface-hero-to: var(--color-surface-hero-to); /** extension DS — second arrêt du dégradé de --surface-hero */
   --background: var(--color-surface-page); /** shadcn --background */
   --card: var(--color-surface-raised); /** shadcn --card */
@@ -276,6 +283,7 @@
   --input: var(--color-border-input); /** shadcn --input */
   --ring: var(--color-border-focus); /** shadcn --ring */
   --nav-surface: var(--color-nav-surface); /** extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */

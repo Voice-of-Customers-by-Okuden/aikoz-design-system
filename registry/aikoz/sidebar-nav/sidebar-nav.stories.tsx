@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect } from "storybook/test";
+import { expect, waitFor, within } from "storybook/test";
 import { SidebarNav } from "./sidebar-nav";
 
 const meta = {
@@ -61,5 +61,177 @@ export const PasLeMemeContratQueViewTabs: Story = {
           "dépend du gabarit de page, pas de la barre.",
       },
     },
+  },
+};
+
+const COURTE = ["Accueil", "Avis", "Équipes"].map((l, i) => ({
+  id: `c${i}`,
+  label: l,
+  href: "#",
+}));
+const LONGUE = Array.from({ length: 24 }, (_, i) => ({
+  id: `l${i}`,
+  label: `Conversation n°${100 + i}`,
+  href: "#",
+}));
+
+export const LaListeDitQuElleContinue: Story = {
+  name: "La liste dit qu'elle continue",
+  render: () => (
+    <div className="flex flex-wrap gap-6">
+      <figure className="m-0 flex flex-col gap-2">
+        <figcaption className="text-xs text-muted-foreground">
+          tout tient — aucun fondu
+        </figcaption>
+        <div className="h-80">
+          <SidebarNav
+            label="Liste courte"
+            current="c0"
+            className="h-full"
+            groups={[{ label: "Sections", entries: COURTE }]}
+            footer={<p className="m-0 p-2 text-xs">Pied</p>}
+          />
+        </div>
+      </figure>
+      <figure className="m-0 flex flex-col gap-2">
+        <figcaption className="text-xs text-muted-foreground">
+          il en reste dessous — fondu en bas
+        </figcaption>
+        <div className="h-80">
+          <SidebarNav
+            label="Liste longue"
+            current="l0"
+            className="h-full"
+            groups={[{ label: "Conversations", entries: LONGUE, density: "compact" }]}
+            footer={<p className="m-0 p-2 text-xs">Pied</p>}
+          />
+        </div>
+      </figure>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Une liste coupée net par le bord du pied ne dit pas qu'elle " +
+          "continue : rien ne distingue « voilà tout » de « il y en a vingt " +
+          "de plus ».\\n\\n" +
+          "Deux canaux, et **aucun n'est permanent**. Le fondu et la barre de " +
+          "défilement n'apparaissent que si quelque chose est réellement " +
+          "masqué, et le fondu change de bord une fois qu'on est arrivé en " +
+          "bas. Un fondu posé en dur serait pire que rien : il promettrait du " +
+          "contenu absent, et on apprendrait à ne plus le croire.\\n\\n" +
+          "C'est un **masque**, pas un aplat posé par-dessus. Un aplat " +
+          "suppose qu'on connaisse la couleur du fond ; le masque efface " +
+          "l'encre quelle que soit la surface, et suit donc la marque et le " +
+          "thème sans avoir à les connaître.",
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    // Sélection par `[data-debord]`, pas par position : la zone défilante a
+    // gagné une enveloppe le jour où l'ombre a dû sortir du masque, et deux
+    // tests sont tombés parce qu'ils comptaient les enfants.
+    const [courte, longue] = [...canvasElement.querySelectorAll("nav")].map(
+      (n) => n.querySelector("[data-debord]") as HTMLElement,
+    );
+
+    // ── Rien de masqué, rien de promis ────────────────────────────────────
+    //
+    // C'est l'assertion qui compte le plus. Un fondu qui s'allume toujours
+    // est une décoration, pas une affordance.
+    await expect(
+      courte.scrollHeight - courte.clientHeight,
+      "la liste courte déborde : le cas « tout tient » n'est pas testé.",
+    ).toBeLessThanOrEqual(1);
+    await expect(
+      courte.dataset.debord,
+      "la liste courte annonce un débordement qu'elle n'a pas.",
+    ).toBe("non");
+    await expect(getComputedStyle(courte).maskImage).toBe("none");
+    await expect(getComputedStyle(courte.parentElement!).backgroundImage).toBe("none");
+
+    // ── Du contenu dessous, le fondu en bas ───────────────────────────────
+    await expect(
+      longue.scrollHeight - longue.clientHeight,
+      "la liste longue ne déborde pas : le test ne prouve rien.",
+    ).toBeGreaterThan(50);
+    await expect(longue.dataset.debord).toBe("bas");
+    await expect(getComputedStyle(longue).maskImage).not.toBe("none");
+
+    // ── Le dégradé n'est PAS sur l'élément masqué ─────────────────────────
+    //
+    // `mask-image` découpe tout le rendu de son élément, fond compris. Posés
+    // ensemble, le masque effaçait le dégradé exactement là où il devait se
+    // voir — l'effet était imperceptible et aucune opacité n'y aurait rien
+    // changé. C'est le défaut signalé par « on ne voit pas trop ».
+    const enveloppe = longue.parentElement!;
+    await expect(
+      getComputedStyle(longue).backgroundImage,
+      "le dégradé est posé sur l'élément masqué : le masque l'efface.",
+    ).toBe("none");
+    await expect(
+      getComputedStyle(enveloppe).backgroundImage,
+      "l'enveloppe ne porte pas de dégradé : le bord ne se voit que là où il " +
+        "y a de l'encre à estomper.",
+    ).not.toBe("none");
+    await expect(getComputedStyle(enveloppe).maskImage).toBe("none");
+
+    // ── Le dégradé va d'un bord à l'autre, et jusqu'au pied ───────────────
+    //
+    // La barre a 12 px de rembourrage et un `gap-4` avant son pied. Le
+    // dégradé s'arrêtait donc 12 px avant les montants et 16 px avant le
+    // pied : ces blancs dessinaient trois bordures autour de lui, et le bloc
+    // estompé ressemblait à une carte flottante.
+    const barre = longue.closest("nav")!;
+    const bEnv = enveloppe.getBoundingClientRect();
+    const bNav = barre.getBoundingClientRect();
+    // 1 px de tolérance : la barre porte un filet à droite.
+    await expect(
+      Math.round(bEnv.left - bNav.left),
+      "le dégradé s'arrête avant le montant gauche.",
+    ).toBeLessThanOrEqual(1);
+    await expect(
+      Math.round(bNav.right - bEnv.right),
+      "le dégradé s'arrête avant le montant droit.",
+    ).toBeLessThanOrEqual(1);
+
+    const bPied = (barre.lastElementChild as HTMLElement).getBoundingClientRect();
+    await expect(
+      Math.round(bPied.top - bEnv.bottom),
+      `il reste ${Math.round(bPied.top - bEnv.bottom)} px de blanc entre le ` +
+        `dégradé et le pied.`,
+    ).toBeLessThanOrEqual(1);
+
+    // ── Et rien ne déborde sur les côtés ──────────────────────────────────
+    //
+    // Une ombre intérieure se dessine sur les QUATRE bords : mesurée,
+    // `inset 0 -10px 12px -10px` peignait aussi le long des montants. Un
+    // dégradé n'a pas de côtés, et aucune ombre ne subsiste pour en
+    // fabriquer.
+    await expect(
+      getComputedStyle(enveloppe).boxShadow,
+      "une ombre intérieure subsiste : elle déborde sur la gauche et la " +
+        "droite de la barre.",
+    ).toBe("none");
+
+    // ── Au milieu, des deux côtés ; en bas, plus rien dessous ─────────────
+    longue.scrollTop = 40;
+    await waitFor(async () => {
+      await expect(longue.dataset.debord).toBe("deux");
+    });
+
+    longue.scrollTop = longue.scrollHeight;
+    await waitFor(async () => {
+      await expect(
+        longue.dataset.debord,
+        "arrivé en bas, le fondu promet encore du contenu.",
+      ).toBe("haut");
+    });
+
+    longue.scrollTop = 0;
+    await waitFor(async () => {
+      await expect(longue.dataset.debord).toBe("bas");
+    });
   },
 };
