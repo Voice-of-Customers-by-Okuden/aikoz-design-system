@@ -18,6 +18,21 @@ export interface SidebarNavGroup {
   label: string;
   labelHidden?: boolean;
   entries: SidebarNavEntry[];
+  /**
+   * Ce qui s'affiche quand `entries` est vide — typiquement après un filtre
+   * qui ne trouve rien.
+   *
+   * Sans lui, un groupe filtré à zéro rend un `<ul>` vide : l'intitulé reste,
+   * et rien en dessous. Qui voit l'écran conclut à un bug d'affichage ; qui
+   * ne le voit pas n'entend « liste de 0 éléments » que s'il entre dans la
+   * liste. Un groupe vide doit dire pourquoi il est vide.
+   */
+  empty?: ReactNode;
+  /**
+   * `compact` pour un groupe d'historique — cf. `NavItem`. La navigation
+   * principale reste en `default` : c'est ce qui fait la hiérarchie.
+   */
+  density?: "default" | "compact";
 }
 
 export interface SidebarNavProps {
@@ -81,6 +96,10 @@ export function SidebarNav({
       aria-label={label}
       className={cn(
         "flex flex-col gap-4 w-full sm:w-60 shrink-0",
+        // `min-h-0` : sans lui, un conteneur flex refuse de descendre sous la
+        // taille de son contenu, et la zone défilante ci-dessous ne défile
+        // jamais. C'est la moitié de la règle que tout le monde oublie.
+        "min-h-0",
         "bg-[var(--nav-surface)] p-3",
         // `--border`, et non `--border-strong`.
         //
@@ -107,8 +126,25 @@ export function SidebarNav({
         className
       )}
     >
-      {header && <div className="px-1">{header}</div>}
+      {header && <div className="shrink-0 px-1">{header}</div>}
 
+      {/* ── Seuls les GROUPES défilent ────────────────────────────────────
+      
+          L'en-tête et le pied restent en place. Mesuré avant correction, sur
+          une fenêtre de 760 px et avec cinq conversations seulement : la
+          barre faisait 880 px et le bas de son pied tombait à 868 px, soit
+          108 px sous le pli. Le sélecteur de POI, les paramètres et la
+          déconnexion devenaient inatteignables — et comme la zone de
+          contenu a son propre défilement, la page n'en avait pas pour les
+          rattraper.
+      
+          `mt-auto` sur le pied ne suffisait pas : il colle le pied au bas du
+          CONTENU, pas au bas de l'écran, et un contenu plus grand que
+          l'écran pousse simplement le pied plus bas.
+      
+          Sans hauteur imposée par l'appelant, ce conteneur ne fait rien :
+          `flex-1` n'a rien à partager et `overflow-y-auto` rien à couper. */}
+      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
       {blocs.map((bloc, i) => (
         <Fragment key={bloc.label}>
           {/* Le trait entre deux groupes est décoratif — il double l'intitulé,
@@ -133,24 +169,35 @@ export function SidebarNav({
             </span>
             {/* `<ul>` : le nombre d'entrées est annoncé à l'entrée de la liste
                 (« liste de 4 éléments »), ce qu'une suite de `<a>` ne dit pas. */}
-            <ul
-              aria-labelledby={`${uid}-groupe-${i}`}
-              className="flex flex-col gap-0.5 list-none m-0 p-0"
-            >
-              {bloc.entries.map((e) => {
-                const { id, ...reste } = e;
-                return (
-                  <li key={id}>
-                    <NavItem {...reste} current={id === current} />
-                  </li>
-                );
-              })}
-            </ul>
+            {bloc.entries.length === 0 && bloc.empty ? (
+              <div className="px-4 py-2 text-sm text-[var(--nav-on-muted)]">
+                {bloc.empty}
+              </div>
+            ) : (
+              <ul
+                aria-labelledby={`${uid}-groupe-${i}`}
+                className="flex flex-col gap-0.5 list-none m-0 p-0"
+              >
+                {bloc.entries.map((e) => {
+                  const { id, ...reste } = e;
+                  return (
+                    <li key={id}>
+                      <NavItem
+                        {...reste}
+                        density={reste.density ?? bloc.density}
+                        current={id === current}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
         </Fragment>
       ))}
+      </div>
 
-      {footer && <div className="mt-auto px-1">{footer}</div>}
+      {footer && <div className="mt-auto shrink-0 px-1">{footer}</div>}
     </nav>
   );
 }

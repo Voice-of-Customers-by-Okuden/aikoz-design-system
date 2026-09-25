@@ -21,6 +21,21 @@ export interface NavItemProps
   count?: number;
   /** Nom donné au compteur dans l'énoncé. « 3 en attente » par défaut. */
   countLabel?: string;
+  /**
+   * `compact` pour une liste d'HISTORIQUE — conversations passées, fichiers
+   * récents — par opposition à la navigation principale.
+   *
+   * Ce n'est pas un réglage de compression : c'est une hiérarchie. Une liste
+   * qui s'allonge sans fin et une barre de sections n'ont pas le même poids,
+   * et les rendre à la même taille fait payer à la seconde l'encombrement de
+   * la première. Mesuré sur l'écran ADP : cinq conversations à 44 px, c'est
+   * 220 px de barre pour de l'historique.
+   *
+   * La cible tactile ne bouge pas : `min-h-9` à la souris, `tactile:min-h-11`
+   * au doigt — exactement la règle que `Button` applique déjà à sa taille
+   * `sm`, et pas une exception inventée ici.
+   */
+  density?: "default" | "compact";
 }
 
 // ─── Composant ────────────────────────────────────────────────────────────────
@@ -48,7 +63,16 @@ export interface NavItemProps
  */
 export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
   function NavItem(
-    { label, icon, current = false, count, countLabel, className, ...props },
+    {
+      label,
+      icon,
+      current = false,
+      count,
+      countLabel,
+      density = "default",
+      className,
+      ...props
+    },
     ref
   ) {
     const compte =
@@ -73,8 +97,10 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
           "group relative flex items-center gap-3 no-underline",
           // 44px de haut : la cible confortable, bien au-delà des 24px
           // exigés par WCAG 2.5.8. Une entrée de menu se vise vite.
-          "min-h-11 pl-4 pr-3 py-2 rounded-[var(--radius)]",
-          "text-sm transition-colors",
+          "rounded-[var(--radius)] transition-colors",
+          density === "compact"
+            ? "min-h-9 tactile:min-h-11 pl-4 pr-3 py-1.5 text-xs"
+            : "min-h-11 pl-4 pr-3 py-2 text-sm",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
           "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--nav-surface)]",
           current
@@ -91,12 +117,21 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
         {current && (
           <span
             aria-hidden="true"
-            className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-[var(--nav-accent)]"
+            className={cn(
+              "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r-full bg-[var(--nav-accent)]",
+              density === "compact" ? "h-4" : "h-5"
+            )}
           />
         )}
 
         {icon && (
-          <span aria-hidden="true" className="shrink-0 inline-flex size-5 items-center justify-center">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "shrink-0 inline-flex items-center justify-center",
+              density === "compact" ? "size-4" : "size-5"
+            )}
+          >
             {icon}
           </span>
         )}

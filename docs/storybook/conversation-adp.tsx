@@ -702,6 +702,8 @@ export interface ConversationADPProps {
   poiCourant?: string;
   conversations?: { id: string; titre: string }[];
   conversationCourante?: string;
+  /** Avis en attente de traitement, porté par l'entrée « Gestion des avis ». */
+  avisEnAttente?: number;
   /** Cf. `PresentationBrouillon` — « bloc prêt à coller » par défaut. */
   presentation?: PresentationBrouillon;
   repriseManuelle?: boolean;
@@ -716,6 +718,7 @@ export function ConversationADP({
   poiCourant = "cdg",
   conversations = CONVERSATIONS,
   conversationCourante = "charmon",
+  avisEnAttente = 4,
   presentation = "bloc",
   repriseManuelle = false,
   onEnvoyerPourValidation,
@@ -723,10 +726,34 @@ export function ConversationADP({
 }: ConversationADPProps) {
   const [poi, setPoi] = useState(poiCourant);
   const [barreOuverte, setBarreOuverte] = useState(true);
+  const [filtre, setFiltre] = useState("");
   const idBarre = useId();
+  const idCompte = useId();
+
+  // Un champ de recherche qui ne filtre rien est un mensonge d'interface :
+  // on tape, rien ne bouge, et on conclut qu'il n'y a pas de résultat.
+  const trouvees = useMemo(() => {
+    const q = filtre.trim().toLowerCase();
+    return q
+      ? conversations.filter((c) => c.titre.toLowerCase().includes(q))
+      : conversations;
+  }, [conversations, filtre]);
 
   return (
-    <div className="flex min-h-[48rem] w-full bg-[var(--background)] text-[var(--foreground)]">
+    /* ── L'écran occupe la fenêtre, et rien de plus ────────────────────────
+    
+       C'était `min-h-[48rem]`, et c'est ce qui laissait le pied de la barre
+       passer sous le pli : une hauteur MINIMALE laisse le contenu pousser la
+       page aussi loin qu'il veut, et le pied descend avec. Mesuré sur une
+       fenêtre de 760 px avec cinq conversations — barre de 880 px, bas du
+       pied à 868 px.
+    
+       Une hauteur FIXE change la nature du problème : la barre ne peut plus
+       grandir, donc c'est sa zone défilante qui absorbe les conversations,
+       et le pied reste où il est. C'est la moitié manquante du correctif de
+       `SidebarNav` — un conteneur défilant dans un parent sans hauteur ne
+       défile jamais. */
+    <div className="flex h-[100dvh] w-full overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
       {/* La barre se replie par l'attribut `hidden`, pas par un démontage :
           `aria-controls` doit désigner un élément qui EXISTE, sinon il ne
           désigne rien — c'est le défaut qu'on vient de corriger sur
@@ -777,8 +804,19 @@ export function ConversationADP({
                 type="search"
                 autoComplete="off"
                 placeholder="Rechercher"
+                value={filtre}
+                onChange={(e) => setFiltre(e.target.value)}
                 leadingIcon={<Ico d={D.loupe} />}
+                aria-describedby={idCompte}
               />
+              {/* Le décompte est annoncé à chaque frappe. Sans lui, filtrer
+                  une liste ne produit aucun retour perceptible hors écran —
+                  et le seul canal restant serait de compter les entrées. */}
+              <p id={idCompte} aria-live="polite" className="sr-only">
+                {filtre.trim()
+                  ? `${trouvees.length} conversation${trouvees.length > 1 ? "s" : ""} sur ${conversations.length}`
+                  : ""}
+              </p>
             </div>
           }
           groups={[
@@ -794,6 +832,11 @@ export function ConversationADP({
                   label: "Gestion des avis",
                   href: "#",
                   icon: <Ico d={D.bulle} />,
+                  // `NavItem` intègre le nombre au nom accessible du lien :
+                  // « Gestion des avis, 4 en attente ». Une pastille muette
+                  // ne dirait rien à qui n'a pas l'écran.
+                  count: avisEnAttente,
+                  countLabel: "en attente",
                 },
                 {
                   id: "cockpit",
@@ -811,7 +854,13 @@ export function ConversationADP({
             },
             {
               label: "Conversations",
-              entries: conversations.map((c) => ({
+              // Un historique, pas une barre de sections. Cinq conversations
+              // à 44 px pesaient 220 px de barre ; la même liste en compact
+              // en pèse 180, et surtout elle cesse de rivaliser avec les
+              // trois espaces au-dessus.
+              density: "compact",
+              empty: `Aucune conversation ne contient « ${filtre.trim()} ».`,
+              entries: trouvees.map((c) => ({
                 id: c.id,
                 label: c.titre,
                 href: "#",

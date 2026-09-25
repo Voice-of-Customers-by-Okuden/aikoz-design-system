@@ -160,6 +160,95 @@ export const AvisSensible: Story = {
   },
 };
 
+const TRENTE = Array.from({ length: 30 }, (_, i) => ({
+  id: `c${i}`,
+  titre:
+    i === 3
+      ? "Parking P2 issues"
+      : `Réponse à l'avis n°${1200 + i} — terminal ${1 + (i % 3)}`,
+}));
+
+export const BarreLaterale: Story = {
+  name: "La barre latérale — pied atteignable, recherche vivante",
+  args: { conversations: TRENTE, conversationCourante: "c3" },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Deux défauts corrigés, tous deux mesurés plutôt que vus.\n\n" +
+          "**Le pied passait sous le pli.** Sur une fenêtre de 760 px et avec " +
+          "cinq conversations, la barre faisait 880 px et le bas de son pied " +
+          "tombait à 868 px : sélecteur de POI, paramètres et déconnexion " +
+          "inatteignables. `mt-auto` colle le pied au bas du CONTENU, pas de " +
+          "l'écran. Seuls les groupes défilent désormais.\n\n" +
+          "**La recherche ne filtrait rien.** On tapait, rien ne bougeait, et " +
+          "on concluait qu'il n'y avait pas de résultat.",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const c = within(canvasElement);
+    const nav = c.getByRole("navigation", { name: "Espaces ADP+" });
+
+    // ── Le pied reste dans la barre, liste longue comprise ────────────────
+    //
+    // Cette histoire porte TRENTE conversations, et c'est la condition du
+    // test. Mes deux premières versions mesuraient des invariances : « le
+    // pied est-il dans la barre ? » l'est toujours quand la barre grandit
+    // avec lui, et « le pied est-il dans la fenêtre ? » l'est toujours quand
+    // cinq conversations tiennent dedans. Les deux passaient le correctif
+    // retiré.
+    //
+    // Ce qui distingue vraiment les deux états : le débordement doit être
+    // absorbé par la ZONE DES GROUPES, pas par la barre.
+    const zone = nav.children[1] as HTMLElement;
+    await expect(
+      zone.scrollHeight,
+      `la zone des groupes ne déborde pas (${zone.scrollHeight} px pour ` +
+        `${zone.clientHeight} px visibles) : le test ne prouve rien, il faut ` +
+        `plus de conversations.`,
+    ).toBeGreaterThan(zone.clientHeight);
+
+    const pied = nav.lastElementChild as HTMLElement;
+    const basPied = Math.round(pied.getBoundingClientRect().bottom);
+    const basBarre = Math.round(nav.getBoundingClientRect().bottom);
+    await expect(
+      basPied,
+      `le pied s'arrête à ${basPied} px alors que la barre s'arrête à ` +
+        `${basBarre} px : le sélecteur de POI et la déconnexion sont hors ` +
+        `de la barre.`,
+    ).toBeLessThanOrEqual(basBarre + 1);
+
+    // Et le sélecteur de POI, qui vit dans ce pied, est bien atteignable.
+    await expect(
+      pied.contains(c.getByRole("button", { name: /changer de POI/i })),
+    ).toBe(true);
+
+    // ── La recherche filtre, et le dit ────────────────────────────────────
+    const avant = c.getAllByRole("link").length;
+    const champ = c.getByRole("searchbox", { name: /Rechercher dans les conversations/i });
+    await u.type(champ, "parking");
+
+    await waitFor(async () => {
+      const apres = c.getAllByRole("link").length;
+      await expect(
+        apres,
+        `${avant} liens avant, ${apres} après : la recherche ne filtre rien.`,
+      ).toBeLessThan(avant);
+    });
+
+    // Filtre sans résultat : le groupe dit POURQUOI il est vide.
+    await u.clear(champ);
+    await u.type(champ, "zzzz");
+    await waitFor(async () => {
+      await expect(
+        c.getByText(/Aucune conversation ne contient/i),
+      ).toBeInTheDocument();
+    });
+  },
+};
+
 export const ChangerDePOI: Story = {
   name: "Changer de POI — la recherche est à l'intérieur",
   parameters: {
