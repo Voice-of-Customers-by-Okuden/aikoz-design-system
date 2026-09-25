@@ -62,11 +62,17 @@ export const LOGOS: Record<string, LogoMarque> = {
     nom: "Groupe ADP",
     clair: "./logos/adp-clair.svg",
     sombre: "./logos/adp-sombre.svg",
-    // Bloc vertical fourni par Alice le 25/09/2026. Recadré sur l'encre —
-    // le fichier d'origine porte des marges transparentes qu'aucune boîte de
-    // mise en page ne peut deviner : 472 × 423 avant, 450 × 383 après, soit
-    // un rapport de 1,17:1 contre 2,91 pour le bloc horizontal. C'est cet
-    // écart qui le rend utilisable dans une barre latérale de 240 px.
+    // Bloc vertical fourni par Alice le 25/09/2026, publié TEL QUEL.
+    //
+    // Ses marges transparentes sont la respiration du bloc, pas un défaut
+    // d'export : leur plateforme le rend à 74 × 66,31 px, soit un rapport de
+    // 1,1160:1 — celui du fichier complet (1,1158), pas celui de l'encre
+    // seule (1,1749). Je l'avais d'abord recadré sur l'encre ; le logo
+    // serrait alors ses voisins de 6 %, et « respecte les espacements de la
+    // capture » veut dire exactement l'inverse.
+    //
+    // 1,12:1 contre 2,91 pour le bloc horizontal : c'est cet écart qui le
+    // rend utilisable dans une barre latérale de 240 px.
     //
     // La version sombre est DÉRIVÉE, comme les autres : chaque pixel encré
     // passe en blanc, l'alpha conservé au pixel près, aucune forme touchée.

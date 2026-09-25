@@ -144,6 +144,21 @@ export const DeuxMarques: Story = {
           `haut : la surcharge de tokens/brand/adp.json n'a pas pris.`,
       ).toBe(true);
 
+      // ── La valeur d'ADP est une MESURE, pas un arrondi ────────────────
+      //
+      // 6 px vient de l'inspection d'un bouton de leur plateforme
+      // multi-POI : `border-radius: calc(var(--radius) - 2px)`, résolu en
+      // `calc(-2px + 0.5rem)`. Notre échelle de rayons va de 4 à 8 sans
+      // passer par 6, donc quelqu'un qui « range » ce littéral en
+      // `dimension.radius.md` le ferait dériver de 2 px sur chaque bouton et
+      // chaque badge — invisible isolément, très visible à côté de leur
+      // écran. D'où une assertion sur la valeur exacte.
+      await expect(
+        adp.pilule,
+        `ADP rend la pilule à ${adp.pilule} px. La valeur relevée sur leur ` +
+          `plateforme est 6 px : un alias de notre échelle donnerait 4 ou 8.`,
+      ).toBe(6);
+
       // Et le cercle ne bouge pas d'un pixel entre les deux marques.
       await expect(
         adp.cercle,

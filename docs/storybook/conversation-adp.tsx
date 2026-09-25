@@ -816,7 +816,10 @@ export function ConversationADP({
           header={
             <div className="flex flex-col gap-3 pb-1">
               <div className="flex items-center gap-2">
-                <BrandMark orientation="vertical" className="h-10 max-w-[3rem]" />
+                <BrandMark
+                  orientation="vertical"
+                  className="h-[66.31px] max-w-[74px]"
+                />
                 <span className="min-w-0">
                   <span className="block text-base font-semibold text-[var(--nav-on)]">
                     ADP+

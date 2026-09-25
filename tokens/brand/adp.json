@@ -199,8 +199,11 @@
   "radius": {
     "pill": {
       "$type": "dimension",
-      "$value": "{dimension.radius.md}",
-      "$description": "ADP n'est pas une marque en pilule. Ses interfaces — la v2 de l'outil Avis digitaux comme la charte imprimée — posent des angles courts sur des formes rectangulaires ; la pilule d'Aikoz y lisait comme une greffe.\n\n8 px, soit la même valeur que `--radius` : sous cette marque, un bouton et la carte qui le contient partagent leur rayon, et c'est précisément ce qui fait l'unité du dessin. Une marque = une ligne, et la retirer rend les pilules."
+      "$value": {
+        "value": 6,
+        "unit": "px"
+      },
+      "$description": "ADP n'est pas une marque en pilule. Ses interfaces — la v2 de l'outil Avis digitaux comme la charte imprimée — posent des angles courts sur des formes rectangulaires ; la pilule d'Aikoz y lisait comme une greffe.\n\n6 px, et pas une valeur choisie à l'œil : Alice a inspecté un bouton de leur plateforme multi-POI le 25/09/2026. Il porte `border-radius: calc(var(--radius) - 2px)`, résolu en `calc(-2px + 0.5rem)`. Leur `--radius` vaut 0,5rem comme le nôtre, et leurs boutons sont donc au palier `md` de l'échelle shadcn — 6 px, pas 8.\n\nValeur LITTÉRALE et non un alias de `dimension.radius` : notre échelle va de 4 à 8 sans passer par 6. Ce n'est pas un palier de notre système, c'est une mesure prise chez eux — et c'est le seul moyen que Cyril n'ait rien à reprendre avant la démonstration de la v2.\n\nUne marque = une ligne, et la retirer rend les pilules."
     }
   }
 }
