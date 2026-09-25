@@ -356,10 +356,9 @@ function Parcours({
           sensitive={sensibles}
           pendingValidation={enValidation}
           onDraftReply={(id) => setEncours(id)}
-          // « Modifier la réponse » reprend l'avis au valideur et le
-          // ramène en rédaction : l'inverse exact de l'envoi. Sans ça,
-          // « Modifier » aurait été un bouton qui n'agit pas.
-          onReviewPending={(id) => {
+          // « Modifier » reprend l'avis au valideur et le ramène en
+          // rédaction : l'inverse exact de l'envoi.
+          onEditPending={(id) => {
             const a = enValidation.find((x) => x.id === id);
             if (!a) return;
             setEnValidation((v) => v.filter((x) => x.id !== id));
@@ -369,6 +368,19 @@ function Parcours({
             toast({
               message: `Réponse reprise à ${a.validatorLabel}.`,
               tone: "info",
+            });
+          }}
+          // « Valider » conclut : la réponse part à la publication et quitte
+          // le tableau. Aucune colonne ne l'accueille, et c'est juste — rien
+          // n'attend plus personne. Le message est la seule trace, donc il
+          // doit dire ce qui s'est passé, pas « c'est fait ».
+          onApprovePending={(id) => {
+            const a = enValidation.find((x) => x.id === id);
+            if (!a) return;
+            setEnValidation((v) => v.filter((x) => x.id !== id));
+            toast({
+              message: `Réponse validée et envoyée à la publication pour ${a.author ?? "cet avis"}.`,
+              tone: "success",
             });
           }}
         />
