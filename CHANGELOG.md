@@ -18,6 +18,34 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.26.0] — 2026-09-25
+
+### Ajouté
+
+- **`onApprovePending`** — « Valider la réponse » depuis la fiche de
+  relecture : feu vert donné, la réponse part à la publication et quitte la
+  colonne.
+
+  Séparé de la modification parce que ce sont **deux décisions opposées** :
+  se raviser, ou conclure. Une fiche qui n'offrirait que la modification ne
+  servirait qu'à se raviser — jamais à conclure.
+
+- **`onEditPending`** — « Modifier la réponse », le même comportement que
+  `onReviewPending`, sous un nom qui dit ce qu'il fait.
+
+### Modifié
+
+- **« Relire ma réponse » devient « Relire la réponse ».** Celui qui relit
+  n'est pas toujours celui qui a écrit.
+
+### Déprécié
+
+- **`onReviewPending`** — employer `onEditPending`. Conservé pour ne rien
+  casser chez qui consomme déjà le registry ; retiré à la prochaine version
+  majeure.
+
+---
+
 ## [2.25.2] — 2026-09-25
 
 ### Corrigé

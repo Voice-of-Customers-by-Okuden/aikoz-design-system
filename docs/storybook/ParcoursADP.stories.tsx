@@ -106,14 +106,14 @@ export const DuTableauALaValidation: Story = {
     // Les trois colonnes proposent chacune une action différente, et elles
     // sont visibles en même temps. « Voir la réponse » était en `ghost` :
     // la colonne signalait un problème sans offrir de chemin apparent pour
-    // le régler. Montée à `outline` elle devenait « Relire ma réponse », à
+    // le régler. Montée à `outline` elle devenait « Relire la réponse », à
     // `default` elle devenait « Rédiger ».
     //
     // On mesure les FONDS rendus, pas les noms de variantes.
     // `getAllBy…[0]` : la colonne hors charte porte deux avis, donc deux
     // boutons « Voir la réponse ». Ils sont identiques par construction ;
     // c'est le premier de chaque famille qu'on compare.
-    const poids = ["Rédiger une réponse", "Relire ma réponse", "Voir la réponse"].map(
+    const poids = ["Rédiger une réponse", "Relire la réponse", "Voir la réponse"].map(
       (nom) =>
         getComputedStyle(c.getAllByRole("button", { name: nom })[0]).backgroundColor,
     );
@@ -292,7 +292,7 @@ export const RelireEtReprendre: Story = {
     docs: {
       description: {
         story:
-          "« Relire ma réponse » ouvre la MÊME fiche que la colonne hors " +
+          "« Relire la réponse » ouvre la MÊME fiche que la colonne hors " +
           "charte, et pour la même raison : on ne relit pas une réponse sans " +
           "l'avis qu'elle traite.\n\n" +
           "Elle renvoyait auparavant l'identifiant à l'appelant sans rien " +
@@ -317,7 +317,7 @@ export const RelireEtReprendre: Story = {
     });
 
     // ── La fiche montre l'avis ET la réponse ──────────────────────────────
-    await u.click(c.getByRole("button", { name: /Relire ma réponse/i }));
+    await u.click(c.getByRole("button", { name: /Relire la réponse/i }));
     const fiche = await boite().findByRole("dialog");
     await expect(
       within(fiche).getByText(/Contrôle de sûreté humiliant/),
@@ -326,7 +326,7 @@ export const RelireEtReprendre: Story = {
     ).toBeInTheDocument();
     await expect(
       within(fiche).getByText(/Madame Meunier/),
-      "la fiche ne montre pas la réponse : « Relire ma réponse » n'a rien à " +
+      "la fiche ne montre pas la réponse : « Relire la réponse » n'a rien à " +
         "relire.",
     ).toBeInTheDocument();
 
@@ -337,7 +337,7 @@ export const RelireEtReprendre: Story = {
     await waitFor(async () => {
       await expect(c.getByText(/Contrôle de sûreté humiliant/)).toBeInTheDocument();
       await expect(
-        c.queryByRole("button", { name: /Relire ma réponse/i }),
+        c.queryByRole("button", { name: /Relire la réponse/i }),
         "on est resté sur le tableau : « Modifier » n'a pas rouvert la " +
           "rédaction.",
       ).not.toBeInTheDocument();
@@ -345,5 +345,68 @@ export const RelireEtReprendre: Story = {
     await expect(
       await c.findByRole("button", { name: /Envoyer pour validation/i }),
     ).toBeInTheDocument();
+  },
+};
+
+export const ValiderLaReponse: Story = {
+  name: "Valider la réponse — la fiche conclut",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "La fiche de relecture offre **deux sorties opposées** : se raviser " +
+          "ou conclure. N'en offrir qu'une en ferait un aller sans retour — " +
+          "ou un retour sans aller.\n\n" +
+          "« Valider » envoie la réponse à la publication, et l'avis quitte le " +
+          "tableau. **Aucune colonne ne l'accueille**, et c'est juste : rien " +
+          "n'attend plus personne. Le message devient donc la seule trace, et " +
+          "il doit dire ce qui s'est passé plutôt que « c'est fait ».",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const c = within(canvasElement);
+    const boite = () => within(document.body);
+
+    await u.click(c.getAllByRole("button", { name: /Rédiger une réponse/i })[0]);
+    await u.click(await c.findByRole("button", { name: /Envoyer pour validation/i }));
+    await waitFor(async () => {
+      await expect(c.getByRole("button", { name: /Relire la réponse/i })).toBeInTheDocument();
+    });
+
+    await u.click(c.getByRole("button", { name: /Relire la réponse/i }));
+    const fiche = await boite().findByRole("dialog");
+
+    // Les DEUX sorties, et une seule primaire.
+    const modifier = within(fiche).getByRole("button", { name: /Modifier la réponse/i });
+    const valider = within(fiche).getByRole("button", { name: /Valider la réponse/i });
+    await expect(
+      getComputedStyle(modifier).backgroundColor,
+      "les deux sorties de la fiche ont le même poids : rien ne dit laquelle " +
+        "conclut.",
+    ).not.toBe(getComputedStyle(valider).backgroundColor);
+
+    await u.click(valider);
+
+    // L'avis quitte le tableau, et le message porte la trace.
+    await waitFor(async () => {
+      await expect(
+        c.queryByRole("button", { name: /Relire la réponse/i }),
+        "l'avis validé est resté en attente de validation.",
+      ).not.toBeInTheDocument();
+    });
+    await expect(
+      c.getByText(/Rien en attente de validation/i),
+    ).toBeInTheDocument();
+    // `findAllByText` : `Toast` écrit son message à l'écran ET dans une
+    // région annoncée, et c'est juste — un message seulement affiché ne
+    // prévient pas qui ne voit pas l'écran.
+    await expect(
+      (await boite().findAllByText(/Réponse validée et envoyée à la publication/))
+        .length,
+      "rien ne dit ce qu'est devenue la réponse : le tableau ne la montre " +
+        "plus, et le message est sa seule trace.",
+    ).toBeGreaterThan(0);
   },
 };

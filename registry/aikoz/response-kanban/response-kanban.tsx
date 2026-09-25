@@ -96,10 +96,24 @@ export interface ResponseKanbanProps {
    */
   onDraftReply?: (id: string) => void;
   /**
-   * « Modifier la réponse », depuis la fiche de relecture : la réponse est
-   * reprise au valideur et repart en rédaction. L'inverse de l'envoi.
+   * @deprecated Employer `onEditPending`. Conservé pour ne rien casser chez
+   * qui consomme déjà le registry ; retiré à la prochaine version majeure.
    */
   onReviewPending?: (id: string) => void;
+  /**
+   * « Modifier la réponse » : la réponse est reprise à son valideur et
+   * repart en rédaction. L'inverse exact de l'envoi.
+   */
+  onEditPending?: (id: string) => void;
+  /**
+   * « Valider la réponse » : feu vert donné, la réponse part à la
+   * publication et quitte la colonne.
+   *
+   * Séparé de `onEditPending` parce que ce sont deux décisions opposées, et
+   * qu'une fiche de relecture qui n'offrirait que la modification ne
+   * servirait qu'à se raviser — jamais à conclure.
+   */
+  onApprovePending?: (id: string) => void;
   /**
    * Remplace le titre et le sous-titre d'une colonne.
    *
@@ -403,10 +417,12 @@ function SensitiveColumn({
 
 function PendingValidationColumn({
   items,
-  onReview,
+  onEdit,
+  onApprove,
 }: {
   items: PendingValidationItem[];
-  onReview?: (id: string) => void;
+  onEdit?: (id: string) => void;
+  onApprove?: (id: string) => void;
 }) {
   if (items.length === 0) {
     return (
@@ -450,15 +466,23 @@ function PendingValidationColumn({
             <Dialog
               trigger={
                 <Button size="sm" variant="outline">
-                  Relire ma réponse
+                  Relire la réponse
                 </Button>
               }
               title="Réponse en attente de validation"
               description={`Chez ${item.validatorLabel}`}
+              // Deux sorties opposées, et la fiche existe pour choisir entre
+              // elles : se raviser, ou conclure. N'en offrir qu'une ferait de
+              // la relecture un aller sans retour — ou un retour sans aller.
               footer={
-                <Button onClick={() => onReview?.(item.id)}>
-                  Modifier la réponse
-                </Button>
+                <>
+                  <Button variant="outline" onClick={() => onEdit?.(item.id)}>
+                    Modifier la réponse
+                  </Button>
+                  <Button onClick={() => onApprove?.(item.id)}>
+                    Valider la réponse
+                  </Button>
+                </>
               }
             >
               <div className="flex flex-col gap-3">
@@ -512,6 +536,8 @@ export function ResponseKanban({
   sensitive,
   pendingValidation,
   onReviewPending,
+  onEditPending,
+  onApprovePending,
   titleLevel,
   initialVisible = 3,
   onSaveReply,
@@ -566,7 +592,8 @@ export function ResponseKanban({
                 children: (
                   <PendingValidationColumn
                     items={pendingValidation}
-                    onReview={onReviewPending}
+                    onEdit={onEditPending ?? onReviewPending}
+                    onApprove={onApprovePending}
                   />
                 ),
               },
