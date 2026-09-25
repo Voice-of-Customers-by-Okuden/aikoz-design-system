@@ -52,6 +52,13 @@ export interface PendingValidationItem {
   text: string;
   /** Qui doit donner son feu vert, ex. « Responsable qualité CDG ». */
   validatorLabel: string;
+  /**
+   * La réponse partie en validation.
+   *
+   * Sans elle, « Relire ma réponse » n'avait rien à relire. Une commande qui
+   * porte un verbe doit pouvoir le tenir.
+   */
+  reply: string;
 }
 
 export interface ResponseKanbanProps {
@@ -88,7 +95,10 @@ export interface ResponseKanbanProps {
    * relais est hors de son périmètre.
    */
   onDraftReply?: (id: string) => void;
-  /** « Relire ma réponse », depuis la colonne « En attente de validation ». */
+  /**
+   * « Modifier la réponse », depuis la fiche de relecture : la réponse est
+   * reprise au valideur et repart en rédaction. L'inverse de l'envoi.
+   */
   onReviewPending?: (id: string) => void;
   /**
    * Remplace le titre et le sous-titre d'une colonne.
@@ -408,16 +418,53 @@ function PendingValidationColumn({
           density="compact"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
-            {/* Le badge nomme QUI doit valider. « En attente » tout court
-                laisserait chercher à qui réclamer. */}
-            {/* `neutral` comme le compteur de la colonne : rien ne cloche,
-                ça attend quelqu'un. */}
+            {/* Le badge nomme QUI doit valider — « en attente » tout court
+                laisserait chercher à qui réclamer — et il est `neutral`
+                comme le compteur de la colonne : rien ne cloche, ça attend
+                quelqu'un. */}
             <Badge tone="neutral" size="sm">
               Chez {item.validatorLabel}
             </Badge>
-            <Button size="sm" variant="outline" onClick={() => onReview?.(item.id)}>
-              Relire ma réponse
-            </Button>
+
+            {/* La MÊME fiche que la colonne hors charte, et pour la même
+                raison : on ne relit pas une réponse sans l'avis qu'elle
+                traite. Composition de `Dialog`, pas un composant à part —
+                placement, titre, piège de focus, Échap et retour du focus au
+                déclencheur y sont déjà.
+            
+                Avant, « Relire ma réponse » renvoyait l'identifiant à
+                l'appelant et n'ouvrait rien : une commande qui porte un
+                verbe doit pouvoir le tenir. */}
+            <Dialog
+              trigger={
+                <Button size="sm" variant="outline">
+                  Relire ma réponse
+                </Button>
+              }
+              title="Réponse en attente de validation"
+              description={`Chez ${item.validatorLabel}`}
+              footer={
+                <Button onClick={() => onReview?.(item.id)}>
+                  Modifier la réponse
+                </Button>
+              }
+            >
+              <div className="flex flex-col gap-3">
+                <VerbatimCard
+                  rating={item.rating}
+                  author={item.author}
+                  date={item.date}
+                  text={item.text}
+                  density="compact"
+                />
+                {/* `showOrigin` gardé, contrairement à la fiche hors charte :
+                    là-bas on relit un texte DÉJÀ publié dont l'auteur
+                    n'importe plus ; ici on relit ce qu'on s'apprête à
+                    publier en son propre nom, et savoir qu'une machine l'a
+                    écrit fait partie de la relecture. */}
+                <ReplyBubble origin="ai">{item.reply}</ReplyBubble>
+              </div>
+            </Dialog>
           </div>
         </VerbatimCard>
       ))}
