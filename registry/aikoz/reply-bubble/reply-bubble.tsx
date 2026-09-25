@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { SmartToy, Person } from "@material-symbols-svg/react/rounded";
 import { cn } from "@registry/aikoz/lib/utils";
 import { Badge } from "@registry/aikoz/badge/badge";
@@ -47,6 +47,23 @@ const ORIGIN_ICON = {
   ai: SmartToy,
   operator: Person,
 } as const;
+
+// ─── Découpage du texte ──────────────────────────────────────────────────────
+
+/**
+ * Découpe un texte en paragraphes, puis chaque paragraphe en lignes.
+ *
+ * Une ligne vide sépare deux paragraphes — un vrai `<p>`, avec l'espacement
+ * du conteneur. Un simple retour à la ligne reste DANS le paragraphe et
+ * devient un `<br>` : c'est la signature sur deux lignes, pas un nouveau
+ * paragraphe.
+ */
+function decouperEnParagraphes(texte: string): string[][] {
+  return texte
+    .trim()
+    .split(/\n\s*\n/)
+    .map((para) => para.split("\n"));
+}
 
 // ─── Composant ────────────────────────────────────────────────────────────────
 
@@ -102,6 +119,29 @@ export function ReplyBubble({
 
       {loading ? (
         <SkeletonText lines={2} />
+      ) : typeof children === "string" ? (
+        // Une réponse à un avis fait TOUJOURS plusieurs paragraphes :
+        // salutation, corps, signature. Les rendre dans un seul `<p>` les
+        // fondait en un bloc — le premier signe qu'on regarde une maquette
+        // plutôt qu'un produit.
+        //
+        // Le découpage se fait ici et pas chez l'appelant : un assemblage qui
+        // voudrait poser `whitespace-pre-line` le poserait sur le CONTENEUR,
+        // en comptant sur l'héritage de `white-space`. Ça marche en CSS, et ça
+        // ne marche pas ici — la classe doit d'abord exister dans la feuille
+        // générée, et une classe utilisée nulle part ailleurs n'y est pas.
+        // Mesuré : `white-space` calculé à `normal` sur le `<p>` alors que le
+        // parent portait bien la classe.
+        decouperEnParagraphes(children).map((para, i) => (
+          <p key={i} className="text-sm text-foreground leading-relaxed m-0">
+            {para.map((ligne, j) => (
+              <Fragment key={j}>
+                {j > 0 && <br />}
+                {ligne}
+              </Fragment>
+            ))}
+          </p>
+        ))
       ) : (
         <p className="text-sm text-foreground leading-relaxed m-0">{children}</p>
       )}

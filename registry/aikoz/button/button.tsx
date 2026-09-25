@@ -20,6 +20,21 @@ const buttonVariants = cva(
     "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
     "disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
   ],
+  // ── `text-balance` empêche `whitespace-nowrap` de fonctionner ──────────
+  //
+  // `text-wrap` est un raccourci de `text-wrap-mode` + `text-wrap-style`, et
+  // `white-space` un raccourci de `white-space-collapse` + `text-wrap-mode`.
+  // Les deux écrivent donc dans la MÊME propriété longue. Posé sur la base,
+  // `text-balance` remet `text-wrap-mode` à `wrap` — et le
+  // `whitespace-nowrap` d'un appelant est silencieusement annulé : la classe
+  // est dans le DOM, la règle est dans la feuille, et `white-space` calcule
+  // `normal`. Mesuré sur « Donner votre voix à ADP+ » dans une barre de
+  // 240 px : 60 px de haut, soit deux lignes, avec la classe posée.
+  //
+  // Pour forcer une ligne unique, passer **`text-nowrap`** et non
+  // `whitespace-nowrap` : les deux appartiennent au même groupe pour
+  // `tailwind-merge`, qui retire alors `text-balance` au lieu de le laisser
+  // gagner.
   {
     variants: {
       variant: {
