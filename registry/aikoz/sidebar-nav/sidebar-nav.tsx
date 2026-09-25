@@ -169,24 +169,38 @@ export function SidebarNav({
           ? "linear-gradient(to bottom, transparent 0, #000 2rem)"
           : undefined;
 
-  // L'ombre est faite de l'ENCRE de la barre, diluée. Pas d'un gris écrit en
-  // dur : `--nav-on` vaut l'encre de marque en clair et le blanc en sombre,
-  // donc l'ombre fonce sur fond clair et éclaircit sur fond sombre, sans
-  // qu'aucune valeur ne soit à maintenir par thème. `color-mix(in oklch, …,
-  // transparent N%)` est la forme de transparence du système.
-  const ENCRE = "color-mix(in oklch, var(--nav-on), transparent 76%)";
-  // Étalement NUL et flou large : une ombre à étalement négatif se
-  // rétracte sous le bord et ne laisse qu'un liseré de deux pixels — c'est
-  // ce que donnait `-12px`, et c'est pour ça qu'on ne la voyait pas.
-  const HAUT = `inset 0 10px 12px -10px ${ENCRE}`;
-  const BAS = `inset 0 -10px 12px -10px ${ENCRE}`;
-  const ombre =
+  // ── Un DÉGRADÉ DE FOND, et pas une ombre portée ───────────────────────
+  //
+  // `box-shadow: inset` était la solution évidente et elle avait deux
+  // défauts visibles, tous deux relevés par Alice.
+  //
+  // Elle déborde sur les CÔTÉS : une ombre intérieure se dessine sur les
+  // quatre bords, et un flou de 12 px pour un étalement de -10 la fait
+  // réapparaître le long des montants. Mesuré :
+  // `0px -10px 12px -10px inset` peint aussi à gauche et à droite.
+  //
+  // Et sa bande DOUBLE le trait du pied : deux séparateurs à quelques pixels
+  // l'un de l'autre, là où il n'y a qu'une frontière.
+  //
+  // Un dégradé de fond n'a pas de côtés — il s'arrête exactement où on le
+  // dit — et il se fond dans le trait du pied au lieu de lutter avec lui.
+  // Il est peint sur l'enveloppe ; la zone défilante étant transparente, il
+  // se voit à travers, y compris là où la liste se coupe sur du blanc. C'est
+  // toute la différence avec le masque, qui n'agit que sur l'encre.
+  //
+  // Fait de l'encre de la barre diluée : `--nav-on` vaut l'encre de marque
+  // en clair et le blanc en sombre, donc le dégradé fonce sur fond clair et
+  // éclaircit sur fond sombre, sans valeur à maintenir par thème.
+  const ENCRE = "color-mix(in oklch, var(--nav-on), transparent 86%)";
+  const VERS_HAUT = `linear-gradient(to top, ${ENCRE}, transparent 1.75rem)`;
+  const VERS_BAS = `linear-gradient(to bottom, ${ENCRE}, transparent 1.75rem)`;
+  const degrade =
     debord === "deux"
-      ? `${HAUT}, ${BAS}`
+      ? `${VERS_BAS}, ${VERS_HAUT}`
       : debord === "bas"
-        ? BAS
+        ? VERS_HAUT
         : debord === "haut"
-          ? HAUT
+          ? VERS_BAS
           : undefined;
 
   return (
@@ -244,17 +258,16 @@ export function SidebarNav({
           `flex-1` n'a rien à partager et `overflow-y-auto` rien à couper. */}
       {/* Deux éléments, et c'est obligatoire.
       
-          `mask-image` découpe TOUT le rendu de l'élément, ombre portée
-          comprise : posés sur le même nœud, le masque effaçait l'ombre
-          exactement là où elle devait se voir. C'est ce qui rendait l'effet
-          imperceptible, et aucune quantité d'opacité n'y aurait changé quoi
-          que ce soit.
+          `mask-image` découpe TOUT le rendu de l'élément, fond compris :
+          posés sur le même nœud, le masque effaçait le dégradé exactement là
+          où il devait se voir. C'est ce qui rendait l'effet imperceptible, et
+          aucune quantité d'opacité n'y aurait changé quoi que ce soit.
       
-          L'ombre va donc sur l'enveloppe, qui n'est pas masquée ; le masque
-          reste sur la zone défilante, où il doit être — posé sur le contenu,
-          il défilerait avec lui. */}
+          Le dégradé va donc sur l'enveloppe, qui n'est pas masquée ; le
+          masque reste sur la zone défilante, où il doit être — posé sur le
+          contenu, il défilerait avec lui. */}
       <div
-        style={ombre ? { boxShadow: ombre } : undefined}
+        style={degrade ? { backgroundImage: degrade } : undefined}
         className="flex min-h-0 flex-1 flex-col"
       >
       <div
@@ -349,7 +362,10 @@ export function SidebarNav({
           className={cn(
             "mt-auto shrink-0",
             "-mx-3 -mb-3 px-4 pb-3 pt-3",
-            "border-t border-[var(--nav-border)] bg-[var(--nav-surface-sunken)]"
+            // Pas de `border-t` : le fond du pied suffit à le délimiter, et
+            // un trait sous le dégradé faisait DEUX séparateurs à quelques
+            // pixels l'un de l'autre là où il n'y a qu'une frontière.
+            "bg-[var(--nav-surface-sunken)]"
           )}
         >
           {footer}

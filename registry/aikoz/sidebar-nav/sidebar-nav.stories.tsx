@@ -149,7 +149,7 @@ export const LaListeDitQuElleContinue: Story = {
       "la liste courte annonce un débordement qu'elle n'a pas.",
     ).toBe("non");
     await expect(getComputedStyle(courte).maskImage).toBe("none");
-    await expect(getComputedStyle(courte.parentElement!).boxShadow).toBe("none");
+    await expect(getComputedStyle(courte.parentElement!).backgroundImage).toBe("none");
 
     // ── Du contenu dessous, le fondu en bas ───────────────────────────────
     await expect(
@@ -159,24 +159,35 @@ export const LaListeDitQuElleContinue: Story = {
     await expect(longue.dataset.debord).toBe("bas");
     await expect(getComputedStyle(longue).maskImage).not.toBe("none");
 
-    // ── L'ombre n'est PAS sur l'élément masqué ────────────────────────────
+    // ── Le dégradé n'est PAS sur l'élément masqué ─────────────────────────
     //
-    // `mask-image` découpe tout le rendu de son élément, ombre portée
-    // comprise. Posés ensemble, le masque effaçait l'ombre exactement là où
-    // elle devait se voir — l'effet était imperceptible et aucune opacité
-    // n'y aurait rien changé. C'est le défaut qu'Alice a signalé par « on ne
-    // voit pas trop ».
-    await expect(
-      getComputedStyle(longue).boxShadow,
-      "l'ombre est posée sur l'élément masqué : le masque l'efface.",
-    ).toBe("none");
+    // `mask-image` découpe tout le rendu de son élément, fond compris. Posés
+    // ensemble, le masque effaçait le dégradé exactement là où il devait se
+    // voir — l'effet était imperceptible et aucune opacité n'y aurait rien
+    // changé. C'est le défaut signalé par « on ne voit pas trop ».
     const enveloppe = longue.parentElement!;
     await expect(
-      getComputedStyle(enveloppe).boxShadow,
-      "l'enveloppe ne porte pas d'ombre : le bord ne se voit que là où il y " +
-        "a de l'encre à estomper.",
+      getComputedStyle(longue).backgroundImage,
+      "le dégradé est posé sur l'élément masqué : le masque l'efface.",
+    ).toBe("none");
+    await expect(
+      getComputedStyle(enveloppe).backgroundImage,
+      "l'enveloppe ne porte pas de dégradé : le bord ne se voit que là où il " +
+        "y a de l'encre à estomper.",
     ).not.toBe("none");
     await expect(getComputedStyle(enveloppe).maskImage).toBe("none");
+
+    // ── Et rien ne déborde sur les côtés ──────────────────────────────────
+    //
+    // Une ombre intérieure se dessine sur les QUATRE bords : mesurée,
+    // `inset 0 -10px 12px -10px` peignait aussi le long des montants. Un
+    // dégradé n'a pas de côtés, et aucune ombre ne subsiste pour en
+    // fabriquer.
+    await expect(
+      getComputedStyle(enveloppe).boxShadow,
+      "une ombre intérieure subsiste : elle déborde sur la gauche et la " +
+        "droite de la barre.",
+    ).toBe("none");
 
     // ── Au milieu, des deux côtés ; en bas, plus rien dessous ─────────────
     longue.scrollTop = 40;
