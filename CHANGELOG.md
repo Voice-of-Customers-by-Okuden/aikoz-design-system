@@ -18,6 +18,22 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.25.1] — 2026-09-25
+
+### Corrigé
+
+- **« Voir la réponse » était à peine visible.** En `ghost`, la colonne des
+  réponses hors charte signalait un problème sans offrir de chemin apparent
+  pour le régler. Elle passe en `secondary`.
+
+  Ni `outline` — elle serait devenue indiscernable de « Relire ma réponse » —
+  ni `default` — indiscernable de « Rédiger une réponse ». Les trois
+  commandes sont visibles en même temps sur le même écran et doivent se
+  distinguer d'un coup d'œil : plein foncé, plein clair, cerné. Un garde-fou
+  compte les fonds RENDUS et exige qu'il y en ait trois.
+
+---
+
 ## [2.25.0] — 2026-09-25
 
 ### Corrigé

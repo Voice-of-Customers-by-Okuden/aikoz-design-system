@@ -316,9 +316,21 @@ function OffCharterColumn({
                 placement centré, titre obligatoire, piège de focus, Échap,
                 retour du focus au déclencheur — le construire à nouveau
                 aurait dupliqué exactement cette mécanique. */}
+            {/* ── Trois colonnes, trois poids, aucun doublon ──────────────
+            
+                `default` sur « Rédiger une réponse » : c'est le travail qui
+                presse. `outline` sur « Relire ma réponse » : on va voir, on
+                ne s'engage pas. `secondary` ici — plein mais discret.
+            
+                Il était en `ghost`, donc à peine visible : la colonne
+                signalait un problème et n'offrait aucun chemin apparent pour
+                le régler. Mais le monter à `outline` l'aurait rendu
+                indiscernable de « Relire ma réponse », et à `default`
+                indiscernable de « Rédiger ». Trois commandes différentes sur
+                un même écran doivent se distinguer d'un coup d'œil. */}
             <Dialog
               trigger={
-                <Button variant="ghost" size="sm">
+                <Button variant="secondary" size="sm">
                   Voir la réponse
                 </Button>
               }
