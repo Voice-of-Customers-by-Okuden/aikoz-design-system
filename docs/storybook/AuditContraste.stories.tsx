@@ -110,6 +110,12 @@ const PAIRES: Array<{
   // ne le mesure — exactement ce qui était arrivé aux contours de statut.
   { avant: "--color-nav-on", fond: "--nav-surface-sunken", seuil: 4.5, nature: "texte", quoi: "texte du pied de barre" },
   { avant: "--color-nav-on-muted", fond: "--nav-surface-sunken", seuil: 4.5, nature: "texte", quoi: "texte atténué du pied de barre" },
+  // Le ton `neutral` de CountBadge est CERNÉ sur un fond de carte. Essayé
+  // plein d'abord (4,11:1, sous le seuil), puis voilé sur `--muted`
+  // (6,16:1 mais APCA 74 pour 75) : c'est cette paire-là qui a tranché les
+  // deux fois.
+  { avant: "--color-status-neutral-text", fond: "--card", seuil: 4.5, nature: "texte", quoi: "compteur au ton neutre" },
+  { avant: "--color-status-neutral-fill", fond: "--card", seuil: 3.0, nature: "element", quoi: "contour du compteur neutre" },
   ...[1, 2, 3, 4, 5, 6].map((i) => ({
     avant: `--chart-${i}`,
     fond: "--card",

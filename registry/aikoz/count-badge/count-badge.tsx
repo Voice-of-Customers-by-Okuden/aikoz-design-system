@@ -51,6 +51,7 @@ const countBadgeVariants = cva(
         info: "",
         warning: "",
         error: "",
+        neutral: "",
       },
     },
     compoundVariants: [
@@ -58,6 +59,41 @@ const countBadgeVariants = cva(
       { variant: "count", tone: "info", class: "bg-[var(--info-subtle)] text-[var(--info)]" },
       { variant: "count", tone: "warning", class: "bg-[var(--warning-subtle)] text-[var(--warning)]" },
       { variant: "count", tone: "error", class: "bg-[var(--destructive)] text-[var(--destructive-foreground)]" },
+      // ── `neutral` : ce qui attend sans que rien n'aille mal ──────────────
+      //
+      // Il manquait, et son absence poussait à écrire `warning` pour « en
+      // cours » : sur un tableau de quatre colonnes, un rouge et deux jaunes
+      // donnent l'impression que rien ne va, alors qu'une seule colonne
+      // signale vraiment un problème.
+      //
+      // `--neutral-fill` existait et n'était demandé par personne — le même
+      // défaut que les contours de statut : un rôle publié qu'aucun
+      // composant ne pouvait atteindre.
+      //
+      // CERNÉ, et c'est la troisième tentative — les deux premières sont
+      // instructives.
+      //
+      // Plein d'abord, comme `error` : `--on-inverse` sur `--neutral-fill`
+      // ne donne que 4,11 à 4,27:1 selon la marque, sous le seuil de 4,5.
+      // Je l'avais calculé à 4,70 avec du blanc PUR ; `--on-inverse` n'est
+      // pas blanc, et c'est l'audit qui me l'a appris.
+      //
+      // Voilé ensuite, comme `info` et `warning` : `--neutral-text` sur
+      // `--muted` tient 6,16:1 en WCAG mais retombe à APCA 74 pour un seuil
+      // de 75. `info` et `warning` s'en tirent parce qu'ils sont voilés sur
+      // LEUR propre teinte pâle — `--info-subtle`, `--warning-subtle` — et
+      // la famille neutre n'en a pas.
+      //
+      // Cerné, donc : fond de carte explicite et non hérité, encre à 85 de
+      // APCA dessus, et un contour qui lui donne sa présence. Un compteur
+      // cerné plutôt que plein dit aussi la bonne chose — ce qui attend
+      // n'a pas à peser autant que ce qui presse.
+      {
+        variant: "count",
+        tone: "neutral",
+        class:
+          "bg-[var(--card)] border border-[var(--border-strong)] text-[var(--neutral-text)]",
+      },
     ],
     defaultVariants: { variant: "count", tone: "primary" },
   }
@@ -84,7 +120,14 @@ export interface CountBadgeProps extends VariantProps<typeof countBadgeVariants>
   label?: string | null;
 }
 
-export type CountBadgeTone = "primary" | "info" | "warning" | "error";
+/**
+ * `primary` — un compte qui ne dit rien de plus que son nombre.
+ * `info`    — ce qui attend une lecture.
+ * `warning` — ce qui cloche.
+ * `error`   — ce qui presse.
+ * `neutral` — ce qui est en cours, sans que rien n'aille mal.
+ */
+export type CountBadgeTone = "primary" | "info" | "warning" | "error" | "neutral";
 
 // ─── Composant ────────────────────────────────────────────────────────────────
 
