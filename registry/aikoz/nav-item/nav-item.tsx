@@ -28,6 +28,21 @@ export interface NavItemProps
    * laquelle est vraie. `location` existe exactement pour ça — « la position
    * courante dans un environnement ».
    *
+   * **Visuellement, c'est le MÊME état que `current`**, et c'est délibéré.
+   * Ma première version le rendait plus faible — trait court, pas de fond —
+   * pour « ne pas prétendre être la page ». Résultat : le repère de l'espace
+   * changeait d'apparence selon qu'une conversation était ouverte ou non.
+   * Sur l'accueil, « Accueil » était plein ; sur une conversation,
+   * « Gestion des avis » était pâle. La question « dans quel espace suis-je »
+   * recevait deux réponses différentes selon la page, ce qui est exactement
+   * ce qu'un design system existe pour éviter.
+   *
+   * Ce qui distingue les deux pour qui voit l'écran n'est pas leur force,
+   * c'est leur GROUPE : « Gestion des avis » est dans les espaces,
+   * « Réponse à Mme Charmon » dans les conversations. Chaque liste marque
+   * son élément actif de la même façon, et la lecture est immédiate — on est
+   * dans cet espace, sur cette conversation.
+   *
    * Sans effet si `current` est posé : une entrée ne peut pas être à la fois
    * la page et son contenant.
    */
@@ -133,16 +148,12 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
             : "min-h-11 pl-4 pr-3 py-2 text-sm",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
           "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--nav-surface)]",
-          current
+          // Un seul état ACTIF, qu'on soit la page ou la section qui la
+          // contient : même graisse, même encre, même fond. Trois canaux, et
+          // aucun n'est la couleur seule.
+          current || ancestor
             ? "font-semibold text-[var(--nav-on)] bg-[var(--nav-surface-active)]"
-            : ancestor
-              // Deux canaux, aucun n'étant la couleur seule : la GRAISSE
-              // passe à semi-gras comme l'entrée courante, et l'encre passe
-              // de sourde à pleine. Pas de fond : c'est lui qui distingue la
-              // page de la section qui la contient, et le trait d'accent
-              // ci-dessous est plus court.
-              ? "font-semibold text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]"
-              : "font-medium text-[var(--nav-on-muted)] hover:text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
+            : "font-medium text-[var(--nav-on-muted)] hover:text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
           className
         )}
         {...props}
@@ -156,13 +167,7 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
             aria-hidden="true"
             className={cn(
               "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r-full bg-[var(--nav-accent)]",
-              // Le trait de la SECTION est court — un tiers de celui de la
-              // page. Il dit « c'est par ici » sans prétendre « c'est ici ».
-              current
-                ? density === "compact"
-                  ? "h-4"
-                  : "h-5"
-                : "h-2"
+              density === "compact" ? "h-4" : "h-5"
             )}
           />
         )}
