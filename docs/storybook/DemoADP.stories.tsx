@@ -199,6 +199,17 @@ export const Clair: Story = {
 export const Sombre: Story = {
   name: "Marque ADP, thème sombre",
   globals: { theme: "sombre" },
+  // HORS de la page Docs.
+  //
+  // Sur une page Docs, toutes les histoires partagent le MÊME document. Le
+  // thème se pose sur `documentElement` : cette histoire-là assombrissait
+  // donc ses voisines, et la page entière restait sombre même en
+  // sélectionnant « clair » dans la barre d'outils.
+  //
+  // Une histoire qui épingle un global de niveau DOCUMENT n'a pas sa place
+  // sur une page qui en empile d'autres. Elle reste consultable seule, dans
+  // la barre latérale.
+  tags: ["!autodocs"],
   parameters: {
     docs: {
       description: {

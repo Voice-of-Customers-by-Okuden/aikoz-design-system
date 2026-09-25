@@ -14,7 +14,22 @@ const meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
-    docs: { source: { code: source, language: "tsx" } },
+    docs: {
+      source: {
+        code: source,
+        language: "tsx",
+      },
+      // Le code est DÉPLIÉ d'entrée. Replié, il demandait deux clics à
+      // deviner : trouver l'entrée « Docs » dans la barre latérale, puis
+      // « Show code ». Personne ne l'a trouvé, et c'est le signe que
+      // personne ne le trouvera. Un assemblage existe POUR être copié : son
+      // code est le contenu de la page, pas une option.
+      //
+      // `canvas.sourceState` et non `source.state` : le second ne gouverne
+      // que le bloc `Source` posé à la main, pas le `Canvas` que génère
+      // autodocs.
+      canvas: { sourceState: "shown" },
+    },
   },
   globals: { marque: "adp" },
   decorators: [

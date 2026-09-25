@@ -18,6 +18,29 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.19.2] — 2026-09-25
+
+### Corrigé
+
+- **Le code d'un assemblage est déplié d'entrée.** Il fallait deux clics à
+  deviner — trouver l'entrée « Docs » dans la barre latérale, puis
+  « Show code ». Personne ne les a trouvés, et c'est le signe que personne ne
+  les trouvera. Un assemblage existe pour être copié : son code est le
+  contenu de la page, pas une option. (`canvas.sourceState` et non
+  `source.state` : le second ne gouverne que le bloc `Source` posé à la main,
+  pas le `Canvas` que génère autodocs.)
+- **La page Docs de « Démo ADP » restait sombre même en sélectionnant
+  « clair ».** Sur une page Docs, toutes les histoires partagent le MÊME
+  document, et le thème se pose sur `documentElement` : l'histoire « thème
+  sombre » assombrissait donc ses voisines et la page entière. Elle en est
+  retirée (`tags: ["!autodocs"]`) et reste consultable seule.
+
+  La règle qui en sort : **une histoire qui épingle un global de niveau
+  document n'a pas sa place sur une page qui en empile d'autres.** C'est le
+  même mécanisme que la fuite de `data-brand` corrigée en 2.17.2.
+
+---
+
 ## [2.19.1] — 2026-09-25
 
 ### Corrigé
