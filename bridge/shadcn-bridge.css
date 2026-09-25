@@ -53,6 +53,7 @@
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --neutral-text: var(--color-status-neutral-text); /** extension DS — variation neutre d'un indicateur (DeltaBadge ton neutre) */
   --neutral-fill: var(--color-status-neutral-fill); /** extension DS — aplat neutre d'un indicateur */
   --foreground: var(--color-text-primary); /** shadcn --foreground */
@@ -116,6 +117,7 @@
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --on-hero: var(--color-surface-on-hero); /** extension DS — texte porté par --surface-hero */
   --background: var(--color-surface-page); /** shadcn --background */
   --card: var(--color-surface-raised); /** shadcn --card */
@@ -196,6 +198,7 @@
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --rating-empty: var(--color-rating-empty); /** extension DS — étoile vide, repère décoratif de l'échelle */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --neutral-text: var(--color-status-neutral-text); /** extension DS — variation neutre d'un indicateur (DeltaBadge ton neutre) */
   --neutral-fill: var(--color-status-neutral-fill); /** extension DS — aplat neutre d'un indicateur */
   --foreground: var(--color-text-primary); /** shadcn --foreground */
@@ -258,6 +261,7 @@
   --destructive-text: var(--color-status-error-text); /** extension DS — texte/emphase erreur (utilisé par KpiCard) */
   --rating: var(--color-rating-default); /** extension DS — couleur de notation (étoiles pleines), rôle dédié : cf. règle « un rôle manquant = une variable dédiée » */
   --radius: var(--role-radius-default); /** extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind) */
+  --radius-pill: var(--role-radius-pill); /** extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`. */
   --surface-hero-to: var(--color-surface-hero-to); /** extension DS — second arrêt du dégradé de --surface-hero */
   --background: var(--color-surface-page); /** shadcn --background */
   --card: var(--color-surface-raised); /** shadcn --card */

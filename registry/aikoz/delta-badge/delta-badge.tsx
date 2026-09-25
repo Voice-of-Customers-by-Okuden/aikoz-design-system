@@ -7,7 +7,7 @@ import { cn } from "@registry/aikoz/lib/utils";
 const badgeVariants = cva(
   [
     "inline-flex items-center gap-0.5 shrink-0",
-    "rounded-full font-semibold whitespace-nowrap tabular-nums",
+    "rounded-[var(--radius-pill)] font-semibold whitespace-nowrap tabular-nums",
   ],
   {
     variants: {

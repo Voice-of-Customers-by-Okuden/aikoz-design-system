@@ -55,5 +55,11 @@
   --font-heading: var(--font-family-gotham); /** Police du Groupe ADP — Gotham, repli Century Gothic désigné par la charte. La charte n'en prévoit qu'une pour le digital. */
   --font-body: var(--font-family-gotham); /** Police du Groupe ADP — Gotham, repli Century Gothic désigné par la charte. La charte n'en prévoit qu'une pour le digital. */
   --font-mono: var(--font-family-mono); /** Chiffres tabulaires — commune, aucune charte n'en impose. */
+  /**
+   * ADP n'est pas une marque en pilule. Ses interfaces — la v2 de l'outil Avis digitaux comme la charte imprimée — posent des angles courts sur des formes rectangulaires ; la pilule d'Aikoz y lisait comme une greffe.
+   * 
+   * 8 px, soit la même valeur que `--radius` : sous cette marque, un bouton et la carte qui le contient partagent leur rayon, et c'est précisément ce qui fait l'unité du dessin. Une marque = une ligne, et la retirer rend les pilules.
+   */
+  --radius-pill: var(--dimension-radius-md);
   --color-brand-on-accent: var(--color-ink-900); /** Texte posé sur l'aplat d'accent. Pointait sur `midnight-blue.900`, une primitive d'AIKOZ, y compris sous ADP et Extime. Passe par `ink`, la rampe de chrome de la marque — même valeur pour Aikoz, sa propre rampe. */
 }

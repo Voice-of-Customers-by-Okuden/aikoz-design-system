@@ -98,8 +98,18 @@ export const TroisRolesPasUnSeul: Story = {
     },
   },
   play: async ({ canvasElement }) => {
+    // On sélectionne sur le RENDU, pas sur le nom des classes.
+    //
+    // La version précédente cherchait `rounded-full` dans `className` : elle
+    // a cessé de trouver quoi que ce soit le jour où la pilule est passée
+    // sur `--radius-pill`, un token de marque. Cinq assertions sont alors
+    // tombées d'un coup, sans que le composant ait changé de comportement —
+    // le test tenait à l'orthographe d'une classe.
     const pastilles = [...canvasElement.querySelectorAll<HTMLElement>("span")].filter(
-      (s) => /rounded-full/.test(s.className) && /border/.test(s.className),
+      (s) => {
+        const st = getComputedStyle(s);
+        return st.borderTopWidth !== "0px" && parseFloat(st.borderTopLeftRadius) > 0;
+      },
     );
     await expect(pastilles).toHaveLength(5);
 

@@ -44,6 +44,7 @@ export default {
   "primary": "var(--primary)",
   "primary-edge": "var(--primary-edge)",
   "primary-foreground": "var(--primary-foreground)",
+  "radius-pill": "var(--radius-pill)",
   "rating": "var(--rating)",
   "rating-empty": "var(--rating-empty)",
   "ring": "var(--ring)",

@@ -14,7 +14,10 @@ const badgeVariants = cva(
     // rayon se borne automatiquement à la moitié de la hauteur de chaque
     // ligne, sans distorsion.
     "inline-flex items-center gap-1",
-    "rounded-full border font-semibold",
+    // Même rayon que `Button` : `--radius-pill`, le rayon des formes en
+    // pilule par identité de marque. Un badge et un bouton posés sur la même
+    // ligne avec deux rayons différents se voient immédiatement.
+    "rounded-[var(--radius-pill)] border font-semibold",
   ],
   {
     variants: {

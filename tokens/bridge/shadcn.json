@@ -279,6 +279,11 @@
     "$value": "{role.radius.default}",
     "$description": "extension DS — rayon de base (shadcn --radius, dérivé en lg/md/sm par Tailwind)"
   },
+  "radius-pill": {
+    "$type": "dimension",
+    "$value": "{role.radius.pill}",
+    "$description": "extension DS — rayon des formes en pilule par identité de marque (bouton, badge, puce). Les cercles imposés par la géométrie gardent `rounded-full`."
+  },
   "surface-hero": {
     "$type": "color",
     "$value": "{color.surface.hero}",

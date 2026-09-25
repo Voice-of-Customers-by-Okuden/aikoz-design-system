@@ -187,7 +187,7 @@ export function DateRangePicker({
           aria-labelledby={`${uid}-label ${uid}-trigger`}
           id={`${uid}-trigger`}
           className={cn(
-            "inline-flex items-center gap-2 rounded-full min-h-11 px-4 py-2",
+            "inline-flex items-center gap-2 rounded-[var(--radius-pill)] min-h-11 px-4 py-2",
             "border border-[var(--input)] bg-[var(--card)] text-foreground",
             "text-sm font-medium transition-colors text-left",
             "hover:border-[var(--border-strong)]",
@@ -339,7 +339,7 @@ export function DateRangePicker({
                   onClick={validerPlage}
                   disabled={inverse || (!depuis && !jusqua)}
                   className={cn(
-                    "self-end inline-flex items-center justify-center min-h-11 px-6 rounded-full",
+                    "self-end inline-flex items-center justify-center min-h-11 px-6 rounded-[var(--radius-pill)]",
                     "bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-medium",
                     "hover:bg-[color-mix(in_oklch,var(--primary),transparent_10%)]",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",

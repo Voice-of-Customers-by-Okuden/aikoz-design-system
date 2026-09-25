@@ -113,7 +113,7 @@ export function ChoiceCard({
         "relative flex cursor-pointer transition-colors",
         // 44px au minimum même pour une option d'une ligne (WCAG 2.5.8).
         "min-h-11",
-        appearance === "chip" ? "px-4 py-2 rounded-full items-center gap-2" : "p-4",
+        appearance === "chip" ? "px-4 py-2 rounded-[var(--radius-pill)] items-center gap-2" : "p-4",
         appearance !== "chip" &&
           (layout === "tile"
             ? "flex-col items-center justify-center gap-2 text-center"

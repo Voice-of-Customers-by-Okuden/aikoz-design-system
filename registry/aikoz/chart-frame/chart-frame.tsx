@@ -369,7 +369,7 @@ export function ChartFrame<T>({
         setVue(cle === "graphique" ? "tableau" : "graphique");
       }}
       className={cn(
-        "min-h-8 tactile:min-h-11 tactile:px-4 rounded-full px-2.5 text-xs transition-colors",
+        "min-h-8 tactile:min-h-11 tactile:px-4 rounded-[var(--radius-pill)] px-2.5 text-xs transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
         "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--card)]",
         vue === cle
@@ -420,7 +420,7 @@ export function ChartFrame<T>({
           <div
             role="tablist"
             aria-label={`Affichage de « ${caption} »`}
-            className="flex shrink-0 items-center gap-0.5 rounded-full bg-[color-mix(in_oklch,var(--muted),transparent_55%)] p-0.5"
+            className="flex shrink-0 items-center gap-0.5 rounded-[var(--radius-pill)] bg-[color-mix(in_oklch,var(--muted),transparent_55%)] p-0.5"
           >
             {onglet("graphique", "Graphique")}
             {onglet("tableau", "Tableau")}
