@@ -144,9 +144,21 @@ export function SidebarNav({
     };
   }, [mesurer, blocs.length, current]);
 
-  // Le fondu est un MASQUE, pas un aplat posé par-dessus. Un aplat suppose
-  // qu'on connaisse la couleur du fond ; le masque efface l'encre quelle que
-  // soit la surface, et suit donc la marque et le thème sans les connaître.
+  // ── Deux effets, et le second fait le travail ─────────────────────────
+  //
+  // Le MASQUE estompe l'encre au bord. Il ne suffit pas, et c'est mesurable :
+  // il n'agit que là où il y a de l'encre. Quand la liste se coupe sur un
+  // blanc — entre deux entrées, sous un intitulé de groupe — il n'y a rien à
+  // estomper et le bord reste net. C'est le cas de la capture d'Alice.
+  //
+  // L'OMBRE, elle, est peinte sur la surface : elle se voit que le bord
+  // tombe sur du texte ou sur du vide. C'est elle qui porte le signal ; le
+  // masque ne fait plus qu'adoucir la coupure du texte.
+  //
+  // La barre de défilement ne peut pas tenir ce rôle : mesurée ici, elle est
+  // en survol et occupe 0 px — `scrollbar-width: thin` et `scrollbar-color`
+  // ne la rendent pas permanente sur cette plateforme. Elle reste un canal
+  // d'appoint, pas le canal principal.
   const FONDU = "transparent 0, #000 2rem, #000 calc(100% - 2rem), transparent 100%";
   const masque =
     debord === "deux"
@@ -155,6 +167,26 @@ export function SidebarNav({
         ? "linear-gradient(to bottom, #000 calc(100% - 2rem), transparent 100%)"
         : debord === "haut"
           ? "linear-gradient(to bottom, transparent 0, #000 2rem)"
+          : undefined;
+
+  // L'ombre est faite de l'ENCRE de la barre, diluée. Pas d'un gris écrit en
+  // dur : `--nav-on` vaut l'encre de marque en clair et le blanc en sombre,
+  // donc l'ombre fonce sur fond clair et éclaircit sur fond sombre, sans
+  // qu'aucune valeur ne soit à maintenir par thème. `color-mix(in oklch, …,
+  // transparent N%)` est la forme de transparence du système.
+  const ENCRE = "color-mix(in oklch, var(--nav-on), transparent 76%)";
+  // Étalement NUL et flou large : une ombre à étalement négatif se
+  // rétracte sous le bord et ne laisse qu'un liseré de deux pixels — c'est
+  // ce que donnait `-12px`, et c'est pour ça qu'on ne la voyait pas.
+  const HAUT = `inset 0 10px 12px -10px ${ENCRE}`;
+  const BAS = `inset 0 -10px 12px -10px ${ENCRE}`;
+  const ombre =
+    debord === "deux"
+      ? `${HAUT}, ${BAS}`
+      : debord === "bas"
+        ? BAS
+        : debord === "haut"
+          ? HAUT
           : undefined;
 
   return (
@@ -210,15 +242,31 @@ export function SidebarNav({
       
           Sans hauteur imposée par l'appelant, ce conteneur ne fait rien :
           `flex-1` n'a rien à partager et `overflow-y-auto` rien à couper. */}
+      {/* Deux éléments, et c'est obligatoire.
+      
+          `mask-image` découpe TOUT le rendu de l'élément, ombre portée
+          comprise : posés sur le même nœud, le masque effaçait l'ombre
+          exactement là où elle devait se voir. C'est ce qui rendait l'effet
+          imperceptible, et aucune quantité d'opacité n'y aurait changé quoi
+          que ce soit.
+      
+          L'ombre va donc sur l'enveloppe, qui n'est pas masquée ; le masque
+          reste sur la zone défilante, où il doit être — posé sur le contenu,
+          il défilerait avec lui. */}
+      <div
+        style={ombre ? { boxShadow: ombre } : undefined}
+        className="flex min-h-0 flex-1 flex-col"
+      >
       <div
         ref={zone}
         data-debord={debord}
         style={masque ? { maskImage: masque, WebkitMaskImage: masque } : undefined}
         className={cn(
           "flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto",
-          // La barre de défilement, second canal : fine, dans le trait de la
-          // barre, et le navigateur ne la montre que s'il y a de quoi
-          // défiler. Le fondu seul resterait discret sur une liste courte.
+          // La barre de défilement, canal d'appoint : fine, dans le trait de
+          // la barre. Mesurée sur cette plateforme, elle est en survol et
+          // n'occupe aucune largeur — elle ne peut donc pas porter le signal
+          // à elle seule.
           "[scrollbar-width:thin] [scrollbar-color:var(--nav-border)_transparent]"
         )}
       >
@@ -273,6 +321,7 @@ export function SidebarNav({
           </div>
         </Fragment>
       ))}
+      </div>
       </div>
 
       {/* ── Le pied est une RÉGION, pas la suite de la liste ───────────────

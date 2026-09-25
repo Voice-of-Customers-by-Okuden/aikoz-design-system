@@ -202,7 +202,7 @@ export const BarreLaterale: Story = {
     //
     // Ce qui distingue vraiment les deux états : le débordement doit être
     // absorbé par la ZONE DES GROUPES, pas par la barre.
-    const zone = nav.children[1] as HTMLElement;
+    const zone = nav.querySelector("[data-debord]") as HTMLElement;
     await expect(
       zone.scrollHeight,
       `la zone des groupes ne déborde pas (${zone.scrollHeight} px pour ` +

@@ -129,8 +129,11 @@ export const LaListeDitQuElleContinue: Story = {
     },
   },
   play: async ({ canvasElement }) => {
+    // Sélection par `[data-debord]`, pas par position : la zone défilante a
+    // gagné une enveloppe le jour où l'ombre a dû sortir du masque, et deux
+    // tests sont tombés parce qu'ils comptaient les enfants.
     const [courte, longue] = [...canvasElement.querySelectorAll("nav")].map(
-      (n) => n.children[0] as HTMLElement,
+      (n) => n.querySelector("[data-debord]") as HTMLElement,
     );
 
     // ── Rien de masqué, rien de promis ────────────────────────────────────
@@ -146,6 +149,7 @@ export const LaListeDitQuElleContinue: Story = {
       "la liste courte annonce un débordement qu'elle n'a pas.",
     ).toBe("non");
     await expect(getComputedStyle(courte).maskImage).toBe("none");
+    await expect(getComputedStyle(courte.parentElement!).boxShadow).toBe("none");
 
     // ── Du contenu dessous, le fondu en bas ───────────────────────────────
     await expect(
@@ -154,6 +158,25 @@ export const LaListeDitQuElleContinue: Story = {
     ).toBeGreaterThan(50);
     await expect(longue.dataset.debord).toBe("bas");
     await expect(getComputedStyle(longue).maskImage).not.toBe("none");
+
+    // ── L'ombre n'est PAS sur l'élément masqué ────────────────────────────
+    //
+    // `mask-image` découpe tout le rendu de son élément, ombre portée
+    // comprise. Posés ensemble, le masque effaçait l'ombre exactement là où
+    // elle devait se voir — l'effet était imperceptible et aucune opacité
+    // n'y aurait rien changé. C'est le défaut qu'Alice a signalé par « on ne
+    // voit pas trop ».
+    await expect(
+      getComputedStyle(longue).boxShadow,
+      "l'ombre est posée sur l'élément masqué : le masque l'efface.",
+    ).toBe("none");
+    const enveloppe = longue.parentElement!;
+    await expect(
+      getComputedStyle(enveloppe).boxShadow,
+      "l'enveloppe ne porte pas d'ombre : le bord ne se voit que là où il y " +
+        "a de l'encre à estomper.",
+    ).not.toBe("none");
+    await expect(getComputedStyle(enveloppe).maskImage).toBe("none");
 
     // ── Au milieu, des deux côtés ; en bas, plus rien dessous ─────────────
     longue.scrollTop = 40;
