@@ -410,7 +410,9 @@ function PendingValidationColumn({
           <div className="flex flex-wrap items-center justify-between gap-2">
             {/* Le badge nomme QUI doit valider. « En attente » tout court
                 laisserait chercher à qui réclamer. */}
-            <Badge tone="warning" size="sm">
+            {/* `neutral` comme le compteur de la colonne : rien ne cloche,
+                ça attend quelqu'un. */}
+            <Badge tone="neutral" size="sm">
               Chez {item.validatorLabel}
             </Badge>
             <Button size="sm" variant="outline" onClick={() => onReview?.(item.id)}>
@@ -498,7 +500,9 @@ export function ResponseKanban({
                 subtitle:
                   labels?.pendingValidation?.subtitle ??
                   "Rédigées, en attente d'un feu vert",
-                tone: "warning" as const,
+                // `neutral` et non `warning` : une réponse chez son
+                // valideur n'est pas un problème, c'est du travail en cours.
+                tone: "neutral" as const,
                 count: pendingValidation.length,
                 children: (
                   <PendingValidationColumn

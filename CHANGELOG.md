@@ -18,6 +18,40 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.24.0] — 2026-09-25
+
+### Ajouté
+
+- **`CountBadge` prend un ton `neutral`** — ce qui est en cours, sans que
+  rien n'aille mal. Il manquait, et son absence poussait à écrire `warning`
+  pour « en attente » : sur un tableau de trois colonnes, un rouge et deux
+  jaunes donnent l'impression que rien ne va alors qu'une seule signale
+  vraiment un problème.
+
+  `--neutral-fill` et `--neutral-text` existaient et n'étaient demandés que
+  par `DeltaBadge` — le même défaut que les contours de statut, un rôle
+  publié qu'aucun composant ne pouvait atteindre.
+
+  **Cerné, et c'est la troisième tentative.** Plein comme `error` :
+  `--on-inverse` sur `--neutral-fill` ne donne que 4,11 à 4,27:1 selon la
+  marque. Voilé comme `info` : 6,16:1 en WCAG mais APCA 74 pour un seuil de
+  75 — `info` et `warning` s'en tirent parce qu'ils sont voilés sur LEUR
+  propre teinte pâle, et la famille neutre n'en a pas. Cerné sur un fond de
+  carte explicite : 85 de APCA. Deux paires de plus dans l'audit de
+  contraste.
+
+### Modifié
+
+- **La colonne « En attente de validation » passe en `neutral`.** Une
+  réponse chez son valideur n'est pas un problème, c'est du travail en
+  cours. Son étiquette suit.
+
+- **Le ton d'une colonne se juge à l'échelle du TABLEAU**, pas de la
+  colonne : c'est écrit dans `KanbanColumn.tone`. Prise seule, chaque
+  colonne pouvait se justifier ; côte à côte, elles criaient toutes.
+
+---
+
 ## [2.23.0] — 2026-09-25
 
 ### Modifié

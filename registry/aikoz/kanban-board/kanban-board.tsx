@@ -14,9 +14,15 @@ export interface KanbanColumn {
   /**
    * Pilote le liseré ET le compteur — une seule décision, pas deux.
    *
-   * Le ton dit l'urgence, jamais autre chose : `info` ce qui attend,
+   * Le ton dit l'urgence, jamais autre chose : `info` ce qui attend une
+   * lecture, `neutral` ce qui est en cours sans que rien n'aille mal,
    * `warning` ce qui cloche, `error` ce qui presse. Une colonne dont le ton
    * ne dit rien prend `primary`.
+   *
+   * **Le ton se compte à l'échelle du TABLEAU, pas de la colonne.** Prise
+   * seule, chaque colonne peut se justifier ; mises côte à côte, un rouge et
+   * deux jaunes donnent l'impression que rien ne va alors qu'une seule
+   * signale vraiment un problème.
    */
   tone: CountBadgeTone;
   /**
@@ -49,6 +55,10 @@ const LISERE: Record<CountBadgeTone, string> = {
   info: "--info",
   warning: "--warning",
   error: "--destructive-text",
+  // Le TEXTE neutre et non l'aplat : le liseré est un trait fin sur le fond
+  // de la page, il lui faut la valeur foncée de la famille, comme pour
+  // l'erreur. L'aplat y serait trop pâle.
+  neutral: "--neutral-text",
 };
 
 // ─── Composant ────────────────────────────────────────────────────────────────
