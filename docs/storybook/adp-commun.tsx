@@ -543,7 +543,12 @@ export function CoquilleADP({
               label: "Conversations",
               // Un historique, pas une barre de sections.
               density: "compact",
-              empty: `Aucune conversation ne contient « ${filtre.trim()} ».`,
+              // Deux vides différents, deux phrases différentes. Le message
+              // interpolait le filtre sans le tester : liste vide et champ
+              // vide, il annonçait « Aucune conversation ne contient «  » ».
+              empty: filtre.trim()
+                ? `Aucune conversation ne contient « ${filtre.trim()} ».`
+                : "Aucune conversation pour l'instant.",
               entries: trouvees.map((c) => ({
                 id: c.id,
                 label: c.titre,

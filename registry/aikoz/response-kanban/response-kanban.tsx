@@ -44,10 +44,32 @@ export interface SensitiveReviewItem {
   categoryLabel: string;
 }
 
+export interface PendingValidationItem {
+  id: string;
+  rating: number;
+  author?: string;
+  date?: string;
+  text: string;
+  /** Qui doit donner son feu vert, ex. « Responsable qualité CDG ». */
+  validatorLabel: string;
+}
+
 export interface ResponseKanbanProps {
   automated: AutomatedReplyItem[];
   offCharter: OffCharterReplyItem[];
   sensitive: SensitiveReviewItem[];
+  /**
+   * Réponses rédigées et parties en validation.
+   *
+   * Cette colonne était la DESTINATION MANQUANTE : « Envoyer pour
+   * validation » n'avait nulle part où faire arriver l'avis, et l'action
+   * n'avait donc aucune conséquence visible. On envoyait, et le tableau ne
+   * bougeait pas.
+   *
+   * Facultative : un produit sans circuit de validation ne la déclare pas et
+   * le tableau reste à trois colonnes.
+   */
+  pendingValidation?: PendingValidationItem[];
   /** Avis affichés avant « Voir plus » dans la colonne 1. */
   initialVisible?: number;
   /** « Enregistrer » de l'édition inline, colonne 1. */
@@ -59,6 +81,8 @@ export interface ResponseKanbanProps {
    * relais est hors de son périmètre.
    */
   onDraftReply?: (id: string) => void;
+  /** « Relire ma réponse », depuis la colonne « En attente de validation ». */
+  onReviewPending?: (id: string) => void;
   /**
    * Remplace le titre et le sous-titre d'une colonne.
    *
@@ -70,8 +94,13 @@ export interface ResponseKanbanProps {
    *
    * Les valeurs par défaut restent celles du produit.
    */
+  /** Niveau des titres de colonne — cf. `KanbanBoard`. */
+  titleLevel?: "h2" | "h3" | "h4";
   labels?: Partial<
-    Record<"automated" | "offCharter" | "sensitive", { title?: string; subtitle?: string }>
+    Record<
+      "automated" | "offCharter" | "sensitive" | "pendingValidation",
+      { title?: string; subtitle?: string }
+    >
   >;
   className?: string;
 }
@@ -341,6 +370,52 @@ function SensitiveColumn({
   );
 }
 
+// ─── Colonne 4 — En attente de validation ──────────────────────────────────
+
+function PendingValidationColumn({
+  items,
+  onReview,
+}: {
+  items: PendingValidationItem[];
+  onReview?: (id: string) => void;
+}) {
+  if (items.length === 0) {
+    return (
+      <EmptyState
+        density="compact"
+        title="Rien en attente de validation"
+        description="Les réponses envoyées à un valideur apparaîtront ici jusqu'à leur publication."
+      />
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      {items.map((item) => (
+        <VerbatimCard
+          key={item.id}
+          rating={item.rating}
+          author={item.author}
+          date={item.date}
+          text={item.text}
+          density="compact"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            {/* Le badge nomme QUI doit valider. « En attente » tout court
+                laisserait chercher à qui réclamer. */}
+            <Badge tone="warning" size="sm">
+              Chez {item.validatorLabel}
+            </Badge>
+            <Button size="sm" variant="outline" onClick={() => onReview?.(item.id)}>
+              Relire ma réponse
+            </Button>
+          </div>
+        </VerbatimCard>
+      ))}
+    </div>
+  );
+}
+
 // ─── Composant ────────────────────────────────────────────────────────────────
 
 /**
@@ -363,6 +438,9 @@ export function ResponseKanban({
   automated,
   offCharter,
   sensitive,
+  pendingValidation,
+  onReviewPending,
+  titleLevel,
   initialVisible = 3,
   onSaveReply,
   onDraftReply,
@@ -373,6 +451,7 @@ export function ResponseKanban({
 
   return (
     <KanbanBoard
+      titleLevel={titleLevel}
       className={className}
       columns={[
         {
@@ -412,6 +491,29 @@ export function ResponseKanban({
           count: sensitive.length,
           children: <SensitiveColumn items={sensitive} onDraftReply={onDraftReply} />,
         },
+        // Juste après les avis sensibles : c'est de là que part la réponse,
+        // et la voir arriver dans la colonne voisine est ce qui donne à
+        // « Envoyer pour validation » une conséquence visible.
+        ...(pendingValidation
+          ? [
+              {
+                key: "pending-validation",
+                title:
+                  labels?.pendingValidation?.title ?? "En attente de validation",
+                subtitle:
+                  labels?.pendingValidation?.subtitle ??
+                  "Rédigées, en attente d'un feu vert",
+                tone: "warning" as const,
+                count: pendingValidation.length,
+                children: (
+                  <PendingValidationColumn
+                    items={pendingValidation}
+                    onReview={onReviewPending}
+                  />
+                ),
+              },
+            ]
+          : []),
       ]}
     />
   );

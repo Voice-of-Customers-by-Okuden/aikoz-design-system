@@ -1,0 +1,149 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, waitFor, within } from "storybook/test";
+import source from "./parcours-adp.tsx?raw";
+import { AVIS_SENSIBLES, ParcoursADP } from "./parcours-adp";
+
+const AVIS_UN = AVIS_SENSIBLES[0];
+
+const meta = {
+  title: "Assemblages/Parcours ADP",
+  component: ParcoursADP,
+  tags: ["autodocs"],
+  parameters: {
+    layout: "fullscreen",
+    docs: {
+      source: { code: source, language: "tsx" },
+      canvas: { sourceState: "shown" },
+    },
+  },
+  globals: { marque: "adp", theme: "clair" },
+} satisfies Meta<typeof ParcoursADP>;
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const DuTableauALaValidation: Story = {
+  name: "Du tableau à la validation, et retour",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Les deux écrans déjà publiés, branchés l'un sur l'autre. **Rien de " +
+          "nouveau n'est dessiné** : `ResponseKanban` émettait déjà " +
+          "`onDraftReply`, `Brouillon` émettait déjà `onEnvoyerPourValidation`. " +
+          "Les deux bouts existaient, personne ne les avait reliés.\\n\\n" +
+          "Cliquez « Rédiger une réponse » sur un avis sensible, puis " +
+          "« Envoyer pour validation ».\\n\\n" +
+          "**L'action avait besoin d'une destination.** Le tableau n'avait que " +
+          "trois colonnes : « Envoyer pour validation » n'avait nulle part où " +
+          "faire arriver l'avis, et n'avait donc aucune conséquence visible. " +
+          "La quatrième colonne est posée juste après les avis sensibles — " +
+          "voir l'avis passer d'une colonne à sa voisine EST la conséquence.\\n\\n" +
+          "**Le fil s'ouvre sur l'avis entier**, et non sur un résumé d'une " +
+          "ligne : on ne juge pas une réponse sans la plainte qu'elle traite. " +
+          "Et l'on revient au tableau tout seul, avec un message qui dit à qui " +
+          "la réponse est partie et qui propose d'enchaîner.",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const c = within(canvasElement);
+
+    // ── Au départ : deux sensibles, rien en validation ────────────────────
+    // On compte les CARTES rendues, pas la pastille de compteur.
+    //
+    // La pastille est un affichage du total ; ce qu'on veut prouver est que
+    // l'avis a physiquement changé de colonne. Une pastille juste au-dessus
+    // d'une colonne vide serait le défaut le plus dur à voir.
+    const compte = (nom: RegExp) =>
+      c.getByRole("region", { name: nom }).querySelectorAll("article").length;
+    await expect(c.getByRole("region", { name: /Avis sensibles/i })).toBeInTheDocument();
+    await expect(
+      c.getByRole("region", { name: /En attente de validation/i }),
+      "la colonne de destination n'existe pas : « Envoyer pour validation » " +
+        "n'a nulle part où faire arriver l'avis.",
+    ).toBeInTheDocument();
+
+    const sensiblesAvant = compte(/Avis sensibles/i);
+    await expect(sensiblesAvant).toBe(2);
+    await expect(compte(/En attente de validation/i)).toBe(0);
+
+    // ── On ouvre la conversation ──────────────────────────────────────────
+    await u.click(c.getAllByRole("button", { name: /Rédiger une réponse/i })[0]);
+
+    // L'avis ENTIER ouvre le fil, pas un résumé d'une ligne.
+    const fil = await c.findByText(/Contrôle de sûreté humiliant/);
+    await expect(
+      fil,
+      "le fil s'ouvre sans l'avis : on ne peut pas juger la réponse sans la " +
+        "plainte qu'elle traite.",
+    ).toBeInTheDocument();
+
+    // ── On envoie, et le tableau revient ──────────────────────────────────
+    await u.click(await c.findByRole("button", { name: /Envoyer pour validation/i }));
+
+    await waitFor(async () => {
+      await expect(
+        c.getByRole("region", { name: /En attente de validation/i }),
+        "on reste dans la conversation : l'envoi n'a aucune conséquence visible.",
+      ).toBeInTheDocument();
+    });
+
+    // L'avis a changé de colonne, et les deux compteurs le disent.
+    await expect(
+      compte(/Avis sensibles/i),
+      "l'avis est resté dans « Avis sensibles ».",
+    ).toBe(sensiblesAvant - 1);
+    await expect(compte(/En attente de validation/i)).toBe(1);
+
+    // Le badge nomme QUI doit valider — « en attente » tout court laisserait
+    // chercher à qui réclamer.
+    await expect(c.getByText(/Chez Responsable qualité CDG/)).toBeInTheDocument();
+
+    // ── Le message dit où c'est parti, et propose d'enchaîner ─────────────
+    // Le message est cherché par son BOUTON, puis lu dans son conteneur.
+    //
+    // `findByText` en trouvait deux : `Toast` écrit son message à l'écran ET
+    // dans une région annoncée, et c'est juste — un message seulement
+    // affiché ne prévient pas qui ne voit pas l'écran. C'est la mesure qui
+    // était ambiguë, pas le composant.
+    const suivant = await within(document.body).findByRole("button", {
+      name: /Avis suivant/i,
+    });
+    await expect(
+      suivant.closest("[role='status'], [role='alert'], li, div")?.textContent ?? "",
+      "le message ne dit pas à qui la réponse est partie.",
+    ).toMatch(/Réponse envoyée à Responsable qualité CDG/);
+  },
+};
+
+export const DernierAvisTraite: Story = {
+  name: "Le dernier avis traité — plus rien à enchaîner",
+  args: { avis: [AVIS_UN] },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Quand il ne reste rien, le message n'offre pas « Avis suivant » : " +
+          "une action qui ne mène nulle part est pire qu'une action absente. " +
+          "La colonne des avis sensibles dit alors qu'elle est vide, et " +
+          "pourquoi.",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const c = within(canvasElement);
+
+    await u.click(c.getAllByRole("button", { name: /Rédiger une réponse/i })[0]);
+    await u.click(await c.findByRole("button", { name: /Envoyer pour validation/i }));
+
+    await waitFor(async () => {
+      await expect(c.getByText(/Aucun avis sensible à traiter/i)).toBeInTheDocument();
+    });
+    await expect(
+      within(document.body).queryByRole("button", { name: /Avis suivant/i }),
+      "« Avis suivant » est proposé alors qu'il n'y a plus d'avis.",
+    ).not.toBeInTheDocument();
+  },
+};

@@ -18,6 +18,51 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.21.0] — 2026-09-25
+
+Le parcours « avis sensible → réponse → validation », branché de bout en
+bout. Les deux écrans existaient déjà et émettaient déjà les bons
+événements : personne ne les avait reliés, et il manquait une colonne pour
+que l'envoi ait une conséquence.
+
+### Ajouté
+
+- **`ResponseKanban.pendingValidation`** — la colonne « En attente de
+  validation », posée juste après les avis sensibles. C'était la
+  DESTINATION MANQUANTE : « Envoyer pour validation » n'avait nulle part où
+  faire arriver l'avis, et l'action ne produisait donc rien de visible. Le
+  badge nomme le valideur — « en attente » tout court laisse chercher à qui
+  réclamer. Facultative : un produit sans circuit de validation garde trois
+  colonnes.
+- **`ResponseKanban.onReviewPending`** — « Relire ma réponse » depuis cette
+  colonne.
+- **`KanbanBoard.titleLevel`** et **`ResponseKanban.titleLevel`** — `h3` par
+  défaut. Le niveau dépend du plan de la PAGE, pas du composant, même raison
+  que l'absence de `CardTitle` dans `Card`. Figé à `h3`, il sautait le `h2`
+  sur une page dont le tableau est le contenu principal : axe le signale en
+  `heading-order`, et un lecteur d'écran qui navigue de titre en titre y
+  entend un trou.
+
+### Corrigé
+
+- **Un groupe de conversations vide sans filtre annonçait « Aucune
+  conversation ne contient «  » ».** Le message interpolait le filtre sans
+  le tester. Deux vides différents, deux phrases différentes.
+
+### Assemblages
+
+- **`Assemblages/Parcours ADP`** — le fil entre les deux écrans. On part du
+  tableau, on écrit dans la conversation, l'avis revient se ranger dans la
+  colonne voisine, un message dit à qui la réponse est partie et propose
+  d'enchaîner sur l'avis suivant.
+
+  Deux corrections de parcours au passage. Le fil s'ouvre sur **l'avis
+  entier** et non sur un résumé d'une ligne : on ne juge pas une réponse
+  sans la plainte qu'elle traite. Et l'on **revient au tableau tout seul**,
+  parce que c'est là que la conséquence se voit.
+
+---
+
 ## [2.20.0] — 2026-09-25
 
 Les deux écrans de la v2 de l'outil « ADP+ · Avis digitaux » entrent dans

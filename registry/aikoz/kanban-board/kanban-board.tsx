@@ -30,6 +30,16 @@ export interface KanbanColumn {
 
 export interface KanbanBoardProps {
   columns: KanbanColumn[];
+  /**
+   * Niveau des titres de colonne. `h3` par défaut.
+   *
+   * Le niveau dépend du plan de la PAGE, pas du composant — même raison que
+   * l'absence de `CardTitle` dans `Card`. Figé à `h3`, il sautait le `h2`
+   * sur une page dont le tableau est le contenu principal : axe le signale
+   * en `heading-order`, et un lecteur d'écran qui navigue de titre en titre
+   * y entend un niveau manquant.
+   */
+  titleLevel?: "h2" | "h3" | "h4";
   className?: string;
 }
 
@@ -71,7 +81,11 @@ const LISERE: Record<CountBadgeTone, string> = {
  * tranché le 10/09/2026 que « En-tête de section » est un GABARIT de mise en
  * page et non un composant de bibliothèque ; on suit cette décision.
  */
-export function KanbanBoard({ columns, className }: KanbanBoardProps) {
+export function KanbanBoard({
+  columns,
+  titleLevel: Titre = "h3",
+  className,
+}: KanbanBoardProps) {
   const uid = useId();
 
   return (
@@ -102,9 +116,9 @@ export function KanbanBoard({ columns, className }: KanbanBoardProps) {
                 className="flex min-w-0 flex-col gap-0.5 border-l-4 pl-3"
                 style={{ borderColor: `var(${LISERE[c.tone]})` }}
               >
-                <h3 id={titreId} className="m-0 text-sm font-semibold text-foreground">
+                <Titre id={titreId} className="m-0 text-sm font-semibold text-foreground">
                   {c.title}
-                </h3>
+                </Titre>
                 <p className="m-0 text-xs text-muted-foreground">{c.subtitle}</p>
               </div>
               <CountBadge
