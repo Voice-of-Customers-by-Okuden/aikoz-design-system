@@ -55,7 +55,14 @@ export interface PendingValidationItem {
 }
 
 export interface ResponseKanbanProps {
-  automated: AutomatedReplyItem[];
+  /**
+   * Réponses programmées, publiées sans relecture.
+   *
+   * **Facultative depuis le 25/09/2026.** Tous les produits n'automatisent
+   * pas : ADP ne le fait pas, et déclarer une colonne vide aurait annoncé
+   * une capacité qui n'existe pas. Absente, le tableau ne la rend pas.
+   */
+  automated?: AutomatedReplyItem[];
   offCharter: OffCharterReplyItem[];
   sensitive: SensitiveReviewItem[];
   /**
@@ -454,7 +461,8 @@ export function ResponseKanban({
       titleLevel={titleLevel}
       className={className}
       columns={[
-        {
+        ...(automated
+          ? [{
           key: "automated",
           title: labels?.automated?.title ?? "Réponses automatisées",
           // « À valider » décrivait un circuit d'APPROBATION — une réponse
@@ -464,7 +472,7 @@ export function ResponseKanban({
           // de validation, qui est un autre écran et un autre métier.
           subtitle:
             labels?.automated?.subtitle ?? "Publiées demain, modifiables jusque-là",
-          tone: "info",
+          tone: "info" as const,
           count: automated.length,
           children: (
             <AutomatedColumn
@@ -474,7 +482,8 @@ export function ResponseKanban({
               onSave={onSaveReply}
             />
           ),
-        },
+          }]
+          : []),
         {
           key: "off-charter",
           title: labels?.offCharter?.title ?? "Réponses hors charte",

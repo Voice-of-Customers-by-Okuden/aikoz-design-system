@@ -34,7 +34,7 @@ import { Badge } from "@registry/aikoz/badge/badge";
 import { decouperEnParagraphes } from "@registry/aikoz/reply-bubble/reply-bubble";
 import { cn } from "@registry/aikoz/lib/utils";
 
-import { CoquilleADP, D, Ico, type POI } from "./adp-commun";
+import { CoquilleADP, D, Ico, type Espace, type POI } from "./adp-commun";
 
 /**
  * Un tour de parole.
@@ -447,6 +447,10 @@ export interface ConversationADPProps {
   /** Cf. `PresentationBrouillon` — « bloc prêt à coller » par défaut. */
   presentation?: PresentationBrouillon;
   repriseManuelle?: boolean;
+  /** Changement d'espace depuis la barre. */
+  onNaviguer?: (espace: Espace) => void;
+  /** Ouverture d'une autre conversation depuis la barre. */
+  onOuvrirConversation?: (id: string) => void;
   onEnvoyerPourValidation?: () => void;
   onRepondreSurGoogle?: () => void;
 }
@@ -461,6 +465,8 @@ export function ConversationADP({
   avisEnAttente,
   presentation = "bloc",
   repriseManuelle = false,
+  onNaviguer,
+  onOuvrirConversation,
   onEnvoyerPourValidation,
   onRepondreSurGoogle,
 }: ConversationADPProps) {
@@ -473,6 +479,8 @@ export function ConversationADP({
       conversations={conversations}
       conversationCourante={conversationCourante}
       avisEnAttente={avisEnAttente}
+      onNaviguer={onNaviguer}
+      onOuvrirConversation={onOuvrirConversation}
       pied={
         <form
           className="mx-auto flex w-full max-w-4xl items-end gap-2 px-4 py-4"

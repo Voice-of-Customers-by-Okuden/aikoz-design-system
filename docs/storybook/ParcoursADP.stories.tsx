@@ -147,3 +147,76 @@ export const DernierAvisTraite: Story = {
     ).not.toBeInTheDocument();
   },
 };
+
+export const ToutesLesPagesReliees: Story = {
+  name: "Toutes les pages sont reliées",
+  args: { espaceInitial: "accueil" },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "La barre latérale navigue vraiment, et les portes du rond-point " +
+          "aussi. Une entrée de navigation qui ne navigue pas est le même " +
+          "mensonge d'interface qu'un champ de recherche qui ne filtre " +
+          "rien.\n\n" +
+          "Les entrées restent des `<a>` avec une ancre réelle : le clic est " +
+          "intercepté faute de routeur, mais clic milieu, « ouvrir dans un " +
+          "onglet » et retour arrière continueront de vouloir dire quelque " +
+          "chose le jour où l'application en aura un.\n\n" +
+          "**Cockpit du POI et Tableau de bord ADP ne sont pas montés.** La " +
+          "navigation y mène et l'écran le dit. Un lien vers un écran qui " +
+          "s'annonce vide vaut mieux qu'un lien mort : on sait où l'on a " +
+          "cliqué, et on sait ce qui manque. Une page inventée qui " +
+          "ressemblerait à un cockpit ferait croire à un espace livré.",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const c = within(canvasElement);
+    const nav = () => within(c.getByRole("navigation", { name: "Espaces ADP+" }));
+
+    // On part de l'accueil.
+    await expect(c.getByRole("heading", { name: /Où allez-vous/i })).toBeInTheDocument();
+
+    // ── Une porte du rond-point mène vraiment à son espace ────────────────
+    const rangee = within(
+      c.getByRole("heading", { name: /Où allez-vous/i }).closest("section")!,
+    );
+    await u.click(rangee.getByRole("link", { name: /Gestion des avis/i }));
+    await waitFor(async () => {
+      await expect(
+        c.getByRole("region", { name: /Avis sensibles/i }),
+        "la porte « Gestion des avis » ne mène nulle part.",
+      ).toBeInTheDocument();
+    });
+
+    // ── Et la barre aussi, dans les deux sens ─────────────────────────────
+    await u.click(nav().getByRole("link", { name: /Cockpit du POI/i }));
+    await waitFor(async () => {
+      await expect(
+        c.getByText(/Cockpit du POI n'est pas encore monté/i),
+        "l'entrée « Cockpit du POI » ne mène nulle part, ou mène à un écran " +
+          "qui ne dit pas ce qu'il est.",
+      ).toBeInTheDocument();
+    });
+
+    await u.click(nav().getByRole("link", { name: "Accueil" }));
+    await waitFor(async () => {
+      await expect(c.getByRole("heading", { name: /Où allez-vous/i })).toBeInTheDocument();
+    });
+
+    // ── Il n'y a pas de colonne « Réponses automatisées » ─────────────────
+    //
+    // ADP n'automatise pas. La colonne existe encore dans le composant pour
+    // les produits qui le font — elle n'est simplement pas déclarée ici.
+    await u.click(nav().getByRole("link", { name: /Gestion des avis/i }));
+    await waitFor(async () => {
+      await expect(c.getByRole("region", { name: /Avis sensibles/i })).toBeInTheDocument();
+    });
+    await expect(
+      c.queryByRole("region", { name: /Réponses automatisées/i }),
+      "le tableau annonce une colonne d'automatisation qu'ADP n'a pas.",
+    ).not.toBeInTheDocument();
+  },
+};
