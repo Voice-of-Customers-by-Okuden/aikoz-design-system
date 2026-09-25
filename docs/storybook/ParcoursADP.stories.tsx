@@ -101,6 +101,28 @@ export const DuTableauALaValidation: Story = {
     await expect(c.getByText(/Chez Responsable qualité CDG/)).toBeInTheDocument();
 
     // ── Le message dit où c'est parti, et propose d'enchaîner ─────────────
+    // ── Trois commandes, trois poids ──────────────────────────────────────
+    //
+    // Les trois colonnes proposent chacune une action différente, et elles
+    // sont visibles en même temps. « Voir la réponse » était en `ghost` :
+    // la colonne signalait un problème sans offrir de chemin apparent pour
+    // le régler. Montée à `outline` elle devenait « Relire ma réponse », à
+    // `default` elle devenait « Rédiger ».
+    //
+    // On mesure les FONDS rendus, pas les noms de variantes.
+    // `getAllBy…[0]` : la colonne hors charte porte deux avis, donc deux
+    // boutons « Voir la réponse ». Ils sont identiques par construction ;
+    // c'est le premier de chaque famille qu'on compare.
+    const poids = ["Rédiger une réponse", "Relire ma réponse", "Voir la réponse"].map(
+      (nom) =>
+        getComputedStyle(c.getAllByRole("button", { name: nom })[0]).backgroundColor,
+    );
+    await expect(
+      new Set(poids).size,
+      `les trois commandes du tableau se peignent avec ${new Set(poids).size} ` +
+        `fond(s) : ${poids.join(" · ")}.`,
+    ).toBe(3);
+
     // Le message est cherché par son BOUTON, puis lu dans son conteneur.
     //
     // `findByText` en trouvait deux : `Toast` écrit son message à l'écran ET
