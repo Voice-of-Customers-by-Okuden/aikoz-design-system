@@ -1,4 +1,4 @@
-import { forwardRef, useId } from "react";
+import { forwardRef, useId, type ReactNode } from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@registry/aikoz/lib/utils";
@@ -41,6 +41,21 @@ const triggerVariants = cva(
 export interface SelectOption {
   value: string;
   label: string;
+  /**
+   * Repère visuel posé avant le libellé — drapeau d'une langue, pictogramme
+   * d'un type de source.
+   *
+   * **Décoratif, toujours.** Il est rendu `aria-hidden` : c'est le libellé,
+   * écrit en toutes lettres, qui porte le sens. Une option qui ne serait
+   * identifiable que par son image serait illisible à qui ne la voit pas, et
+   * ambiguë pour les autres — un drapeau nomme un PAYS, pas une langue, et
+   * le français ne s'arrête pas à la France.
+   *
+   * Rendu à l'intérieur de `ItemText`, donc repris dans le déclencheur une
+   * fois l'option choisie : sans cela, le repère n'existerait que dans la
+   * liste ouverte, c'est-à-dire là où on n'en a pas besoin.
+   */
+  icon?: ReactNode;
   /** Grise l'option sans la retirer de la liste — elle reste annoncée. */
   disabled?: boolean;
   /**
@@ -168,7 +183,16 @@ function Item({ option }: { option: SelectOption }) {
           <path d="M2 6.5 4.8 9.2 10 3.5" />
         </svg>
       </SelectPrimitive.ItemIndicator>
-      <SelectPrimitive.ItemText>{option.label}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemText>
+        <span className="inline-flex items-center gap-2">
+          {option.icon && (
+            <span aria-hidden="true" className="inline-flex shrink-0 items-center">
+              {option.icon}
+            </span>
+          )}
+          {option.label}
+        </span>
+      </SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   );
 }

@@ -83,7 +83,12 @@ const D = {
   maison: "M3 10.5 12 3l9 7.5|M5 9.5V21h14V9.5",
   graphe: "M3 3v18h18|M8 16V11|M12.5 16V7|M17 16v-3",
   jauge: "M12 21a9 9 0 1 0-9-9|M3 12a9 9 0 0 1 18 0|M12 12l4-3",
-  clef: "M15.5 3a5.5 5.5 0 1 0-4.9 8L9 12.6V15H6.5l-2 2 1.5 1.5L3 21h4l1.5-1.5|M17 7.5h.01",
+  // Une roue dentée, pas la clé à molette illisible d'avant : son tracé
+  // tenait en deux segments qui, à 16 px, ne formaient plus rien de
+  // reconnaissable. Un pictogramme qu'on ne reconnaît pas ne repère rien,
+  // et vaut moins que pas de pictogramme du tout.
+  reglages:
+    "M19.4 13a7.7 7.7 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.7 7.7 0 0 0-1.7-1L15 3H9l-.3 3a7.7 7.7 0 0 0-1.7 1l-2.4-1-2 3.5L4.6 11a7.7 7.7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.7 7.7 0 0 0 1.7 1L9 21h6l.3-3a7.7 7.7 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5z|M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5",
   sortie: "M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4|M10 17l5-5-5-5|M15 12H3",
   panneau: "M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z|M10 4v16",
   chevrons: "M8 9l4-4 4 4|M16 15l-4 4-4-4",
@@ -92,7 +97,8 @@ const D = {
   crayon: "M4 20h4L20 8l-4-4L4 16v4z|M14 6l4 4",
   envoi: "M4 12 20 4l-8 16-2-6-6-2z",
   valider: "M20 6 9 17l-5-5",
-  avion: "M3 12 21 4l-4 8 4 8-18-8z",
+  epingle:
+    "M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z|M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",
   personne: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z|M5 20a7 7 0 0 1 14 0",
   // L'avatar de l'assistant NE PEUT PAS être le logo de la marque.
   // Mesuré : le fichier ADP fait 300 × 103 px, soit un rapport de 2,91:1.
@@ -104,6 +110,25 @@ const D = {
   // `ReplyBubble` : l'avatar dit qui parle, le badge dit ce qui a écrit.
   assistant: "M12 3v3|M12 18v3|M5.6 5.6l2.1 2.1|M16.3 16.3l2.1 2.1|M3 12h3|M18 12h3|M5.6 18.4l2.1-2.1|M16.3 7.7l2.1-2.1|M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
 } as const;
+
+/**
+ * Drapeau en emoji, par code pays ISO 3166-1 alpha-2.
+ *
+ * Les indicatifs régionaux Unicode (U+1F1E6…) : « FR » devient 🇫🇷 sans
+ * qu'aucune image n'entre dans le dépôt. Windows ne compose pas ces paires
+ * et affiche les deux lettres — un repli acceptable, justement parce que le
+ * drapeau ne porte aucune information.
+ */
+function Drapeau({ code }: { code: string }) {
+  const emoji = [...code.toUpperCase()]
+    .map((c) => String.fromCodePoint(0x1f1e6 + c.charCodeAt(0) - 65))
+    .join("");
+  return (
+    <span aria-hidden="true" className="text-sm leading-none">
+      {emoji}
+    </span>
+  );
+}
 
 // ─── Les données de l'écran ──────────────────────────────────────────────────
 
@@ -296,7 +321,7 @@ export function SelecteurPOI({ pois, courant, onChange, className }: SelecteurPO
               "bg-[var(--muted)] text-[var(--muted-foreground)]"
             )}
           >
-            <Ico d={D.avion} />
+            <Ico d={D.epingle} />
           </span>
           <span className="min-w-0 flex-1">
             <span className="block text-xs text-[var(--nav-on-muted)]">POI</span>
@@ -881,7 +906,7 @@ export function ConversationADP({
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 )}
               >
-                <Ico d={D.clef} />
+                <Ico d={D.reglages} />
                 Paramètres du compte
               </a>
 
@@ -901,14 +926,21 @@ export function ConversationADP({
                 Se déconnecter
               </button>
 
+              {/* Le drapeau est DÉCORATIF, et c'est ce qui le rend
+                  acceptable : « Français » et « English » sont écrits en
+                  toutes lettres à côté. Un drapeau nomme un pays, pas une
+                  langue — le français ne s'arrête pas à la France, et le
+                  choix du drapeau anglais plutôt qu'un autre est arbitraire.
+                  Employé seul, il serait faux ; employé comme repère, il
+                  accélère la reconnaissance sans rien affirmer. */}
               <Select
                 label="Langue de l'interface"
                 labelHidden
                 size="sm"
                 defaultValue="fr"
                 options={[
-                  { value: "fr", label: "Français" },
-                  { value: "en", label: "English" },
+                  { value: "fr", label: "Français", icon: <Drapeau code="FR" /> },
+                  { value: "en", label: "English", icon: <Drapeau code="GB" /> },
                 ]}
               />
             </div>
