@@ -18,6 +18,36 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.25.0] — 2026-09-25
+
+### Corrigé
+
+- **« Relire ma réponse » n'ouvrait rien.** Elle renvoyait l'identifiant à
+  l'appelant et le laissait se débrouiller. Une commande qui porte un verbe
+  doit pouvoir le tenir : elle ouvre désormais la MÊME fiche que la colonne
+  hors charte — l'avis, puis la réponse — parce qu'on ne relit pas une
+  réponse sans la plainte qu'elle traite.
+
+### Ajouté
+
+- **`PendingValidationItem.reply`** — la réponse partie en validation. Sans
+  elle, la fiche n'avait rien à montrer. C'est pour ça que la commande ne
+  faisait rien : la donnée manquait avant l'écran.
+
+### Modifié
+
+- **`onReviewPending` devient « Modifier la réponse »** : la réponse est
+  reprise au valideur et repart en rédaction. L'inverse exact de l'envoi, et
+  la seule action qui a du sens depuis une fiche de relecture.
+
+  Différence assumée avec la fiche hors charte : celle-ci masque l'origine
+  de la réponse (`showOrigin={false}`), parce qu'on y relit un texte DÉJÀ
+  publié dont l'auteur n'importe plus. Ici on relit ce qu'on s'apprête à
+  publier en son propre nom, et savoir qu'une machine l'a écrit fait partie
+  de la relecture.
+
+---
+
 ## [2.24.0] — 2026-09-25
 
 ### Ajouté

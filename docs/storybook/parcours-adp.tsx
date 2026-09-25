@@ -213,6 +213,7 @@ function Parcours({
         date: a.date,
         text: a.text,
         validatorLabel: a.validatorLabel,
+        reply: a.brouillon,
       },
       ...v,
     ]);
@@ -355,10 +356,18 @@ function Parcours({
           sensitive={sensibles}
           pendingValidation={enValidation}
           onDraftReply={(id) => setEncours(id)}
+          // « Modifier la réponse » reprend l'avis au valideur et le
+          // ramène en rédaction : l'inverse exact de l'envoi. Sans ça,
+          // « Modifier » aurait été un bouton qui n'agit pas.
           onReviewPending={(id) => {
             const a = enValidation.find((x) => x.id === id);
+            if (!a) return;
+            setEnValidation((v) => v.filter((x) => x.id !== id));
+            const repris = avis.find((x) => x.id === id);
+            if (repris) setSensibles((s) => [repris, ...s]);
+            setEncours(id);
             toast({
-              message: `La réponse est chez ${a?.validatorLabel}. La relecture arrive dans un prochain lot.`,
+              message: `Réponse reprise à ${a.validatorLabel}.`,
               tone: "info",
             });
           }}

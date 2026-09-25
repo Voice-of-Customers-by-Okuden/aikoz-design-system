@@ -220,3 +220,65 @@ export const ToutesLesPagesReliees: Story = {
     ).not.toBeInTheDocument();
   },
 };
+
+export const RelireEtReprendre: Story = {
+  name: "Relire une réponse envoyée, et la reprendre",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "« Relire ma réponse » ouvre la MÊME fiche que la colonne hors " +
+          "charte, et pour la même raison : on ne relit pas une réponse sans " +
+          "l'avis qu'elle traite.\n\n" +
+          "Elle renvoyait auparavant l'identifiant à l'appelant sans rien " +
+          "ouvrir. Une commande qui porte un verbe doit pouvoir le tenir — " +
+          "et pour ça, `PendingValidationItem` devait porter la réponse, ce " +
+          "qui n'était pas le cas.\n\n" +
+          "« Modifier la réponse » reprend l'avis au valideur et le ramène en " +
+          "rédaction : l'inverse exact de l'envoi.",
+      },
+    },
+  },
+  play: async ({ canvasElement, userEvent: ue }) => {
+    const u = ue ?? userEvent;
+    const c = within(canvasElement);
+    const boite = () => within(document.body);
+
+    // On envoie une réponse, pour avoir quelque chose à relire.
+    await u.click(c.getAllByRole("button", { name: /Rédiger une réponse/i })[0]);
+    await u.click(await c.findByRole("button", { name: /Envoyer pour validation/i }));
+    await waitFor(async () => {
+      await expect(c.getByText(/Chez Responsable qualité CDG/)).toBeInTheDocument();
+    });
+
+    // ── La fiche montre l'avis ET la réponse ──────────────────────────────
+    await u.click(c.getByRole("button", { name: /Relire ma réponse/i }));
+    const fiche = await boite().findByRole("dialog");
+    await expect(
+      within(fiche).getByText(/Contrôle de sûreté humiliant/),
+      "la fiche ne montre pas l'avis : on ne peut pas juger la réponse sans " +
+        "la plainte qu'elle traite.",
+    ).toBeInTheDocument();
+    await expect(
+      within(fiche).getByText(/Madame Meunier/),
+      "la fiche ne montre pas la réponse : « Relire ma réponse » n'a rien à " +
+        "relire.",
+    ).toBeInTheDocument();
+
+    // ── « Modifier » reprend vraiment l'avis ──────────────────────────────
+    await u.click(within(fiche).getByRole("button", { name: /Modifier la réponse/i }));
+
+    // On repart en rédaction sur cet avis…
+    await waitFor(async () => {
+      await expect(c.getByText(/Contrôle de sûreté humiliant/)).toBeInTheDocument();
+      await expect(
+        c.queryByRole("button", { name: /Relire ma réponse/i }),
+        "on est resté sur le tableau : « Modifier » n'a pas rouvert la " +
+          "rédaction.",
+      ).not.toBeInTheDocument();
+    });
+    await expect(
+      await c.findByRole("button", { name: /Envoyer pour validation/i }),
+    ).toBeInTheDocument();
+  },
+};
