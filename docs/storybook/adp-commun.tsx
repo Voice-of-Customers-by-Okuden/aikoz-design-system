@@ -14,6 +14,7 @@ import {
   useId,
   useMemo,
   useState,
+  type MouseEvent,
   type ReactNode,
 } from "react";
 
@@ -379,6 +380,17 @@ export interface CoquilleADPProps {
   conversationCourante?: string;
   /** Avis en attente, porté par l'entrée « Gestion des avis ». */
   avisEnAttente?: number;
+  /**
+   * Changement d'espace depuis la barre.
+   *
+   * Sans ce rappel, les entrées restent des `href="#"` : elles ont l'air de
+   * mener quelque part et ne mènent nulle part. Une navigation qui ne
+   * navigue pas est le même mensonge d'interface qu'un champ de recherche
+   * qui ne filtre rien.
+   */
+  onNaviguer?: (espace: Espace) => void;
+  /** Ouverture d'une conversation depuis la barre. */
+  onOuvrirConversation?: (id: string) => void;
 }
 
 /**
@@ -401,6 +413,8 @@ export function CoquilleADP({
   conversations = CONVERSATIONS,
   conversationCourante,
   avisEnAttente = 4,
+  onNaviguer,
+  onOuvrirConversation,
 }: CoquilleADPProps) {
   const [poiInterne, setPoiInterne] = useState(poiCourant);
   const [barreOuverte, setBarreOuverte] = useState(true);
@@ -511,30 +525,51 @@ export function CoquilleADP({
                 // « Accueil » est le ROND-POINT, pas l'ancienne page d'avis :
                 // celle-ci s'appelle désormais « Gestion des avis », qui dit
                 // ce qu'on y fait au lieu de nommer sa place dans le menu.
+                // Toujours des `<a>` : on change de route. Le clic est
+                // intercepté ici faute de vrai routeur, mais le lien reste un
+                // lien — clic milieu, « ouvrir dans un onglet », retour
+                // arrière continuent de vouloir dire quelque chose le jour
+                // où l'application en aura un.
                 {
                   id: "accueil",
                   label: "Accueil",
-                  href: "#",
+                  href: "#accueil",
                   icon: <Ico d={D.maison} />,
+                  onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault();
+                    onNaviguer?.("accueil");
+                  },
                 },
                 {
                   id: "avis",
+                  onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault();
+                    onNaviguer?.("avis");
+                  },
                   label: "Gestion des avis",
-                  href: "#",
+                  href: "#avis",
                   icon: <Ico d={D.bulle} />,
                   count: avisEnAttente,
                   countLabel: "en attente",
                 },
                 {
                   id: "cockpit",
+                  onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault();
+                    onNaviguer?.("cockpit");
+                  },
                   label: "Cockpit du POI",
-                  href: "#",
+                  href: "#cockpit",
                   icon: <Ico d={D.jauge} />,
                 },
                 {
                   id: "tableau",
+                  onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+                    e.preventDefault();
+                    onNaviguer?.("tableau");
+                  },
                   label: "Tableau de bord ADP",
-                  href: "#",
+                  href: "#tableau",
                   icon: <Ico d={D.graphe} />,
                 },
               ],
@@ -552,7 +587,11 @@ export function CoquilleADP({
               entries: trouvees.map((c) => ({
                 id: c.id,
                 label: c.titre,
-                href: "#",
+                href: `#conversation-${c.id}`,
+                onClick: (e: MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+                  onOuvrirConversation?.(c.id);
+                },
               })),
             },
           ]}

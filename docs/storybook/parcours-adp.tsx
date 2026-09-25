@@ -37,7 +37,10 @@ import {
 } from "@registry/aikoz/response-kanban/response-kanban";
 import { ToastProvider, useToast } from "@registry/aikoz/toast/toast";
 
-import { CoquilleADP } from "./adp-commun";
+import { EmptyState } from "@registry/aikoz/empty-state/empty-state";
+
+import { AccueilADP } from "./accueil-adp";
+import { CoquilleADP, type Espace } from "./adp-commun";
 import { ConversationADP, type Tour } from "./conversation-adp";
 
 // ─── Les données de l'écran ──────────────────────────────────────────────────
@@ -111,6 +114,14 @@ export const HORS_CHARTE = [
   },
 ];
 
+/**
+ * Conservées pour mémoire, plus rendues.
+ *
+ * Alice, le 25/09/2026 : « il n'y a pas de réponse automatisée en fait. »
+ * `ResponseKanban.automated` est donc devenue facultative plutôt que
+ * supprimée — d'autres produits automatisent, ADP non. Déclarer une colonne
+ * vide aurait annoncé une capacité qui n'existe pas.
+ */
 export const AUTOMATISEES = [
   {
     id: "auto-1",
@@ -161,15 +172,29 @@ function filPour(a: AvisSensible): Tour[] {
 
 export interface ParcoursADPProps {
   avis?: AvisSensible[];
+  /** Espace affiché au départ. */
+  espaceInitial?: Espace;
   /** Ouvre directement la conversation sur cet avis, pour les histoires. */
   ouvertSur?: string;
 }
 
-function Parcours({ avis = AVIS_SENSIBLES, ouvertSur }: ParcoursADPProps) {
+function Parcours({
+  avis = AVIS_SENSIBLES,
+  espaceInitial = "avis",
+  ouvertSur,
+}: ParcoursADPProps) {
   const toast = useToast();
   const [sensibles, setSensibles] = useState(avis);
   const [enValidation, setEnValidation] = useState<PendingValidationItem[]>([]);
   const [encours, setEncours] = useState<string | null>(ouvertSur ?? null);
+  const [espace, setEspace] = useState<Espace>(espaceInitial);
+
+  function naviguer(vers: Espace) {
+    // Changer d'espace ferme la conversation : on ne reste pas dans un fil
+    // en croyant être ailleurs.
+    setEncours(null);
+    setEspace(vers);
+  }
 
   const avisCourant = useMemo(
     () => sensibles.find((a) => a.id === encours) ?? null,
@@ -192,6 +217,7 @@ function Parcours({ avis = AVIS_SENSIBLES, ouvertSur }: ParcoursADPProps) {
     ]);
     // On revient au tableau : c'est là que la conséquence se voit.
     setEncours(null);
+    setEspace("avis");
 
     const suivant = restants[0];
     toast({
@@ -205,19 +231,57 @@ function Parcours({ avis = AVIS_SENSIBLES, ouvertSur }: ParcoursADPProps) {
     });
   }
 
+  const conversations = sensibles.map((a) => ({
+    id: a.id,
+    titre: `Réponse à ${a.author ?? "un avis"}`,
+  }));
+
   if (avisCourant) {
     return (
       <ConversationADP
+        onNaviguer={naviguer}
+        onOuvrirConversation={(id) => setEncours(id)}
         titre={`Réponse à ${avisCourant.author ?? "un avis"}`}
         tours={filPour(avisCourant)}
         conversationCourante={avisCourant.id}
-        conversations={sensibles.map((a) => ({
-          id: a.id,
-          titre: `Réponse à ${a.author ?? "un avis"}`,
-        }))}
+        conversations={conversations}
         avisEnAttente={sensibles.length}
         onEnvoyerPourValidation={() => envoyer(avisCourant)}
       />
+    );
+  }
+
+  if (espace === "accueil") {
+    return (
+      <AccueilADP avisEnAttente={sensibles.length} onNaviguer={naviguer} />
+    );
+  }
+
+  // ── Les deux espaces pas encore montés ────────────────────────────────
+  //
+  // Un lien qui mène à un écran vide vaut mieux qu'un lien qui ne mène
+  // nulle part : on sait où l'on a cliqué, et on sait ce qui manque. Le
+  // contraire — une page inventée qui ressemble à un cockpit — ferait
+  // croire à un espace livré.
+  if (espace === "cockpit" || espace === "tableau") {
+    const nom = espace === "cockpit" ? "Cockpit du POI" : "Tableau de bord ADP";
+    return (
+      <CoquilleADP
+        espace={espace}
+        titre={nom}
+        avisEnAttente={sensibles.length}
+        conversations={conversations}
+        onNaviguer={naviguer}
+        onOuvrirConversation={(id) => setEncours(id)}
+      >
+        <div className="p-6">
+          <EmptyState
+            tone="error"
+            title={`${nom} n'est pas encore monté`}
+            description="La navigation y mène déjà : l'écran suivra. Les maquettes existent, les composants aussi — il reste à les assembler."
+          />
+        </div>
+      </CoquilleADP>
     );
   }
 
@@ -226,10 +290,9 @@ function Parcours({ avis = AVIS_SENSIBLES, ouvertSur }: ParcoursADPProps) {
       espace="avis"
       titre="Gestion des avis"
       avisEnAttente={sensibles.length}
-      conversations={sensibles.map((a) => ({
-        id: a.id,
-        titre: `Réponse à ${a.author ?? "un avis"}`,
-      }))}
+      conversations={conversations}
+      onNaviguer={naviguer}
+      onOuvrirConversation={(id) => setEncours(id)}
     >
       <div className="p-6">
         {/* Le tableau EST le contenu de cette page : ses colonnes sont ses
@@ -239,7 +302,6 @@ function Parcours({ avis = AVIS_SENSIBLES, ouvertSur }: ParcoursADPProps) {
             titre en titre y entend un trou. */}
         <ResponseKanban
           titleLevel="h2"
-          automated={AUTOMATISEES}
           offCharter={HORS_CHARTE}
           sensitive={sensibles}
           pendingValidation={enValidation}

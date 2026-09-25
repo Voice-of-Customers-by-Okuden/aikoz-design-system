@@ -18,6 +18,42 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.22.0] — 2026-09-25
+
+Toutes les pages ADP+ sont reliées, et le tableau n'annonce plus une colonne
+qu'ADP n'a pas.
+
+### Modifié
+
+- **`ResponseKanban.automated` devient FACULTATIVE.** Alice : « il n'y a pas
+  de réponse automatisée en fait. » Tous les produits n'automatisent pas, et
+  déclarer une colonne vide aurait annoncé une capacité inexistante. Absente,
+  le tableau ne la rend pas.
+
+  Pas retirée pour autant : d'autres produits automatisent, et la colonne
+  sait déjà éditer une réponse en place. Une prop qui devient facultative ne
+  casse aucun appelant existant.
+
+### Assemblages
+
+- **La navigation navigue.** Les entrées de la barre et les trois portes du
+  rond-point changent vraiment d'espace. Une navigation qui ne navigue pas
+  est le même mensonge d'interface qu'un champ de recherche qui ne filtre
+  rien.
+
+  Elles restent des `<a>` avec une ancre réelle : le clic est intercepté
+  faute de routeur, mais clic milieu, « ouvrir dans un onglet » et retour
+  arrière continueront de vouloir dire quelque chose le jour où
+  l'application en aura un.
+
+- **Cockpit du POI et Tableau de bord ADP s'annoncent comme non montés.** La
+  navigation y mène et l'écran le dit. Un lien vers un écran qui s'annonce
+  vide vaut mieux qu'un lien mort : on sait où l'on a cliqué et ce qui
+  manque. Une page inventée qui ressemblerait à un cockpit ferait croire à un
+  espace livré.
+
+---
+
 ## [2.21.0] — 2026-09-25
 
 Le parcours « avis sensible → réponse → validation », branché de bout en

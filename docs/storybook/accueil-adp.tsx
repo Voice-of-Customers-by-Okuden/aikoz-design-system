@@ -41,6 +41,7 @@ import {
   Ico,
   POIS,
   SelecteurPOI,
+  type Espace,
   type POI,
 } from "./adp-commun";
 
@@ -57,6 +58,7 @@ export interface PorteProps {
    */
   chiffre: ReactNode;
   href: string;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   /** Une seule porte est principale : celle qui porte du travail en attente. */
   principale?: boolean;
 }
@@ -77,12 +79,14 @@ export function Porte({
   icone,
   chiffre,
   href,
+  onClick,
   principale = false,
 }: PorteProps) {
   return (
     <li className="min-w-0 flex-1">
       <a
         href={href}
+        onClick={onClick}
         className={cn(
           "group flex h-full flex-col gap-3 rounded-[var(--radius)] p-5 no-underline",
           "border bg-[var(--card)] text-[var(--card-foreground)]",
@@ -133,6 +137,8 @@ export interface AccueilADPProps {
   poiSuivis?: number;
   /** Volume d'avis du groupe. */
   avisGroupe?: number;
+  /** Changement d'espace — depuis une porte ou depuis la barre. */
+  onNaviguer?: (espace: Espace) => void;
 }
 
 const nombre = new Intl.NumberFormat("fr-FR");
@@ -146,6 +152,7 @@ export function AccueilADP({
   avisPoi = 17780,
   poiSuivis = 93,
   avisGroupe = 35988,
+  onNaviguer,
 }: AccueilADPProps) {
   // ── UNE seule source de vérité pour le POI ────────────────────────────
   //
@@ -167,6 +174,7 @@ export function AccueilADP({
       poiCourant={poi}
       onPoiChange={changerPoi}
       avisEnAttente={avisEnAttente}
+      onNaviguer={onNaviguer}
     >
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-10">
         <header className="flex flex-col gap-2">
@@ -225,6 +233,10 @@ export function AccueilADP({
             <Porte
               principale
               href="#avis"
+              onClick={(e) => {
+                e.preventDefault();
+                onNaviguer?.("avis");
+              }}
               titre="Gestion des avis"
               icone={<Ico d={D.bulle} className="size-5" />}
               quoi="Répondre aux avis, seul ou avec l'assistant, et suivre ce qui part en validation."
@@ -242,6 +254,10 @@ export function AccueilADP({
             />
             <Porte
               href="#cockpit"
+              onClick={(e) => {
+                e.preventDefault();
+                onNaviguer?.("cockpit");
+              }}
               titre="Cockpit du POI"
               icone={<Ico d={D.jauge} className="size-5" />}
               quoi="Note, volume et polarité par thème, pour le POI sur lequel vous travaillez."
@@ -257,6 +273,10 @@ export function AccueilADP({
             />
             <Porte
               href="#tableau"
+              onClick={(e) => {
+                e.preventDefault();
+                onNaviguer?.("tableau");
+              }}
               titre="Tableau de bord ADP"
               icone={<Ico d={D.graphe} className="size-5" />}
               quoi="Le groupe entier : classements des POI, taux de réponse, supervision."
