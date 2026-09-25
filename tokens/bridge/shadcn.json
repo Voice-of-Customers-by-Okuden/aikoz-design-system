@@ -144,6 +144,11 @@
     "$value": "{color.nav.surface}",
     "$description": "extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte"
   },
+  "nav-surface-sunken": {
+    "$type": "color",
+    "$value": "{color.nav.surface-sunken}",
+    "$description": "extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici »."
+  },
   "nav-surface-active": {
     "$type": "color",
     "$value": "{color.nav.surface-active}",

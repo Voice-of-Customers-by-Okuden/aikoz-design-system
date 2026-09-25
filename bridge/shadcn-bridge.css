@@ -28,6 +28,7 @@
   --success-fill-edge: var(--color-status-success-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --warning-fill-edge: var(--color-status-warning-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --error-fill-edge: var(--color-status-error-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-on-muted: var(--color-nav-on-muted); /** extension DS — texte de navigation en retrait — entree non courante */
@@ -136,6 +137,7 @@
   --input: var(--color-border-input); /** shadcn --input */
   --ring: var(--color-border-focus); /** shadcn --ring */
   --nav-surface: var(--color-nav-surface); /** extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */
@@ -173,6 +175,7 @@
   --success-fill-edge: var(--color-status-success-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --warning-fill-edge: var(--color-status-warning-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
   --error-fill-edge: var(--color-status-error-fill-edge); /** extension DS — contour de l'aplat d'une jauge ; porte le 3:1 la ou l'aplat ne peut pas */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-on-muted: var(--color-nav-on-muted); /** extension DS — texte de navigation en retrait — entree non courante */
@@ -280,6 +283,7 @@
   --input: var(--color-border-input); /** shadcn --input */
   --ring: var(--color-border-focus); /** shadcn --ring */
   --nav-surface: var(--color-nav-surface); /** extension DS — fond de la barre de navigation ; distinct de --card, elle ne suit pas forcement la carte */
+  --nav-surface-sunken: var(--color-nav-surface-sunken); /** extension DS — fond d'une région de la barre (le pied : compte, POI, langue). À distinguer de `nav-surface-active`, qui signifie « vous êtes ici ». */
   --nav-surface-active: var(--color-nav-surface-active); /** extension DS — voile de l'entree courante ; NE PORTE PAS l'etat a lui seul (1,19:1 en clair) */
   --nav-border: var(--color-nav-border); /** extension DS — separateur de la barre de navigation */
   --nav-accent: var(--color-nav-accent); /** extension DS — trait de l'entree courante ; ultramarine en clair, aquamarine en sombre — c'est LUI qui porte l'etat */

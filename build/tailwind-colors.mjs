@@ -35,6 +35,7 @@ export default {
   "nav-on-muted": "var(--nav-on-muted)",
   "nav-surface": "var(--nav-surface)",
   "nav-surface-active": "var(--nav-surface-active)",
+  "nav-surface-sunken": "var(--nav-surface-sunken)",
   "neutral-fill": "var(--neutral-fill)",
   "neutral-text": "var(--neutral-text)",
   "on-hero": "var(--on-hero)",

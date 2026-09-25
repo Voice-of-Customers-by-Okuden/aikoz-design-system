@@ -328,6 +328,11 @@
         "$value": "{color.ink.900}",
         "$description": "Barre de navigation du site — même fond que la page, séparée par un trait."
       },
+      "surface-sunken": {
+        "$type": "color",
+        "$value": "{color.ink.950}",
+        "$description": "Le fond d'une RÉGION de la barre, par opposition à la barre elle-même : le pied qui porte le compte, le POI et la langue.\n\nRôle dédié, et pas un détournement de `surface.sunken` : celui-ci vaut exactement `nav.surface-active` en clair — le fond de l'entrée COURANTE. Le pied aurait alors porté la couleur qui signifie « vous êtes ici », et quatre éléments de la barre se seraient annoncés actifs en même temps.\n\nIl se place de l'autre côté de `nav.surface` que l'état actif : en clair, blanc pour la barre, gris de page pour le pied, gris plus soutenu pour l'entrée active. En sombre l'actif s'éclaircit et le pied s'assombrit. Trois niveaux distincts dans les deux thèmes, et l'actif reste le plus marqué."
+      },
       "surface-active": {
         "$type": "color",
         "$value": "{color.ink.800}"

@@ -104,6 +104,12 @@ const PAIRES: Array<{
   { avant: "--ring", fond: "--background", seuil: 3.0, nature: "element", quoi: "anneau de focus sur page" },
   { avant: "--ring", fond: "--card", seuil: 3.0, nature: "element", quoi: "anneau de focus sur carte" },
   { avant: "--color-nav-accent", fond: "--nav-surface", seuil: 3.0, nature: "element", quoi: "trait de l'entrée courante" },
+  // Le pied de la barre a son propre fond depuis le 25/09 : le texte qu'il
+  // porte doit être audité contre CE fond, pas contre celui de la barre.
+  // Sans ces deux lignes, un rôle nouveau serait arrivé sans qu'aucune paire
+  // ne le mesure — exactement ce qui était arrivé aux contours de statut.
+  { avant: "--color-nav-on", fond: "--nav-surface-sunken", seuil: 4.5, nature: "texte", quoi: "texte du pied de barre" },
+  { avant: "--color-nav-on-muted", fond: "--nav-surface-sunken", seuil: 4.5, nature: "texte", quoi: "texte atténué du pied de barre" },
   ...[1, 2, 3, 4, 5, 6].map((i) => ({
     avant: `--chart-${i}`,
     fond: "--card",

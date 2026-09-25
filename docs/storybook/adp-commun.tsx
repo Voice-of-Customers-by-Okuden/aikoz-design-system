@@ -560,8 +560,8 @@ export function CoquilleADP({
               <a
                 href="#"
                 className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-[var(--radius)] px-3 text-sm",
-                  "text-[var(--nav-on)] hover:bg-[var(--surface-hover)]",
+                  "flex min-h-11 items-center gap-3 whitespace-nowrap rounded-[var(--radius)] px-3 text-sm",
+                  "text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 )}
               >
@@ -575,8 +575,8 @@ export function CoquilleADP({
               <button
                 type="button"
                 className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-[var(--radius)] px-3 text-left text-sm",
-                  "text-[var(--nav-on)] hover:bg-[var(--surface-hover)]",
+                  "flex min-h-11 items-center gap-3 whitespace-nowrap rounded-[var(--radius)] px-3 text-left text-sm",
+                  "text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 )}
               >

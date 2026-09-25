@@ -204,7 +204,37 @@ export function SidebarNav({
       ))}
       </div>
 
-      {footer && <div className="mt-auto shrink-0 px-1">{footer}</div>}
+      {/* ── Le pied est une RÉGION, pas la suite de la liste ───────────────
+      
+          Il porte le compte, le POI et la langue — pas de la navigation. Sur
+          le même fond que la barre, il se lisait comme trois entrées de menu
+          de plus, collées en bas.
+      
+          Un rôle dédié, `--nav-surface-sunken`, et pas `--muted` :
+          celui-ci vaut EXACTEMENT `--nav-surface-active` en clair, c'est-à-
+          dire le fond de l'entrée courante. Le pied aurait porté la couleur
+          qui veut dire « vous êtes ici », et quatre éléments de la barre se
+          seraient annoncés actifs en même temps.
+      
+          Il se place de l'autre côté de la barre que l'état actif : en clair
+          blanc / gris de page / gris soutenu, en sombre l'actif s'éclaircit
+          et le pied s'assombrit. L'actif reste le plus marqué des trois.
+      
+          `-mx-3 -mb-3 px-4 pb-3` : la région va d'un bord à l'autre de la
+          barre. Un fond qui s'arrête au rembourrage fait un bloc flottant, et
+          un bloc flottant dans une barre ressemble à une carte qu'on aurait
+          oublié de finir. */}
+      {footer && (
+        <div
+          className={cn(
+            "mt-auto shrink-0",
+            "-mx-3 -mb-3 px-4 pb-3 pt-3",
+            "border-t border-[var(--nav-border)] bg-[var(--nav-surface-sunken)]"
+          )}
+        >
+          {footer}
+        </div>
+      )}
     </nav>
   );
 }
