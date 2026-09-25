@@ -441,9 +441,39 @@ function Bulle({
   );
 }
 
+/**
+ * Comment le brouillon se présente sur sa carte.
+ *
+ * `bloc` — un objet encadré, avec sa barre de titre et son bouton de copie
+ * dessus. C'est le vocabulaire universel du « prêt à coller » : clé d'API,
+ * extrait de code, modèle d'e-mail. Il dit que le texte a des BORDS, qu'on
+ * le prend entier, et qu'il est destiné à partir ailleurs.
+ *
+ * `pose` — le texte à même la carte, sans cadre. Il dit que le texte est le
+ * contenu de l'écran, à lire et à valider sur place.
+ *
+ * Le choix n'est pas cosmétique : il dit ce qu'on attend de l'utilisateur.
+ * Tant que « Répondre sur Google » peut échouer et renvoyer au copier-coller,
+ * le brouillon est un objet qui peut partir ailleurs — d'où `bloc` par
+ * défaut.
+ */
+export type PresentationBrouillon = "bloc" | "pose";
+
 export interface BrouillonProps {
   texte: string;
   heure: string;
+  presentation?: PresentationBrouillon;
+  /**
+   * Ce qui distingue CE brouillon des autres, ajouté au nom accessible de sa
+   * région. Par défaut l'heure.
+   *
+   * Un fil contient plusieurs brouillons dès qu'on reformule. Deux régions
+   * nommées « Brouillon de réponse » sont indiscernables pour qui navigue de
+   * repère en repère — axe le signale en `landmark-unique`, et il a raison :
+   * le lecteur d'écran annonce deux fois la même chose devant deux contenus
+   * différents.
+   */
+  precision?: string;
   /**
    * Le repli de la maquette : quand la publication directe échoue à
    * répétition, on propose le copier-coller vers Google My Business.
@@ -472,6 +502,8 @@ export interface BrouillonProps {
 export function Brouillon({
   texte,
   heure,
+  presentation = "bloc",
+  precision,
   repriseManuelle = false,
   onReformuler,
   onModifier,
@@ -496,63 +528,103 @@ export function Brouillon({
           aria-labelledby={idTitre}
           className="flex min-w-0 flex-1 flex-col gap-3 p-4"
         >
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <h2 id={idTitre} className="m-0 text-sm font-semibold">
-                Brouillon de réponse
-              </h2>
-              {/* L'origine reste écrite en toutes lettres, et mieux placée
-                  qu'avant : dans le titre du bloc plutôt qu'à l'intérieur du
-                  texte. */}
-              <Badge tone="info" size="sm" icon={<Ico d={D.assistant} className="size-3" />}>
-                IA
-              </Badge>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                navigator.clipboard?.writeText(texte);
-                setCopie(true);
-              }}
-            >
-              <Ico d={D.copie} />
-              Copier
-            </Button>
-          </div>
+          {/* ── Le titre, l'origine, la copie ─────────────────────────────
+          
+              En `bloc`, ces trois-là forment la BARRE DE TITRE de l'objet :
+              ils lui appartiennent, comme l'en-tête d'un extrait de code.
+              Le bouton de copie surtout — une affordance de copie se pose sur
+              ce qu'elle copie, pas à côté.
+          
+              En `pose`, il n'y a pas d'objet : ils titrent la carte. */}
+          {(() => {
+            const barre = (
+              <div
+                className={cn(
+                  "flex flex-wrap items-center justify-between gap-2",
+                  presentation === "bloc" &&
+                    "border-b border-border px-3 py-1.5"
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <h2 id={idTitre} className="m-0 text-sm font-semibold">
+                    Brouillon de réponse
+                    {/* Lu, pas affiché : l'heure est déjà écrite sous la
+                        carte pour qui voit l'écran. */}
+                    <span className="sr-only"> — {precision ?? heure}</span>
+                  </h2>
+                  {/* L'origine est écrite en toutes lettres, jamais portée
+                      par une teinte seule. */}
+                  <Badge
+                    tone="info"
+                    size="sm"
+                    icon={<Ico d={D.assistant} className="size-3" />}
+                  >
+                    IA
+                  </Badge>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    navigator.clipboard?.writeText(texte);
+                    setCopie(true);
+                  }}
+                >
+                  <Ico d={D.copie} />
+                  Copier
+                </Button>
+              </div>
+            );
 
-          {/* ── Pourquoi PAS `ReplyBubble` ici ────────────────────────────
-          
-              `ReplyBubble` est une CITATION EN CREUX : fond sourd, liseré
-              gauche, pas de bordure propre. Sa documentation le dit — elle se
-              compose comme l'enfant d'une carte d'avis, « pour rester
-              subordonnée à la carte qui l'accueille plutôt que rivaliser avec
-              elle ». C'est exact dans le Kanban, où la réponse est posée sous
-              le verbatim auquel elle répond.
-          
-              Ici il n'y a pas de verbatim au-dessus : le brouillon EST le
-              sujet de l'écran. L'employer quand même produisait une boîte
-              dans une boîte — carte en relief, bulle en creux, pour un seul
-              et même contenu — et le liseré gauche, privé de ce qu'il
-              subordonne, ne disait plus rien. C'est le trait qu'Alice a
-              relevé, et il venait bien de notre système : employé pour un
-              rôle qu'il n'a pas.
-          
-              Le texte se pose donc à même la carte. Le découpage en
-              paragraphes, lui, reste celui de `ReplyBubble` : une seule
-              implémentation pour les deux. */}
-          <div className="flex flex-col gap-3">
-            {decouperEnParagraphes(texte).map((para, i) => (
-              <p key={i} className="m-0 text-sm leading-relaxed">
-                {para.map((ligne, j) => (
-                  <Fragment key={j}>
-                    {j > 0 && <br />}
-                    {ligne}
-                  </Fragment>
+            const corps = (
+              <div
+                className={cn(
+                  "flex flex-col gap-3",
+                  presentation === "bloc" && "p-4"
+                )}
+              >
+                {decouperEnParagraphes(texte).map((para, i) => (
+                  <p key={i} className="m-0 text-sm leading-relaxed">
+                    {para.map((ligne, j) => (
+                      <Fragment key={j}>
+                        {j > 0 && <br />}
+                        {ligne}
+                      </Fragment>
+                    ))}
+                  </p>
                 ))}
-              </p>
-            ))}
-          </div>
+              </div>
+            );
+
+            /* ── Pourquoi PAS `ReplyBubble` dans les deux cas ─────────────
+            
+               `ReplyBubble` est une CITATION EN CREUX : fond sourd, liseré
+               gauche, pas de bordure propre. Sa documentation le dit — elle
+               se compose comme l'enfant d'une carte d'avis, « pour rester
+               subordonnée à la carte qui l'accueille ». C'est exact dans le
+               Kanban, où la réponse est posée sous le verbatim auquel elle
+               répond.
+            
+               Ici il n'y a pas de verbatim au-dessus. Un liseré privé de ce
+               qu'il subordonne n'est plus qu'un trait. Un CADRE COMPLET, lui,
+               dit autre chose : cet objet a des bords, on le prend entier.
+               C'est ce que dit un bloc prêt à coller, et ce n'est pas ce que
+               disait la citation.
+            
+               Le découpage en paragraphes reste celui de `ReplyBubble` :
+               deux appelants, une seule implémentation. */
+            return presentation === "bloc" ? (
+              <div className="overflow-hidden rounded-[var(--radius)] border border-border bg-[var(--muted)]">
+                {barre}
+                {corps}
+              </div>
+            ) : (
+              <>
+                {barre}
+                {corps}
+              </>
+            );
+          })()}
 
           {/* La confirmation de copie est annoncée, pas seulement affichée. */}
           <p aria-live="polite" className="sr-only">
@@ -630,6 +702,8 @@ export interface ConversationADPProps {
   poiCourant?: string;
   conversations?: { id: string; titre: string }[];
   conversationCourante?: string;
+  /** Cf. `PresentationBrouillon` — « bloc prêt à coller » par défaut. */
+  presentation?: PresentationBrouillon;
   repriseManuelle?: boolean;
   onEnvoyerPourValidation?: () => void;
   onRepondreSurGoogle?: () => void;
@@ -642,6 +716,7 @@ export function ConversationADP({
   poiCourant = "cdg",
   conversations = CONVERSATIONS,
   conversationCourante = "charmon",
+  presentation = "bloc",
   repriseManuelle = false,
   onEnvoyerPourValidation,
   onRepondreSurGoogle,
@@ -819,6 +894,7 @@ export function ConversationADP({
                   key={t.id}
                   texte={t.texte}
                   heure={t.heure}
+                  presentation={presentation}
                   repriseManuelle={repriseManuelle}
                   onEnvoyerPourValidation={onEnvoyerPourValidation}
                   onRepondreSurGoogle={onRepondreSurGoogle}
