@@ -15,6 +15,24 @@ export interface NavItemProps
    */
   current?: boolean;
   /**
+   * L'entrée n'est pas la page affichée, mais la SECTION qui la contient.
+   *
+   * Sans elle, une barre qui liste des sections ET leur contenu ne peut
+   * marquer qu'une seule chose : ouvrez une conversation, et « Gestion des
+   * avis » redevient une entrée comme les autres. On ne sait plus dans quel
+   * espace on se trouve — c'est ce qu'Alice a relevé le 25/09/2026.
+   *
+   * Rend `aria-current="location"`, et non `"page"` : la valeur dit DE QUOI
+   * l'élément est le courant. `page` est réservé à la page affichée, et deux
+   * `aria-current="page"` dans une même barre laissent l'utilisateur choisir
+   * laquelle est vraie. `location` existe exactement pour ça — « la position
+   * courante dans un environnement ».
+   *
+   * Sans effet si `current` est posé : une entrée ne peut pas être à la fois
+   * la page et son contenant.
+   */
+  ancestor?: boolean;
+  /**
    * Compteur en fin de ligne : avis en attente, alertes. Le nombre est intégré
    * au nom accessible du lien, sinon il n'est qu'une pastille muette.
    */
@@ -69,6 +87,7 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
       current = false,
       count,
       countLabel,
+      ancestor = false,
       density = "default",
       className,
       ...props
@@ -97,7 +116,7 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
         // `page` et non `true` : la valeur dit DE QUOI l'élément est le
         // courant. `aria-current="page"` s'annonce « page courante » ;
         // `true` s'annonce « courant », ce qui ne renseigne sur rien.
-        aria-current={current ? "page" : undefined}
+        aria-current={current ? "page" : ancestor ? "location" : undefined}
         // Nom composé en UNE chaîne, et non par un `sr-only` séparé :
         // l'algorithme de nom accessible joint les éléments par une espace,
         // ce qui donnait « Campagnes , 3 en attente » — une virgule
@@ -116,7 +135,14 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
           "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--nav-surface)]",
           current
             ? "font-semibold text-[var(--nav-on)] bg-[var(--nav-surface-active)]"
-            : "font-medium text-[var(--nav-on-muted)] hover:text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
+            : ancestor
+              // Deux canaux, aucun n'étant la couleur seule : la GRAISSE
+              // passe à semi-gras comme l'entrée courante, et l'encre passe
+              // de sourde à pleine. Pas de fond : c'est lui qui distingue la
+              // page de la section qui la contient, et le trait d'accent
+              // ci-dessous est plus court.
+              ? "font-semibold text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]"
+              : "font-medium text-[var(--nav-on-muted)] hover:text-[var(--nav-on)] hover:bg-[var(--nav-surface-active)]",
           className
         )}
         {...props}
@@ -125,12 +151,18 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
             une bordure conditionnelle décalerait le libellé de 3px à chaque
             changement de page. `--nav-accent` vaut ultramarine en clair et
             aquamarine en sombre — 5,77:1 et 15,08:1 sur la barre. */}
-        {current && (
+        {(current || ancestor) && (
           <span
             aria-hidden="true"
             className={cn(
               "absolute left-0 top-1/2 -translate-y-1/2 w-[3px] rounded-r-full bg-[var(--nav-accent)]",
-              density === "compact" ? "h-4" : "h-5"
+              // Le trait de la SECTION est court — un tiers de celui de la
+              // page. Il dit « c'est par ici » sans prétendre « c'est ici ».
+              current
+                ? density === "compact"
+                  ? "h-4"
+                  : "h-5"
+                : "h-2"
             )}
           />
         )}

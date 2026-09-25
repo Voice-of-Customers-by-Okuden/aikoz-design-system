@@ -444,7 +444,13 @@ export function CoquilleADP({
       <div id={idBarre} hidden={!barreOuverte} className="shrink-0 max-sm:hidden">
         <SidebarNav
           label="Espaces ADP+"
-          current={espace === "avis" && conversationCourante ? conversationCourante : espace}
+          // La conversation ouverte est la PAGE, et l'espace qui la
+          // contient est marqué à part. Sans ça, une seule des deux pouvait
+          // l'être : ouvrir une conversation faisait disparaître « Gestion
+          // des avis » dans la masse, et on ne savait plus dans quel espace
+          // on se trouvait.
+          current={conversationCourante ?? espace}
+          ancestor={conversationCourante ? espace : undefined}
           className="h-full"
           header={
             <div className="flex flex-col gap-3 pb-1">

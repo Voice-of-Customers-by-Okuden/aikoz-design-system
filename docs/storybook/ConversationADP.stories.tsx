@@ -225,6 +225,44 @@ export const BarreLaterale: Story = {
       pied.contains(c.getByRole("button", { name: /changer de POI/i })),
     ).toBe(true);
 
+    // ── On sait dans quel ESPACE on se trouve ─────────────────────────────
+    //
+    // Une barre qui liste des sections ET leur contenu ne peut marquer
+    // qu'une seule chose avec `current`. Conversation ouverte, « Gestion des
+    // avis » redevenait une entrée comme les autres, et plus rien ne disait
+    // dans quel espace on était.
+    //
+    // Deux repères, deux valeurs : `page` pour la conversation, `location`
+    // pour l'espace qui la contient. Deux `page` dans une même barre
+    // laisseraient l'utilisateur choisir laquelle est vraie.
+    const nav2 = within(nav);
+    const espace = nav2.getByRole("link", { name: /Gestion des avis/i });
+    await expect(
+      espace,
+      "« Gestion des avis » ne porte aucun repère : rien ne dit dans quel " +
+        "espace on se trouve.",
+    ).toHaveAttribute("aria-current", "location");
+
+    const page = nav2.getByRole("link", { name: /Parking P2 issues/i });
+    await expect(page).toHaveAttribute("aria-current", "page");
+
+    // Et il n'y a QU'UNE page courante.
+    const pages = [...nav.querySelectorAll('[aria-current="page"]')];
+    await expect(
+      pages.length,
+      `${pages.length} entrées portent « page » : l'utilisateur ne peut pas ` +
+        `savoir laquelle est vraie.`,
+    ).toBe(1);
+
+    // Le repère de l'espace ne tient pas à la seule couleur : sa graisse
+    // passe au semi-gras, comme l'entrée courante et contrairement aux
+    // voisines. Mesuré, pas déduit de la classe.
+    const voisine = nav2.getByRole("link", { name: /Cockpit du POI/i });
+    await expect(
+      getComputedStyle(espace).fontWeight,
+      "le repère d'espace ne tient qu'à la couleur.",
+    ).not.toBe(getComputedStyle(voisine).fontWeight);
+
     // ── La recherche filtre, et le dit ────────────────────────────────────
     const avant = c.getAllByRole("link").length;
     const champ = c.getByRole("searchbox", { name: /Rechercher dans les conversations/i });

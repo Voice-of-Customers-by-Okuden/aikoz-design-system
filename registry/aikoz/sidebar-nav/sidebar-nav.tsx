@@ -49,6 +49,11 @@ export interface SidebarNavProps {
   groups?: SidebarNavGroup[];
   /** `id` de l'entrée correspondant à la page affichée. */
   current?: string;
+  /**
+   * `id` de l'entrée qui CONTIENT la page affichée — la section, quand la
+   * barre liste aussi son contenu. Cf. `NavItem.ancestor`.
+   */
+  ancestor?: string;
   /** En-tête de la barre : logo, sélecteur de compte. */
   header?: ReactNode;
   /** Pied de la barre : profil, déconnexion. */
@@ -83,6 +88,7 @@ export function SidebarNav({
   entries,
   groups,
   current,
+  ancestor,
   header,
   footer,
   className,
@@ -186,6 +192,7 @@ export function SidebarNav({
                         {...reste}
                         density={reste.density ?? bloc.density}
                         current={id === current}
+                        ancestor={id !== current && id === ancestor}
                       />
                     </li>
                   );
