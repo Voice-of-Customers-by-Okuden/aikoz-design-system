@@ -294,8 +294,15 @@ export function AccueilADP({
               quoi="Répondre aux avis, seul ou avec l'assistant, et suivre ce qui part en validation."
               chiffre={
                 avisEnAttente > 0 ? (
-                  <Badge tone="warning" size="sm">
-                    {avisEnAttente} avis sensibles en attente
+                  // `error` et non `warning` : c'est LE MÊME FAIT que le
+                  // compteur rouge de la colonne « Avis sensibles ». Une
+                  // même information qui change de couleur d'un écran à
+                  // l'autre oblige à se redemander ce qu'elle veut dire —
+                  // c'est le défaut qu'on vient de corriger sur le repère
+                  // d'espace de la barre latérale.
+                  <Badge tone="error" size="sm">
+                    {avisEnAttente} avis sensible{avisEnAttente > 1 ? "s" : ""}{" "}
+                    en attente
                   </Badge>
                 ) : (
                   <span className="text-sm text-[var(--muted-foreground)]">
