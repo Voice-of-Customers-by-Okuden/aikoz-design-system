@@ -177,6 +177,32 @@ export const LaListeDitQuElleContinue: Story = {
     ).not.toBe("none");
     await expect(getComputedStyle(enveloppe).maskImage).toBe("none");
 
+    // ── Le dégradé va d'un bord à l'autre, et jusqu'au pied ───────────────
+    //
+    // La barre a 12 px de rembourrage et un `gap-4` avant son pied. Le
+    // dégradé s'arrêtait donc 12 px avant les montants et 16 px avant le
+    // pied : ces blancs dessinaient trois bordures autour de lui, et le bloc
+    // estompé ressemblait à une carte flottante.
+    const barre = longue.closest("nav")!;
+    const bEnv = enveloppe.getBoundingClientRect();
+    const bNav = barre.getBoundingClientRect();
+    // 1 px de tolérance : la barre porte un filet à droite.
+    await expect(
+      Math.round(bEnv.left - bNav.left),
+      "le dégradé s'arrête avant le montant gauche.",
+    ).toBeLessThanOrEqual(1);
+    await expect(
+      Math.round(bNav.right - bEnv.right),
+      "le dégradé s'arrête avant le montant droit.",
+    ).toBeLessThanOrEqual(1);
+
+    const bPied = (barre.lastElementChild as HTMLElement).getBoundingClientRect();
+    await expect(
+      Math.round(bPied.top - bEnv.bottom),
+      `il reste ${Math.round(bPied.top - bEnv.bottom)} px de blanc entre le ` +
+        `dégradé et le pied.`,
+    ).toBeLessThanOrEqual(1);
+
     // ── Et rien ne déborde sur les côtés ──────────────────────────────────
     //
     // Une ombre intérieure se dessine sur les QUATRE bords : mesurée,

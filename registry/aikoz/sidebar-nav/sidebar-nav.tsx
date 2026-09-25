@@ -268,7 +268,21 @@ export function SidebarNav({
           contenu, il défilerait avec lui. */}
       <div
         style={degrade ? { backgroundImage: degrade } : undefined}
-        className="flex min-h-0 flex-1 flex-col"
+        className={cn(
+          "flex min-h-0 flex-1 flex-col",
+          // ── Le dégradé va d'un bord à l'autre ──────────────────────────
+          //
+          // La barre a un rembourrage de 12 px et un `gap-4` avant son pied.
+          // Le dégradé s'arrêtait donc 12 px avant les montants et 16 px
+          // avant le pied, et ces blancs dessinaient trois bordures autour
+          // de lui : le bloc estompé ressemblait à une carte flottante.
+          //
+          // `-mx-3 px-3` déplace le rembourrage à l'INTÉRIEUR : le fond
+          // couvre toute la largeur, le contenu garde sa marge. `-mb-4`
+          // annule l'écart avant le pied, pour que le dégradé s'achève
+          // exactement là où le pied commence.
+          "-mx-3 px-3 -mb-4"
+        )}
       >
       <div
         ref={zone}
