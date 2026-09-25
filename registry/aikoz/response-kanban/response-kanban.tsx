@@ -426,10 +426,14 @@ function PendingValidationColumn({
 // ─── Composant ────────────────────────────────────────────────────────────────
 
 /**
- * Kanban de réponses — vue de supervision en 3 colonnes fixes, classées par
- * urgence croissante de gauche à droite : réponses automatisées à valider
- * avant publication, réponses déjà publiées hors charte à corriger, avis
- * sensibles à traiter immédiatement.
+ * Kanban de réponses — vue de supervision, ordonnée par FLUX de gauche à
+ * droite : un avis sensible arrive, on y répond, la réponse part en
+ * validation. Viennent ensuite les piles qui ne sont pas sur ce chemin —
+ * les réponses publiées hors charte à corriger, puis les automatisées, qui
+ * ne demandent rien à personne.
+ *
+ * Deux colonnes sont facultatives : `pendingValidation` (pas de circuit de
+ * validation) et `automated` (pas d'automatisation).
  *
  * **Composite, pas un atome** : il assemble des briques déjà du registry
  * (`Card`, `Badge`, `Button`, `VerbatimCard`, `EmptyState`, `Dialog`) et de
@@ -461,48 +465,30 @@ export function ResponseKanban({
       titleLevel={titleLevel}
       className={className}
       columns={[
-        ...(automated
-          ? [{
-          key: "automated",
-          title: labels?.automated?.title ?? "Réponses automatisées",
-          // « À valider » décrivait un circuit d'APPROBATION — une réponse
-          // qui attend l'accord de quelqu'un. Ces réponses-là n'attendent
-          // personne : elles partent demain, et on peut les modifier
-          // jusque-là. Le mot faisait confondre ce tableau avec un circuit
-          // de validation, qui est un autre écran et un autre métier.
-          subtitle:
-            labels?.automated?.subtitle ?? "Publiées demain, modifiables jusque-là",
-          tone: "info" as const,
-          count: automated.length,
-          children: (
-            <AutomatedColumn
-              items={automated}
-              visibleCount={visibleAutomated}
-              onShowMore={() => setVisibleAutomated((v) => v + automated.length)}
-              onSave={onSaveReply}
-            />
-          ),
-          }]
-          : []),
-        {
-          key: "off-charter",
-          title: labels?.offCharter?.title ?? "Réponses hors charte",
-          subtitle: labels?.offCharter?.subtitle ?? "Publiées, à corriger",
-          tone: "warning",
-          count: offCharter.length,
-          children: <OffCharterColumn items={offCharter} onDraftReply={onDraftReply} />,
-        },
+        // ── L'ordre lit le FLUX, de gauche à droite ────────────────────
+        //
+        // Il était « par urgence croissante », ce qui mettait les avis à
+        // traiter immédiatement en DERNIER — et, la colonne automatisée
+        // devenue facultative, laissait « Réponses hors charte » ouvrir le
+        // tableau.
+        //
+        // Un tableau à colonnes se lit comme un chemin. Le chemin est :
+        // un avis sensible arrive, on y répond, la réponse part en
+        // validation. Départ et arrivée sont donc voisins, et c'est ce qui
+        // rend le passage de l'un à l'autre lisible au moment de l'envoi.
+        //
+        // « Réponses hors charte » n'est pas sur ce chemin : c'est une pile
+        // à part, des réponses DÉJÀ publiées à corriger. La glisser entre
+        // le départ et l'arrivée coupe la lecture en deux. Elle vient après.
+        // « Réponses automatisées » ne demande rien à personne : elle ferme.
         {
           key: "sensitive",
           title: labels?.sensitive?.title ?? "Avis sensibles",
           subtitle: labels?.sensitive?.subtitle ?? "À traiter immédiatement",
-          tone: "error",
+          tone: "error" as const,
           count: sensitive.length,
           children: <SensitiveColumn items={sensitive} onDraftReply={onDraftReply} />,
         },
-        // Juste après les avis sensibles : c'est de là que part la réponse,
-        // et la voir arriver dans la colonne voisine est ce qui donne à
-        // « Envoyer pour validation » une conséquence visible.
         ...(pendingValidation
           ? [
               {
@@ -518,6 +504,35 @@ export function ResponseKanban({
                   <PendingValidationColumn
                     items={pendingValidation}
                     onReview={onReviewPending}
+                  />
+                ),
+              },
+            ]
+          : []),
+        {
+          key: "off-charter",
+          title: labels?.offCharter?.title ?? "Réponses hors charte",
+          subtitle: labels?.offCharter?.subtitle ?? "Publiées, à corriger",
+          tone: "warning" as const,
+          count: offCharter.length,
+          children: <OffCharterColumn items={offCharter} onDraftReply={onDraftReply} />,
+        },
+        ...(automated
+          ? [
+              {
+                key: "automated",
+                title: labels?.automated?.title ?? "Réponses automatisées",
+                subtitle:
+                  labels?.automated?.subtitle ??
+                  "Publiées demain, modifiables jusque-là",
+                tone: "info" as const,
+                count: automated.length,
+                children: (
+                  <AutomatedColumn
+                    items={automated}
+                    visibleCount={visibleAutomated}
+                    onShowMore={() => setVisibleAutomated((v) => v + automated.length)}
+                    onSave={onSaveReply}
                   />
                 ),
               },

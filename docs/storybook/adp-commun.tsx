@@ -117,7 +117,15 @@ export function Drapeau({ code }: { code: string }) {
 export interface POI {
   id: string;
   nom: string;
-  /** Regroupement dans le sélecteur — « Aéroports », « Commerces ». */
+  /**
+   * Regroupement dans le sélecteur.
+   *
+   * **Plus rendu depuis le 25/09/2026.** La liste est à plat : les trois
+   * catégories — Aéroports, Commerces, Salons — ajoutaient trois intitulés
+   * pour classer sept entrées, et sur 93 POI c'est la RECHERCHE qui fait le
+   * travail, pas le classement. Le champ reste dans le type : il décrit une
+   * donnée réelle, et un jour un filtre s'en servira.
+   */
   groupe?: string;
 }
 
@@ -217,17 +225,6 @@ export function SelecteurPOI({
     return q ? pois.filter((p) => p.nom.toLowerCase().includes(q)) : pois;
   }, [pois, filtre]);
 
-  // Regroupés dans l'ordre d'apparition — 93 POI chez ADP, une liste à plat
-  // ne se parcourt pas.
-  const groupes = useMemo(() => {
-    const m = new Map<string, POI[]>();
-    for (const p of resultats) {
-      const g = p.groupe ?? "Autres";
-      m.set(g, [...(m.get(g) ?? []), p]);
-    }
-    return [...m.entries()];
-  }, [resultats]);
-
   return (
     <Dialog
       open={ouvert}
@@ -310,48 +307,39 @@ export function SelecteurPOI({
             ou de l'enseigne.
           </p>
         ) : (
-          <div className="flex max-h-80 flex-col gap-4 overflow-y-auto">
-            {groupes.map(([groupe, liste]) => (
-              <section key={groupe} aria-label={groupe} className="flex flex-col gap-1">
-                <h3 className="m-0 px-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-                  {groupe}
-                </h3>
-                <ul className="m-0 flex list-none flex-col gap-1 p-0">
-                  {liste.map((p) => {
-                    const actif = p.id === courant;
-                    return (
-                      <li key={p.id}>
-                        <button
-                          type="button"
-                          // `aria-current="true"` et non `"page"` : on ne
-                          // change pas de page, on change le sujet de toutes
-                          // les pages.
-                          aria-current={actif || undefined}
-                          onClick={() => {
-                            onChange?.(p.id);
-                            setOuvert(false);
-                          }}
-                          className={cn(
-                            "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm",
-                            "min-h-11 border border-transparent",
-                            "hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)]",
-                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
-                            actif && "bg-[var(--muted)] font-semibold"
-                          )}
-                        >
-                          <span className="min-w-0 flex-1 truncate">{p.nom}</span>
-                          {/* Le POI courant ne tient pas à la seule graisse :
-                              la coche le dit, et `aria-current` l'annonce. */}
-                          {actif && <Ico d={D.valider} className="text-[var(--primary)]" />}
-                          {actif && <span className="sr-only">POI actuel</span>}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            ))}
-          </div>
+          /* Liste à plat, sans catégories : cf. `POI.groupe`. */
+          <ul className="m-0 flex max-h-80 list-none flex-col gap-1 overflow-y-auto p-0">
+            {resultats.map((p) => {
+              const actif = p.id === courant;
+              return (
+                <li key={p.id}>
+                  <button
+                    type="button"
+                    // `aria-current="true"` et non `"page"` : on ne change
+                    // pas de page, on change le sujet de toutes les pages.
+                    aria-current={actif || undefined}
+                    onClick={() => {
+                      onChange?.(p.id);
+                      setOuvert(false);
+                    }}
+                    className={cn(
+                      "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm",
+                      "min-h-11 border border-transparent",
+                      "hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)]",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
+                      actif && "bg-[var(--muted)] font-semibold"
+                    )}
+                  >
+                    <span className="min-w-0 flex-1 truncate">{p.nom}</span>
+                    {/* Le POI courant ne tient pas à la seule graisse : la
+                        coche le dit, et `aria-current` l'annonce. */}
+                    {actif && <Ico d={D.valider} className="text-[var(--primary)]" />}
+                    {actif && <span className="sr-only">POI actuel</span>}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
     </Dialog>

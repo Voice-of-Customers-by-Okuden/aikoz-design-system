@@ -18,6 +18,42 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.23.0] — 2026-09-25
+
+### Modifié
+
+- **L'ordre des colonnes de `ResponseKanban` suit le FLUX**, et non plus
+  « l'urgence croissante » : avis sensibles → en attente de validation →
+  hors charte → automatisées.
+
+  L'ancien ordre mettait les avis à traiter immédiatement en dernier, et,
+  la colonne automatisée devenue facultative, laissait « Réponses hors
+  charte » ouvrir le tableau. Un tableau à colonnes se lit comme un chemin :
+  un avis arrive, on y répond, la réponse part en validation. Départ et
+  arrivée sont donc voisins, et c'est ce qui rend le passage de l'un à
+  l'autre lisible au moment de l'envoi. « Hors charte » n'est pas sur ce
+  chemin — c'est une pile à part, des réponses déjà publiées à corriger — et
+  la glisser entre le départ et l'arrivée coupe la lecture en deux.
+
+- **Le sélecteur de POI ne groupe plus par catégorie.** Trois intitulés pour
+  classer sept entrées, et sur 93 POI c'est la recherche qui fait le
+  travail. `POI.groupe` reste dans le type : il décrit une donnée réelle, et
+  un filtre s'en servira un jour.
+
+### Assemblages
+
+- **Accueil** — le bloc vertical du Groupe ADP et le titre ouvrent la page,
+  et une barre « Posez-moi vos questions » se pose entre le choix du POI et
+  les portes. Sa place n'est pas décorative : elle vient après le POI, parce
+  qu'une question porte sur un POI, et avant les portes, parce qu'elle les
+  court-circuite. Elle ouvre un fil, elle n'est pas un décor.
+- **Gestion des avis** — un bloc « Vue d'ensemble » en `compact` au-dessus du
+  tableau : volume d'avis et note. En `compact` parce qu'ils situent et ne
+  sont pas le sujet ; la note est en `rating`, nombre et étoiles, deux
+  canaux là où un anneau ne dit pas sur quelle échelle on lit 3,7.
+
+---
+
 ## [2.22.0] — 2026-09-25
 
 Toutes les pages ADP+ sont reliées, et le tableau n'annonce plus une colonne
