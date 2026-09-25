@@ -19,6 +19,11 @@
  * quatre avis sensibles en attente, 3,7/5 sur ce POI, 93 POI suivis. Sans ce
  * chiffre la page ne fait que ralentir le trajet.
  *
+ * Et les paramètres n'y figurent pas du tout. Ils ont eu leur raccourci en bas
+ * de page, retiré le 25/09/2026 : la barre latérale les porte déjà, en
+ * permanence, sur tous les écrans. Un rond-point qui répète une entrée
+ * toujours visible allonge le trajet sans l'abréger.
+ *
  * ── Pourquoi le POI est au-dessus des portes ─────────────────────────────
  *
  * Un POI est déjà sélectionné à l'entrée, et tout ce qui suit en dépend : le
@@ -351,25 +356,6 @@ export function AccueilADP({
           </ul>
         </section>
 
-        {/* ── Le raccourci, et pas une quatrième porte ──────────────────────
-
-            Les paramètres ne sont pas une destination de travail : on n'y va
-            pas en arrivant, on y passe. Une quatrième carte de même poids
-            l'aurait rangé à côté des trois espaces, et aurait fait de la
-            rangée un menu — quatre cases équivalentes ne hiérarchisent plus
-            rien. Un lien discret en bas dit la même chose sans mentir sur
-            son importance. */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-          <p className="m-0 text-sm text-[var(--muted-foreground)]">
-            Besoin de régler votre compte, vos notifications ou votre langue ?
-          </p>
-          <Button variant="outline" size="sm" asChild>
-            <a href="#parametres">
-              <Ico d={D.reglages} />
-              Paramètres du compte
-            </a>
-          </Button>
-        </div>
       </div>
     </CoquilleADP>
   );
