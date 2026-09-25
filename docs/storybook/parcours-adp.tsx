@@ -42,6 +42,7 @@ import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
 
 import { AccueilADP } from "./accueil-adp";
 import { CoquilleADP, type Espace } from "./adp-commun";
+import { TableauDeBordADP } from "./tableau-de-bord-adp";
 import { ConversationADP, type Tour } from "./conversation-adp";
 
 // ─── Les données de l'écran ──────────────────────────────────────────────────
@@ -270,14 +271,24 @@ function Parcours({
     );
   }
 
-  // ── Les deux espaces pas encore montés ────────────────────────────────
+  if (espace === "tableau") {
+    return (
+      <TableauDeBordADP
+        avisEnAttente={sensibles.length}
+        onNaviguer={naviguer}
+        onOuvrirConversation={(id) => setEncours(id)}
+      />
+    );
+  }
+
+  // ── L'espace pas encore monté ─────────────────────────────────────────
   //
   // Un lien qui mène à un écran vide vaut mieux qu'un lien qui ne mène
   // nulle part : on sait où l'on a cliqué, et on sait ce qui manque. Le
   // contraire — une page inventée qui ressemble à un cockpit — ferait
   // croire à un espace livré.
-  if (espace === "cockpit" || espace === "tableau") {
-    const nom = espace === "cockpit" ? "Cockpit du POI" : "Tableau de bord ADP";
+  if (espace === "cockpit") {
+    const nom = "Cockpit du POI";
     return (
       <CoquilleADP
         espace={espace}
