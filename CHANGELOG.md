@@ -18,6 +18,25 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.25.2] — 2026-09-25
+
+### Corrigé
+
+- **« 1 avis sensible en attente » était jaune sur l'accueil et rouge sur le
+  tableau.** Le même fait, deux couleurs, deux écrans : on se redemande à
+  chaque page ce que la teinte veut dire. La porte du rond-point passe en
+  `error`.
+
+  Un garde-fou compare désormais les deux TEINTES en traversant réellement
+  les deux écrans — l'étiquette de la porte est cernée, le compteur de
+  colonne est un aplat plein, donc on ne compare pas les couleurs à
+  l'identique mais leur position sur la roue : 33° contre 94° quand l'une
+  était jaune, quelques degrés d'écart maintenant.
+
+- **« 1 avis sensibles »** — l'accord manquait au singulier.
+
+---
+
 ## [2.25.1] — 2026-09-25
 
 ### Corrigé

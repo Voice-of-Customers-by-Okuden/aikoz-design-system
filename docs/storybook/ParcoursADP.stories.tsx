@@ -228,6 +228,49 @@ export const ToutesLesPagesReliees: Story = {
       await expect(c.getByRole("heading", { name: /Où allez-vous/i })).toBeInTheDocument();
     });
 
+    // ── Le même fait porte la même couleur d'un écran à l'autre ───────────
+    //
+    // « 1 avis sensible en attente » sur l'accueil et le compteur de la
+    // colonne « Avis sensibles » disent LA MÊME CHOSE. L'un était jaune et
+    // l'autre rouge : on se redemande à chaque écran ce que la couleur veut
+    // dire.
+    //
+    // On ne compare pas les couleurs à l'identique — la porte est une
+    // étiquette cernée, le compteur un aplat plein, et c'est normal. On
+    // compare leur TEINTE : un rouge et un jaune sont à plus de 40° l'un de
+    // l'autre en OKLCH, deux rouges à quelques degrés.
+    const teinte = (couleur: string) => {
+      const m = couleur.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)/);
+      return m ? Number(m[3]) : NaN;
+    };
+
+    await u.click(nav().getByRole("link", { name: "Accueil" }));
+    const porte = await waitFor(() =>
+      c.getByText(/avis sensibles? en attente/i),
+    );
+    const teintePorte = teinte(getComputedStyle(porte).color);
+
+    await u.click(nav().getByRole("link", { name: /Gestion des avis/i }));
+    const colonne = await waitFor(() =>
+      c.getByRole("region", { name: /Avis sensibles/i }),
+    );
+    // Le compteur est le second enfant de l'en-tête de colonne. Le
+    // chercher par un texte purement numérique ne marchait pas : `CountBadge`
+    // ajoute un énoncé lu en plus du chiffre visible.
+    const compteur = colonne.querySelector<HTMLElement>(":scope > div > span");
+    await expect(
+      compteur,
+      "compteur de colonne introuvable : le test ne mesure rien.",
+    ).not.toBeNull();
+    const teinteCompteur = teinte(getComputedStyle(compteur!).backgroundColor);
+
+    await expect(
+      Math.abs(teintePorte - teinteCompteur),
+      `la porte de l'accueil est à ${Math.round(teintePorte)}° et le compteur ` +
+        `du tableau à ${Math.round(teinteCompteur)}° : le même fait change de ` +
+        `couleur d'un écran à l'autre.`,
+    ).toBeLessThan(40);
+
     // ── Il n'y a pas de colonne « Réponses automatisées » ─────────────────
     //
     // ADP n'automatise pas. La colonne existe encore dans le composant pour
