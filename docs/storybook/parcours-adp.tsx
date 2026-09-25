@@ -38,6 +38,7 @@ import {
 import { ToastProvider, useToast } from "@registry/aikoz/toast/toast";
 
 import { EmptyState } from "@registry/aikoz/empty-state/empty-state";
+import { KpiCard } from "@registry/aikoz/kpi-card/kpi-card";
 
 import { AccueilADP } from "./accueil-adp";
 import { CoquilleADP, type Espace } from "./adp-commun";
@@ -253,7 +254,18 @@ function Parcours({
 
   if (espace === "accueil") {
     return (
-      <AccueilADP avisEnAttente={sensibles.length} onNaviguer={naviguer} />
+      <AccueilADP
+        avisEnAttente={sensibles.length}
+        onNaviguer={naviguer}
+        // Poser une question ouvre un fil. Faute de quoi répondre dans cet
+        // assemblage, on atterrit sur le premier avis à traiter — et s'il
+        // n'y en a plus, sur l'espace des avis.
+        onQuestion={() => {
+          const premier = sensibles[0];
+          if (premier) setEncours(premier.id);
+          else naviguer("avis");
+        }}
+      />
     );
   }
 
@@ -294,7 +306,44 @@ function Parcours({
       onNaviguer={naviguer}
       onOuvrirConversation={(id) => setEncours(id)}
     >
-      <div className="p-6">
+      <div className="flex flex-col gap-6 p-6">
+        {/* ── Vue d'ensemble ────────────────────────────────────────────
+        
+            Deux repères, en `compact` : sur cette page ils situent, ils ne
+            sont pas le sujet. Le sujet est le tableau juste en dessous, et
+            deux cartes de taille normale lui auraient disputé l'entrée de
+            page.
+        
+            La note est en `rating` : le nombre ET les étoiles, deux canaux.
+            La maquette l'entoure d'un anneau — un anneau ne dit pas sur
+            quelle échelle on lit 3,7 ; les étoiles le disent, et c'est déjà
+            le repère employé sur chaque avis du tableau.
+        
+            « Google » est écrit en toutes lettres plutôt que posé en
+            logotype : le dépôt est public, et nous n'embarquons pas la
+            marque d'un tiers pour signer une source. */}
+        <section aria-labelledby="vue-ensemble" className="flex flex-col gap-3">
+          <h2 id="vue-ensemble" className="m-0 text-base font-semibold">
+            Vue d'ensemble
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <KpiCard
+              density="compact"
+              variant="raw"
+              label="Nombre d'avis"
+              value={17780}
+              description="Source Google · 12 derniers mois"
+            />
+            <KpiCard
+              density="compact"
+              variant="rating"
+              label="Votre note"
+              value={3.7}
+              description="Source Google · 12 derniers mois"
+            />
+          </div>
+        </section>
+
         {/* Le tableau EST le contenu de cette page : ses colonnes sont ses
             sections de premier rang, donc des `h2` sous le `h1` de la
             coquille. Laissées en `h3`, elles sautaient un niveau — axe le

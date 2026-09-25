@@ -32,7 +32,9 @@ import { useState, type ReactNode } from "react";
 
 import { Card } from "@registry/aikoz/card/card";
 import { Badge } from "@registry/aikoz/badge/badge";
+import { BrandMark } from "@registry/aikoz/brand-mark/brand-mark";
 import { Button } from "@registry/aikoz/button/button";
+import { Input } from "@registry/aikoz/input/input";
 import { cn } from "@registry/aikoz/lib/utils";
 
 import {
@@ -139,6 +141,15 @@ export interface AccueilADPProps {
   avisGroupe?: number;
   /** Changement d'espace — depuis une porte ou depuis la barre. */
   onNaviguer?: (espace: Espace) => void;
+  /**
+   * Question posée depuis l'accueil.
+   *
+   * C'est un raccourci qui SAUTE le rond-point : on sait déjà ce qu'on veut,
+   * on le demande. Sans ce rappel, le champ serait un décor — et un champ
+   * qui ne répond pas est le même mensonge qu'une navigation qui ne navigue
+   * pas.
+   */
+  onQuestion?: (texte: string) => void;
 }
 
 const nombre = new Intl.NumberFormat("fr-FR");
@@ -153,6 +164,7 @@ export function AccueilADP({
   poiSuivis = 93,
   avisGroupe = 35988,
   onNaviguer,
+  onQuestion,
 }: AccueilADPProps) {
   // ── UNE seule source de vérité pour le POI ────────────────────────────
   //
@@ -177,14 +189,26 @@ export function AccueilADP({
       onNaviguer={onNaviguer}
     >
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-4 py-10">
-        <header className="flex flex-col gap-2">
-          <h2 className="m-0 text-2xl font-semibold">
-            Pilotez votre e-réputation
-          </h2>
-          <p className="m-0 text-sm text-[var(--muted-foreground)]">
-            ADP+ analyse vos retours clients et vous guide dans la rédaction
-            des réponses aux avis.
-          </p>
+        {/* ── L'en-tête d'accueil ───────────────────────────────────────
+        
+            Le bloc vertical, et non l'horizontal : posé au-dessus d'un titre
+            centré, un bloc de 2,91:1 s'étale sur toute la largeur du texte
+            et le titre n'est plus qu'une légende. Le vertical fait 1,12:1.
+        
+            Centré ici, et seulement ici : c'est la seule page du produit qui
+            accueille plutôt qu'elle ne fait travailler. Partout ailleurs le
+            texte est aligné à gauche, parce qu'on y lit des listes. */}
+        <header className="flex flex-col items-center gap-4 text-center">
+          <BrandMark orientation="vertical" className="h-[74px] max-w-[84px]" />
+          <div className="flex flex-col gap-2">
+            <h2 className="m-0 text-2xl font-semibold">
+              Pilotez votre e-réputation
+            </h2>
+            <p className="m-0 text-sm text-[var(--muted-foreground)]">
+              ADP+ analyse vos retours clients et vous guide dans la rédaction
+              des réponses aux avis.
+            </p>
+          </div>
         </header>
 
         {/* ── Étape 1 : le POI ──────────────────────────────────────────────
@@ -223,6 +247,34 @@ export function AccueilADP({
             className="shrink-0"
           />
         </Card>
+
+        {/* ── Le raccourci, entre le POI et les routes ──────────────────
+        
+            Sa place n'est pas décorative. Il vient APRÈS le POI, parce qu'une
+            question porte sur un POI et qu'on doit savoir lequel avant de la
+            poser. Il vient AVANT les routes, parce qu'il les court-circuite :
+            qui sait déjà ce qu'il veut n'a pas à choisir une porte. */}
+        <form
+          className="flex items-end gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const champ = new FormData(e.currentTarget).get("question");
+            const texte = String(champ ?? "").trim();
+            if (texte) onQuestion?.(texte);
+          }}
+        >
+          <Input
+            name="question"
+            label={`Poser une question sur ${nomPoi}`}
+            labelHidden
+            wrapperClassName="flex-1"
+            placeholder="Posez-moi vos questions"
+            leadingIcon={<Ico d={D.assistant} />}
+          />
+          <Button type="submit" aria-label="Envoyer la question">
+            <Ico d={D.envoi} />
+          </Button>
+        </form>
 
         {/* ── Étape 2 : les routes ──────────────────────────────────────── */}
         <section aria-labelledby="accueil-routes" className="flex flex-col gap-3">
