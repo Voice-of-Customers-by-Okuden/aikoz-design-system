@@ -18,6 +18,28 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.19.1] — 2026-09-25
+
+### Corrigé
+
+- **Les assemblages ne se copiaient pas.** Ils n'avaient pas de page Docs,
+  donc pas de bouton « Copy code ». Et l'ajouter seul n'aurait rien donné :
+  il aurait copié `<MatriceHabilitation />`, un composant qui n'existait que
+  dans le fichier d'histoire.
+
+  Chaque assemblage vit désormais dans un fichier NU à côté de son histoire,
+  comme `dashboard-complet.tsx` le faisait déjà. Sa page de doc montre ce
+  fichier en entier, lu par `?raw` sur la source réelle : la doc ne peut pas
+  diverger du code. 12 242 caractères pour la matrice d'habilitation, prêts
+  à coller.
+
+  Un assemblage se COPIE, il ne s'installe pas : la prochaine personne en a
+  besoin comme point de départ, avec ses rôles et ses colonnes à elle. C'est
+  la question qui tranche composant / assemblage, et elle est en section 1 de
+  « Créer un composant ».
+
+---
+
 ## [2.19.0] — 2026-09-25
 
 Contribution de Louis Brach (#129).

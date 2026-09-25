@@ -113,6 +113,7 @@ const SENSIBLES = [
 const meta = {
   title: "Assemblages/Démo ADP — État des réponses",
   component: ResponseKanban,
+  tags: ["autodocs"],
   parameters: { layout: "fullscreen" },
   args: {
     automated: AUTOMATISEES,
