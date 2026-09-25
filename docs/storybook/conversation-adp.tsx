@@ -3,142 +3,38 @@
  *
  * L'écran de conversation de l'outil « ADP+ · Avis digitaux » : l'assistant
  * rédige une réponse à un avis, l'utilisateur la relit, puis choisit sa
- * sortie. C'est la v2 du tableau de bord que nous livrons, donc un écran
- * ADP — mais bâti sur les tokens de marque, pas sur du bleu ADP écrit en
- * dur : `data-brand="generali"` et le même fichier rend l'écran Generali.
+ * sortie.
  *
- * Ce fichier se COPIE, il ne s'installe pas. Un assemblage est un écran, pas
- * une brique : la prochaine personne qui en a besoin en a besoin comme point
- * de départ, avec ses espaces à elle et ses actions à elle. Il ne dépend que
- * de composants publiés du registry : `shadcn add` les installe, puis on
- * colle ce fichier à côté.
+ * Ce fichier se COPIE, il ne s'installe pas, et il vient avec
+ * `adp-commun.tsx` — la barre latérale, le sélecteur de POI et les
+ * pictogrammes y vivent, parce que l'accueil les partage. Deux copies de
+ * cette barre divergeraient au premier correctif.
  *
- * ── Les trois écarts assumés avec la maquette ────────────────────────────
+ * ── Les écarts assumés avec la maquette ──────────────────────────────────
  *
- * 1. **Le brouillon n'est pas en chasse fixe.** La maquette le rend en
- *    monospace ; dans notre système, la chasse fixe veut dire « ceci est du
- *    code, à recopier caractère par caractère ». Or ce texte est une lettre
- *    destinée à un voyageur. Il prend donc la typographie de corps, comme
- *    tout le reste du produit.
+ * 1. **Le brouillon n'est pas en chasse fixe.** Elle dirait « ceci est du
+ *    code, à recopier caractère par caractère ». Ce texte est une lettre
+ *    destinée à un voyageur.
  *
- * 2. **Le brouillon porte l'étiquette « IA ».** Absente de la maquette. Une
- *    réponse générée qui ne dit pas qu'elle est générée fait porter à
- *    l'utilisateur, au moment de publier au nom de l'aéroport, une décision
- *    dont il ignore la nature. `ReplyBubble` le dit en toutes lettres, pas
- *    par une teinte.
+ * 2. **Le brouillon porte l'étiquette « IA ».** Une réponse générée qui ne
+ *    dit pas qu'elle est générée fait porter à l'utilisateur, au moment de
+ *    publier au nom de l'aéroport, une décision dont il ignore la nature.
  *
  * 3. **La conversation courante est titrée.** La maquette ne l'annonce que
- *    par le surlignage d'une entrée de la barre latérale — invisible à un
- *    lecteur d'écran arrivé directement sur la page, et invisible tout court
- *    barre repliée. Le titre est le `h1` de la page.
+ *    par le surlignage d'une entrée de la barre — invisible barre repliée,
+ *    et invisible à un lecteur d'écran.
  */
 
-import { Fragment, useId, useMemo, useState, type ReactNode } from "react";
+import { Fragment, useId, useState, type ReactNode } from "react";
 
-import { SidebarNav } from "@registry/aikoz/sidebar-nav/sidebar-nav";
-import { BrandMark } from "@registry/aikoz/brand-mark/brand-mark";
 import { Button } from "@registry/aikoz/button/button";
-import { Input } from "@registry/aikoz/input/input";
 import { Card } from "@registry/aikoz/card/card";
-import { Dialog } from "@registry/aikoz/dialog/dialog";
-import { Select } from "@registry/aikoz/select/select";
+import { Input } from "@registry/aikoz/input/input";
 import { Badge } from "@registry/aikoz/badge/badge";
 import { decouperEnParagraphes } from "@registry/aikoz/reply-bubble/reply-bubble";
 import { cn } from "@registry/aikoz/lib/utils";
 
-// ─── Pictogrammes ────────────────────────────────────────────────────────────
-//
-// Filaires, en `currentColor`, décoratifs : le libellé porte le sens, et
-// chacun est `aria-hidden`.
-//
-// `strokeWidth` est en unités du VIEWBOX, pas en pixels. Ces tracés ont un
-// viewBox de 24 et s'affichent en 16 px : pour 1,5 px rendus il faut
-// 1,5 × 24 / 16 = 2,25. C'est la même valeur que sur le tableau de bord —
-// une rangée de pictogrammes d'épaisseurs différentes est le premier défaut
-// qu'on voit sur un écran dense.
-
-function Ico({ d, className }: { d: string; className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      className={cn("size-4 shrink-0", className)}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.25}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {d.split("|").map((p) => (
-        <path key={p} d={p} />
-      ))}
-    </svg>
-  );
-}
-
-const D = {
-  plus: "M12 5v14|M5 12h14",
-  bulle: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z",
-  loupe: "M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z|M21 21l-4.3-4.3",
-  maison: "M3 10.5 12 3l9 7.5|M5 9.5V21h14V9.5",
-  graphe: "M3 3v18h18|M8 16V11|M12.5 16V7|M17 16v-3",
-  jauge: "M12 21a9 9 0 1 0-9-9|M3 12a9 9 0 0 1 18 0|M12 12l4-3",
-  // Une roue dentée, pas la clé à molette illisible d'avant : son tracé
-  // tenait en deux segments qui, à 16 px, ne formaient plus rien de
-  // reconnaissable. Un pictogramme qu'on ne reconnaît pas ne repère rien,
-  // et vaut moins que pas de pictogramme du tout.
-  reglages:
-    "M19.4 13a7.7 7.7 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.7 7.7 0 0 0-1.7-1L15 3H9l-.3 3a7.7 7.7 0 0 0-1.7 1l-2.4-1-2 3.5L4.6 11a7.7 7.7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.7 7.7 0 0 0 1.7 1L9 21h6l.3-3a7.7 7.7 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5z|M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5",
-  sortie: "M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4|M10 17l5-5-5-5|M15 12H3",
-  panneau: "M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z|M10 4v16",
-  chevrons: "M8 9l4-4 4 4|M16 15l-4 4-4-4",
-  copie: "M9 9h10v12H9z|M15 9V5H5v12h4",
-  refaire: "M3 12a9 9 0 0 1 15.3-6.4L21 8|M21 3v5h-5|M21 12a9 9 0 0 1-15.3 6.4L3 16|M3 21v-5h5",
-  crayon: "M4 20h4L20 8l-4-4L4 16v4z|M14 6l4 4",
-  envoi: "M4 12 20 4l-8 16-2-6-6-2z",
-  valider: "M20 6 9 17l-5-5",
-  epingle:
-    "M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z|M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",
-  personne: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z|M5 20a7 7 0 0 1 14 0",
-  // L'avatar de l'assistant NE PEUT PAS être le logo de la marque.
-  // Mesuré : le fichier ADP fait 300 × 103 px, soit un rapport de 2,91:1.
-  // Posé dans une pastille de 28 px, il rend 28 × 9,6 px — la mention
-  // « GROUPE ADP » y fait 4 px de haut. Un logo qu'on écrase n'est plus
-  // le logo que le client a validé, et la charte de marque l'interdit.
-  //
-  // Ce glyphe parle la même langue que l'étiquette « IA » de
-  // `ReplyBubble` : l'avatar dit qui parle, le badge dit ce qui a écrit.
-  assistant: "M12 3v3|M12 18v3|M5.6 5.6l2.1 2.1|M16.3 16.3l2.1 2.1|M3 12h3|M18 12h3|M5.6 18.4l2.1-2.1|M16.3 7.7l2.1-2.1|M12 9.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z",
-} as const;
-
-/**
- * Drapeau en emoji, par code pays ISO 3166-1 alpha-2.
- *
- * Les indicatifs régionaux Unicode (U+1F1E6…) : « FR » devient 🇫🇷 sans
- * qu'aucune image n'entre dans le dépôt. Windows ne compose pas ces paires
- * et affiche les deux lettres — un repli acceptable, justement parce que le
- * drapeau ne porte aucune information.
- */
-function Drapeau({ code }: { code: string }) {
-  const emoji = [...code.toUpperCase()]
-    .map((c) => String.fromCodePoint(0x1f1e6 + c.charCodeAt(0) - 65))
-    .join("");
-  return (
-    <span aria-hidden="true" className="text-sm leading-none">
-      {emoji}
-    </span>
-  );
-}
-
-// ─── Les données de l'écran ──────────────────────────────────────────────────
-
-/** Un point d'intérêt : un terminal, une boutique, un salon. */
-export interface POI {
-  id: string;
-  nom: string;
-  /** Regroupement dans le sélecteur — « Aéroports », « Commerces ». */
-  groupe?: string;
-}
+import { CoquilleADP, D, Ico, type POI } from "./adp-commun";
 
 /**
  * Un tour de parole.
@@ -150,32 +46,6 @@ export interface POI {
 export type Tour =
   | { id: string; role: "assistant" | "utilisateur"; texte: string; heure: string }
   | { id: string; role: "brouillon"; texte: string; heure: string };
-
-export const POIS: POI[] = [
-  { id: "cdg", nom: "Aéroport de Paris-Charles de Gaulle", groupe: "Aéroports" },
-  { id: "orly", nom: "Aéroport de Paris-Orly", groupe: "Aéroports" },
-  { id: "lbg", nom: "Aéroport de Paris-Le Bourget", groupe: "Aéroports" },
-  {
-    id: "extime-2b",
-    nom: "Extime Duty Free Paris | Paris-CDG - Terminal 2B / 2D",
-    groupe: "Commerces",
-  },
-  {
-    id: "extime-2e",
-    nom: "Extime Duty Free Paris | Paris-CDG - Terminal 2E Porte K",
-    groupe: "Commerces",
-  },
-  { id: "halles", nom: "Les Halles by Extime Duty Free Paris", groupe: "Commerces" },
-  { id: "salon-2e", nom: "Salon Extime — Terminal 2E", groupe: "Salons" },
-];
-
-export const CONVERSATIONS = [
-  { id: "cdg-positif", titre: "Réponse à avis positif CDG" },
-  { id: "parking", titre: "Parking P2 issues" },
-  { id: "securite-en", titre: "Reply: Humiliating security check" },
-  { id: "securite-fr", titre: "Réponse sécurité CDG agressive" },
-  { id: "charmon", titre: "Réponse à Mme Charmon, 1re visite" },
-];
 
 /**
  * Le fil de la maquette du 25/09/2026, mot pour mot.
@@ -241,174 +111,6 @@ Extime Duty Free Paris | Paris-CDG – Terminal 2B / 2D`,
     heure: "10:40",
   },
 ];
-
-// ─── Le sélecteur de POI ─────────────────────────────────────────────────────
-
-export interface SelecteurPOIProps {
-  pois: POI[];
-  /** `id` du POI sur lequel on travaille. */
-  courant: string;
-  onChange?: (id: string) => void;
-  /** Rend le déclencheur pleine largeur, pour le pied de la barre latérale. */
-  className?: string;
-}
-
-/**
- * Changer de POI.
- *
- * **« Changer de POI », pas « Rechercher un autre POI »** : un libellé nomme
- * le but, jamais le mécanisme. La recherche est à l'INTÉRIEUR — c'est le
- * moyen d'atteindre le but, elle n'a pas à s'afficher sur la porte. Le même
- * raisonnement que « Se connecter » plutôt que « Saisir ses identifiants ».
- *
- * Le POI courant est écrit sur le déclencheur, et repris dans son nom
- * accessible : un bouton qui dirait seulement « Changer de POI » obligerait
- * à chercher ailleurs sur quoi on travaille.
- *
- * Exporté séparément parce que l'accueil en rond-point s'en sert aussi, et
- * que c'est le MÊME contrôle : deux implémentations divergeraient au premier
- * correctif.
- */
-export function SelecteurPOI({ pois, courant, onChange, className }: SelecteurPOIProps) {
-  const [ouvert, setOuvert] = useState(false);
-  const [filtre, setFiltre] = useState("");
-  const nom = pois.find((p) => p.id === courant)?.nom ?? courant;
-  const idResultats = useId();
-
-  const resultats = useMemo(() => {
-    const q = filtre.trim().toLowerCase();
-    return q ? pois.filter((p) => p.nom.toLowerCase().includes(q)) : pois;
-  }, [pois, filtre]);
-
-  // Regroupés dans l'ordre d'apparition — 93 POI chez ADP, une liste à plat
-  // ne se parcourt pas.
-  const groupes = useMemo(() => {
-    const m = new Map<string, POI[]>();
-    for (const p of resultats) {
-      const g = p.groupe ?? "Autres";
-      m.set(g, [...(m.get(g) ?? []), p]);
-    }
-    return [...m.entries()];
-  }, [resultats]);
-
-  return (
-    <Dialog
-      open={ouvert}
-      onOpenChange={(o) => {
-        setOuvert(o);
-        // La recherche repart à zéro à chaque ouverture : rouvrir sur un
-        // filtre oublié donne une liste amputée sans qu'on sache pourquoi.
-        if (!o) setFiltre("");
-      }}
-      title="Changer de POI"
-      description="Le POI choisi vaut pour tous les espaces : avis, cockpit et tableau de bord."
-      trigger={
-        <button
-          type="button"
-          className={cn(
-            "flex w-full items-center gap-3 rounded-md p-2 text-left",
-            "border border-transparent",
-            "hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)]",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
-            "focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--nav-surface)]",
-            className
-          )}
-        >
-          <span
-            aria-hidden="true"
-            className={cn(
-              "grid size-9 shrink-0 place-items-center rounded-full",
-              "bg-[var(--muted)] text-[var(--muted-foreground)]"
-            )}
-          >
-            <Ico d={D.epingle} />
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-xs text-[var(--nav-on-muted)]">POI</span>
-            <span className="block truncate text-sm font-medium text-[var(--nav-on)]">
-              {nom}
-            </span>
-          </span>
-          {/* Le nom accessible du bouton, lu en plus du texte visible : sans
-              lui, un lecteur d'écran annonce le nom du POI et rien de ce que
-              le bouton fait. */}
-          <span className="sr-only">— changer de POI</span>
-          <Ico d={D.chevrons} className="text-[var(--nav-on-muted)]" />
-        </button>
-      }
-    >
-      <div className="flex flex-col gap-4">
-        <Input
-          label="Rechercher un POI"
-          type="search"
-          autoComplete="off"
-          value={filtre}
-          onChange={(e) => setFiltre(e.target.value)}
-          placeholder="Terminal, boutique, salon…"
-          leadingIcon={<Ico d={D.loupe} />}
-          aria-describedby={idResultats}
-        />
-
-        {/* Le décompte est annoncé à chaque frappe : sans lui, filtrer une
-            liste de 93 entrées ne produit aucun retour perceptible hors de
-            l'écran. `polite` — la frappe ne doit pas être interrompue. */}
-        <p id={idResultats} aria-live="polite" className="sr-only">
-          {resultats.length} POI sur {pois.length}
-        </p>
-
-        {resultats.length === 0 ? (
-          <p className="m-0 text-sm text-[var(--muted-foreground)]">
-            Aucun POI ne correspond à « {filtre} ». Essayez le nom du terminal
-            ou de l'enseigne.
-          </p>
-        ) : (
-          <div className="flex max-h-80 flex-col gap-4 overflow-y-auto">
-            {groupes.map(([groupe, liste]) => (
-              <section key={groupe} aria-label={groupe} className="flex flex-col gap-1">
-                <h3 className="m-0 px-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-                  {groupe}
-                </h3>
-                <ul className="m-0 flex list-none flex-col gap-1 p-0">
-                  {liste.map((p) => {
-                    const actif = p.id === courant;
-                    return (
-                      <li key={p.id}>
-                        <button
-                          type="button"
-                          // `aria-current="true"` et non `"page"` : on ne
-                          // change pas de page, on change le sujet de toutes
-                          // les pages.
-                          aria-current={actif || undefined}
-                          onClick={() => {
-                            onChange?.(p.id);
-                            setOuvert(false);
-                          }}
-                          className={cn(
-                            "flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm",
-                            "min-h-11 border border-transparent",
-                            "hover:border-[var(--border-strong)] hover:bg-[var(--surface-hover)]",
-                            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]",
-                            actif && "bg-[var(--muted)] font-semibold"
-                          )}
-                        >
-                          <span className="min-w-0 flex-1 truncate">{p.nom}</span>
-                          {/* Le POI courant ne tient pas à la seule graisse :
-                              la coche le dit, et `aria-current` l'annonce. */}
-                          {actif && <Ico d={D.valider} className="text-[var(--primary)]" />}
-                          {actif && <span className="sr-only">POI actuel</span>}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </section>
-            ))}
-          </div>
-        )}
-      </div>
-    </Dialog>
-  );
-}
 
 // ─── Les tours de parole ─────────────────────────────────────────────────────
 
@@ -733,8 +435,6 @@ export function Brouillon({
 
 // ─── L'écran ─────────────────────────────────────────────────────────────────
 
-export type Espace = "avis" | "cockpit" | "tableau";
-
 export interface ConversationADPProps {
   /** Conversation affichée — c'est le `h1` de la page. */
   titre: string;
@@ -743,7 +443,6 @@ export interface ConversationADPProps {
   poiCourant?: string;
   conversations?: { id: string; titre: string }[];
   conversationCourante?: string;
-  /** Avis en attente de traitement, porté par l'entrée « Gestion des avis ». */
   avisEnAttente?: number;
   /** Cf. `PresentationBrouillon` — « bloc prêt à coller » par défaut. */
   presentation?: PresentationBrouillon;
@@ -755,276 +454,63 @@ export interface ConversationADPProps {
 export function ConversationADP({
   titre,
   tours,
-  pois = POIS,
-  poiCourant = "cdg",
-  conversations = CONVERSATIONS,
+  pois,
+  poiCourant,
+  conversations,
   conversationCourante = "charmon",
-  avisEnAttente = 4,
+  avisEnAttente,
   presentation = "bloc",
   repriseManuelle = false,
   onEnvoyerPourValidation,
   onRepondreSurGoogle,
 }: ConversationADPProps) {
-  const [poi, setPoi] = useState(poiCourant);
-  const [barreOuverte, setBarreOuverte] = useState(true);
-  const [filtre, setFiltre] = useState("");
-  const idBarre = useId();
-  const idCompte = useId();
-
-  // Un champ de recherche qui ne filtre rien est un mensonge d'interface :
-  // on tape, rien ne bouge, et on conclut qu'il n'y a pas de résultat.
-  const trouvees = useMemo(() => {
-    const q = filtre.trim().toLowerCase();
-    return q
-      ? conversations.filter((c) => c.titre.toLowerCase().includes(q))
-      : conversations;
-  }, [conversations, filtre]);
-
   return (
-    /* ── L'écran occupe la fenêtre, et rien de plus ────────────────────────
-    
-       C'était `min-h-[48rem]`, et c'est ce qui laissait le pied de la barre
-       passer sous le pli : une hauteur MINIMALE laisse le contenu pousser la
-       page aussi loin qu'il veut, et le pied descend avec. Mesuré sur une
-       fenêtre de 760 px avec cinq conversations — barre de 880 px, bas du
-       pied à 868 px.
-    
-       Une hauteur FIXE change la nature du problème : la barre ne peut plus
-       grandir, donc c'est sa zone défilante qui absorbe les conversations,
-       et le pied reste où il est. C'est la moitié manquante du correctif de
-       `SidebarNav` — un conteneur défilant dans un parent sans hauteur ne
-       défile jamais. */
-    <div className="flex h-[100dvh] w-full overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
-      {/* La barre se replie par l'attribut `hidden`, pas par un démontage :
-          `aria-controls` doit désigner un élément qui EXISTE, sinon il ne
-          désigne rien — c'est le défaut qu'on vient de corriger sur
-          `ViewTabs`.
-          
-          Le conteneur ne porte aucune classe de `display` : `display:contents`
-          ou `flex` l'emporteraient sur la feuille de style du navigateur, et
-          la barre resterait visible bouton replié.
-          
-          `max-sm:hidden` : sous 640 px la barre ne s'affiche pas du tout.
-          `SidebarNav` le dit dans sa propre documentation — le tiroir mobile
-          dépend du gabarit de page, pas de la barre, et se monte dans un
-          `Dialog`. C'est une limite connue de cet assemblage, pas un oubli. */}
-      <div id={idBarre} hidden={!barreOuverte} className="shrink-0 max-sm:hidden">
-        <SidebarNav
-          label="Espaces ADP+"
-          current={conversationCourante}
-          className="h-full"
-          header={
-            <div className="flex flex-col gap-3 pb-1">
-              <div className="flex items-center gap-2">
-                <BrandMark
-                  orientation="vertical"
-                  className="h-[66.31px] max-w-[74px]"
-                />
-                <span className="min-w-0">
-                  <span className="block text-base font-semibold text-[var(--nav-on)]">
-                    ADP+
-                  </span>
-                  <span className="block text-xs text-[var(--nav-on-muted)]">
-                    Avis digitaux
-                  </span>
-                </span>
-              </div>
-
-              <Button size="sm" className="w-full text-nowrap px-3">
-                <Ico d={D.plus} />
-                Nouvelle conversation
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full text-nowrap px-3"
-              >
-                Donner votre voix à ADP+
-              </Button>
-
-              <Input
-                label="Rechercher dans les conversations"
-                labelHidden
-                type="search"
-                autoComplete="off"
-                placeholder="Rechercher"
-                value={filtre}
-                onChange={(e) => setFiltre(e.target.value)}
-                leadingIcon={<Ico d={D.loupe} />}
-                aria-describedby={idCompte}
-              />
-              {/* Le décompte est annoncé à chaque frappe. Sans lui, filtrer
-                  une liste ne produit aucun retour perceptible hors écran —
-                  et le seul canal restant serait de compter les entrées. */}
-              <p id={idCompte} aria-live="polite" className="sr-only">
-                {filtre.trim()
-                  ? `${trouvees.length} conversation${trouvees.length > 1 ? "s" : ""} sur ${conversations.length}`
-                  : ""}
-              </p>
-            </div>
-          }
-          groups={[
-            {
-              label: "Espaces",
-              labelHidden: true,
-              entries: [
-                // « Accueil » devient « Gestion des avis » : l'entrée nommait
-                // sa position dans le menu, pas ce qu'on y fait. « Accueil »
-                // est désormais le rond-point, et c'est un autre écran.
-                {
-                  id: "avis",
-                  label: "Gestion des avis",
-                  href: "#",
-                  icon: <Ico d={D.bulle} />,
-                  // `NavItem` intègre le nombre au nom accessible du lien :
-                  // « Gestion des avis, 4 en attente ». Une pastille muette
-                  // ne dirait rien à qui n'a pas l'écran.
-                  count: avisEnAttente,
-                  countLabel: "en attente",
-                },
-                {
-                  id: "cockpit",
-                  label: "Cockpit du POI",
-                  href: "#",
-                  icon: <Ico d={D.jauge} />,
-                },
-                {
-                  id: "tableau",
-                  label: "Tableau de bord ADP",
-                  href: "#",
-                  icon: <Ico d={D.graphe} />,
-                },
-              ],
-            },
-            {
-              label: "Conversations",
-              // Un historique, pas une barre de sections. Cinq conversations
-              // à 44 px pesaient 220 px de barre ; la même liste en compact
-              // en pèse 180, et surtout elle cesse de rivaliser avec les
-              // trois espaces au-dessus.
-              density: "compact",
-              empty: `Aucune conversation ne contient « ${filtre.trim()} ».`,
-              entries: trouvees.map((c) => ({
-                id: c.id,
-                label: c.titre,
-                href: "#",
-              })),
-            },
-          ]}
-          footer={
-            <div className="flex flex-col gap-1">
-              <SelecteurPOI pois={pois} courant={poi} onChange={setPoi} />
-
-              <hr className="m-0 border-0 border-t border-[var(--nav-border)]" />
-
-              <a
-                href="#"
-                className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-md px-3 text-sm",
-                  "text-[var(--nav-on)] hover:bg-[var(--surface-hover)]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
-                )}
-              >
-                <Ico d={D.reglages} />
-                Paramètres du compte
-              </a>
-
-              {/* Un `<button>`, pas un lien. Se déconnecter n'amène nulle
-                  part : ça détruit une session. Un lien promettrait l'ouverture
-                  dans un onglet et le retour arrière — ni l'un ni l'autre
-                  n'existent ici. */}
-              <button
-                type="button"
-                className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-md px-3 text-left text-sm",
-                  "text-[var(--nav-on)] hover:bg-[var(--surface-hover)]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
-                )}
-              >
-                <Ico d={D.sortie} />
-                Se déconnecter
-              </button>
-
-              {/* Le drapeau est DÉCORATIF, et c'est ce qui le rend
-                  acceptable : « Français » et « English » sont écrits en
-                  toutes lettres à côté. Un drapeau nomme un pays, pas une
-                  langue — le français ne s'arrête pas à la France, et le
-                  choix du drapeau anglais plutôt qu'un autre est arbitraire.
-                  Employé seul, il serait faux ; employé comme repère, il
-                  accélère la reconnaissance sans rien affirmer. */}
-              <Select
-                label="Langue de l'interface"
-                labelHidden
-                size="sm"
-                defaultValue="fr"
-                options={[
-                  { value: "fr", label: "Français", icon: <Drapeau code="FR" /> },
-                  { value: "en", label: "English", icon: <Drapeau code="GB" /> },
-                ]}
-              />
-            </div>
-          }
-        />
-      </div>
-
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center gap-3 border-b border-border px-4 py-3">
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-expanded={barreOuverte}
-            aria-controls={idBarre}
-            onClick={() => setBarreOuverte((v) => !v)}
-          >
-            <Ico d={D.panneau} />
-            <span className="sr-only">
-              {barreOuverte ? "Replier la barre latérale" : "Déplier la barre latérale"}
-            </span>
+    <CoquilleADP
+      espace="avis"
+      titre={titre}
+      pois={pois}
+      poiCourant={poiCourant}
+      conversations={conversations}
+      conversationCourante={conversationCourante}
+      avisEnAttente={avisEnAttente}
+      pied={
+        <form
+          className="mx-auto flex w-full max-w-4xl items-end gap-2 px-4 py-4"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <Input
+            label="Votre question"
+            labelHidden
+            wrapperClassName="flex-1"
+            placeholder="Posez des questions et je ferai de mon mieux pour y répondre…"
+          />
+          <Button type="submit" aria-label="Envoyer la question">
+            <Ico d={D.envoi} />
           </Button>
-          {/* Le titre de la conversation, et non « ADP+ » : le nom du produit
-              est déjà dans la barre, et un `h1` doit dire où l'on est. */}
-          <h1 className="m-0 truncate text-base font-semibold">{titre}</h1>
-        </header>
-
-        <div className="flex-1 overflow-y-auto px-4 py-8">
-          <ol className="m-0 mx-auto flex w-full max-w-4xl list-none flex-col gap-6 p-0">
-            {tours.map((t) =>
-              t.role === "brouillon" ? (
-                <Brouillon
-                  key={t.id}
-                  texte={t.texte}
-                  heure={t.heure}
-                  presentation={presentation}
-                  repriseManuelle={repriseManuelle}
-                  onEnvoyerPourValidation={onEnvoyerPourValidation}
-                  onRepondreSurGoogle={onRepondreSurGoogle}
-                />
-              ) : (
-                <Bulle key={t.id} role={t.role} heure={t.heure}>
-                  {t.texte}
-                </Bulle>
-              )
-            )}
-          </ol>
-        </div>
-
-        <div className="border-t border-border px-4 py-4">
-          <form
-            className="mx-auto flex w-full max-w-4xl items-end gap-2"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <Input
-              label="Votre question"
-              labelHidden
-              wrapperClassName="flex-1"
-              placeholder="Posez des questions et je ferai de mon mieux pour y répondre…"
-            />
-            <Button type="submit" aria-label="Envoyer la question">
-              <Ico d={D.envoi} />
-            </Button>
-          </form>
-        </div>
+        </form>
+      }
+    >
+      <div className="px-4 py-8">
+        <ol className="m-0 mx-auto flex w-full max-w-4xl list-none flex-col gap-6 p-0">
+          {tours.map((t) =>
+            t.role === "brouillon" ? (
+              <Brouillon
+                key={t.id}
+                texte={t.texte}
+                heure={t.heure}
+                presentation={presentation}
+                repriseManuelle={repriseManuelle}
+                onEnvoyerPourValidation={onEnvoyerPourValidation}
+                onRepondreSurGoogle={onRepondreSurGoogle}
+              />
+            ) : (
+              <Bulle key={t.id} role={t.role} heure={t.heure}>
+                {t.texte}
+              </Bulle>
+            )
+          )}
+        </ol>
       </div>
-    </div>
+    </CoquilleADP>
   );
 }

@@ -75,10 +75,21 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
     },
     ref
   ) {
-    const compte =
-      count !== undefined
-        ? `${count} ${countLabel ?? "en attente"}`
-        : undefined;
+    // Zéro ne s'affiche pas.
+    //
+    // Pour un COMPTEUR, l'absence de pastille est déjà l'information : une
+    // pastille « 0 » occupe la place, attire l'œil et ne dit rien de plus que
+    // le vide. Elle fait pire — un lecteur d'écran annonce « Gestion des
+    // avis, 0 en attente » là où « Gestion des avis » suffisait.
+    //
+    // La règle ne vaut pas partout : sur une carte dont le rôle est de dire
+    // s'il faut s'y rendre, le silence est ambigu — a-t-elle chargé ? — et il
+    // faut écrire « aucun avis en attente ». Ici la barre est permanente, et
+    // ce qui est permanent doit se taire quand il n'a rien à dire.
+    const compteVisible = count !== undefined && count > 0;
+    const compte = compteVisible
+      ? `${count} ${countLabel ?? "en attente"}`
+      : undefined;
 
     return (
       <a
@@ -138,7 +149,7 @@ export const NavItem = forwardRef<HTMLAnchorElement, NavItemProps>(
 
         <span className="flex-1 min-w-0 truncate">{label}</span>
 
-        {count !== undefined && (
+        {compteVisible && (
           // La pastille est muette : le compte est porté par `aria-label`,
           // sinon le nombre n'est qu'une tache colorée que rien n'annonce.
           <span
