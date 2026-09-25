@@ -57,8 +57,13 @@ const ORIGIN_ICON = {
  * du conteneur. Un simple retour à la ligne reste DANS le paragraphe et
  * devient un `<br>` : c'est la signature sur deux lignes, pas un nouveau
  * paragraphe.
+ *
+ * Exporté : un appelant qui rend une réponse SANS la citation en creux —
+ * parce que la réponse est le sujet de son écran et non une citation
+ * subordonnée — a le même besoin, et deux découpages divergeraient au
+ * premier correctif.
  */
-function decouperEnParagraphes(texte: string): string[][] {
+export function decouperEnParagraphes(texte: string): string[][] {
   return texte
     .trim()
     .split(/\n\s*\n/)

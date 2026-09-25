@@ -33,7 +33,7 @@
  *    barre repliée. Le titre est le `h1` de la page.
  */
 
-import { useId, useMemo, useState, type ReactNode } from "react";
+import { Fragment, useId, useMemo, useState, type ReactNode } from "react";
 
 import { SidebarNav } from "@registry/aikoz/sidebar-nav/sidebar-nav";
 import { BrandMark } from "@registry/aikoz/brand-mark/brand-mark";
@@ -42,7 +42,8 @@ import { Input } from "@registry/aikoz/input/input";
 import { Card } from "@registry/aikoz/card/card";
 import { Dialog } from "@registry/aikoz/dialog/dialog";
 import { Select } from "@registry/aikoz/select/select";
-import { ReplyBubble } from "@registry/aikoz/reply-bubble/reply-bubble";
+import { Badge } from "@registry/aikoz/badge/badge";
+import { decouperEnParagraphes } from "@registry/aikoz/reply-bubble/reply-bubble";
 import { cn } from "@registry/aikoz/lib/utils";
 
 // ─── Pictogrammes ────────────────────────────────────────────────────────────
@@ -495,10 +496,18 @@ export function Brouillon({
           aria-labelledby={idTitre}
           className="flex min-w-0 flex-1 flex-col gap-3 p-4"
         >
-          <div className="flex items-center justify-between gap-2">
-            <h2 id={idTitre} className="m-0 text-sm font-semibold">
-              Brouillon de réponse
-            </h2>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <h2 id={idTitre} className="m-0 text-sm font-semibold">
+                Brouillon de réponse
+              </h2>
+              {/* L'origine reste écrite en toutes lettres, et mieux placée
+                  qu'avant : dans le titre du bloc plutôt qu'à l'intérieur du
+                  texte. */}
+              <Badge tone="info" size="sm" icon={<Ico d={D.assistant} className="size-3" />}>
+                IA
+              </Badge>
+            </div>
             <Button
               variant="ghost"
               size="sm"
@@ -512,11 +521,38 @@ export function Brouillon({
             </Button>
           </div>
 
-          {/* Les paragraphes sont découpés par `ReplyBubble` lui-même : une
-              réponse à un avis en fait toujours trois — salutation, corps,
-              signature. L'assemblage passe le texte brut, avec ses lignes
-              vides. */}
-          <ReplyBubble origin="ai">{texte}</ReplyBubble>
+          {/* ── Pourquoi PAS `ReplyBubble` ici ────────────────────────────
+          
+              `ReplyBubble` est une CITATION EN CREUX : fond sourd, liseré
+              gauche, pas de bordure propre. Sa documentation le dit — elle se
+              compose comme l'enfant d'une carte d'avis, « pour rester
+              subordonnée à la carte qui l'accueille plutôt que rivaliser avec
+              elle ». C'est exact dans le Kanban, où la réponse est posée sous
+              le verbatim auquel elle répond.
+          
+              Ici il n'y a pas de verbatim au-dessus : le brouillon EST le
+              sujet de l'écran. L'employer quand même produisait une boîte
+              dans une boîte — carte en relief, bulle en creux, pour un seul
+              et même contenu — et le liseré gauche, privé de ce qu'il
+              subordonne, ne disait plus rien. C'est le trait qu'Alice a
+              relevé, et il venait bien de notre système : employé pour un
+              rôle qu'il n'a pas.
+          
+              Le texte se pose donc à même la carte. Le découpage en
+              paragraphes, lui, reste celui de `ReplyBubble` : une seule
+              implémentation pour les deux. */}
+          <div className="flex flex-col gap-3">
+            {decouperEnParagraphes(texte).map((para, i) => (
+              <p key={i} className="m-0 text-sm leading-relaxed">
+                {para.map((ligne, j) => (
+                  <Fragment key={j}>
+                    {j > 0 && <br />}
+                    {ligne}
+                  </Fragment>
+                ))}
+              </p>
+            ))}
+          </div>
 
           {/* La confirmation de copie est annoncée, pas seulement affichée. */}
           <p aria-live="polite" className="sr-only">
