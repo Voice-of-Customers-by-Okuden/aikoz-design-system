@@ -263,6 +263,33 @@ export const BarreLaterale: Story = {
       "le repère d'espace ne tient qu'à la couleur.",
     ).not.toBe(getComputedStyle(voisine).fontWeight);
 
+    // ── La liste dit qu'elle continue ─────────────────────────────────────
+    //
+    // Coupée net par le bord du pied, rien ne distinguait « voilà tout » de
+    // « il y en a vingt-cinq de plus ».
+    //
+    // On mesure le COUPLAGE, pas la présence du fondu : il doit apparaître
+    // exactement quand quelque chose est masqué, et disparaître quand il n'y
+    // a plus rien dessous. Un fondu permanent promettrait du contenu absent,
+    // et on apprendrait à ne plus le croire — ce serait pire que rien.
+    await expect(
+      zone.dataset.debord,
+      `la zone déborde de ${zone.scrollHeight - zone.clientHeight} px et ` +
+        `annonce « ${zone.dataset.debord} » : rien ne dit que la liste ` +
+        `continue.`,
+    ).toBe("bas");
+    await expect(getComputedStyle(zone).maskImage).not.toBe("none");
+
+    // Défilé jusqu'en bas, le fondu passe de l'autre côté.
+    zone.scrollTop = zone.scrollHeight;
+    await waitFor(async () => {
+      await expect(
+        zone.dataset.debord,
+        "arrivé en bas, le fondu du bas promet encore du contenu.",
+      ).toBe("haut");
+    });
+    zone.scrollTop = 0;
+
     // ── La recherche filtre, et le dit ────────────────────────────────────
     const avant = c.getAllByRole("link").length;
     const champ = c.getByRole("searchbox", { name: /Rechercher dans les conversations/i });

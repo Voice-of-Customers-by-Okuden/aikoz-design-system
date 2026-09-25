@@ -1,4 +1,12 @@
-import { Fragment, useId, type ReactNode } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { cn } from "@registry/aikoz/lib/utils";
 import { NavItem, type NavItemProps } from "@registry/aikoz/nav-item/nav-item";
 
@@ -97,6 +105,58 @@ export function SidebarNav({
   const blocs: SidebarNavGroup[] =
     groups ?? (entries ? [{ label, labelHidden: true, entries }] : []);
 
+  // ── Dire qu'il reste quelque chose à voir ─────────────────────────────
+  //
+  // Une liste coupée net par le bord du pied ne dit pas qu'elle continue :
+  // rien ne distingue « voilà tout » de « il y en a vingt-cinq de plus ».
+  //
+  // Deux canaux, et aucun n'est permanent : le fondu ET la barre de
+  // défilement n'apparaissent que si quelque chose est réellement masqué.
+  // Un fondu posé en dur serait pire que rien — il promettrait du contenu
+  // absent, et on apprendrait à ne plus le croire.
+  const zone = useRef<HTMLDivElement>(null);
+  const [debord, setDebord] = useState<"non" | "bas" | "haut" | "deux">("non");
+
+  const mesurer = useCallback(() => {
+    const e = zone.current;
+    if (!e) return;
+    // 1 px de tolérance : les hauteurs de défilement sont fractionnaires, et
+    // un `scrollTop` de 0,5 px suffirait sinon à allumer le fondu du haut.
+    const haut = e.scrollTop > 1;
+    const bas = e.scrollTop + e.clientHeight < e.scrollHeight - 1;
+    setDebord(haut && bas ? "deux" : haut ? "haut" : bas ? "bas" : "non");
+  }, []);
+
+  useEffect(() => {
+    const e = zone.current;
+    if (!e) return;
+    mesurer();
+    e.addEventListener("scroll", mesurer, { passive: true });
+    // La hauteur disponible change sans qu'on défile : fenêtre
+    // redimensionnée, liste filtrée, groupe ajouté. Sans l'observateur, le
+    // fondu resterait allumé sur une liste devenue courte.
+    const ro = new ResizeObserver(mesurer);
+    ro.observe(e);
+    for (const enfant of Array.from(e.children)) ro.observe(enfant);
+    return () => {
+      e.removeEventListener("scroll", mesurer);
+      ro.disconnect();
+    };
+  }, [mesurer, blocs.length, current]);
+
+  // Le fondu est un MASQUE, pas un aplat posé par-dessus. Un aplat suppose
+  // qu'on connaisse la couleur du fond ; le masque efface l'encre quelle que
+  // soit la surface, et suit donc la marque et le thème sans les connaître.
+  const FONDU = "transparent 0, #000 2rem, #000 calc(100% - 2rem), transparent 100%";
+  const masque =
+    debord === "deux"
+      ? `linear-gradient(to bottom, ${FONDU})`
+      : debord === "bas"
+        ? "linear-gradient(to bottom, #000 calc(100% - 2rem), transparent 100%)"
+        : debord === "haut"
+          ? "linear-gradient(to bottom, transparent 0, #000 2rem)"
+          : undefined;
+
   return (
     <nav
       aria-label={label}
@@ -150,7 +210,18 @@ export function SidebarNav({
       
           Sans hauteur imposée par l'appelant, ce conteneur ne fait rien :
           `flex-1` n'a rien à partager et `overflow-y-auto` rien à couper. */}
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
+      <div
+        ref={zone}
+        data-debord={debord}
+        style={masque ? { maskImage: masque, WebkitMaskImage: masque } : undefined}
+        className={cn(
+          "flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto",
+          // La barre de défilement, second canal : fine, dans le trait de la
+          // barre, et le navigateur ne la montre que s'il y a de quoi
+          // défiler. Le fondu seul resterait discret sur une liste courte.
+          "[scrollbar-width:thin] [scrollbar-color:var(--nav-border)_transparent]"
+        )}
+      >
       {blocs.map((bloc, i) => (
         <Fragment key={bloc.label}>
           {/* Le trait entre deux groupes est décoratif — il double l'intitulé,
