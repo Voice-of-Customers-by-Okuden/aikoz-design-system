@@ -446,7 +446,23 @@ function Bulle({
         </span>
         <p
           className={cn(
-            "m-0 rounded-lg px-4 py-3 text-sm leading-relaxed",
+            // ── Pourquoi la bulle est plus ronde que tout le reste ────────
+            //
+            // Elle ne relève ni de la pilule d'identité ni du cercle imposé
+            // par la géométrie : sa rondeur PORTE UN SENS. C'est elle qui
+            // dit « ceci est de la parole », et une bulle au rayon d'une
+            // carte cesse d'être une bulle — sous Aikoz, le bouton en
+            // pilule était même plus rond que la parole qu'il commente.
+            //
+            // Le double du rayon de surface, pas une valeur en dur : la
+            // bulle reste solidaire de la marque, elle est seulement d'un
+            // cran au-dessus. Même construction que les paliers `md` et
+            // `sm` de Tailwind, qui dérivent eux aussi de `--radius`.
+            //
+            // Locale à l'assemblage, et pas un token : un seul consommateur.
+            // Les cinq paliers de rayon retirés le 22/09 l'avaient été pour
+            // n'en avoir aucun — on ne recommence pas dans l'autre sens.
+            "m-0 rounded-[calc(var(--radius)*2)] px-4 py-3 text-sm leading-relaxed",
             moi
               ? "bg-[var(--primary)] text-[var(--primary-foreground)]"
               : "border border-border bg-[var(--card)] text-[var(--card-foreground)]"
@@ -800,7 +816,7 @@ export function ConversationADP({
           header={
             <div className="flex flex-col gap-3 pb-1">
               <div className="flex items-center gap-2">
-                <BrandMark className="h-8 max-w-[6rem]" />
+                <BrandMark orientation="vertical" className="h-10 max-w-[3rem]" />
                 <span className="min-w-0">
                   <span className="block text-base font-semibold text-[var(--nav-on)]">
                     ADP+
