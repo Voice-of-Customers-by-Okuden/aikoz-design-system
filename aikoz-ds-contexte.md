@@ -2,7 +2,7 @@
 
 > À lire au démarrage de CHAQUE session (Claude Code comme le chat).
 > Source unique de vérité du contexte projet. Toute décision structurante s'écrit ici, tout de suite.
-> Dernière mise à jour : 2026-09-22
+> Dernière mise à jour : 2026-09-28
 
 ## 1. Objectif
 Construire le design system Aikoz by Okuden : socle de composants React pour un SaaS B2B d'analyse d'avis clients (assurance, banque, auto), aussi distribué en marque blanche. Cap : fondations solides vers un dashboard d'analyse d'avis démontrable (v0.1). Démarrage dev produit : à poser à Arnaud/Louis.
@@ -30,11 +30,11 @@ Build via Style Dictionary (build-tokens.mjs, config inline) depuis le DTCG (tok
 Régénération : npm run build:tokens.
 Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour agnosticisme framework + marque blanche.
 
-## 5. État actuel — 25/09/2026, version 2.19.2
+## 5. État actuel — 28/09/2026, version 2.26.0
 
 - Repo : Voice-of-Customers-by-Okuden/aikoz-design-system, **public**. Site publié par GitHub Pages depuis `main` : https://voice-of-customers-by-okuden.github.io/aikoz-design-system/
-- **55 composants, 56 entrées de registry, 275 tests**, verts dans les deux thèmes. Louis a l'accès `write` et consomme le registry publié.
-- **Section « Assemblages »** dans Storybook, publiée : matrice d'habilitation (modifiable · consultable · noms corrigés), circuit de validation, démo ADP « État des réponses » avec leur contenu exact. Un assemblage vit dans un **fichier nu** à côté de son histoire (motif de `dashboard-complet.tsx`), et sa page Docs montre ce fichier EN ENTIER, lu par `?raw` : la doc ne peut pas diverger du code. Code **déplié d'entrée** (`canvas.sourceState`), bouton « Copy code ».
+- **55 composants, 56 entrées de registry, 298 tests**, verts dans les deux thèmes. Louis a l'accès `write` et consomme le registry publié.
+- **Section « Assemblages »** dans Storybook, publiée : matrice d'habilitation, circuit de validation, démo ADP « État des réponses », et **l'outil ADP+ entier** — accueil en rond-point, conversation, gestion des avis, tableau de bord (onglet « Réponses »), tous **reliés** par `Parcours ADP`. Leur socle commun — barre latérale, sélecteur de POI, coquille de page, pictogrammes — vit dans `docs/storybook/adp-commun.tsx` : deux copies de cette barre divergeraient au premier correctif, et il y en a eu six en une journée. Un assemblage vit dans un **fichier nu** à côté de son histoire (motif de `dashboard-complet.tsx`), et sa page Docs montre ce fichier EN ENTIER, lu par `?raw` : la doc ne peut pas diverger du code. Code **déplié d'entrée** (`canvas.sourceState`), bouton « Copy code ».
 - **Trois façons de récupérer du code**, toutes vérifiées en ligne : `npx shadcn@latest add .../r/<nom>.json` pour un composant · « Show code » sur une histoire pour l'usage · page **Docs** d'un assemblage pour l'écran entier.
 - **Versionnage sémantique** : `CHANGELOG.md`, `public/version.json`, `audit:version` refuse une PR qui touche `registry/`, `tokens/` ou `bridge/` sans monter la version ET écrire le journal — verrou npm compris. ⚠️ **Lancer `registry:build` APRÈS `npm version`**, sinon `chiffres.ts` porte l'ancienne version et la CI tombe.
 - **Les chiffres de la vitrine sont comptés, pas écrits** (`docs/storybook/chiffres.ts`, généré).
@@ -44,12 +44,14 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 - **`AstralPhoebus` est LOUIS**, pas Tommy — vérifié sur ses commits (`brach.louispj@gmail.com`). Erreur d'attribution corrigée le 24/09. Ses PR #127 et #129 sont fusionnées.
 - **`gh` rebascule tout seul sur le compte perso d'Alice** (`lilicegonzales`), et `git push` échoue en 403. Cause : le `gitconfig` d'Xcode pose un `credential.helper = osxkeychain` générique, lu AVANT la config perso ; et `gh auth git-credential` ne sert QUE le compte actif, vérifié. Correction en attente côté Alice, cf. §Dettes ouvertes.
 - Storybook : le serveur de dev **ne rescanne pas un fichier créé après son démarrage**. Redémarrer avant de conclure à une classe morte. Piège rencontré cinq fois.
+- **GitHub Pages sert `index.json` avec `cache-control: max-age=600`.** Pendant dix minutes après un déploiement, une histoire nouvelle est invisible pour qui avait déjà ouvert le site : Storybook ne lit cet index qu'au chargement. Le message est « Couldn't find story matching… », et il fait croire à un lien mort. **Le dire en même temps que le lien** quand on envoie une nouveauté à Louis ou à ADP. `Cmd + Maj + R` règle le cas immédiat.
+- **Deux espaces ADP+ ne sont pas montés** — Cockpit du POI, et trois onglets du tableau de bord sur quatre. La navigation y mène et **l'écran dit qu'il n'existe pas encore** : un lien vers un écran qui s'annonce vide vaut mieux qu'un lien mort, et une page inventée ferait croire à un espace livré.
 
 ### Les neuf contrôles qui tournent en CI
 | contrôle | ce qu'il refuse |
 |---|---|
 | `build:tokens` | un bridge qui ment, une échelle sombre qui diverge, une carte héroïne hors bande, **un rôle `--role-*` que personne ne lit**, et **un rôle de statut défini dans un thème que le pont ne publie pas** |
-| `audit:conventions` | un composant qui s'écarte des **douze conventions** du système |
+| `audit:conventions` | un composant qui s'écarte des **treize conventions** du système — la treizième exige que tout `rounded-full` restant soit NOMMÉ dans `CERCLES_PAR_GEOMETRIE` avec sa raison |
 | `audit:typo` | une taille ou une graisse hors échelle |
 | `audit:mouvement` | une animation de position sans `motion-reduce`/`motion-safe` |
 | `audit:marques` | une couleur empruntée à la rampe d'une autre marque |
@@ -61,6 +63,13 @@ Long terme (non bloquant) : composants cibles Web Components (Lit/Stencil) pour 
 
 ## 6. Décisions verrouillées (avec le pourquoi)
 - **Composant ou assemblage.** Un composant est une brique : son contrat doit tenir PARTOUT, sans qu'on le voie, il vit dans `registry/aikoz/` et se livre par `shadcn add`. Un assemblage est un écran : il tient ICI, on le voit, il vit dans `docs/storybook/` (fichier nu + histoire) et se **copie** depuis sa page Docs. La question qui tranche : *la prochaine personne qui en a besoin en a besoin à l'identique, ou comme point de départ ?* Un assemblage porte quand même son test — ici une histoire EST un test. Écrit en section 1 de « Créer un composant ». Pourquoi : le système avait 53 atomes et zéro assemblage publié, donc toute demande d'écran client devenait un 54e composant.
+- **Le rayon des pilules est un token de MARQUE.** `--radius-pill` : Aikoz est en pilule (9999), ADP ne l'est pas (**6 px**, valeur relevée par Alice sur leur plateforme multi-POI — `calc(var(--radius) - 2px)` pour un `--radius` de 0,5rem ; littérale et non un alias, notre échelle va de 4 à 8 sans passer par 6). Le travail n'était pas la valeur mais le **tri** : sur 25 `rounded-full`, neuf relèvent de l'identité (bouton, badge, puce) et seize de la **géométrie** (avatar, curseur d'interrupteur, piste de jauge) — changer le rayon de ceux-là ne produit pas une autre identité mais une erreur de dessin. Une marque = une ligne, et la retirer rend les pilules.
+- **Le ton d'une colonne se juge à l'échelle du TABLEAU, pas de la colonne.** Prise seule, chacune se justifie ; côte à côte, un rouge et deux jaunes donnent l'impression que rien ne va alors qu'une seule signale un problème. D'où le ton `neutral` de `CountBadge`, qui manquait : `--neutral-fill` était publié et seul `DeltaBadge` le demandait.
+- **Un même fait porte la même couleur d'un écran à l'autre.** « 1 avis sensible en attente » était jaune sur l'accueil et rouge sur le tableau. Un garde-fou traverse réellement les deux écrans et compare les **teintes** (pas les couleurs à l'identique : une étiquette cernée et un aplat plein ne se peignent pas pareil).
+- **Un tableau à colonnes se lit comme un chemin.** L'ordre suit le FLUX, pas « l'urgence croissante » : avis sensibles → en attente de validation → hors charte. Départ et arrivée voisins, c'est ce qui rend le passage de l'un à l'autre lisible au moment de l'envoi ; une pile qui n'est pas sur le chemin ne s'y glisse pas.
+- **Une commande qui porte un verbe doit pouvoir le tenir.** « Relire ma réponse » renvoyait un identifiant et n'ouvrait rien — et si elle ne le tenait pas, c'est que la **donnée manquait avant l'écran** (`PendingValidationItem` ne transportait pas la réponse). Même famille : une navigation qui ne navigue pas, un champ de recherche qui ne filtre rien, un fondu de défilement permanent.
+- **Une affordance qui ment est pire qu'une affordance absente.** Le fondu de fin de liste n'apparaît que si quelque chose est réellement masqué et change de bord une fois en bas ; « Avis suivant » n'est pas proposé quand il n'y a plus d'avis.
+- **Le bloc vertical d'un logo est un cadrage de charte, pas une variante décorative.** `BrandMark.orientation`. Mesuré à 40 px de haut : bloc horizontal du Groupe ADP 116 px de large, vertical 47. Une marque sans bloc vertical retombe **silencieusement** sur l'horizontal — contrairement à une version sombre manquante, l'autre cadrage reste le logo validé.
 - **Le rouge ne dit qu'une chose : l'utilisateur est refusé, ou quelque chose va être détruit.** Un chargement qui échoue ne fait ni l'un ni l'autre : `EmptyState tone="error"` n'est PAS rouge, et ce qui distingue l'échec du vide est la présence d'une **action de reprise**, pas une teinte.
 - **Le vocabulaire des props.** `label` nomme un contrôle ou une mesure · `title` titre un bloc qu'on lit · `caption` nomme un jeu de données (c'est le `<caption>` HTML, donc **obligatoire ou inexistant**) · `description` est la ligne de contexte. Les rappels disent CE QUI a changé, jamais le geste : `onValueChange`, `onCheckedChange`, `onOpenChange`. Deux exceptions nommées : `BarChart.onBarClick` et `FranceMap.onSelect` disent « clic » parce qu'ils sont des raccourcis souris uniquement, le graphique étant masqué aux technologies d'assistance.
 - Format & câblage couleur : primitives en DTCG objet (components oklch, source de vérité) ; toute variable CSS porte la couleur **complète** (`oklch(L C H)`, ou `/ alpha`) ; consommateurs en `var(--x)` brut ; transparence via `color-mix(in oklch, …, transparent N%)` ou variable à alpha inclus. Pourquoi : couleur atomique/opaque au point de définition → pas de manipulation de composants dispersée, pas d'erreur de syntaxe, prêt gamut large. Jamais `oklch(var())` / `hsl(var())` / triplet nu.
@@ -95,11 +104,35 @@ Trois défauts, un seul mécanisme. Ce qui se pose sur `documentElement` ne se r
 - Sur une page **Docs**, toutes les histoires partagent le même document. L'histoire « thème sombre » de la démo ADP assombrissait ses voisines et la page entière. **Une histoire qui épingle un global de niveau document n'a pas sa place sur une page qui en empile d'autres** (`tags: ["!autodocs"]`).
 - L'audit de rendu tournait aussi en mode docs, où il mesurait le gabarit de Storybook (143 px de débordement) au lieu du nôtre. Et un `afterEach` qui lève en docs **remplace l'histoire** par un bloc d'erreur : **cinq pages de composant sur six** affichaient six encadrés rouges à la place des exemples, en ligne depuis la 2.9.0. Il ne tourne plus en docs, et son contrôle de débordement mesure le **canevas**, plus le document.
 
+### La leçon du 25/09 : **une propriété CSS en écrase une autre sans le dire**
+Quatre défauts, un seul mécanisme : deux déclarations qui écrivent dans la même propriété longue, et la seconde gagne en silence.
+- **`text-balance` annule `whitespace-nowrap` sur TOUT `Button`.** `white-space` et `text-wrap` écrivent tous deux dans `text-wrap-mode`. La classe de l'appelant est dans le DOM, la règle dans la feuille, et `white-space` calcule `normal`. C'est **`text-nowrap`** qu'il faut — `tailwind-merge` retire alors `text-balance` au lieu de le laisser gagner. Écrit dans `button.tsx`.
+- **`mask-image` découpe TOUT le rendu de son élément**, fond et ombre portée compris. Masque et dégradé de défilement posés sur le même nœud : le masque effaçait le dégradé exactement là où il devait se voir. J'ai d'abord cru à un réglage trop faible et monté l'opacité de 16 à 24 % sans le moindre effet — ce qui aurait dû me mettre sur la piste.
+- **Une ombre `inset` se dessine sur QUATRE bords.** `inset 0 -10px 12px -10px` peint aussi le long des montants. Un dégradé de fond n'a pas de côtés.
+- **`display: contents` l'emporte sur `[hidden]`** de la feuille du navigateur : la barre latérale portait l'attribut et occupait toujours ses 240 px.
+- Corollaire de mise en page : **`tailwind-merge` ne retire une classe que si on lui en donne une du MÊME groupe.** `flex-wrap items-center` ne remplace pas le `flex-col` de la base de `Card` — d'où un contenu empilé et centré là où il devait se répondre.
+
 ### Corollaire : **un test qui dépend de l'environnement ne parle pas du composant**
 Le test d'alignement de `KpiCard` mesurait la chasse des chiffres sans attendre les polices. Isolé il passait, en CI il passait (les polices n'y chargent pas), en suite complète il échouait à 3,53 px. Trois environnements, trois verdicts, aucun sur le composant. `await document.fonts.ready`. **C'est le pire type de test : celui qui échoue pour de mauvaises raisons, parce qu'on finit par l'ignorer.**
 
+### Corollaire : **un test qui tient à l'orthographe d'une classe ne mesure pas un composant**
+`badge.stories.tsx` sélectionnait ses pastilles par `/rounded-full/` dans `className`. Cinq assertions sont tombées d'un coup le jour où la pilule est passée sur un token, **sans que le composant ait changé de comportement**. Même famille : une zone défilante cherchée par `nav.children[1]`, qui a gagné une enveloppe. On sélectionne sur le RENDU (bordure, rayon, `[data-…]`), jamais sur le nom des classes ni sur la position dans l'arbre.
+
+### Corollaire : **une assertion qui ne peut pas échouer ne prouve rien**
+Trois fois de suite sur la barre latérale. « Le pied est-il dans la barre ? » est toujours vrai quand la barre grandit avec lui. « Le pied est-il dans la fenêtre ? » est toujours vrai quand cinq conversations tiennent dedans. **Casser le garde-fou est le seul moyen de savoir**, et il faut le casser du bon côté : c'est la version à 30 conversations qui a fini par dire la vérité.
+
 ### Corollaire : **deviner une valeur qu'on peut lire, c'est se mesurer soi-même**
-J'ai estimé `info.200` à 4,77:1 en devinant ses composantes au lieu de les lire dans `primitives.json`. La vraie valeur donne 4,18. Quinze histoires tombées, une seule cause. Même famille : j'ai lu un `oklch()` rendu comme du `rgb()` et annoncé un chroma de 0,318 — un bleu pur — sur une bordure grise.
+J'ai estimé `info.200` à 4,77:1 en devinant ses composantes au lieu de les lire dans `primitives.json`. La vraie valeur donne 4,18. Quinze histoires tombées, une seule cause. Même famille : j'ai lu un `oklch()` rendu comme du `rgb()` et annoncé un chroma de 0,318 — un bleu pur — sur une bordure grise. Et le 25/09 : j'ai calculé le ton `neutral` plein à 4,70:1 **avec du blanc pur**, alors que `--on-inverse` n'est pas blanc — 4,11 en vrai, sous le seuil. Trois tentatives avant la bonne (plein, voilé, cerné), l'audit tranchant à chaque fois.
+
+Deux API lues de travers le même jour, pour la même raison : **`Table` prend `rows`, pas `data`** (le générique tombait alors sur `unknown`), et **`ProgressBar` rend `role="meter"`, pas `progressbar`** — ce qui est correct : `progressbar` décrit une tâche qui avance, `meter` une mesure dans une échelle connue. Une part de réponses hors charte ne progresse pas, elle se situe.
+
+### Dettes fermées le 25/09
+- ✅ **`--radius` est câblé proprement** — cf. §6, `--radius-pill` et le tri géométrie/identité.
+- ✅ **La barre latérale ne déborde plus sous le pli.** Mesuré : 880 px de barre dans une fenêtre de 760, pied à 868, avec **cinq** conversations. Seuls les groupes défilent ; l'en-tête et le pied restent. `mt-auto` colle le pied au bas du CONTENU, pas de l'écran — et un conteneur défilant dans un parent sans hauteur ne défile jamais, d'où la hauteur fixe sur l'écran qui l'accueille.
+- ✅ **Le pied de barre est une région**, avec `--nav-surface-sunken`, un rôle créé parce qu'il n'existait rien : en clair `--muted`, `--surface-hover` et `--nav-surface-active` valent **exactement la même couleur**, et donner l'un des trois au pied lui aurait donné la teinte qui signifie « vous êtes ici ».
+- ✅ **La section qui CONTIENT la page courante se marque aussi** (`NavItem.ancestor`, `aria-current="location"`). Visuellement **identique** à `current` : un repère d'espace qui change d'apparence selon la page pose deux fois la même question. Ce qui les distingue est leur GROUPE, pas leur force.
+- ✅ **`ReplyBubble` rend les paragraphes.** Une réponse à un avis en fait toujours trois. Le découpage est exporté (`decouperEnParagraphes`).
+- ✅ **Les pages ADP+ ont un `main`.** « Aller au contenu » n'avait rien à viser, et l'introduction de l'accueil comptait comme une **seconde bannière**.
 
 ### Dettes fermées les 23-25/09
 - ✅ **La suite tourne dans les deux thèmes** (`npm run test:sombre`), et `mesurerLeRendu` s'applique à chaque histoire, plus au seul tableau de bord.
@@ -127,25 +160,28 @@ J'ai estimé `info.200` à 4,77:1 en devinant ses composantes au lieu de les lir
 - README périmé (dit à tort que Claude Code lit DESIGN.md).
 - **Workflow Jekyll hérité** : il échoue à chaque fusion sur `main` alors que le vrai déploiement (« Design system ») passe. Une croix rouge qui ne veut rien dire apprend à ignorer les croix rouges. À désactiver dans les réglages Pages.
 - **21 branches distantes sur 33 sont déjà fusionnées** dans `main`. À nettoyer, de préférence AVANT la réécriture d'historique : chaque référence est réécrite.
-- **Rien n'est écrit sur la hiérarchie et la densité.** Les douze conventions CI sont douze règles de **non-erreur** ; la section « typographie et espacement » dit « rien à faire de spécial, sauf ne pas sortir de l'échelle ». Le système sait dire « c'est faux », pas « c'est mou » — donc chaque écran re-dérive sa hiérarchie et tombe sur le plus petit dénominateur qui passe la CI. Sept règles ont été trouvées en corrigeant la matrice d'habilitation, aucune n'est écrite : la densité suit ce que la cellule contient · filets verticaux ssi les deux axes portent du sens · une colonne d'ancrage dès qu'on lit vers la droite · le trait d'en-tête porte 3:1 quand il sépare des rangées qui se ressemblent · un pictogramme par ligne quand toutes se ressemblent · **des colonnes de même contenu, même largeur** (mesurable, déjà testée) · **un en-tête riche s'aligne en haut** (mesurable, déjà testée).
+- **Rien n'est écrit sur la hiérarchie et la densité.** Les douze conventions CI sont douze règles de **non-erreur** ; la section « typographie et espacement » dit « rien à faire de spécial, sauf ne pas sortir de l'échelle ». Le système sait dire « c'est faux », pas « c'est mou » — donc chaque écran re-dérive sa hiérarchie et tombe sur le plus petit dénominateur qui passe la CI. Sept règles ont été trouvées en corrigeant la matrice d'habilitation, **et six de plus en montant l'outil ADP+** (§6 : ton à l'échelle du tableau · même fait même couleur · ordre par le flux · un verbe qui se tient · une affordance qui ne ment pas · trois commandes visibles = trois poids). Aucune n'est encore dans la doc : la densité suit ce que la cellule contient · filets verticaux ssi les deux axes portent du sens · une colonne d'ancrage dès qu'on lit vers la droite · le trait d'en-tête porte 3:1 quand il sépare des rangées qui se ressemblent · un pictogramme par ligne quand toutes se ressemblent · **des colonnes de même contenu, même largeur** (mesurable, déjà testée) · **un en-tête riche s'aligne en haut** (mesurable, déjà testée).
 
 ## 8. Backlog / à auditer
 - **Polices sous licence non livrées** (doctrine assumée : un DS *déclare* la police, il ne la *livre* pas — `public/fonts/LISEZ-MOI.md`). Manquent : les fichiers **Extime** (brand center) et **Gotham** pour ADP (à acheter chez Hœfler & Co). Les replis sont ceux que les chartes désignent.
-- **Généraliser `Pagination` dans `Table`** : le composant existe, le tableau ne l'emploie pas encore.
+- **Généraliser `Pagination` dans `Table`** : le composant existe, le tableau ne l'emploie pas encore — l'onglet « Réponses » les assemble à la main.
 - Composants encore absents et jugés non nécessaires aujourd'hui : `slider`, `drawer`, `sheet`, `calendar`, `command`, `tag`, `spinner`.
 - Button : hiérarchie light, hovers + max-width.
 - Modéliser les tokens de hover (`surface.*-hover`) selon la règle du §6.
-- `--radius` à câbler proprement.
 
 ## 9. Prochaines étapes (3 max, à réactualiser)
-1. **Livrer à Cyril les assemblages d'écran** dont il a besoin — priorité du 25/09. Reste à savoir lesquels et s'il part d'un projet React existant.
+1. **Monter le Cockpit du POI** et les trois onglets manquants du tableau de bord. Les maquettes existent, les composants aussi ; la navigation y mène déjà et l'écran dit qu'il n'est pas monté.
 2. **Les trois commandes `gh`**, par Alice. C'est le seul point de la liste qui peut la gêner dans la journée.
-3. **Écrire la section « Hiérarchie et densité »**, et faire passer en convention CI les deux règles déjà mesurables.
+3. **Écrire la section « Hiérarchie et densité »** — treize règles trouvées, aucune écrite — et faire passer en convention CI celles qui sont déjà mesurables.
 
 ## En attente externe
 - **Alice** : feu vert pour la réécriture d'historique, et ouverture du ticket au support GitHub (elle seule peut).
 - **Louis** : confirmer qu'il n'a pas de clone local avec du travail en cours avant la réécriture. Ses deux PR sont fusionnées, avec une relecture postée sur chacune. Une remarque lui reste ouverte : le compteur de `ViewTabs` est visible et jamais annoncé (`label={null}` → `label="entrées"`).
 - **ADP** : les **six noms de rôles** de la matrice d'habilitation. Trois n'en ont pas, et deux colonnes portent le même intitulé (« RÔLE 6 »), ce qui rend **quatre paires de droits indiscernables** — mesuré, 20 noms distincts pour 24 cases. C'est la seule chose entre la matrice et un livrable. Et : la matrice est-elle **modifiable ou consultable** ? Les deux existent.
+- **Alice**, deux questions posées et sans réponse : où mènent « Augmenter votre nombre d'avis » et « Améliorer votre note moyenne » du bloc « Vue d'ensemble » (sans destination, ils sont retirés — un lien mort est pire qu'un lien absent) · la barre « Posez-moi vos questions » de l'accueil doit-elle ouvrir un fil (branchement actuel) ou interroger la donnée du POI ? Et : faut-il une colonne pour les réponses **publiées**, ou le message suffit-il ?
+- **Alice**, trois choix tranchés seuls et faciles à renverser : la note du bloc « Vue d'ensemble » en nombre + étoiles plutôt qu'en anneau · « Google » écrit en toutes lettres plutôt qu'en logotype (dépôt public, on n'embarque pas la marque d'un tiers) · l'ordre des colonnes du kanban (elle proposait hors charte au milieu, cf. §6).
+- **Les deux écarts assumés avec la maquette du brouillon de réponse** : il n'est pas en chasse fixe (c'est une lettre, pas du code) et il porte l'étiquette « IA » (publier au nom de l'aéroport sans savoir ce qui a écrit, c'est décider sans savoir quoi). Les deux se retirent en une ligne.
+- **ADP** : le **bloc vertical officiel en version sombre** — celui en place est dérivé (chaque pixel encré passé en blanc), comme les autres. Le bloc clair, lui, a été fourni par Alice le 25/09.
 - **Cyril** : licence Gotham pour ADP (Hœfler & Co) · fichiers de police Extime (brand center).
 - Pietro : Tailwind v3 ou v4 (choix d'archi ; ne bloque plus l'oklch, confirmé fonctionnel sur v3 via valeurs arbitraires + color-mix).
 - Arnaud (Brand Brain) : voix unique vs collective, ton agents/COMEX, contenu anglais, corpus d'exemples, ton Labels Aikoz.
