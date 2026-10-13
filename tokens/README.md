@@ -33,7 +33,8 @@ Les semantiques de theme referencent la couche brand la ou la couleur depend de 
 ## Decisions DA conservees (plus recentes que son repo, ~2 mois)
 
 - **Typo** : `font-family.body` = **Inter** (UI/web/dashboard), `heading` = PP Radio Grotesk
-  (slides/print), `mono` = JetBrains Mono (KPI). (Son repo avait Satoshi en body.)
+  (slides/print), `mono` = JetBrains Mono (CODE uniquement, jamais un chiffre).
+  (Son repo avait Satoshi en body.)
 - **Elevation** : la DA mene par les **bordures** (`border.*`), pas les ombres. Les tokens
   `shadow.*` restent dispo pour les rares overlays/dropdowns uniquement.
 - **Aquamarine sur fond sombre uniquement** : `nav.accent` = ultramarine en light,
@@ -44,7 +45,8 @@ Les semantiques de theme referencent la couche brand la ou la couleur depend de 
 - Dimension **marque blanche** : `brand/aikoz.json` + `brand/generali.json` + rampe
   `color.generali-red` dans primitives (valeurs a confirmer cote brand Generali).
 - Dimension **theme** : `theme/light.json` + `theme/dark.json`.
-- Groupe **`color.nav.*`** (sidebar thematisee) + `typography.metric` (chiffres mono).
+- Groupe **`color.nav.*`** (sidebar thematisee). (`typography.metric` a été annonce ici et jamais cree : les chiffres
+  suivent la marque, cf. DESIGN.md.)
 
 ## A trancher cote CI (avec Cyril)
 

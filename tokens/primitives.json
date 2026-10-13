@@ -3161,7 +3161,7 @@
     "mono": {
       "$type": "fontFamily",
       "$value": "JetBrains Mono, monospace",
-      "$description": "KPI / chiffres"
+      "$description": "CODE uniquement — extraits, noms de tokens, valeurs CSS. PAS les chiffres : son zéro pointé distingue 0 de O dans du code, et rend un KPI illisible. Les chiffres suivent la police de la marque, avec `tabular-nums`."
     },
     "roboto": {
       "$type": "fontFamily",

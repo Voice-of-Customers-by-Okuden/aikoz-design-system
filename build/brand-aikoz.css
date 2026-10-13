@@ -47,6 +47,6 @@
   --color-chart-6: var(--color-neutral-600); /** Série de données 6 de la marque. Les trois premières viennent des trois rampes de marque (primary, secondary, accent) : une palette optimisée librement sépare mieux mais peut abandonner une couleur d'identité. Chaque teinte tient 7.14:1 sur la carte (WCAG 1.4.11, seuil 3:1) et la palette sépare de ΔE 0.160 au pire, en vision normale comme en protanopie et en deutéranopie. */
   --font-heading: var(--font-family-heading); /** Police de la marque Aikoz — PP Radio Grotesk pour les titres, Inter pour l'interface. */
   --font-body: var(--font-family-body); /** Police d'interface de la marque. */
-  --font-mono: var(--font-family-mono); /** Chiffres tabulaires — commune, aucune charte n'en impose. */
+  --font-mono: var(--font-family-mono); /** Police du CODE — commune aux marques, aucune charte n'en impose. Elle ne rend AUCUN chiffre d'interface : un token commun ne traverserait pas la marque, et le zéro pointé de JetBrains Mono est illisible en KPI. */
   --color-brand-on-accent: var(--color-ink-900); /** Texte posé sur l'aplat d'accent. Pointait sur `midnight-blue.900`, une primitive d'AIKOZ, y compris sous ADP et Extime. Passe par `ink`, la rampe de chrome de la marque — même valeur pour Aikoz, sa propre rampe. */
 }

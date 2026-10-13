@@ -236,6 +236,40 @@ for (const nom of composants) {
   }
 }
 
+// ── 14. `mono` est la police du CODE, jamais celle d'un chiffre ───────────
+//
+// `font-family.mono` valait JetBrains Mono pour les QUATRE marques, et sa
+// description disait « KPI / chiffres ». Deux défauts dans un seul token :
+//
+//  1. Un chiffre rendu en `mono` sort identique sous ADP, Extime et Generali.
+//     La marque ne le traverse pas — c'est exactement ce qu'un design system
+//     multi-marque ne doit pas laisser faire.
+//  2. Le zéro de JetBrains Mono porte un point. C'est une QUALITÉ dans du
+//     code, où il faut distinguer `0` de `O` ; c'est illisible sur un KPI à
+//     40 px.
+//
+// Aucun composant ne l'avait jamais employé — ils rendent tous leurs chiffres
+// en `font-sans … tabular-nums`. La règle n'était donc pas violée : elle
+// n'était écrite nulle part, et la documentation disait l'inverse du code.
+// Trois lignes de `DESIGN.md` nommaient trois polices différentes pour les
+// chiffres ; qui suivait la mauvaise avait raison de la suivre.
+const MONO = /\bfont-mono\b|--font-mono|font-family-mono/;
+
+for (const nom of composants) {
+  const chemin = path.join(RACINE, nom, `${nom}.tsx`);
+  if (!fs.existsSync(chemin)) continue;
+  const src = sansCommentaires(fs.readFileSync(chemin, 'utf8'));
+  if (MONO.test(src)) {
+    echecs.push(
+      `${nom} — emploie la police \`mono\`. Elle est réservée au CODE : ` +
+        `commune aux quatre marques, elle ne traverse pas l'identité, et son ` +
+        `zéro pointé est illisible en chiffre. Un chiffre se rend dans la ` +
+        `police de la marque avec \`tabular-nums\` — cf. DESIGN.md, ` +
+        `« Les chiffres suivent la marque ».`,
+    );
+  }
+}
+
 // ── 13. `rounded-full` est réservé aux cercles imposés par la géométrie ────
 //
 // La pilule d'un bouton ou d'un badge est un choix d'IDENTITÉ : Aikoz est en
@@ -311,6 +345,6 @@ if (echecs.length) {
 }
 
 console.log(
-  `audit conventions OK — ${composants.length} composants, treize conventions ` +
+  `audit conventions OK — ${composants.length} composants, quatorze conventions ` +
     `tenues, une exception nommée, ${Object.keys(CERCLES_PAR_GEOMETRIE).length} cercles imposés par la géométrie.`,
 );

@@ -245,7 +245,7 @@
   --color-rating-gold-500: oklch(0.7576 0.1549 88.059);
   --font-family-heading: 'PP Radio Grotesk', Futura, 'Avenir Next', 'Century Gothic', sans-serif; /** Police de titres Aikoz. Les binaires ne sont PAS livrés — le dépôt est public et la licence est commerciale. Le repli est donc ce que verra la majorité : trois grotesques géométriques aux proportions proches, dans l ordre de disponibilité (macOS, Windows), avant la valeur par défaut. Il valait « PP Radio Grotesk, sans-serif » — un repli que personne n avait choisi, et qui rendait les titres en Helvetica sur Mac et en Arial ailleurs. */
   --font-family-body: Inter, sans-serif; /** UI / web / dashboard (DA recente) */
-  --font-family-mono: 'JetBrains Mono', monospace; /** KPI / chiffres */
+  --font-family-mono: 'JetBrains Mono', monospace; /** CODE uniquement — extraits, noms de tokens, valeurs CSS. PAS les chiffres : son zéro pointé distingue 0 de O dans du code, et rend un KPI illisible. Les chiffres suivent la police de la marque, avec `tabular-nums`. */
   --font-family-roboto: Roboto, Arial, sans-serif; /** Police des outils digitaux Generali. Charte Generali p. 32 : « Roboto est la police utilisée pour tous les outils digitaux SOE ». Repli Arial, la seconde police autorisée par la même charte. */
   --font-family-systeme: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; /** Pile système. Défaut d'une marque dont la charte typographique n'est pas encore connue — mieux vaut une pile neutre qu'emprunter la police d'une autre marque. */
   /**
