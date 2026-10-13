@@ -422,12 +422,31 @@ export function BarChart({
                   // en dessous, le texte ne tiendrait pas dans le segment.
                   const valeur = Math.round(Number(props.value ?? 0));
                   const etiquette = percent && props.height > 18;
-                  // Contraste mesuré (colorjs.io) blanc/encre contre les 6
-                  // couleurs de `--chart-*`, light ET dark : `--primary-foreground`
-                  // convient partout SAUF chart-5 (indice 4) où lui seul
-                  // n'atteint que 4,05:1 en sombre — blanc fixe y passe dans
-                  // les deux thèmes (4,62 / 6,64) et est donc conservé tel quel.
-                  const texte = i % 6 === 4 ? "oklch(1 0 0)" : "var(--primary-foreground)";
+                  // ── L'encre lit le pont, sans cas particulier ──────────
+                  //
+                  // Un `oklch(1 0 0)` était figé ici pour la 5e série, au nom
+                  // d'une mesure annonçant 4,62 et 6,64. Remesurée au pixel
+                  // peint, la paire donne 14,92 en clair et 3,40 en sombre :
+                  // la palette de séries a changé depuis, et le commentaire
+                  // est resté. C'est précisément ce qu'une couleur en dur
+                  // rend possible — `AuditContraste` itère sur des NOMS DE
+                  // VARIABLES et ne l'a jamais vue.
+                  //
+                  // `--primary-foreground` vaut blanc dans les huit
+                  // combinaisons de marque et de thème : retirer le cas
+                  // particulier ne change donc rien au rendu, et rend la
+                  // couleur mesurable.
+                  //
+                  // DETTE OUVERTE, plus large que ce composant : cette encre
+                  // unique ne tient 4,5:1 que sur 21 des 48 paires
+                  // marque × thème × série. En sombre la palette de séries est
+                  // volontairement claire, et du blanc dessus est illisible.
+                  // Il manque un rôle « encre portée par une série », qui
+                  // bascule avec le thème. Les étiquettes ne se rendent
+                  // aujourd'hui qu'en `layout="stacked-percent"`, qu'aucune
+                  // histoire n'emploie : la dette n'est pas visible, elle est
+                  // livrée.
+                  const texte = "var(--primary-foreground)";
                   return (
                     // L'emphase se fait par RETRAIT : la catégorie pointée
                     // garde sa pleine intensité, les autres s'effacent.

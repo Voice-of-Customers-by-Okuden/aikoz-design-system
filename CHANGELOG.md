@@ -18,6 +18,45 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.26.1] — 2026-10-13
+
+### Corrigé
+
+- **`mono` n'est plus la police des chiffres.** `DESIGN.md` en nommait trois
+  pour les chiffres d'interface — `brand-primary` pour les « numéros »,
+  `display` pour les « grands chiffres KPI », `mono` pour les « valeurs KPI ».
+  Qui suivait `mono` récupérait le zéro pointé de JetBrains Mono, et un chiffre
+  identique sous les quatre marques. La charte tranche désormais : les chiffres
+  suivent la marque, `mono` est la police du code. Aucune valeur de token ne
+  change ; seules les descriptions et la documentation.
+- **`BarChart` n'écrit plus de couleur en dur.** Un `oklch(1 0 0)` y était figé
+  pour la 5e série au nom d'une mesure annonçant 4,62 et 6,64 ; remesurée, la
+  paire donne 14,92 en clair et 3,40 en sombre. `--primary-foreground` vaut
+  blanc dans les huit combinaisons de marque et de thème, donc le rendu est
+  inchangé — mais la couleur redevient mesurable.
+
+### Ajouté
+
+- **`audit:conventions` voit toutes les notations de couleur.** Son motif ne
+  reconnaissait que `#rrggbb` : il laissait passer `oklch()`, `rgb()`, `hsl()`
+  et les hex à trois chiffres. C'est par ce trou que le littéral de `BarChart`
+  était resté. Les `#000` des masques de `SidebarNav` sont inscrits en
+  exception avec leur raison, et une exception qui ne s'applique plus échoue.
+
+### Dette ouverte
+
+- L'encre des étiquettes de `BarChart` ne tient 4,5:1 que sur **21 des 48**
+  paires marque × thème × série. En sombre, la palette de séries est
+  volontairement claire et une encre blanche y est illisible. Il manque un rôle
+  « encre portée par une série ». Les étiquettes ne se rendent qu'en
+  `layout="stacked-percent"`, qu'aucune histoire n'emploie : la dette est
+  livrée sans être visible.
+- **`audit:version` se désactive en silence dans la CI.** Le `git fetch
+  --depth=50` ne donne pas de base de comparaison, et le script conclut
+  « ignoré » puis sort en succès. Il n'a donc rien gardé jusqu'ici.
+
+---
+
 ## [2.26.0] — 2026-09-25
 
 ### Ajouté
