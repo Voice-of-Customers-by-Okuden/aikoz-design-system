@@ -144,6 +144,14 @@ jobs:
       # une.
       #
       # Louis a l'accès `write`. C'est exactement le moment.
+      # Un nombre écrit dans de la prose que personne ne remesure ne produit
+      # pas une erreur : il produit de la confiance imméritée. `DESIGN.md`
+      # annonçait vingt et un ratios de contraste, dix-sept étaient faux, et
+      # deux portaient « ✓ WCAG AA » pour des couleurs à 3,30:1 et 3,19:1. Le
+      # Claude Design, construit À PARTIR de ce document, en a hérité.
+      - name: La charte ne promet que ce qu'elle tient
+        run: npm run audit:ratios-charte
+
       - name: Les conventions du design system
         run: npm run audit:conventions
 

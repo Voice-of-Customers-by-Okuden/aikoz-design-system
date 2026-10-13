@@ -181,20 +181,25 @@ aquamarine-500: #EDFFF9
 
 #### Règles d'usage Brand Layer
 
+Chaque ratio est écrit sous la forme `#encre sur #fond — N,NN:1`, et
+`audit:ratios-charte` les remesure tous. Une affirmation qui ne nomme pas ses
+deux couleurs n'est pas vérifiable, donc elle n'a pas sa place ici.
+
 ```
-aquamarine-green (#70FFD4) :
-  ✓ Sur fond dark (#0A1128, #1C223C, #2E3450) — contraste 9.8:1 ✓ WCAG AAA
-  ✗ JAMAIS sur fond blanc ou gris clair — contraste 1.4:1 ✗ WCAG FAIL
+aquamarine-green :
+  ✓ #70FFD4 sur #0A1128 — 15,08:1   AAA
+  ✓ #70FFD4 sur #1C223C — 12,61:1   AAA
+  ✓ #70FFD4 sur #2E3450 — 9,83:1    AAA
+  ✗ #70FFD4 sur #FFFFFF — 1,24:1    JAMAIS : illisible sur fond clair
 
-ultramarine-blue (#3B5DCE) :
-  ✓ Sur fond blanc (#FFFFFF) — contraste 5.9:1 ✓ WCAG AA
-  ✓ Sur fond très clair (#F5F7FA) — contraste 5.6:1 ✓ WCAG AA
-  ✓ Sur fond dark en version claire (#DDE5FC, #A3B6F4)
-  ✗ Pas comme couleur de texte body sur fond intermédiaire (#E5E7EB)
+ultramarine-blue :
+  ✓ #3B5DCE sur #FFFFFF — 5,76:1    AA
+  ✓ #3B5DCE sur #F5F7FA — 5,37:1    AA
+  ✗ Pas comme texte body sur fond intermédiaire (#E5E7EB)
 
-midnight-blue (#0A1128) :
-  ✓ Sur fond blanc — contraste 19.4:1 ✓ WCAG AAA
-  ✓ Comme fond avec texte blanc — contraste 19.4:1 ✓ WCAG AAA
+midnight-blue :
+  ✓ #0A1128 sur #FFFFFF — 18,69:1   AAA
+  ✓ #FFFFFF sur #0A1128 — 18,69:1   AAA
 ```
 
 ### COUCHE 2 — Product Layer (invariable, WCAG AA garanti)
@@ -202,10 +207,10 @@ midnight-blue (#0A1128) :
 #### Neutrals dashboard
 
 ```
-neutral-900: #0F1117   — texte primaire sur fond clair (ratio 19:1 ✓)
+neutral-900: #0F1117   — texte primaire · #0F1117 sur #FFFFFF — 18,87:1 AAA
 neutral-800: #1E2230
-neutral-700: #374151   — texte secondaire (ratio 10.7:1 ✓)
-neutral-500: #6B7280   — texte muted (ratio 4.6:1 ✓)
+neutral-700: #374151   — texte secondaire · #374151 sur #FFFFFF — 10,31:1 AAA
+neutral-500: #6B7280   — texte muted · #6B7280 sur #FFFFFF — 4,83:1 AA
 neutral-300: #D1D5DB   — borders, dividers
 neutral-200: #E5E7EB   — borders légers
 neutral-100: #F3F4F6   — fond sunken
@@ -216,24 +221,24 @@ neutral-50:  #F9FAFB   — fond page
 
 ```
 /* SUCCESS */
-success-700: #15803D   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
-success-600: #16A34A   — texte sur blanc (ratio 5.1:1 ✓ WCAG AA)
-success-100: #DCFCE7   — fond badge/tag success
+success-text: #006147   — texte · #006147 sur #FFFFFF — 7,50:1 AAA
+success-fill: #0DA868   — aplat · #0DA868 sur #FFFFFF — 3,08:1 (objet, seuil 3)
+success-bg:   #9EEAC6   — voile · #006147 sur #9EEAC6 — 5,37:1 AA
 
 /* WARNING */
-warning-700: #B45309   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
-warning-600: #D97706   — texte sur blanc (ratio 4.7:1 ✓ WCAG AA)
-warning-100: #FEF3C7   — fond badge/tag warning
+warning-text: #6E5100   — texte · #6E5100 sur #FFFFFF — 7,39:1 AAA
+warning-fill: #D9A900   — aplat, porté par son contour (cf. `-fill-edge`)
+warning-bg:   #FDE98A   — voile · #6E5100 sur #FDE98A — 6,06:1 AA
 
 /* ERROR */
-error-700:   #B91C1C   — texte sur blanc (ratio 6.2:1 ✓ WCAG AA)
-error-600:   #DC2626   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
-error-100:   #FEE2E2   — fond badge/tag error
+error-text:   #9F2618   — texte · #9F2618 sur #FFFFFF — 7,60:1 AAA
+error-fill:   #CC4229   — aplat · #CC4229 sur #FFFFFF — 4,80:1 AA
+error-bg:     #F5C3B5   — voile · #9F2618 sur #F5C3B5 — 4,83:1 AA
 
 /* INFO */
-info-700:    #1D4ED8   — texte sur blanc (ratio 7.0:1 ✓ WCAG AA)
-info-600:    #2563EB   — texte sur blanc (ratio 5.9:1 ✓ WCAG AA)
-info-100:    #DBEAFE   — fond badge/tag info
+info-text:    #0D5EA5   — texte · #0D5EA5 sur #FFFFFF — 6,64:1 AA
+info-fill:    #1478C8   — aplat · #1478C8 sur #FFFFFF — 4,62:1 AA
+info-bg:      #D9E9F8   — voile · #0D5EA5 sur #D9E9F8 — 5,36:1 AA
 ```
 
 #### Tokens sémantiques surfaces
@@ -278,9 +283,9 @@ Logo_Symbol.svg              — picto seul, espaces restreints
 ### Règles d'usage
 
 ```
-Sur fond dark (#0A1128, #1C223C) : logo en blanc — contraste 3:1 ✓
-Sur fond clair (#FFFFFF, #F9FAFB) : logo en midnight-blue (#0A1128) — contraste 19:1 ✓
-Sur fond ultramarine (#3B5DCE) : logo en blanc — contraste 5.9:1 ✓
+Sur fond dark : logo en blanc — #FFFFFF sur #0A1128 — 18,69:1
+Sur fond clair : logo en midnight-blue — #0A1128 sur #FFFFFF — 18,69:1
+Sur fond ultramarine : logo en blanc — #FFFFFF sur #3B5DCE — 5,76:1
 ```
 
 **À faire :**
@@ -405,7 +410,7 @@ Padding: 8px 16px
 
 Variante dark :
 Fond :  aquamarine-green (#70FFD4)
-Texte : midnight-blue (#0A1128) — contraste 9.8:1 ✓
+Texte : midnight-blue — #0A1128 sur #FFFFFF — 18,69:1
 ```
 
 ### Bouton secondaire (ghost)
@@ -556,7 +561,7 @@ Logo       : bas-gauche, variante fond clair, w=90px, margin 48px
 ```
 
 **À éviter :**
-- Jamais aquamarine (#70FFD4) sur fond blanc (échec WCAG — contraste 1.4:1)
+- Jamais aquamarine sur fond blanc — #70FFD4 sur #FFFFFF — 1,24:1
 - Pas de texte sous 18px sur format carrousel (lisibilité mobile)
 - Pas de gradient de fond
 - Jamais plus de 40 mots par slide
