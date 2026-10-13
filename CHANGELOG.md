@@ -18,6 +18,41 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.26.2] — 2026-10-13
+
+### Corrigé
+
+- **`DESIGN.md` annonçait vingt et un ratios de contraste ; dix-sept étaient
+  faux.** Les écarts allaient de 0,2 à 5,3 points — 9,8 annoncé contre 15,08
+  mesuré pour l'aquamarine sur midnight. Deux portaient la mention
+  « ✓ WCAG AA · texte sur blanc » pour des couleurs mesurées à **3,30:1** et
+  **3,19:1**, sous le seuil de 4,5:1.
+- **Les couleurs de statut de la charte dataient d'avant la 2.26.0.** Elles
+  étaient restées sur les valeurs par défaut de Tailwind, alors que les tokens
+  avaient été corrigés le 11/09. La charte porte désormais les valeurs des
+  tokens, en texte, aplat et voile.
+
+### Ajouté
+
+- **`audit:ratios-charte`** remesure chaque ratio écrit dans `DESIGN.md`, et
+  passe dans la CI. Forme canonique : `#encre sur #fond — N,NN:1`. Une
+  affirmation qui ne nomme pas ses deux couleurs échoue aussi — une garantie
+  invérifiable n'est pas une garantie.
+
+### Pourquoi ça comptait
+
+Le Claude Design, qui fabrique les présentations Aikoz, a été construit **à
+partir de `DESIGN.md`**. Il a hérité des valeurs et des fausses garanties, et
+les porte encore. Corriger la charte est le préalable : l'aligner sans elle
+l'aurait fait rediverger au prochain qui la lit.
+
+C'était la troisième occurrence du même défaut dans la journée — un nombre
+écrit dans de la prose que personne ne remesure. Les deux autres : le
+commentaire de `BarChart` (2.26.1) et le `typography.metric` de
+`tokens/README.md` (2.26.1).
+
+---
+
 ## [2.26.1] — 2026-10-13
 
 ### Corrigé
