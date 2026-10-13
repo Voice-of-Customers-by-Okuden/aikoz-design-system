@@ -22,6 +22,7 @@
     "audit:typo": "node scripts/audit-typo.mjs",
     "audit:mouvement": "node scripts/audit-mouvement.mjs",
     "audit:conventions": "node scripts/audit-conventions.mjs",
+    "audit:deux-systemes": "node scripts/audit-deux-systemes.mjs",
     "audit:version": "node scripts/audit-version.mjs",
     "version:publier": "node scripts/version-publiee.mjs",
     "build:chiffres": "node scripts/chiffres.mjs"

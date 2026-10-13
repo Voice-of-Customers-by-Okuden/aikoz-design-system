@@ -13,6 +13,52 @@ description: >
 
 ---
 
+## Une marque, deux chaînes de production
+
+Aikoz livre par deux chaînes, et elles portent la même identité :
+
+| Chaîne | Produit | Source des tokens | Vérifications |
+|---|---|---|---|
+| Ce dépôt | interfaces, composants, registry installable | `tokens/` (DTCG) | 11, bloquantes |
+| Claude Design | présentations, tableaux de bord, pages | l'artefact publié | aucune |
+
+**Le dépôt fait foi.** Pas par principe — parce qu'il mesure. Chaque couleur y
+est auditée sur huit combinaisons de marque et de thème avant d'être publiée.
+
+### Ce qui diverge
+
+Douze rôles de statut sur quatorze comparés : les quatre couleurs de statut,
+chacune en texte, aplat et voile. Les deux familles de polices, elles,
+correspondent déjà.
+
+**Ce n'est pas un défaut d'accessibilité.** Les paires du Claude Design
+tiennent le seuil de 4,5:1 — de 4,51 à 5,49. Les nôtres tiennent de 4,83 à
+7,50 : plus de marge, pas une conformité différente. C'est un écart de
+cohérence de marque, et il se corrige côté Claude Design.
+
+### Les deux générations de noms, et le piège
+
+Il existe **deux** formes du Claude Design : l'artefact publié
+(`project/tokens.json`) et un bundle exporté sur disque. **Leurs noms ne
+désignent pas les mêmes rôles** — le bundle appelle `--success-text` ce que
+l'artefact appelle `success-fill`.
+
+Comparer les noms sans vérifier les rôles fait prendre un aplat pour du texte,
+et rend un verdict d'accessibilité entièrement faux. C'est arrivé le
+13/10/2026 : la première version de ce contrôle annonçait six échecs AA qui
+n'existaient pas. `audit:deux-systemes` compare donc **l'artefact publié** —
+qui est aussi celui qui fabrique les slides — et met les rôles en face par
+leur SENS.
+
+### Limite connue
+
+Le contrôle compare le dépôt à une **copie** des tokens de l'artefact
+(`tokens/claude-design/tokens.json`). La rafraîchir est manuel. C'est un
+cliquet, pas une garantie — et un cliquet vaut infiniment mieux que l'absence
+de point de contact, qui est l'état d'avant.
+
+---
+
 ## Typographie
 
 ### Familles de polices
