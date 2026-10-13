@@ -7,7 +7,7 @@
  *
  * ── Ce qu'on compare, et pourquoi c'est subtil ───────────────────────────
  *
- * On compare l'ARTEFACT PUBLIÉ (`tokens/claude-design/tokens.json`), pas le
+ * On compare l'ARTEFACT PUBLIÉ (`references/claude-design/tokens.json`), pas le
  * bundle exporté sur disque. Les deux existent, et leurs noms ne désignent
  * PAS les mêmes rôles : le bundle appelle `--success-text` ce que l'artefact
  * appelle `success-fill`. Comparer les noms sans vérifier les rôles fait
@@ -26,7 +26,7 @@
  */
 import fs from 'node:fs';
 
-const CLAUDE = 'tokens/claude-design/tokens.json';
+const CLAUDE = 'references/claude-design/tokens.json';
 const echecs = [];
 
 if (!fs.existsSync(CLAUDE)) {

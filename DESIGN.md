@@ -53,7 +53,7 @@ leur SENS.
 ### Limite connue
 
 Le contrôle compare le dépôt à une **copie** des tokens de l'artefact
-(`tokens/claude-design/tokens.json`). La rafraîchir est manuel. C'est un
+(`references/claude-design/tokens.json`). La rafraîchir est manuel. C'est un
 cliquet, pas une garantie — et un cliquet vaut infiniment mieux que l'absence
 de point de contact, qui est l'état d'avant.
 
