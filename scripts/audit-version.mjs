@@ -44,11 +44,26 @@ let modifies;
 try {
   modifies = git(`git diff --name-only ${base}...HEAD`).split('\n').filter(Boolean);
 } catch {
-  console.log(
-    `audit version ignoré — impossible de comparer à ${base}. ` +
-      'Le contrôle a besoin de la branche de référence pour savoir ce qui change.',
+  // ── Un contrôle qui ne peut pas mesurer doit ÉCHOUER ──────────────────
+  //
+  // Il sortait en succès. Dans la CI, `actions/checkout` récupère un seul
+  // commit : `origin/main...HEAD` n'a alors aucun ancêtre commun, la
+  // comparaison lève, et le contrôle se déclarait « ignoré » puis rendait
+  // vert. Relevé le 13/10/2026 sur la PR #154, qui a fusionné sans monter
+  // la version alors qu'elle changeait six fichiers livrés.
+  //
+  // C'est le pire état pour un garde-fou : il ne protège rien ET il
+  // inspire confiance. Un échec bruyant se répare ; un succès muet se
+  // propage.
+  console.error(
+    `audit version ÉCHOUÉ — impossible de comparer à ${base}.\n` +
+      `  Le contrôle a besoin de l'historique commun avec la branche de\n` +
+      `  référence. Dans la CI, c'est \`fetch-depth: 0\` sur\n` +
+      `  \`actions/checkout\` ; en local, \`git fetch origin main\`.\n` +
+      `  Il échoue au lieu de s'ignorer : un contrôle muet rend vert une\n` +
+      `  version qui ne dit pas ce qui change.`,
   );
-  process.exit(0);
+  process.exit(1);
 }
 
 const touchent = modifies.filter((f) => LIVRE.some((re) => re.test(f)));

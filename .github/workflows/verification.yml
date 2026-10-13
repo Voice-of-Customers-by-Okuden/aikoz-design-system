@@ -10,6 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # L'historique ENTIER, et pas le commit seul.
+          #
+          # Par défaut l'action ne récupère qu'une profondeur de 1 : il n'y a
+          # alors aucun ancêtre commun avec `main`, et « La version dit ce qui
+          # change » ne pouvait rien comparer. Il se déclarait « ignoré » et
+          # rendait vert — donc il n'a rien gardé jusqu'ici.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           # Node 24, comme en local. La CI tournait en 20 avec npm 10 : un
@@ -154,7 +162,7 @@ jobs:
         env:
           BASE_REF: origin/${{ github.base_ref || 'main' }}
         run: |
-          git fetch --no-tags --depth=50 origin "${{ github.base_ref || 'main' }}" || true
+          git fetch --no-tags origin "${{ github.base_ref || 'main' }}"
           npm run audit:version
 
       # Les stories SONT les tests : axe y tourne en mode `error`, une
