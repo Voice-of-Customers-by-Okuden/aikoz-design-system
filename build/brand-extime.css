@@ -47,6 +47,6 @@
   --color-ink-1000: var(--color-extime-malachite-900); /** Palier 1000 du chrome (malachite). */
   --font-heading: var(--font-family-extime); /** Police de la marque Extime — la police propriétaire, repli Arial désigné par la charte. La charte n'en prévoit qu'une, titres et texte courant confondus ; la hiérarchie passe par la GRAISSE (Thin pour l'accroche, Regular pour le courant), pas par un second caractère. */
   --font-body: var(--font-family-extime); /** Police de la marque Extime — la police propriétaire, repli Arial désigné par la charte. La charte n'en prévoit qu'une, titres et texte courant confondus ; la hiérarchie passe par la GRAISSE (Thin pour l'accroche, Regular pour le courant), pas par un second caractère. */
-  --font-mono: var(--font-family-mono); /** Chiffres tabulaires — commune, aucune charte n'en impose. */
+  --font-mono: var(--font-family-mono); /** Police du CODE — commune aux marques, aucune charte n'en impose. Elle ne rend AUCUN chiffre d'interface : un token commun ne traverserait pas la marque, et le zéro pointé de JetBrains Mono est illisible en KPI. */
   --color-brand-on-accent: var(--color-ink-900); /** Texte posé sur l'aplat d'accent. Pointait sur `midnight-blue.900`, une primitive d'AIKOZ, y compris sous ADP et Extime. Passe par `ink`, la rampe de chrome de la marque — même valeur pour Aikoz, sa propre rampe. */
 }

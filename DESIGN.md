@@ -34,6 +34,23 @@ PP Radio Grotesk : non disponible sur Google Fonts — fichiers TTF dans /fonts/
 Satoshi :       https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap
 ```
 
+### Les chiffres suivent la marque
+
+Un chiffre d'interface — KPI, compteur, pourcentage, valeur de tableau — se rend
+dans la police de la MARQUE (`product-primary` ici, Gotham chez ADP, Extime chez
+Extime, Roboto chez Generali) avec `tabular-nums`. Les quatre embarquent le jeu
+tabulaire, c'est mesuré.
+
+Jamais en `mono` : le token est commun aux quatre marques, donc un chiffre en
+`mono` sort identique partout — la marque ne le traverse pas —, et le zéro pointé
+de JetBrains Mono, qui sert à distinguer `0` de `O` dans du code, rend un KPI
+illisible.
+
+Cette règle existe parce que ce document en nommait **trois** : `brand-primary`
+pour les « numéros », `display` pour les « grands chiffres KPI », `mono` pour les
+« valeurs KPI ». Chacun a suivi une ligne différente, personne n'avait tort.
+`audit:conventions` la tient désormais.
+
 ### Hiérarchie typographique — UI / Dashboard (Inter)
 
 ```
@@ -47,7 +64,7 @@ body:       Inter 400, 14px, line-height 1.5
 body-sm:    Inter 400, 13px
 caption:    Inter 400, 12px
 label:      Inter 600, 11px, tracking 0.06em, UPPERCASE  — badges, kickers, headers tableau
-mono:       "JetBrains Mono" ou monospace, 500, 14px     — valeurs KPI, chiffres data
+mono:       "JetBrains Mono" ou monospace, 500, 14px     — CODE uniquement, jamais un chiffre
 ```
 
 ### Hiérarchie typographique — Slides / Print (PP Radio Grotesk)

@@ -47,6 +47,6 @@
   --color-ink-1000: var(--color-generali-red-900); /** Palier 1000 de la rampe de chrome (generali-red). */
   --font-heading: var(--font-family-roboto); /** Police de la marque Generali — Roboto. Charte p. 32 : « Roboto est la police utilisée pour tous les outils digitaux SOE ». Titres et interface partagent la famille : la charte n'en prévoit pas deux pour le digital. */
   --font-body: var(--font-family-roboto); /** Police d'interface de la marque. */
-  --font-mono: var(--font-family-mono); /** Chiffres tabulaires — commune, aucune charte n'en impose. */
+  --font-mono: var(--font-family-mono); /** Police du CODE — commune aux marques, aucune charte n'en impose. Elle ne rend AUCUN chiffre d'interface : un token commun ne traverserait pas la marque, et le zéro pointé de JetBrains Mono est illisible en KPI. */
   --color-brand-on-accent: var(--color-ink-900); /** Texte posé sur l'aplat d'accent. Pointait sur `midnight-blue.900`, une primitive d'AIKOZ, y compris sous ADP et Extime. Passe par `ink`, la rampe de chrome de la marque — même valeur pour Aikoz, sa propre rampe. */
 }

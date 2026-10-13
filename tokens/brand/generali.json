@@ -190,7 +190,7 @@
     "mono": {
       "$type": "fontFamily",
       "$value": "{font-family.mono}",
-      "$description": "Chiffres tabulaires — commune, aucune charte n'en impose."
+      "$description": "Police du CODE — commune aux marques, aucune charte n'en impose. Elle ne rend AUCUN chiffre d'interface : un token commun ne traverserait pas la marque, et le zéro pointé de JetBrains Mono est illisible en KPI."
     }
   }
 }
