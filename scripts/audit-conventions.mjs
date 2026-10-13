@@ -40,8 +40,30 @@ const EXCEPTIONS = {
       "pas des couleurs d'interface. Elles ne suivent ni le thème ni le " +
       "registre, exactement comme les couleurs de marque ne suivent pas le " +
       "thème.",
+    'sidebar-nav':
+      "Les `#000` des dégradés de masque. Dans un `mask-image` seul l'ALPHA " +
+      "compte : la couleur est arbitraire, et un token posé là ne voudrait " +
+      "rien dire. Ils passaient jusqu'ici parce qu'ils s'écrivent sur trois " +
+      "chiffres, et que le motif n'en reconnaissait que six.",
   },
 };
+
+/**
+ * Toutes les notations de couleur, pas seulement `#rrggbb`.
+ *
+ * Le motif ne reconnaissait que les hex à SIX chiffres. Il laissait donc
+ * passer les notations fonctionnelles — `oklch()`, `rgb()`, `hsl()` — et les
+ * hex à trois. C'est par ce trou qu'un `oklch(1 0 0)` est resté dans
+ * `BarChart` avec, pour seule trace de mesure, un commentaire annonçant
+ * 4,62 et 6,64 là où la palette donne aujourd'hui 14,92 et 3,40.
+ */
+const COULEUR_EN_DUR =
+  /#[0-9a-fA-F]{3,8}\b|\boklch\([^)]*\)|\brgba?\(\s*\d[^)]*\)|\bhsla?\(\s*\d[^)]*\)/;
+
+/** Le source d'un composant, débarrassé de ce qui n'est pas une couleur. */
+function sansFauxPositifs(code) {
+  return code.replace(/viewBox="[^"]*"/g, '').replace(/\sd="[^"]*"/g, '');
+}
 
 const echecs = [];
 const composants = fs
@@ -124,7 +146,7 @@ for (const nom of composants) {
     );
   }
   // Un hex dans un `viewBox` ou un `d=` de tracé n'est pas une couleur.
-  const hex = code.replace(/viewBox="[^"]*"/g, '').replace(/\sd="[^"]*"/g, '').match(/#[0-9a-fA-F]{6}\b/);
+  const hex = sansFauxPositifs(code).match(COULEUR_EN_DUR);
   if (hex && !EXCEPTIONS['hex-en-dur'][nom]) {
     echecs.push(
       `${ou} — couleur en dur (${hex[0]}). Même raison qu'au-dessus. Si ` +
@@ -317,6 +339,15 @@ for (const nom of composants) {
         `une marque qui ne l'est pas.`,
     );
   }
+  // Même discipline que pour les cercles : une exception qu'on ne mesure
+  // plus ne protège rien.
+  if (nom in EXCEPTIONS['hex-en-dur'] && !sansFauxPositifs(src).match(COULEUR_EN_DUR)) {
+    echecs.push(
+      `EXCEPTIONS['hex-en-dur'] cite « ${nom} », qui n'écrit plus de ` +
+        `couleur en dur. Retirer sa ligne.`,
+    );
+  }
+
   if (!emplois && nom in CERCLES_PAR_GEOMETRIE) {
     echecs.push(
       `CERCLES_PAR_GEOMETRIE cite « ${nom} », qui n'écrit plus ` +
@@ -346,5 +377,6 @@ if (echecs.length) {
 
 console.log(
   `audit conventions OK — ${composants.length} composants, quatorze conventions ` +
-    `tenues, une exception nommée, ${Object.keys(CERCLES_PAR_GEOMETRIE).length} cercles imposés par la géométrie.`,
+    `tenues, ${Object.keys(EXCEPTIONS['hex-en-dur']).length} couleurs en dur ` +
+    `assumées, ${Object.keys(CERCLES_PAR_GEOMETRIE).length} cercles imposés par la géométrie.`,
 );
