@@ -3,7 +3,7 @@ import { expect, waitFor, within } from "storybook/test";
 import { BrandMark, LOGOS, nomDeMarque } from "./brand-mark";
 
 const meta = {
-  title: "Marque/BrandMark",
+  title: "Marques/BrandMark",
   component: BrandMark,
   tags: ["autodocs"],
   parameters: { layout: "padded" },

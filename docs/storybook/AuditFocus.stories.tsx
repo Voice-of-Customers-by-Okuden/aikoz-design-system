@@ -36,7 +36,7 @@ import { DashboardComplet } from "./dashboard-complet";
  * quelqu'un qui tabule.
  */
 const meta = {
-  title: "Design system/Audit du focus",
+  title: "Coulisses/Audit du focus",
   parameters: { layout: "fullscreen" },
 } satisfies Meta;
 export default meta;

@@ -6,7 +6,7 @@ import { DashboardComplet } from "./dashboard-complet";
 // ─── Histoire ────────────────────────────────────────────────────────────────
 
 const meta = {
-  title: "Design system/Dashboard complet",
+  title: "Coulisses/Dashboard complet",
   parameters: {
     layout: "fullscreen",
     // La page occupe l'écran : la contrainte de largeur des autres histoires

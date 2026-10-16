@@ -37,7 +37,7 @@ import { DashboardComplet } from "./dashboard-complet";
  * 16 px demande 2,25 ; en 20 px, 1,8.
  */
 const meta = {
-  title: "Design system/Audit des icônes",
+  title: "Coulisses/Audit des icônes",
   parameters: { layout: "fullscreen" },
 } satisfies Meta;
 export default meta;

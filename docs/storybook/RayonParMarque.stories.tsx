@@ -25,7 +25,7 @@ function Cadre({ marque, nom }: { marque: string; nom: string }) {
       <iframe
         title={`Panneau ${nom}`}
         data-marque={marque}
-        src={`iframe.html?id=design-system-decisions-rayon-par-marque--panneau&viewMode=story&globals=marque:${marque};theme:clair`}
+        src={`iframe.html?id=coulisses-decisions-rayon-par-marque--panneau&viewMode=story&globals=marque:${marque};theme:clair`}
         className="h-80 w-full rounded-[var(--radius)] border border-border bg-[var(--background)]"
       />
     </figure>
@@ -42,7 +42,7 @@ function Comparaison() {
 }
 
 const meta = {
-  title: "Design system/Décisions/Rayon par marque",
+  title: "Coulisses/Décisions/Rayon par marque",
   component: Comparaison,
   parameters: { layout: "fullscreen" },
   globals: { theme: "clair" },

@@ -156,14 +156,31 @@ const preview: Preview = {
     // test plutôt que de s'afficher dans un coin. Un avertissement qu'on peut
     // ignorer finit toujours par être ignoré.
     a11y: { test: "error" },
+    // ── L'ordre de la barre latérale, délibéré ───────────────────────────
+    //
+    // Il citait « Décisions » et « Archive », qui ont déménagé dans
+    // « Coulisses » : un ordre qui nomme des sections inexistantes ne range
+    // rien, il laisse l'alphabet décider. Et l'alphabet mettait les pages
+    // d'audit avant les composants.
+    //
+    // La règle : ce qu'on vient chercher d'abord, en haut ; ce qui ne
+    // regarde que les mainteneurs, tout en bas.
     options: {
       storySort: {
         order: [
           "Design system",
-          ["Introduction", "Tokens", "Décisions"],
+          ["Introduction", "Accessibilité", "Tokens", "Marques", "Thème sombre",
+           "Créer un composant", "Ajouter une marque"],
           "Composants",
+          "Formulaires",
+          "Navigation",
+          "Données",
           "Graphiques",
-          "Archive",
+          "Marques",
+          "Site",
+          "Assemblages",
+          // Audits, décisions, dettes, archive : en dernier, toujours.
+          "Coulisses",
         ],
       },
     },

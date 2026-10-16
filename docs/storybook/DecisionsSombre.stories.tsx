@@ -22,7 +22,7 @@ import { DeltaBadge } from "@registry/aikoz/delta-badge/delta-badge";
  * sur une page qu'on regarde une heure d'affilée.
  */
 const meta = {
-  title: "Design system/Décisions — thème sombre",
+  title: "Coulisses/Décisions — thème sombre",
   parameters: { layout: "padded" },
 } satisfies Meta;
 export default meta;
