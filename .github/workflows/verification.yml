@@ -149,6 +149,18 @@ jobs:
       # annonçait vingt et un ratios de contraste, dix-sept étaient faux, et
       # deux portaient « ✓ WCAG AA » pour des couleurs à 3,30:1 et 3,19:1. Le
       # Claude Design, construit À PARTIR de ce document, en a hérité.
+      # Aikoz livre par DEUX chaînes : ce dépôt rend les interfaces, le Claude
+      # Design rend les présentations et les tableaux de bord. Elles n'avaient
+      # aucun point de contact, et elles ont dérivé sur douze rôles de statut.
+      #
+      # Ce contrôle n'était pas branché tant qu'il était rouge : l'aligner côté
+      # copie suivie l'aurait rendu vert sans toucher l'artefact publié — un
+      # contrôle qui ment, ce que la 2.26.1 venait de réparer ailleurs. Les
+      # douze valeurs ont été portées dans l'artefact le 16/10, il passe au
+      # vert pour de vrai, il entre.
+      - name: Les deux chaînes disent la même chose
+        run: npm run audit:deux-systemes
+
       - name: La charte ne promet que ce qu'elle tient
         run: npm run audit:ratios-charte
 
