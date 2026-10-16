@@ -13,6 +13,31 @@ description: >
 
 ---
 
+## Se brancher sur les tokens, plutôt que les copier
+
+Les tokens sont servis à une **URL stable** :
+
+```html
+<link rel="stylesheet"
+      href="https://voice-of-customers-by-okuden.github.io/aikoz-design-system/tokens/index.css">
+```
+
+Un document qui pose ce lien suit chaque publication, pour toujours. Il n'a
+plus aucune valeur à tenir à jour : ni couleur, ni rayon, ni police.
+
+**Pourquoi ça existe.** Sans URL à laquelle se brancher, tout le monde copie.
+Un fichier de présentation produit dans Claude Design portait **238 valeurs
+figées** — une copie entière de `build/primitives.css`, commentaires compris.
+Il affichait ses chiffres en JetBrains Mono trois jours après qu'on ait retiré
+cette règle, et aucun bouton « actualiser » ne pouvait le corriger : rien ne
+relit une valeur déjà écrite.
+
+**Ce que le lien ne corrige pas.** Il fournit les valeurs, pas les choix. Un
+document qui écrit `font: var(--font-mono)` sur un nombre continuera de le
+faire : c'est sa décision, pas la nôtre. Les deux se réparent séparément.
+
+---
+
 ## Une marque, deux chaînes de production
 
 Aikoz livre par deux chaînes, et elles portent la même identité :

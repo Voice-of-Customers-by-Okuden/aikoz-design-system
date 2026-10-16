@@ -70,6 +70,23 @@ jobs:
           cp -R storybook-static/. site/
           mkdir -p site/playground
           cp -R docs/preview/. site/playground/
+
+          # ── Les tokens, à une URL stable ─────────────────────────────────
+          #
+          # Sans URL à laquelle se brancher, tout le monde COPIE. Un fichier
+          # de présentation produit dans Claude Design portait 238 valeurs
+          # figées — une copie entière de `build/primitives.css`, commentaires
+          # compris. Il affichait donc ses chiffres en JetBrains Mono trois
+          # jours après qu'on ait retiré cette règle, et aucun bouton
+          # « actualiser » ne pouvait le corriger : rien ne relit une valeur
+          # déjà écrite.
+          #
+          # Servir le CSS rend le branchement possible. Un `<link>` vers
+          # `tokens/index.css` et le document suit chaque publication, pour
+          # toujours. Le dossier est copié ENTIER parce que `index.css`
+          # importe ses voisins en chemin relatif.
+          mkdir -p site/tokens
+          cp -R build/. site/tokens/
           # Garde-fou : une page vide se publie sans erreur. On vérifie donc
           # que les deux points d'entrée existent AVANT de publier, plutôt que
           # de le découvrir sur l'URL publique.
@@ -78,6 +95,11 @@ jobs:
           # Les 19 logos de marque sont servis en chemin RELATIF depuis le
           # Storybook ; s'ils manquaient, les pastilles sortiraient vides.
           test -d site/brands || { echo "::error::les logos de marque manquent"; exit 1; }
+          # Le point d'entrée des tokens, et une valeur dedans : un CSS vide
+          # se publie sans erreur et casserait tout ce qui s'y branche.
+          grep -q -- "--color-midnight-blue-900" site/tokens/primitives.css \
+            || { echo "::error::tokens/primitives.css vide ou incomplet"; exit 1; }
+          test -s site/tokens/index.css || { echo "::error::tokens/index.css absent"; exit 1; }
           echo "Publié : $(du -sh site | cut -f1)"
 
       - uses: actions/configure-pages@v5
