@@ -50,16 +50,16 @@ Aikoz livre par deux chaînes, et elles portent la même identité :
 **Le dépôt fait foi.** Pas par principe — parce qu'il mesure. Chaque couleur y
 est auditée sur huit combinaisons de marque et de thème avant d'être publiée.
 
-### Ce qui diverge
+### Elles sont alignées depuis le 16/10/2026
 
-Douze rôles de statut sur quatorze comparés : les quatre couleurs de statut,
-chacune en texte, aplat et voile. Les deux familles de polices, elles,
-correspondent déjà.
+Douze rôles de statut divergeaient — les quatre couleurs, chacune en texte,
+aplat et voile. Ils ont été portés dans l'artefact publié, et
+`audit:deux-systemes` passe désormais **dans la CI** : les deux chaînes ne
+peuvent plus repartir sans que ça échoue.
 
-**Ce n'est pas un défaut d'accessibilité.** Les paires du Claude Design
-tiennent le seuil de 4,5:1 — de 4,51 à 5,49. Les nôtres tiennent de 4,83 à
-7,50 : plus de marge, pas une conformité différente. C'est un écart de
-cohérence de marque, et il se corrige côté Claude Design.
+Au passage, le README du Claude Design prescrivait encore « JetBrains Mono
+for every number ». C'était la source des zéros pointés dans les tableaux de
+bord produits par l'équipe : le document qu'ils suivaient le leur demandait.
 
 ### Les deux générations de noms, et le piège
 
