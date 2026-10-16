@@ -18,6 +18,47 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.27.0] — 2026-10-16
+
+### Ajouté
+
+Deux composants, tirés de la **vision cible** d'Arnaud — l'écran qu'Aikoz
+doit devenir. Son prototype est la spécification, pas le livrable : on le
+refait avec nos composants, et ce qui manque entre ici, à nos règles.
+
+- **`ScoreRing`** — une note unique sur son anneau. Ni `ProgressBar`, qui rend
+  la même mesure à plat et se lit comme un détail là où la note est le sujet ;
+  ni `DonutChart`, qui répartit un total entre plusieurs parts et mentirait
+  sur la nature de la donnée. Trois niveaux déduits de seuils en **fraction**
+  de l'échelle — les mêmes servent une note sur 5 et un taux sur 100. Rôle
+  `meter`, comme `ProgressBar` : une note est une mesure, pas l'avancement
+  d'une tâche.
+- **`Checklist`** — une liste de choses à accomplir, et ce qu'il en reste.
+  Elle ne réutilise pas `Accordion` : son intitulé porte un état, un effort et
+  parfois un compteur, là où l'accordéon prend une chaîne — et la moitié des
+  usages ne déplie rien. Une tâche sans détail ne se déplie pas, parce qu'un
+  bouton qui n'ouvre rien est un mensonge d'interface.
+
+### Ce que les garde-fous ont attrapé en chemin
+
+- `ScoreRing` nommait sa ligne de contexte **`caption`**. Refusé :
+  `caption` désigne ici le nom accessible d'un jeu de données. C'est la leçon
+  que `KpiCard` porte déjà dans ses commentaires, refaite au premier jet.
+- `Checklist` rendait ses boutons de dépliement à **21 px de haut**, sous le
+  plancher de 24 px du critère WCAG 2.2 AA 2.5.8.
+
+### Pas de composant pour
+
+- La **cloche de notification** : une icône et un `CountBadge` positionnés.
+- Les **cartes de suggestion** : une `Card`, une icône, un libellé.
+- La carte **« Votre story de la semaine »** : un assemblage, qui n'a de sens
+  que sur cet écran.
+
+Trois compositions de composants existants. Aucune ne mérite un composant de
+plus.
+
+---
+
 ## [2.26.3] — 2026-10-16
 
 ### Modifié
