@@ -308,6 +308,10 @@ for (const nom of composants) {
 // personne ne le voit avant la démonstration. Chaque emploi doit donc être
 // NOMMÉ ici, avec la raison qui le range du côté de la géométrie.
 const CERCLES_PAR_GEOMETRIE = {
+  checklist:
+    "la pastille d'état d'une tâche — 20 px sur 20 px, aussi large que " +
+    "haute. Un rayon de marque la déformerait en losange arrondi sans " +
+    "rien dire de l'identité.",
   avatar: 'portrait circulaire',
   'booking-flow': 'pastille d’étape, aussi large que haute',
   'brand-logo': 'monogramme circulaire',
