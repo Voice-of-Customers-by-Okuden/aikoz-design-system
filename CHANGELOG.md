@@ -18,6 +18,40 @@ de l'API — mais il se voit, donc il est toujours écrit ici.
 
 ---
 
+## [2.26.3] — 2026-10-16
+
+### Modifié
+
+- **Le Storybook se range par public.** Il comptait douze sections racines
+  pour cinquante-cinq composants, dont quatre n'en contenaient qu'un seul —
+  et `Marque` coexistait avec `Marques`.
+
+  | Avant | Après |
+  |---|---|
+  | `Marque/BrandMark` | `Marques/BrandMark` |
+  | `Retours/AlertDialog` | `Composants/AlertDialog` |
+  | `Parcours/BookingFlow` | `Composants/BookingFlow` |
+
+  Les audits, les décisions, les dettes et l'archive passent sous
+  **`Coulisses`** : elles ne s'adressent pas à qui vient chercher un
+  composant. Dix sections au lieu de douze, et l'ordre de la barre latérale
+  devient délibéré — ce qu'on vient chercher en haut, ce qui ne regarde que
+  les mainteneurs tout en bas.
+
+  L'ordre précédent citait « Décisions » et « Archive », qui ont déménagé :
+  un ordre qui nomme des sections inexistantes ne range rien, il laisse
+  l'alphabet décider — et l'alphabet mettait les pages d'audit avant les
+  composants.
+
+### Attention aux liens
+
+Les identifiants d'histoire changent pour les pages déplacées. Un lien
+externe vers `design-system-decisions-…` ou `retours-alertdialog--…` ne
+répondra plus. Le seul identifiant écrit en dur dans le dépôt — le cadre de
+« Rayon par marque » — est corrigé.
+
+---
+
 ## [2.26.2] — 2026-10-13
 
 ### Corrigé

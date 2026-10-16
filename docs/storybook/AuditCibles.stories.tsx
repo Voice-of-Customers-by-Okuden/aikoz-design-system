@@ -53,7 +53,7 @@ import { DashboardComplet } from "./dashboard-complet";
  * 20 px.
  */
 const meta = {
-  title: "Design system/Audit des cibles",
+  title: "Coulisses/Audit des cibles",
   parameters: { layout: "fullscreen" },
 } satisfies Meta;
 export default meta;

@@ -10,7 +10,7 @@ const jours = [
 ];
 
 const meta = {
-  title: "Parcours/BookingFlow",
+  title: "Composants/BookingFlow",
   component: BookingFlow,
   tags: ["autodocs"],
   args: { days: jours, trigger: <Button>Réserver une démonstration</Button> },

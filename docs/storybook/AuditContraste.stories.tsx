@@ -26,7 +26,7 @@ import { expect } from "storybook/test";
  * document, dans les huit combinaisons marque × thème.
  */
 const meta = {
-  title: "Design system/Audit de contraste",
+  title: "Coulisses/Audit de contraste",
   parameters: { layout: "padded" },
 } satisfies Meta;
 export default meta;

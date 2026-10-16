@@ -5,7 +5,7 @@ import { AlertDialog } from "./alert-dialog";
 import { Button } from "@registry/aikoz/button/button";
 
 const meta = {
-  title: "Retours/AlertDialog",
+  title: "Composants/AlertDialog",
   component: AlertDialog,
   tags: ["autodocs"],
   parameters: { layout: "padded" },

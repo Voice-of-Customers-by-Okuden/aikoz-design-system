@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
  * 75 pour du texte, 45 pour un élément d'interface.
  */
 const meta = {
-  title: "Design system/Décisions/Dettes d'accent",
+  title: "Coulisses/Décisions/Dettes d'accent",
   parameters: { layout: "fullscreen" },
 } satisfies Meta;
 export default meta;
